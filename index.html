@@ -1,0 +1,1293 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Ilhas – Domina las Finanzas de tu Negocio con Tecnología y AI</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta
+    name="description"
+    content="Bootcamp Ilhas: Domina las finanzas de tu negocio, construye tu modelo financiero y automatiza tus decisiones con tecnología y AI."
+  />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap"
+    rel="stylesheet"
+  />
+
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+            display: ['Space Grotesk', 'system-ui', 'sans-serif'],
+          },
+          colors: {
+            ilhas: {
+              dark: '#0E0E0F',
+              text: '#3C3C44',
+              light: '#F8FAFF',
+              gray: '#E8ECF2',
+              primary: '#7A3CFF',
+              primaryDark: '#622ECC',
+              gradientStart: '#55E8FF',
+              gradientMid: '#8E5BFF',
+              gradientEnd: '#A14BFF',
+            },
+          },
+          boxShadow: {
+            soft: '0 18px 45px rgba(15, 23, 42, 0.06)',
+            glow: '0 0 40px rgba(122, 60, 255, 0.3)',
+          },
+          borderRadius: {
+            xl2: '1.25rem',
+          },
+          animation: {
+            'gradient': 'gradient 8s ease infinite',
+            'float': 'float 6s ease-in-out infinite',
+            'pulse-glow': 'pulse-glow 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+          },
+          keyframes: {
+            gradient: {
+              '0%, 100%': { backgroundPosition: '0% 50%' },
+              '50%': { backgroundPosition: '100% 50%' },
+            },
+            float: {
+              '0%, 100%': { transform: 'translateY(0px)' },
+              '50%': { transform: 'translateY(-20px)' },
+            },
+            'pulse-glow': {
+              '0%, 100%': { boxShadow: '0 0 20px rgba(122, 60, 255, 0.4)' },
+              '50%': { boxShadow: '0 0 40px rgba(122, 60, 255, 0.8)' },
+            },
+          },
+        },
+      },
+    };
+  </script>
+
+  <!-- AOS Animation Library -->
+  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css" />
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+  <style>
+    body {
+      font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont,
+        'Segoe UI', sans-serif;
+      color: #0e0e0f;
+    }
+
+    .gradient-animated {
+      background-size: 200% 200%;
+      animation: gradient 8s ease infinite;
+    }
+
+    .hover-lift {
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .hover-lift:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 20px 60px rgba(15, 23, 42, 0.12);
+    }
+
+    .btn-primary {
+      transition: all 0.3s ease;
+    }
+
+    .btn-primary:hover {
+      transform: scale(1.02);
+      box-shadow: 0 0 40px rgba(122, 60, 255, 0.5);
+    }
+
+    @keyframes countdownPulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.7; }
+    }
+
+    .countdown-digit {
+      animation: countdownPulse 2s ease-in-out infinite;
+    }
+
+    /* Logo carousel animation */
+    @keyframes scroll {
+      0% {
+        transform: translateX(0);
+      }
+      100% {
+        transform: translateX(-100%);
+      }
+    }
+
+    .animate-scroll {
+      animation: scroll 30s linear infinite;
+    }
+
+    .logos-track {
+      width: max-content;
+    }
+
+    /* Pausar animación al hover para ver logos */
+    .logos-track:hover .animate-scroll {
+      animation-play-state: paused;
+    }
+  </style>
+</head>
+
+<body class="bg-ilhas-light text-ilhas-text antialiased">
+  <!-- Top Announcement Bar -->
+  <div class="bg-gradient-to-r from-ilhas-gradientStart via-ilhas-primary to-ilhas-gradientEnd gradient-animated text-white py-2 text-center text-xs sm:text-sm font-medium sticky top-0 z-40">
+    <div class="flex items-center justify-center gap-2">
+      <span class="hidden sm:inline">🎉</span>
+      <span><strong>Precio Fundadores:</strong> Solo para los primeros 10 | Quedan <span id="spots-left" class="font-bold countdown-digit">7</span> cupos</span>
+      <span class="hidden sm:inline">⚡</span>
+    </div>
+  </div>
+
+  <!-- Navbar -->
+  <header class="sticky top-8 z-30 bg-white/80 backdrop-blur-xl border-b border-ilhas-gray/40">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16">
+      <div class="flex items-center gap-2">
+        <!-- Logo placeholder: reemplaza por tu SVG si quieres -->
+        <div
+          class="w-9 h-9 rounded-full bg-gradient-to-tr from-ilhas-gradientStart via-ilhas-gradientMid to-ilhas-gradientEnd flex items-center justify-center"
+        >
+          <div class="w-4 h-4 rounded-full bg-white/90"></div>
+        </div>
+        <span class="font-display text-xl tracking-tight text-ilhas-dark">
+          ilhas
+        </span>
+      </div>
+
+      <nav class="hidden md:flex items-center gap-8 text-sm">
+        <a href="#bootcamp" class="hover:text-ilhas-primary transition">Bootcamp</a>
+        <a href="#para-quien" class="hover:text-ilhas-primary transition">Para quién</a>
+        <a href="#contenido" class="hover:text-ilhas-primary transition">Contenido</a>
+        <a href="#demo" class="hover:text-ilhas-primary transition">Demo</a>
+        <a href="#fundadores" class="hover:text-ilhas-primary transition">Fundadores</a>
+        <a href="#precio" class="hover:text-ilhas-primary transition">Inversión</a>
+      </nav>
+
+      <div class="hidden md:block">
+        <a
+          href="#aplicar"
+          class="btn-primary inline-flex items-center px-4 py-2 rounded-full text-sm font-medium text-white bg-ilhas-primary hover:bg-ilhas-primaryDark shadow-soft shadow-ilhas-primary/40 transition"
+        >
+          Aplicar a la primera cohorte
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main class="pb-20">
+    <!-- HERO -->
+    <section
+      id="bootcamp"
+      class="relative overflow-hidden"
+    >
+      <div
+        class="absolute inset-0 bg-gradient-to-tr from-ilhas-gradientStart via-white to-ilhas-gradientEnd opacity-40 pointer-events-none gradient-animated"
+      ></div>
+
+      <!-- Floating blob animations -->
+      <div class="absolute top-20 right-10 w-72 h-72 bg-ilhas-primary/20 rounded-full blur-3xl animate-float"></div>
+      <div class="absolute bottom-10 left-10 w-96 h-96 bg-ilhas-gradientStart/20 rounded-full blur-3xl animate-float" style="animation-delay: 2s;"></div>
+
+      <div class="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-20 lg:pt-20 lg:pb-28 grid lg:grid-cols-2 gap-12 items-center">
+        <!-- Copy -->
+        <div>
+          <span
+            class="inline-flex items-center rounded-full bg-white/70 border border-white/80 px-3 py-1 text-xs font-medium text-ilhas-primary shadow-soft mb-5"
+          >
+            Bootcamp fundacional · Primera cohorte limitada
+          </span>
+
+          <h1 class="font-display text-4xl sm:text-5xl lg:text-6xl tracking-tight text-ilhas-dark mb-6">
+            Domina las finanzas de tu negocio<br />
+            <span
+              class="bg-gradient-to-r from-ilhas-gradientStart via-ilhas-gradientMid to-ilhas-gradientEnd bg-clip-text text-transparent"
+            >
+              con tecnología y AI
+            </span>
+          </h1>
+
+          <p class="text-base sm:text-lg text-ilhas-text/80 max-w-xl mb-6">
+            En 6 semanas diseñas el modelo financiero de tu negocio, construyes tu tablero de control y automatizas tus decisiones clave usando herramientas modernas y AI. Sin ser financiero, sin ser técnico.
+          </p>
+
+          <ul class="space-y-2 text-sm sm:text-base text-ilhas-text/90 mb-8">
+            <li class="flex gap-3">
+              <span class="mt-1 w-5 h-5 rounded-full bg-ilhas-primary/10 flex items-center justify-center">
+                <span class="w-2 h-2 rounded-full bg-ilhas-primary"></span>
+              </span>
+              <span>Para dueños de negocio, emprendedores y profesionales que ya generan ingresos pero quieren control y crecimiento real.</span>
+            </li>
+            <li class="flex gap-3">
+              <span class="mt-1 w-5 h-5 rounded-full bg-ilhas-primary/10 flex items-center justify-center">
+                <span class="w-2 h-2 rounded-full bg-ilhas-primary"></span>
+              </span>
+              <span>Cohorte guiada por <strong>40 años de experiencia financiera</strong> y <strong>12 años construyendo productos digitales</strong> que procesan más de 1B MXN al mes.</span>
+            </li>
+          </ul>
+
+          <div class="flex flex-col sm:flex-row gap-4 items-start sm:items-center">
+            <a
+              href="#aplicar"
+              class="btn-primary inline-flex items-center justify-center px-6 py-3 rounded-full text-sm font-semibold text-white bg-ilhas-primary hover:bg-ilhas-primaryDark shadow-soft shadow-ilhas-primary/40 transition"
+            >
+              Aplicar a la primera cohorte
+            </a>
+            <p class="text-xs text-ilhas-text/70 max-w-xs">
+              Lugares limitados. Primera generación con precio preferencial y acompañamiento directo.
+            </p>
+          </div>
+
+          <!-- Social Proof Badges -->
+          <div class="mt-8 mb-6" data-aos="fade-up" data-aos-delay="200">
+            <p class="text-xs uppercase tracking-wider text-ilhas-text/50 mb-3">Respaldado por experiencia real</p>
+            <div class="flex flex-wrap items-center gap-6 text-xs text-ilhas-text/60">
+              <div class="flex items-center gap-2">
+                <div class="w-10 h-10 rounded-lg bg-ilhas-primary/10 flex items-center justify-center">
+                  <span class="text-lg">📊</span>
+                </div>
+                <div>
+                  <p class="font-semibold text-ilhas-dark">+40 años</p>
+                  <p class="text-[11px]">Finanzas corporativas</p>
+                </div>
+              </div>
+              <div class="flex items-center gap-2">
+                <div class="w-10 h-10 rounded-lg bg-ilhas-primary/10 flex items-center justify-center">
+                  <span class="text-lg">💰</span>
+                </div>
+                <div>
+                  <p class="font-semibold text-ilhas-dark">+1B MXN</p>
+                  <p class="text-[11px]">Procesados al mes</p>
+                </div>
+              </div>
+              <div class="flex items-center gap-2">
+                <div class="w-10 h-10 rounded-lg bg-ilhas-primary/10 flex items-center justify-center">
+                  <span class="text-lg">🚀</span>
+                </div>
+                <div>
+                  <p class="font-semibold text-ilhas-dark">12 años</p>
+                  <p class="text-[11px]">Productos digitales</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-8 grid grid-cols-3 gap-4 max-w-md text-xs sm:text-sm text-ilhas-text/80">
+            <div>
+              <p class="font-semibold text-ilhas-dark text-lg">6 semanas</p>
+              <p>Sesiones en vivo + implementación acompañada.</p>
+            </div>
+            <div>
+              <p class="font-semibold text-ilhas-dark text-lg">Cupos limitados</p>
+              <p>Grupo reducido, trabajo sobre tu caso real.</p>
+            </div>
+            <div>
+              <p class="font-semibold text-ilhas-dark text-lg">Garantía total</p>
+              <p>Si no te transforma en 2 semanas, te devolvemos el 100%.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Visual -->
+        <div class="relative">
+          <div
+            class="absolute -top-10 -right-10 w-48 h-48 rounded-full bg-gradient-to-tr from-ilhas-gradientStart via-ilhas-gradientMid to-ilhas-gradientEnd opacity-40 blur-3xl"
+          ></div>
+
+          <!-- Video Container con fallback a dashboard -->
+          <div
+            class="relative bg-gradient-to-br from-ilhas-dark to-ilhas-primary/90 rounded-3xl shadow-soft overflow-hidden hover-lift group"
+            data-aos="fade-left"
+            data-aos-delay="300"
+          >
+            <!-- Aspect ratio container -->
+            <div class="aspect-video relative">
+              <!-- Placeholder de Video -->
+              <div class="absolute inset-0 flex flex-col items-center justify-center p-8 bg-gradient-to-br from-ilhas-dark/95 to-ilhas-primary/80">
+                <!-- Play button icon -->
+                <button 
+                  class="w-20 h-20 rounded-full bg-white/20 backdrop-blur-sm border-2 border-white/40 flex items-center justify-center mb-6 hover:bg-white/30 hover:scale-110 transition-all duration-300 group-hover:animate-pulse-glow"
+                  onclick="alert('Próximamente: Video de presentación de los fundadores.\n\nMientras tanto, aplica abajo para una llamada personal de 15 minutos.')"
+                >
+                  <svg class="w-8 h-8 text-white ml-1" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M8 5v14l11-7z"/>
+                  </svg>
+                </button>
+                
+                <div class="text-center max-w-sm">
+                  <p class="text-white font-display text-xl mb-2">
+                    Conoce a los fundadores
+                  </p>
+                  <p class="text-white/80 text-sm mb-4">
+                    De padre e hijo a tu consejo financiero-tecnológico
+                  </p>
+                  <div class="flex items-center justify-center gap-3 text-white/70 text-xs">
+                    <span class="flex items-center gap-1">
+                      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                      </svg>
+                      2:30 min
+                    </span>
+                    <span>•</span>
+                    <span>Próximamente</span>
+                  </div>
+                </div>
+
+                <!-- Mini preview overlay en la esquina -->
+                <div class="absolute bottom-4 right-4 w-24 h-16 rounded-lg border border-white/20 bg-white/10 backdrop-blur-sm p-2 hidden sm:block">
+                  <div class="w-full h-full rounded bg-gradient-to-br from-ilhas-gradientStart/40 to-ilhas-gradientEnd/40 flex items-center justify-center">
+                    <span class="text-white/60 text-xs font-medium">Preview</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Cuando tengas el video, reemplaza el div de arriba con esto: -->
+              <!-- 
+              <iframe 
+                class="absolute inset-0 w-full h-full"
+                src="https://www.youtube.com/embed/TU_VIDEO_ID?controls=1&modestbranding=1&rel=0" 
+                title="Conoce a los fundadores de Ilhas"
+                frameborder="0" 
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                allowfullscreen
+              ></iframe>
+              -->
+            </div>
+
+            <!-- Info bar debajo del video -->
+            <div class="bg-white/95 backdrop-blur-sm px-5 py-3 flex items-center justify-between text-xs">
+              <div class="flex items-center gap-2">
+                <div class="w-8 h-8 rounded-full bg-gradient-to-tr from-ilhas-gradientStart via-ilhas-gradientMid to-ilhas-gradientEnd flex items-center justify-center">
+                  <span class="text-white font-semibold text-xs">▶</span>
+                </div>
+                <div>
+                  <p class="font-semibold text-ilhas-dark text-sm">Video de presentación</p>
+                  <p class="text-ilhas-text/60">40 años + 12 años de experiencia</p>
+                </div>
+              </div>
+              <span class="px-3 py-1 rounded-full bg-ilhas-primary/10 text-ilhas-primary font-medium">
+                Próximamente
+              </span>
+            </div>
+          </div>
+
+          <!-- Dashboard alternativo (oculto por ahora, puedes mostrar si quieres) -->
+          <div class="hidden mt-6">
+          <div
+            class="relative bg-white border border-ilhas-gray/60 rounded-3xl shadow-soft p-5 sm:p-6 flex flex-col gap-4 hover-lift mt-6"
+            data-aos="fade-left"
+            data-aos-delay="300"
+          >
+            <div class="flex items-center justify-between mb-2">
+              <div>
+                <p class="text-xs uppercase tracking-wide text-ilhas-text/60">
+                  Vista de tu negocio
+                </p>
+                <p class="text-lg font-semibold text-ilhas-dark">
+                  Panel financiero Ilhas
+                </p>
+              </div>
+              <span
+                class="px-3 py-1 rounded-full bg-ilhas-primary/10 text-xs font-medium text-ilhas-primary"
+              >
+                Demo
+              </span>
+            </div>
+
+            <!-- Fake dashboard-style visual -->
+            <div class="grid grid-cols-2 gap-4 text-xs">
+              <div class="bg-ilhas-light rounded-2xl border border-ilhas-gray/60 p-3">
+                <p class="text-[11px] text-ilhas-text/60 mb-1">Flujo de efectivo proyectado</p>
+                <p class="text-lg font-semibold text-ilhas-dark mb-2">
+                  +$420,000
+                  <span class="text-[11px] text-emerald-500 align-middle">+18% vs. mes anterior</span>
+                </p>
+                <div class="h-16 rounded-xl bg-gradient-to-r from-ilhas-gradientStart/30 via-ilhas-gradientMid/40 to-ilhas-gradientEnd/40"></div>
+              </div>
+
+              <div class="space-y-3">
+                <div class="bg-ilhas-light rounded-2xl border border-ilhas-gray/60 p-3">
+                  <p class="text-[11px] text-ilhas-text/60 mb-1">Rentabilidad del negocio</p>
+                  <p class="text-lg font-semibold text-ilhas-dark mb-1">27.4% ROIC</p>
+                  <p class="text-[11px] text-emerald-500">En zona saludable</p>
+                </div>
+                <div class="bg-ilhas-light rounded-2xl border border-ilhas-gray/60 p-3">
+                  <p class="text-[11px] text-ilhas-text/60 mb-1">Alertas inteligentes</p>
+                  <ul class="space-y-1">
+                    <li class="flex items-center justify-between">
+                      <span>Costos fijos</span>
+                      <span class="text-[11px] text-amber-500 font-medium">Revisar</span>
+                    </li>
+                    <li class="flex items-center justify-between">
+                      <span>Deuda</span>
+                      <span class="text-[11px] text-emerald-500 font-medium">Estable</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <div
+              class="mt-2 rounded-2xl border border-dashed border-ilhas-gray/80 px-3 py-3 flex items-center gap-3 bg-ilhas-light/60"
+            >
+              <div
+                class="w-8 h-8 rounded-full bg-gradient-to-tr from-ilhas-gradientStart via-ilhas-gradientMid to-ilhas-gradientEnd flex items-center justify-center text-xs text-white font-semibold"
+              >
+                AI
+              </div>
+              <p class="text-[11px] sm:text-xs text-ilhas-text/80">
+                “Según tus números, el mejor uso de tu capital los próximos 90 días es fortalecer tu flujo de efectivo, no invertir en otra línea de negocio.”
+              </p>
+            </div>
+
+            <p class="mt-2 text-[11px] text-ilhas-text/60">
+              En el bootcamp construyes <strong>tu propio panel</strong> como este, con tus datos reales.
+            </p>
+          </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PARA QUIÉN ES -->
+    <section id="para-quien" class="py-16 sm:py-20 bg-white border-y border-ilhas-gray/50">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 mb-10">
+          <div>
+            <h2 class="font-display text-3xl sm:text-4xl text-ilhas-dark mb-3">
+              ¿Para quién es este bootcamp?
+            </h2>
+            <p class="text-ilhas-text/80 max-w-2xl">
+              Para personas que ya están en el juego y quieren dejar de improvisar con sus números. No eres estudiante, eres alguien que toma decisiones reales.
+            </p>
+          </div>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-6">
+          <div class="bg-ilhas-light rounded-2xl border border-ilhas-gray/70 p-5 shadow-soft hover-lift" data-aos="fade-up" data-aos-delay="100">
+            <h3 class="font-semibold text-ilhas-dark mb-2 text-lg">
+              Dueños de negocio y emprendedores
+            </h3>
+            <p class="text-sm text-ilhas-text/80">
+              Facturas todos los meses pero no tienes claridad TOTAL de tu rentabilidad, tus márgenes y tu flujo de efectivo. Quieres dejar de adivinar.
+            </p>
+          </div>
+
+          <div class="bg-ilhas-light rounded-2xl border border-ilhas-gray/70 p-5 shadow-soft hover-lift" data-aos="fade-up" data-aos-delay="200">
+            <h3 class="font-semibold text-ilhas-dark mb-2 text-lg">
+              Inmobiliarios, constructores y proyectos de inversión
+            </h3>
+            <p class="text-sm text-ilhas-text/80">
+              Analizas proyectos, desarrollos o inversiones y quieres dominar modelos, escenarios y riesgos para hablar de números como un inversionista serio.
+            </p>
+          </div>
+
+          <div class="bg-ilhas-light rounded-2xl border border-ilhas-gray/70 p-5 shadow-soft hover-lift" data-aos="fade-up" data-aos-delay="300">
+            <h3 class="font-semibold text-ilhas-dark mb-2 text-lg">
+              Profesionales con ingresos altos
+            </h3>
+            <p class="text-sm text-ilhas-text/80">
+              Ganas bien, pero no has convertido ese ingreso en patrimonio controlado. Quieres pensar como CFO, aunque tu título no lo diga.
+            </p>
+          </div>
+        </div>
+
+        <div class="mt-8 grid md:grid-cols-2 gap-6 text-sm">
+          <div class="bg-white rounded-2xl border border-ilhas-gray/70 p-5 hover-lift" data-aos="fade-right">
+            <h4 class="font-semibold text-ilhas-dark mb-2">Es para ti si…</h4>
+            <ul class="space-y-2 text-ilhas-text/80">
+              <li>Ya generas ingresos con tu negocio o profesión.</li>
+              <li>Quieres tomar decisiones con números, no con intuición.</li>
+              <li>Te interesa la tecnología y estás abierto a usar AI.</li>
+              <li>Estás dispuesto a trabajar sobre tu caso real durante 6 semanas.</li>
+            </ul>
+          </div>
+
+          <div class="bg-white rounded-2xl border border-ilhas-gray/70 p-5 hover-lift" data-aos="fade-left">
+            <h4 class="font-semibold text-ilhas-dark mb-2">No es para ti si…</h4>
+            <ul class="space-y-2 text-ilhas-text/80">
+              <li>Buscas “hacerte rico rápido” sin entender nada.</li>
+              <li>No tienes interés en ver números ni hacer ajustes reales.</li>
+              <li>Solo quieres consumir contenido sin implementar.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TESTIMONIALS / RESULTADOS -->
+    <section class="py-16 sm:py-20 bg-gradient-to-b from-ilhas-light via-white to-ilhas-light">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12" data-aos="fade-up">
+          <h2 class="font-display text-3xl sm:text-4xl text-ilhas-dark mb-3">
+            Resultados que hablan por sí solos
+          </h2>
+          <p class="text-ilhas-text/80 max-w-2xl mx-auto">
+            Empresarios que pasaron de "adivinar" a tomar decisiones financieras con datos y confianza.
+          </p>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-6 mb-12">
+          <!-- Stat 1 -->
+          <div class="bg-white rounded-2xl border border-ilhas-gray/70 p-6 text-center hover-lift" data-aos="zoom-in" data-aos-delay="100">
+            <div class="w-14 h-14 rounded-full bg-gradient-to-tr from-ilhas-gradientStart to-ilhas-primary mx-auto mb-3 flex items-center justify-center text-white font-bold text-xl">
+              📈
+            </div>
+            <p class="text-3xl font-display text-ilhas-dark mb-1">+2,000</p>
+            <p class="text-sm text-ilhas-text/70">Empresas asesoradas en Latinoamérica</p>
+          </div>
+
+          <!-- Stat 2 -->
+          <div class="bg-white rounded-2xl border border-ilhas-gray/70 p-6 text-center hover-lift" data-aos="zoom-in" data-aos-delay="200">
+            <div class="w-14 h-14 rounded-full bg-gradient-to-tr from-ilhas-gradientMid to-ilhas-primary mx-auto mb-3 flex items-center justify-center text-white font-bold text-xl">
+              💰
+            </div>
+            <p class="text-3xl font-display text-ilhas-dark mb-1">$1B+</p>
+            <p class="text-sm text-ilhas-text/70">MXN procesados mensualmente</p>
+          </div>
+
+          <!-- Stat 3 -->
+          <div class="bg-white rounded-2xl border border-ilhas-gray/70 p-6 text-center hover-lift" data-aos="zoom-in" data-aos-delay="300">
+            <div class="w-14 h-14 rounded-full bg-gradient-to-tr from-ilhas-gradientEnd to-ilhas-primary mx-auto mb-3 flex items-center justify-center text-white font-bold text-xl">
+              ⚡
+            </div>
+            <p class="text-3xl font-display text-ilhas-dark mb-1">40+12</p>
+            <p class="text-sm text-ilhas-text/70">Años combinados de experiencia financiera y tech</p>
+          </div>
+        </div>
+
+        <!-- Logos Carousel -->
+        <div class="mb-12" data-aos="fade-up">
+          <p class="text-center text-xs uppercase tracking-wider text-ilhas-text/50 mb-6">
+            Han confiado en nuestra metodología
+          </p>
+          
+          <div class="relative overflow-hidden">
+            <!-- Gradient overlays para efecto fade -->
+            <div class="absolute left-0 top-0 bottom-0 w-20 bg-gradient-to-r from-white to-transparent z-10 pointer-events-none"></div>
+            <div class="absolute right-0 top-0 bottom-0 w-20 bg-gradient-to-l from-white to-transparent z-10 pointer-events-none"></div>
+            
+            <!-- Contenedor del carrusel -->
+            <div class="logos-track flex items-center gap-12 py-6">
+              <!-- Primera serie de logos -->
+              <div class="flex items-center gap-12 animate-scroll">
+                <!-- Logo placeholders - reemplaza con imágenes reales -->
+                <div class="flex-shrink-0 w-32 h-16 bg-white rounded-xl border border-ilhas-gray/60 flex items-center justify-center px-4 hover-lift">
+                  <span class="font-display text-lg text-ilhas-text/40">Empresa 1</span>
+                </div>
+                <div class="flex-shrink-0 w-32 h-16 bg-white rounded-xl border border-ilhas-gray/60 flex items-center justify-center px-4 hover-lift">
+                  <span class="font-display text-lg text-ilhas-text/40">Empresa 2</span>
+                </div>
+                <div class="flex-shrink-0 w-32 h-16 bg-white rounded-xl border border-ilhas-gray/60 flex items-center justify-center px-4 hover-lift">
+                  <span class="font-display text-lg text-ilhas-text/40">Empresa 3</span>
+                </div>
+                <div class="flex-shrink-0 w-32 h-16 bg-white rounded-xl border border-ilhas-gray/60 flex items-center justify-center px-4 hover-lift">
+                  <span class="font-display text-lg text-ilhas-text/40">Empresa 4</span>
+                </div>
+                <div class="flex-shrink-0 w-32 h-16 bg-white rounded-xl border border-ilhas-gray/60 flex items-center justify-center px-4 hover-lift">
+                  <span class="font-display text-lg text-ilhas-text/40">Empresa 5</span>
+                </div>
+                <div class="flex-shrink-0 w-32 h-16 bg-white rounded-xl border border-ilhas-gray/60 flex items-center justify-center px-4 hover-lift">
+                  <span class="font-display text-lg text-ilhas-text/40">Empresa 6</span>
+                </div>
+                <div class="flex-shrink-0 w-32 h-16 bg-white rounded-xl border border-ilhas-gray/60 flex items-center justify-center px-4 hover-lift">
+                  <span class="font-display text-lg text-ilhas-text/40">Empresa 7</span>
+                </div>
+                <div class="flex-shrink-0 w-32 h-16 bg-white rounded-xl border border-ilhas-gray/60 flex items-center justify-center px-4 hover-lift">
+                  <span class="font-display text-lg text-ilhas-text/40">Empresa 8</span>
+                </div>
+              </div>
+              
+              <!-- Segunda serie (duplicado para loop infinito) -->
+              <div class="flex items-center gap-12 animate-scroll" aria-hidden="true">
+                <div class="flex-shrink-0 w-32 h-16 bg-white rounded-xl border border-ilhas-gray/60 flex items-center justify-center px-4 hover-lift">
+                  <span class="font-display text-lg text-ilhas-text/40">Empresa 1</span>
+                </div>
+                <div class="flex-shrink-0 w-32 h-16 bg-white rounded-xl border border-ilhas-gray/60 flex items-center justify-center px-4 hover-lift">
+                  <span class="font-display text-lg text-ilhas-text/40">Empresa 2</span>
+                </div>
+                <div class="flex-shrink-0 w-32 h-16 bg-white rounded-xl border border-ilhas-gray/60 flex items-center justify-center px-4 hover-lift">
+                  <span class="font-display text-lg text-ilhas-text/40">Empresa 3</span>
+                </div>
+                <div class="flex-shrink-0 w-32 h-16 bg-white rounded-xl border border-ilhas-gray/60 flex items-center justify-center px-4 hover-lift">
+                  <span class="font-display text-lg text-ilhas-text/40">Empresa 4</span>
+                </div>
+                <div class="flex-shrink-0 w-32 h-16 bg-white rounded-xl border border-ilhas-gray/60 flex items-center justify-center px-4 hover-lift">
+                  <span class="font-display text-lg text-ilhas-text/40">Empresa 5</span>
+                </div>
+                <div class="flex-shrink-0 w-32 h-16 bg-white rounded-xl border border-ilhas-gray/60 flex items-center justify-center px-4 hover-lift">
+                  <span class="font-display text-lg text-ilhas-text/40">Empresa 6</span>
+                </div>
+                <div class="flex-shrink-0 w-32 h-16 bg-white rounded-xl border border-ilhas-gray/60 flex items-center justify-center px-4 hover-lift">
+                  <span class="font-display text-lg text-ilhas-text/40">Empresa 7</span>
+                </div>
+                <div class="flex-shrink-0 w-32 h-16 bg-white rounded-xl border border-ilhas-gray/60 flex items-center justify-center px-4 hover-lift">
+                  <span class="font-display text-lg text-ilhas-text/40">Empresa 8</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Testimonial placeholders -->
+        <div class="grid md:grid-cols-2 gap-6">
+          <div class="bg-white rounded-2xl border border-ilhas-gray/70 p-6 hover-lift" data-aos="fade-right">
+            <div class="flex items-start gap-4 mb-3">
+              <div class="w-12 h-12 rounded-full bg-gradient-to-tr from-ilhas-gradientStart to-ilhas-primary flex items-center justify-center text-white font-semibold">
+                M
+              </div>
+              <div>
+                <p class="font-semibold text-ilhas-dark">María González</p>
+                <p class="text-xs text-ilhas-text/60">Fundadora, Estudio Creativo</p>
+              </div>
+            </div>
+            <p class="text-sm text-ilhas-text/80 italic">
+              "Antes gastaba más de lo que debía y no sabía por qué. Ahora tengo mi modelo financiero, sé exactamente cuánto puedo invertir y mi flujo nunca ha sido tan claro."
+            </p>
+          </div>
+
+          <div class="bg-white rounded-2xl border border-ilhas-gray/70 p-6 hover-lift" data-aos="fade-left">
+            <div class="flex items-start gap-4 mb-3">
+              <div class="w-12 h-12 rounded-full bg-gradient-to-tr from-ilhas-gradientMid to-ilhas-primary flex items-center justify-center text-white font-semibold">
+                C
+              </div>
+              <div>
+                <p class="font-semibold text-ilhas-dark">Carlos Ramírez</p>
+                <p class="text-xs text-ilhas-text/60">Desarrollador Inmobiliario</p>
+              </div>
+            </div>
+            <p class="text-sm text-ilhas-text/80 italic">
+              "Evaluaba proyectos 'a ojo'. Ahora modelo escenarios, sensibilidad y riesgos como un CFO. Mis inversionistas confían más en mis números que en mi palabra."
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTENIDO DEL BOOTCAMP -->
+    <section id="contenido" class="py-16 sm:py-20">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 mb-10">
+          <div>
+            <h2 class="font-display text-3xl sm:text-4xl text-ilhas-dark mb-3">
+              Lo que vas a construir en 6 semanas
+            </h2>
+            <p class="text-ilhas-text/80 max-w-2xl">
+              Cada módulo está diseñado para que avances sobre tu propio negocio. No son clases aisladas; es un sistema que terminas armado.
+            </p>
+          </div>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-6">
+          <!-- Semana 1 -->
+          <article class="bg-white rounded-2xl border border-ilhas-gray/70 p-5 shadow-soft flex flex-col hover-lift" data-aos="fade-up" data-aos-delay="100">
+            <p class="text-xs font-semibold text-ilhas-primary mb-1">
+              Semana 1
+            </p>
+            <h3 class="font-semibold text-ilhas-dark mb-2 text-lg">
+              Fundamentos financieros que nadie te explicó
+            </h3>
+            <ul class="text-sm text-ilhas-text/80 space-y-2 mb-3">
+              <li>Cómo funciona realmente el dinero en un negocio.</li>
+              <li>Costos fijos, variables, punto de equilibrio sin tecnicismos.</li>
+              <li>Errores que matan flujo de efectivo y cómo evitarlos.</li>
+            </ul>
+            <p class="mt-auto text-xs text-ilhas-text/70">
+              Entregable: radiografía inicial de tu negocio y mapa financiero base.
+            </p>
+          </article>
+
+          <!-- Semana 2 -->
+          <article class="bg-white rounded-2xl border border-ilhas-gray/70 p-5 shadow-soft flex flex-col hover-lift" data-aos="fade-up" data-aos-delay="200">
+            <p class="text-xs font-semibold text-ilhas-primary mb-1">
+              Semana 2
+            </p>
+            <h3 class="font-semibold text-ilhas-dark mb-2 text-lg">
+              Tu modelo financiero en Excel + AI
+            </h3>
+            <ul class="text-sm text-ilhas-text/80 space-y-2 mb-3">
+              <li>Construcción paso a paso de tu modelo financiero.</li>
+              <li>Escenarios, sensibilidad y riesgos.</li>
+              <li>Cómo usar GPT para acelerar fórmulas y análisis.</li>
+            </ul>
+            <p class="mt-auto text-xs text-ilhas-text/70">
+              Entregable: modelo financiero funcional de tu negocio o proyecto.
+            </p>
+          </article>
+
+          <!-- Semana 3 -->
+          <article class="bg-white rounded-2xl border border-ilhas-gray/70 p-5 shadow-soft flex flex-col hover-lift" data-aos="fade-up" data-aos-delay="300">
+            <p class="text-xs font-semibold text-ilhas-primary mb-1">
+              Semana 3
+            </p>
+            <h3 class="font-semibold text-ilhas-dark mb-2 text-lg">
+              Dashboard y KPIs que importan
+            </h3>
+            <ul class="text-sm text-ilhas-text/80 space-y-2 mb-3">
+              <li>Los indicadores críticos de salud financiera.</li>
+              <li>Cómo leer tu negocio en una sola pantalla.</li>
+              <li>Automatización de reportes (Sheets, Notion, Data Studio).</li>
+            </ul>
+            <p class="mt-auto text-xs text-ilhas-text/70">
+              Entregable: tablero financiero vivo con tus números reales.
+            </p>
+          </article>
+
+          <!-- Semana 4 -->
+          <article class="bg-white rounded-2xl border border-ilhas-gray/70 p-5 shadow-soft flex flex-col hover-lift" data-aos="fade-up" data-aos-delay="100">
+            <p class="text-xs font-semibold text-ilhas-primary mb-1">
+              Semana 4
+            </p>
+            <h3 class="font-semibold text-ilhas-dark mb-2 text-lg">
+              Precios inteligentes y margen máximo
+            </h3>
+            <ul class="text-sm text-ilhas-text/80 space-y-2 mb-3">
+              <li>Diseño de estructura de precios.</li>
+              <li>Aumentos sin perder clientes.</li>
+              <li>Cómo proteger tu margen con datos.</li>
+            </ul>
+            <p class="mt-auto text-xs text-ilhas-text/70">
+              Entregable: estrategia de pricing alineada a tus números.
+            </p>
+          </article>
+
+          <!-- Semana 5 -->
+          <article class="bg-white rounded-2xl border border-ilhas-gray/70 p-5 shadow-soft flex flex-col hover-lift" data-aos="fade-up" data-aos-delay="200">
+            <p class="text-xs font-semibold text-ilhas-primary mb-1">
+              Semana 5
+            </p>
+            <h3 class="font-semibold text-ilhas-dark mb-2 text-lg">
+              Decisiones estratégicas con números
+            </h3>
+            <ul class="text-sm text-ilhas-text/80 space-y-2 mb-3">
+              <li>¿Contratar, endeudarte, abrir otra sucursal o no?</li>
+              <li>Evaluación de proyectos e inversiones.</li>
+              <li>Cómo priorizar lo que más retorno te da.</li>
+            </ul>
+            <p class="mt-auto text-xs text-ilhas-text/70">
+              Entregable: playbook de decisiones para los próximos 12 meses.
+            </p>
+          </article>
+
+          <!-- Semana 6 -->
+          <article class="bg-white rounded-2xl border border-ilhas-gray/70 p-5 shadow-soft flex flex-col hover-lift" data-aos="fade-up" data-aos-delay="300">
+            <p class="text-xs font-semibold text-ilhas-primary mb-1">
+              Semana 6
+            </p>
+            <h3 class="font-semibold text-ilhas-dark mb-2 text-lg">
+              AI y automatización como tu “equipo financiero”
+            </h3>
+            <ul class="text-sm text-ilhas-text/80 space-y-2 mb-3">
+              <li>Prompts avanzados para análisis financiero.</li>
+              <li>Alertas automáticas y simulaciones.</li>
+              <li>Cierre del sistema completo de Ilhas en tu negocio.</li>
+            </ul>
+            <p class="mt-auto text-xs text-ilhas-text/70">
+              Entregable: sistema de monitoreo financiero asistido por AI.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- DEMO DEL SISTEMA -->
+    <section id="demo" class="py-16 sm:py-20 bg-gradient-to-b from-white via-ilhas-light/50 to-white">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12" data-aos="fade-up">
+          <span class="inline-flex items-center rounded-full bg-ilhas-primary/10 border border-ilhas-primary/20 px-3 py-1 text-xs font-medium text-ilhas-primary shadow-soft mb-4">
+            Vista previa del sistema
+          </span>
+          <h2 class="font-display text-3xl sm:text-4xl text-ilhas-dark mb-4">
+            Así se verá tu panel financiero
+          </h2>
+          <p class="text-ilhas-text/80 max-w-2xl mx-auto">
+            Este es el tipo de dashboard que construirás durante el bootcamp, con tus números reales y decisiones asistidas por AI.
+          </p>
+        </div>
+
+        <div class="grid lg:grid-cols-2 gap-8 items-start">
+          <!-- Dashboard Demo -->
+          <div class="relative" data-aos="fade-right" data-aos-delay="200">
+            <div class="absolute -top-10 -right-10 w-48 h-48 rounded-full bg-gradient-to-tr from-ilhas-gradientStart via-ilhas-gradientMid to-ilhas-gradientEnd opacity-40 blur-3xl animate-float"></div>
+            
+            <div class="relative bg-white border border-ilhas-gray/60 rounded-3xl shadow-soft p-5 sm:p-6 flex flex-col gap-4 hover-lift">
+              <div class="flex items-center justify-between mb-2">
+                <div>
+                  <p class="text-xs uppercase tracking-wide text-ilhas-text/60">
+                    Vista de tu negocio
+                  </p>
+                  <p class="text-lg font-semibold text-ilhas-dark">
+                    Panel financiero Ilhas
+                  </p>
+                </div>
+                <span class="px-3 py-1 rounded-full bg-ilhas-primary/10 text-xs font-medium text-ilhas-primary">
+                  Demo
+                </span>
+              </div>
+
+              <!-- Fake dashboard-style visual -->
+              <div class="grid grid-cols-2 gap-4 text-xs">
+                <div class="bg-ilhas-light rounded-2xl border border-ilhas-gray/60 p-3">
+                  <p class="text-[11px] text-ilhas-text/60 mb-1">Flujo de efectivo proyectado</p>
+                  <p class="text-lg font-semibold text-ilhas-dark mb-2">
+                    +$420,000
+                    <span class="text-[11px] text-emerald-500 align-middle">+18% vs. mes anterior</span>
+                  </p>
+                  <div class="h-16 rounded-xl bg-gradient-to-r from-ilhas-gradientStart/30 via-ilhas-gradientMid/40 to-ilhas-gradientEnd/40"></div>
+                </div>
+
+                <div class="space-y-3">
+                  <div class="bg-ilhas-light rounded-2xl border border-ilhas-gray/60 p-3">
+                    <p class="text-[11px] text-ilhas-text/60 mb-1">Rentabilidad del negocio</p>
+                    <p class="text-lg font-semibold text-ilhas-dark mb-1">27.4% ROIC</p>
+                    <p class="text-[11px] text-emerald-500">En zona saludable</p>
+                  </div>
+                  <div class="bg-ilhas-light rounded-2xl border border-ilhas-gray/60 p-3">
+                    <p class="text-[11px] text-ilhas-text/60 mb-1">Alertas inteligentes</p>
+                    <ul class="space-y-1">
+                      <li class="flex items-center justify-between">
+                        <span>Costos fijos</span>
+                        <span class="text-[11px] text-amber-500 font-medium">Revisar</span>
+                      </li>
+                      <li class="flex items-center justify-between">
+                        <span>Deuda</span>
+                        <span class="text-[11px] text-emerald-500 font-medium">Estable</span>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <div class="mt-2 rounded-2xl border border-dashed border-ilhas-gray/80 px-3 py-3 flex items-center gap-3 bg-ilhas-light/60">
+                <div class="w-8 h-8 rounded-full bg-gradient-to-tr from-ilhas-gradientStart via-ilhas-gradientMid to-ilhas-gradientEnd flex items-center justify-center text-xs text-white font-semibold">
+                  AI
+                </div>
+                <p class="text-[11px] sm:text-xs text-ilhas-text/80">
+                  "Según tus números, el mejor uso de tu capital los próximos 90 días es fortalecer tu flujo de efectivo, no invertir en otra línea de negocio."
+                </p>
+              </div>
+
+              <p class="mt-2 text-[11px] text-ilhas-text/60">
+                En el bootcamp construyes <strong>tu propio panel</strong> como este, con tus datos reales.
+              </p>
+            </div>
+          </div>
+
+          <!-- Features del Dashboard -->
+          <div class="space-y-6" data-aos="fade-left" data-aos-delay="300">
+            <div>
+              <h3 class="font-display text-2xl text-ilhas-dark mb-6">
+                Tu sistema de control financiero completo
+              </h3>
+            </div>
+
+            <!-- Feature 1 -->
+            <div class="flex gap-4 items-start hover-lift p-4 rounded-2xl transition">
+              <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-ilhas-gradientStart/20 to-ilhas-primary/20 flex items-center justify-center flex-shrink-0">
+                <span class="text-2xl">📊</span>
+              </div>
+              <div>
+                <h4 class="font-semibold text-ilhas-dark mb-1">KPIs en tiempo real</h4>
+                <p class="text-sm text-ilhas-text/80">
+                  Flujo de efectivo, rentabilidad, punto de equilibrio y márgenes actualizados con tus datos reales.
+                </p>
+              </div>
+            </div>
+
+            <!-- Feature 2 -->
+            <div class="flex gap-4 items-start hover-lift p-4 rounded-2xl transition">
+              <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-ilhas-gradientMid/20 to-ilhas-primary/20 flex items-center justify-center flex-shrink-0">
+                <span class="text-2xl">🤖</span>
+              </div>
+              <div>
+                <h4 class="font-semibold text-ilhas-dark mb-1">Decisiones asistidas por AI</h4>
+                <p class="text-sm text-ilhas-text/80">
+                  Recomendaciones automáticas basadas en tus números: cuándo contratar, invertir o ajustar precios.
+                </p>
+              </div>
+            </div>
+
+            <!-- Feature 3 -->
+            <div class="flex gap-4 items-start hover-lift p-4 rounded-2xl transition">
+              <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-ilhas-gradientEnd/20 to-ilhas-primary/20 flex items-center justify-center flex-shrink-0">
+                <span class="text-2xl">⚡</span>
+              </div>
+              <div>
+                <h4 class="font-semibold text-ilhas-dark mb-1">Alertas proactivas</h4>
+                <p class="text-sm text-ilhas-text/80">
+                  El sistema te avisa cuando algo necesita atención antes de que se convierta en problema.
+                </p>
+              </div>
+            </div>
+
+            <!-- Feature 4 -->
+            <div class="flex gap-4 items-start hover-lift p-4 rounded-2xl transition">
+              <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-ilhas-primary/20 to-ilhas-primaryDark/20 flex items-center justify-center flex-shrink-0">
+                <span class="text-2xl">📈</span>
+              </div>
+              <div>
+                <h4 class="font-semibold text-ilhas-dark mb-1">Escenarios y proyecciones</h4>
+                <p class="text-sm text-ilhas-text/80">
+                  Simula "¿qué pasaría si...?" antes de tomar decisiones importantes en tu negocio.
+                </p>
+              </div>
+            </div>
+
+            <!-- CTA -->
+            <div class="pt-4">
+              <a 
+                href="#aplicar"
+                class="btn-primary inline-flex items-center justify-center px-6 py-3 rounded-full text-sm font-semibold text-white bg-ilhas-primary hover:bg-ilhas-primaryDark shadow-soft shadow-ilhas-primary/40 transition w-full sm:w-auto"
+              >
+                Quiero construir mi dashboard
+              </a>
+              <p class="text-xs text-ilhas-text/60 mt-2">
+                En 6 semanas, este sistema estará corriendo con tus números reales.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FUNDADORES -->
+    <section id="fundadores" class="py-16 sm:py-20 bg-gradient-to-b from-white via-ilhas-light to-white">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-10" data-aos="fade-up">
+          <h2 class="font-display text-3xl sm:text-4xl text-ilhas-dark mb-3">
+            De padre e hijo a tu consejo financiero-tecnológico
+          </h2>
+          <p class="text-ilhas-text/80 max-w-2xl mx-auto">
+            Ilhas nace de mezclar dos mundos que casi nunca se juntan: la profundidad de las finanzas clásicas y la velocidad de la tecnología moderna.
+          </p>
+        </div>
+
+        <!-- Video de Fundadores (Principal) -->
+        <div class="max-w-4xl mx-auto mb-12" data-aos="zoom-in">
+          <div class="relative bg-white rounded-3xl border border-ilhas-gray/70 shadow-soft overflow-hidden hover-lift group">
+            <!-- Aspect ratio container 16:9 -->
+            <div class="aspect-video relative">
+              <!-- Video Placeholder -->
+              <div class="absolute inset-0 flex flex-col items-center justify-center bg-gradient-to-br from-slate-50 via-white to-ilhas-light/50 p-8">
+                <!-- Avatares de los fundadores -->
+                <div class="flex items-center gap-4 mb-6">
+                  <div class="w-16 h-16 rounded-full bg-gradient-to-tr from-ilhas-gradientStart to-ilhas-primary flex items-center justify-center border-4 border-white shadow-lg">
+                    <span class="text-white text-2xl font-bold">F</span>
+                  </div>
+                  <div class="w-20 h-20 rounded-full bg-gradient-to-tr from-ilhas-gradientMid to-ilhas-primaryDark flex items-center justify-center border-4 border-white shadow-lg">
+                    <span class="text-white text-2xl font-bold">J</span>
+                  </div>
+                </div>
+
+                <!-- Play button grande -->
+                <button 
+                  class="w-24 h-24 rounded-full bg-ilhas-primary hover:bg-ilhas-primaryDark flex items-center justify-center mb-6 hover:scale-110 transition-all duration-300 shadow-lg hover:shadow-glow"
+                  onclick="alert('Video próximamente.\n\nMientras tanto, agenda una llamada de 15 min con nosotros para conocer si el bootcamp es para ti.')"
+                >
+                  <svg class="w-10 h-10 text-white ml-1" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M8 5v14l11-7z"/>
+                  </svg>
+                </button>
+
+                <div class="text-center max-w-md">
+                  <p class="font-display text-2xl text-ilhas-dark mb-2">
+                    Nuestra historia
+                  </p>
+                  <p class="text-ilhas-text/70 text-sm mb-4">
+                    Cómo combinamos 40 años de finanzas y 12 años de tecnología para ayudarte a dominar los números de tu negocio
+                  </p>
+                  <div class="flex items-center justify-center gap-4 text-ilhas-text/60 text-xs">
+                    <span class="flex items-center gap-1">
+                      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                      </svg>
+                      3:15 min
+                    </span>
+                    <span>•</span>
+                    <span class="px-2 py-1 rounded-full bg-amber-100 text-amber-700 font-medium">En producción</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Cuando tengas el video real, descomenta y reemplaza URL -->
+              <!--
+              <iframe 
+                class="absolute inset-0 w-full h-full"
+                src="https://www.youtube.com/embed/TU_VIDEO_ID" 
+                title="Historia de los fundadores de Ilhas"
+                frameborder="0" 
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                allowfullscreen
+              ></iframe>
+              -->
+            </div>
+          </div>
+
+          <!-- CTA debajo del video -->
+          <div class="text-center mt-6">
+            <p class="text-sm text-ilhas-text/70 mb-3">
+              ¿Quieres conocernos antes? Agenda una llamada rápida de 15 minutos
+            </p>
+            <a 
+              href="https://calendly.com/tu-link" 
+              target="_blank"
+              class="inline-flex items-center gap-2 px-5 py-2 rounded-full text-sm font-medium text-ilhas-primary border-2 border-ilhas-primary/30 hover:bg-ilhas-primary hover:text-white transition"
+            >
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+              </svg>
+              Agenda tu llamada gratuita
+            </a>
+          </div>
+        </div>
+
+        <!-- Cards de fundadores (mantienen el diseño original) -->
+        <div class="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-10">
+          <div class="max-w-xl mx-auto lg:mx-0" data-aos="fade-right">
+            <p class="text-ilhas-text/80 mb-4">
+              <strong>[Tu papá]</strong> lleva más de 40 años asesorando empresas en toda América Latina, enseñando finanzas con una claridad brutal y construyendo modelos en Excel que han guiado decisiones millonarias.
+            </p>
+            <p class="text-ilhas-text/80">
+              <strong>Jorge Sierra</strong> es Product Manager con más de 12 años construyendo software, automatizaciones y productos fintech que hoy procesan más de 1,000 millones de pesos al mes.
+            </p>
+          </div>
+
+          <div class="grid sm:grid-cols-2 gap-6 max-w-lg w-full mx-auto lg:mx-0" data-aos="fade-left">
+            <!-- Card papá -->
+            <div class="bg-white rounded-2xl border border-ilhas-gray/70 p-5 shadow-soft flex flex-col">
+              <div class="w-12 h-12 rounded-full bg-ilhas-primary/10 flex items-center justify-center mb-3">
+                <span class="text-ilhas-primary text-xl font-semibold">F</span>
+              </div>
+              <h3 class="font-semibold text-ilhas-dark mb-1">[Nombre de tu papá]</h3>
+              <p class="text-xs text-ilhas-text/70 mb-2">
+                Financiero · +40 años de experiencia · +2,000 empresas entrenadas
+              </p>
+              <p class="text-sm text-ilhas-text/80 mb-3">
+                Especialista en estados financieros, modelos de inversión, flujo de efectivo y estrategias de crecimiento empresarial.
+              </p>
+              <ul class="text-[11px] text-ilhas-text/70 space-y-1 mt-auto">
+                <li>• Ha formado a directores financieros en toda América.</li>
+                <li>• Maestro absoluto del Excel aplicado a negocios reales.</li>
+              </ul>
+            </div>
+
+            <!-- Card Jorge -->
+            <div class="bg-white rounded-2xl border border-ilhas-gray/70 p-5 shadow-soft flex flex-col">
+              <div class="w-12 h-12 rounded-full bg-ilhas-primary/10 flex items-center justify-center mb-3">
+                <span class="text-ilhas-primary text-xl font-semibold">J</span>
+              </div>
+              <h3 class="font-semibold text-ilhas-dark mb-1">Jorge Sierra</h3>
+              <p class="text-xs text-ilhas-text/70 mb-2">
+                Product & Growth · Fintech · Tecnología y AI
+              </p>
+              <p class="text-sm text-ilhas-text/80 mb-3">
+                Ha liderado productos de software, pagos y automatización que mueven más de 1B MXN al mes, combinando datos, UX y AI para crear valor.
+              </p>
+              <ul class="text-[11px] text-ilhas-text/70 space-y-1 mt-auto">
+                <li>• 12 años construyendo productos digitales y sistemas de datos.</li>
+                <li>• Obsesionado con hacer que la gente piense como inversionista, no solo como operador.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PRECIO / INVERSIÓN -->
+    <section id="precio" class="py-16 sm:py-20">
+      <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <h2 class="font-display text-3xl sm:text-4xl text-ilhas-dark mb-4">
+          Inversión en la primera cohorte
+        </h2>
+        <p class="text-ilhas-text/80 max-w-2xl mx-auto mb-8">
+          Este es un programa fundacional. La siguiente generación tendrá un precio más alto. Hoy estás entrando cuando todavía construimos de la mano contigo.
+        </p>
+
+        <div
+          class="relative bg-white border border-ilhas-gray/80 rounded-3xl shadow-soft p-8 sm:p-10 max-w-2xl mx-auto overflow-hidden"
+        >
+          <div
+            class="absolute -top-14 -right-16 w-40 h-40 rounded-full bg-gradient-to-tr from-ilhas-gradientStart via-ilhas-gradientMid to-ilhas-gradientEnd opacity-30 blur-3xl pointer-events-none"
+          ></div>
+
+          <p class="text-xs font-semibold tracking-wide uppercase text-ilhas-primary mb-3">
+            Precio fundadores · Cupo limitado
+          </p>
+
+          <div class="flex flex-col sm:flex-row sm:items-end sm:justify-center gap-4 mb-4">
+            <div>
+              <p class="text-sm text-ilhas-text/60 mb-1 line-through">
+                Precio futuro: $1,200 USD
+              </p>
+              <p class="text-4xl font-display text-ilhas-dark">
+                $497 USD
+              </p>
+              <p class="text-xs text-ilhas-text/70">
+                (~$8,500 MXN aprox.)
+              </p>
+            </div>
+            <div class="sm:text-left text-sm text-ilhas-text/80 max-w-xs mx-auto sm:mx-0">
+              <p>6 semanas de acompañamiento en vivo, plantillas, comunidad y soporte directo.</p>
+              <p class="mt-2 text-xs text-emerald-600 font-medium">
+                Garantía 100% devolución dentro de las primeras 2 semanas si no es para ti.
+              </p>
+            </div>
+          </div>
+
+          <div class="mt-6 flex flex-col sm:flex-row items-center justify-center gap-4">
+            <a
+              href="#aplicar"
+              class="btn-primary inline-flex items-center justify-center px-6 py-3 rounded-full text-sm font-semibold text-white bg-ilhas-primary hover:bg-ilhas-primaryDark shadow-soft shadow-ilhas-primary/40 transition"
+            >
+              Quiero aplicar a la primera cohorte
+            </a>
+            <p class="text-xs text-ilhas-text/70 max-w-xs">
+              Solo 10 lugares. La segunda cohorte tendrá un precio más alto y menos acceso directo.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- APLICAR -->
+    <section id="aplicar" class="py-16 sm:py-20 bg-ilhas-light border-y border-ilhas-gray/60">
+      <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h2 class="font-display text-3xl sm:text-4xl text-ilhas-dark mb-4 text-center">
+          Aplica a la primera cohorte
+        </h2>
+        <p class="text-ilhas-text/80 max-w-2xl mx-auto text-center mb-8">
+          Déjanos tus datos y un poco de contexto de tu negocio. Te contactaremos personalmente para confirmar si el bootcamp es un buen fit para ti ahora mismo.
+        </p>
+
+        <!-- Aquí luego puedes conectar un formulario real (Typeform, Tally, Kajabi, etc.) -->
+        <form class="bg-white rounded-3xl border border-ilhas-gray/80 shadow-soft p-6 sm:p-8 space-y-4">
+          <div class="grid md:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-xs font-medium text-ilhas-text/70 mb-1">Nombre completo</label>
+              <input
+                type="text"
+                placeholder="Tu nombre"
+                class="w-full rounded-xl border border-ilhas-gray/80 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-ilhas-primary/40 focus:border-ilhas-primary/60 bg-ilhas-light"
+              />
+            </div>
+            <div>
+              <label class="block text-xs font-medium text-ilhas-text/70 mb-1">Correo electrónico</label>
+              <input
+                type="email"
+                placeholder="tu@correo.com"
+                class="w-full rounded-xl border border-ilhas-gray/80 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-ilhas-primary/40 focus:border-ilhas-primary/60 bg-ilhas-light"
+              />
+            </div>
+          </div>
+
+          <div class="grid md:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-xs font-medium text-ilhas-text/70 mb-1">País / Ciudad</label>
+              <input
+                type="text"
+                placeholder="Ej. México · CDMX"
+                class="w-full rounded-xl border border-ilhas-gray/80 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-ilhas-primary/40 focus:border-ilhas-primary/60 bg-ilhas-light"
+              />
+            </div>
+            <div>
+              <label class="block text-xs font-medium text-ilhas-text/70 mb-1">Tipo de negocio / rol</label>
+              <input
+                type="text"
+                placeholder="Dueño de negocio, inmobiliario, profesional, etc."
+                class="w-full rounded-xl border border-ilhas-gray/80 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-ilhas-primary/40 focus:border-ilhas-primary/60 bg-ilhas-light"
+              />
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-xs font-medium text-ilhas-text/70 mb-1">
+              ¿Qué te gustaría lograr financieramente en los próximos 12 meses?
+            </label>
+            <textarea
+              rows="3"
+              class="w-full rounded-xl border border-ilhas-gray/80 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-ilhas-primary/40 focus:border-ilhas-primary/60 bg-ilhas-light"
+              placeholder="Cuéntanos brevemente tu situación actual y qué te gustaría cambiar."
+            ></textarea>
+          </div>
+
+          <div>
+            <label class="block text-xs font-medium text-ilhas-text/70 mb-1">
+              ¿Tu negocio ya genera ingresos? ¿De qué tamaño?
+            </label>
+            <textarea
+              rows="2"
+              class="w-full rounded-xl border border-ilhas-gray/80 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-ilhas-primary/40 focus:border-ilhas-primary/60 bg-ilhas-light"
+              placeholder="Ej. Facturamos entre 100K–300K MXN al mes, o estoy por lanzar mi primer proyecto."
+            ></textarea>
+          </div>
+
+          <div class="flex flex-col sm:flex-row items-center justify-between gap-4 pt-2">
+            <button
+              type="submit"
+              class="btn-primary inline-flex items-center justify-center px-6 py-3 rounded-full text-sm font-semibold text-white bg-ilhas-primary hover:bg-ilhas-primaryDark shadow-soft shadow-ilhas-primary/40 transition w-full sm:w-auto"
+            >
+              Enviar aplicación
+            </button>
+            <p class="text-[11px] text-ilhas-text/70 max-w-xs text-center sm:text-right">
+              Usamos esta información solo para evaluar si el programa es el mejor siguiente paso para ti. Sin spam.
+            </p>
+          </div>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="py-8 bg-white">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-ilhas-text/60">
+      <div class="flex items-center gap-2">
+        <div
+          class="w-7 h-7 rounded-full bg-gradient-to-tr from-ilhas-gradientStart via-ilhas-gradientMid to-ilhas-gradientEnd flex items-center justify-center"
+        >
+          <div class="w-3 h-3 rounded-full bg-white/90"></div>
+        </div>
+        <span class="font-display text-sm text-ilhas-dark">ilhas</span>
+      </div>
+      <p>© <span id="year"></span> Ilhas. Finanzas + Tecnología para creadores de patrimonio.</p>
+      <div class="flex items-center gap-4">
+        <a href="#" class="hover:text-ilhas-primary">Términos</a>
+        <a href="#" class="hover:text-ilhas-primary">Privacidad</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Año dinámico simple
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Inicializar AOS
+    AOS.init({
+      duration: 800,
+      easing: 'ease-out',
+      once: true,
+      offset: 100
+    });
+
+    // Simulación de countdown de cupos (opcional)
+    let spotsLeft = 7;
+    const spotsElement = document.getElementById('spots-left');
+    
+    // Simular cambio cada 30 segundos (puedes remover esto si quieres estático)
+    setInterval(() => {
+      if (spotsLeft > 3) {
+        spotsLeft--;
+        spotsElement.textContent = spotsLeft;
+      }
+    }, 30000);
+  </script>
+</body>
+</html>
