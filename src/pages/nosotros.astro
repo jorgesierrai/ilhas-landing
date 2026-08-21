@@ -1,12 +1,48 @@
 ---
 import Base from "../layouts/Base.astro";
+
+// 🔒 BLOQUEADA — docs/02-paginas.md § /nosotros.
+// La rejilla (grid-personas) y el componente TarjetaPersona.astro ya están
+// listos para recibir datos reales. No se invoca con datos de relleno: eso
+// violaría la regla "cero placeholders en producción" de CLAUDE.md.
+//
+// Exactamente lo que falta para destrabar cada tarjeta:
+//
+// Jorge Sierra (hijo):
+//   - Foto individual (formato tarjeta vertical 4:5, fondo limpio).
+//   - Un párrafo de trayectoria propio (no el mismo texto de /finanzas).
+//   - Rol para mostrar bajo el nombre (ej. "Product & Growth · Fintech").
+//
+// Jorge Sierra (papá):
+//   - Su nombre ya se confirmó como "Jorge Sierra" (ver /finanzas, donde se
+//     desambigua como "Jorge Sierra (papá)"). Aquí, sin el hijo al lado,
+//     falta decidir cómo se distingue solo — o si con "Jorge Sierra" basta
+//     al no estar los dos en la misma vista.
+//   - Foto individual (mismo formato).
+//   - Un párrafo de trayectoria propio.
+//   - Rol para mostrar bajo el nombre.
+//
+// Los números de ambos ya están atribuidos correctamente en docs/02-paginas.md
+// y pueden pasarse tal cual al prop `atribuciones` de TarjetaPersona en cuanto
+// se resuelva lo de arriba:
+//   Jorge (papá): "40 años" → "asesorando empresas en LATAM"
+//                 "+2,000 empresas" → "asesoradas"
+//   Jorge (hijo): "12 años" → "construyendo productos digitales"
+//                 "+1B MXN/mes" → "procesados por productos que ha liderado"
 ---
 
 <Base
   title="Nosotros"
   description="Quiénes construyen Ilhas."
 >
-  <p class="container section-y">
-    Página en construcción.
-  </p>
+  <section class="section-y">
+    <div class="container prose">
+      <p class="kicker">Nosotros</p>
+      <h1>Página en construcción.</h1>
+      <p class="lead">
+        Todavía no tenemos foto y bio de cada participante de Ilhas. Cuando
+        estén listas, aquí va una tarjeta individual por persona.
+      </p>
+    </div>
+  </section>
 </Base>

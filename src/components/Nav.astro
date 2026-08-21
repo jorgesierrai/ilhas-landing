@@ -4,6 +4,11 @@
 // El wordmark es el link al home (no hay pestaña "Inicio").
 // [Hablemos] apunta a /soluciones: es el carril de servicio, el techo de la
 // escalera de valor (docs/01-arquitectura.md). No existe agendador propio todavía.
+//
+// "Nosotros" sigue fuera del menú a propósito: la ruta /nosotros existe pero
+// docs/02-paginas.md la marca como bloqueada (falta bio y foto de cada
+// participante) y la regla del menú es que cada pestaña es una promesa de que
+// hay algo detrás. Se agrega de vuelta cuando la página tenga contenido real.
 interface Props {
   currentPath: string;
 }
@@ -14,7 +19,6 @@ const navItems = [
   { href: "/metodo", label: "El Método" },
   { href: "/finanzas", label: "Ilhas Finanzas" },
   { href: "/soluciones", label: "Soluciones" },
-  { href: "/nosotros", label: "Nosotros" },
 ];
 
 const isCurrent = (href: string) =>

@@ -245,12 +245,18 @@ a:hover {
 }
 
 .btn-primary {
-  background: var(--ilhas-gradient-h);
+  /* Sólido, no el gradiente: un botón se ajusta al ancho de su texto, así
+     que no hay forma de garantizar que las letras no caigan sobre la zona
+     cian del gradiente (la más clara) — ahí el contraste con blanco cae a
+     ~1.5:1, muy por debajo del mínimo AA de 4.5:1. Mismo problema y mismo
+     fix que los badges de letra en /metodo y en el home. */
+  background: var(--ilhas-primary);
   color: var(--ilhas-white);
   box-shadow: var(--ilhas-shadow-soft);
 }
 
 .btn-primary:hover {
+  background: var(--ilhas-primary-dark);
   box-shadow: var(--ilhas-shadow-hover);
   color: var(--ilhas-white);
 }
