@@ -151,6 +151,46 @@ a:hover {
   padding-block: var(--ilhas-section-y);
 }
 
+/* Tabla que scrollea horizontal en vez de romper el ancho del body.
+   El contenedor recorta y da el scroll; la tabla adentro puede ser
+   más ancha que la pantalla sin empujar el layout. */
+.table-scroll {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.table-scroll table {
+  border-collapse: collapse;
+  width: 100%;
+  min-width: 640px;
+}
+
+.bg-white {
+  background: var(--ilhas-white);
+}
+
+.kicker {
+  font-family: var(--ilhas-font-body);
+  font-weight: 500;
+  font-size: var(--ilhas-fs-small);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ilhas-primary);
+}
+
+.lead {
+  font-family: var(--ilhas-font-body);
+  font-weight: 400;
+  font-size: var(--ilhas-fs-lead);
+  color: var(--ilhas-text);
+}
+
+.prose {
+  max-width: var(--ilhas-measure);
+  margin-inline: auto;
+}
+
 .visually-hidden {
   position: absolute;
   width: 1px;
