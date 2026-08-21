@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 72 72" width="72" height="72" role="img" aria-label="Ilhas mark">
+  <defs>
+    <linearGradient id="ilhasGrad" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%"   stop-color="#55E8FF"/>
+      <stop offset="50%"  stop-color="#8E5BFF"/>
+      <stop offset="100%" stop-color="#A14BFF"/>
+    </linearGradient>
+  </defs>
+
+  <circle cx="36" cy="36" r="33" fill="url(#ilhasGrad)"/>
+  <circle cx="36" cy="36" r="14.5" fill="#FFFFFF" fill-opacity="0.92"/>
+</svg>

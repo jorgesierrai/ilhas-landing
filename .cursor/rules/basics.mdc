@@ -1,93 +1,52 @@
 ---
 alwaysApply: true
 ---
-# ILHAS.AI LANDING RULE — MASTER RULE
+# ilhas.ai — regla maestra
 
-## 🎯 Propósito
-Esta regla debe guiar a la IA en Cursor para que cualquier archivo relacionado con la landing page, branding, storytelling, componentes de UI, copy o estructura de Ilhas.ai se construya con un estándar world-class tipo Mindvalley / MasterClass, con tono aspiracional, claro, inteligente y orientado a conversión.
+**Esta regla reemplaza a la anterior.** La versión previa describía cómo construir *una landing de bootcamp de finanzas* (hero → bootcamp → quién es Jorge → CTA final) y pedía React + Tailwind. Ilhas ya no es eso, y el stack tampoco. Si encuentras esa estructura en algún lado, está obsoleta.
 
-## 🧠 Principios Obligator ios
-1. Storytelling antes que features.
-2. Aspiracional pero práctico.
-3. Claridad radical: cero palabrería.
-4. Autoridad + empatía.
-5. Identidad de marca Ilhas:
-   - Inteligente
-   - Directo
-   - Ambicioso
-   - Inspirador
-   - Premium
-6. Código limpio, componentes reusables, spacing amplio, tipografía grande.
-7. Proponer mejoras automáticamente cuando detecte un diseño/estructura inferior.
+## Antes de escribir nada
 
-## 🌐 Estructura Obligatoria de la Landing de Ilhas.ai
-La IA debe siempre estructurar o corregir la landing con estos bloques:
+Lee, en este orden:
 
-1. **Hero**
-   - Frase de poder (máx 12–16 palabras).
-   - Subfrase clara explicando Ilhas.
-   - Dos CTAs: "Aprender con Ilhas" / "Ver Bootcamp".
-   - Estética tipo Mindvalley: aire, tipografía XL, claridad absoluta.
+1. `CLAUDE.md` — qué es este repositorio y las cinco reglas que no se rompen.
+2. `docs/00-INDEX.md` — **el orden de precedencia entre las fuentes, que se contradicen a propósito.**
+3. El doc específico de lo que vayas a tocar.
 
-2. **Sección de Credibilidad**
-   - >$1B MXN procesados.
-   - 12 años construyendo productos, growth, fintech y sistemas.
-   - Experiencia aplicando IA, finanzas, estrategia y creatividad.
+No improvises estructura, copy, colores ni tipografías. Todo está decidido y documentado.
 
-3. **La Verdad sobre el Dinero según Ilhas**
-   - No es suerte: es estructura.
-   - No es trabajar más: es trabajar distinto.
-   - Es creatividad × estrategia × sistemas × IA.
+## Lo esencial, en corto
 
-4. **Los 3 Pilares que Enseña Ilhas**
-   - Mentalidad
-   - Modelos
-   - Motores (IA, automatización, sistemas de ejecución)
+**Ilhas es un método —I·L·H·A·S— y hay dos maneras de recibirlo: te lo enseñamos (formación) o te lo hacemos (consultoría).** El método es el barco; las áreas son las islas. Finanzas es la primera.
 
-5. **Bootcamp**
-   - Duración, transformación, resultados esperados.
-   - Qué lo hace único en LATAM.
-   - Qué NO es (cortar bullshit del mercado).
+El sitio son cinco páginas: `/` (ramifica) · `/metodo` (prueba cómo pensamos) · `/finanzas` (manda al webinar) · `/soluciones` (califica) · `/nosotros` (cara y trayectoria).
 
-6. **Quién es Jorge — Versión Ilhas**
-   - Bio aspiracional.
-   - Autoridad real, cero adornos innecesarios.
+Stack: **Astro estático**, sin framework de UI, CSS propio con los tokens de `docs/marca/tokens.css`, tipografías self-hosted, cero JS de cliente salvo que sea imprescindible. Ver `docs/06-stack-y-seguridad.md`.
 
-7. **CTA Final Grande**
-   - “Da el siguiente paso.”
-   - “Únete a Ilhas.”
-   - Botón grande, diseño premium.
+## Las cinco reglas
 
-## 🪄 Regla de Oro
-La IA debe comportarse como:
-**Director creativo + PM senior + estratega de growth + copywriter premium de Ilhas.ai**
+1. El sitio **nunca explica el webinar ni el programa**. Manda a `eventos.ilhas.ai` (Go High Level) con un clic. Nada de temario, precio, bonos ni oferta en este repo.
+2. **Nada de la oferta del webinar sale gratis.** El Radar de Oportunidades y su scoring no van en el sitio.
+3. **No se anuncian islas futuras.** Ilhas Operaciones / CS / Soporte / Marketing no aparecen, ni como "próximamente".
+4. **Los números se atribuyen, nunca se suman.** El "40 + 12" junto solo en `/finanzas`.
+5. **Cero placeholders en producción.** Si un dato no existe, el bloque no se publica.
 
-Debe preguntarse siempre:
-- ¿Se ve premium?
-- ¿Es claro?
-- ¿Es aspiracional?
-- ¿Vende sin vender?
-- ¿Podría estar en Mindvalley / Apple / MasterClass?
+## La regla de tono
 
-Si la respuesta es “NO”: rehacer, mejorar o sugerir cambios.
+**La carnita arriba.** Los clientes reales escribieron "vamos con la carnita, please", "¿a qué hora termina la introducción?" y "comenzamos la nueva era de vender humo". Llegan con prisa y con el detector de humo encendido. Sustancia en el primer scroll, cero intro larga, cero superlativos vacíos, cero popups. Ver `docs/04-voz-del-cliente.md`.
 
-## 🧩 Reglas de Código
-- Siempre preferir React + Tailwind (a menos que se pida lo contrario).
-- Componentes siempre reusables, limpios y separados.
-- Spacing amplio: padding XL por defecto.
-- Tipografías grandes: headers 3–5rem, párrafos min 1.25rem.
-- Gradientes suaves tipo Mindvalley cuando aplique.
-- Nunca generar texto de relleno sin intención estratégica.
-- Optimizar SEO + velocidad + responsiveness.
+## Marca
 
-## 🚀 Activación Automática
-La IA debe aplicar esta regla automáticamente en cualquier archivo cuyo path incluya:
-- /landing
-- /home
-- index.*
-- /ilhas
-- /marketing
-- /bootcamp
+- Color: `#7A3CFF` primary · tinta `#0E0E0F` · cuerpo `#3C3C44` · fondo `#F8FAFF` · bordes `#E8ECF2`.
+- Gradiente: `#55E8FF → #8E5BFF → #A14BFF`, diagonal abajo-izq → arriba-der. **Solo en momentos de marca**, nunca de fondo a todo.
+- Tipografía: **Space Grotesk** 600 (display) + **Inter** 400/500/600 (cuerpo). Solo esas dos.
+- Layout: mucho aire, una idea por vista, tarjetas blancas radio 20px, botones pill.
+- Español LATAM, trato de "tú". **"IA"**, nunca "AI".
 
-Así como en cualquier solicitud que mencione:
-“landing”, “Ilhas”, “bootcamp”, “branding”, “página principal”, “marketing site”.
+Detalle completo en `docs/marca/`.
+
+## Antes de dar algo por terminado
+
+¿Respeta las cinco reglas? ¿Usa el vocabulario de la voz del cliente y no invenciones? ¿Los colores y tipos salen de `docs/marca/`? ¿`npm run build` limpio? ¿Pasa el checklist de seguridad? ¿Se ve premium, claro y sin humo?
+
+Si algo falla: rehacer, no entregar tibio.
