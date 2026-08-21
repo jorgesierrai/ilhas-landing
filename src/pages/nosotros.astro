@@ -1,48 +1,81 @@
 ---
 import Base from "../layouts/Base.astro";
+import TarjetaPersona from "../components/TarjetaPersona.astro";
 
-// 🔒 BLOQUEADA — docs/02-paginas.md § /nosotros.
-// La rejilla (grid-personas) y el componente TarjetaPersona.astro ya están
-// listos para recibir datos reales. No se invoca con datos de relleno: eso
-// violaría la regla "cero placeholders en producción" de CLAUDE.md.
-//
-// Exactamente lo que falta para destrabar cada tarjeta:
-//
-// Jorge Sierra (hijo):
-//   - Foto individual (formato tarjeta vertical 4:5, fondo limpio).
-//   - Un párrafo de trayectoria propio (no el mismo texto de /finanzas).
-//   - Rol para mostrar bajo el nombre (ej. "Product & Growth · Fintech").
-//
-// Jorge Sierra (papá):
-//   - Su nombre ya se confirmó como "Jorge Sierra" (ver /finanzas, donde se
-//     desambigua como "Jorge Sierra (papá)"). Aquí, sin el hijo al lado,
-//     falta decidir cómo se distingue solo — o si con "Jorge Sierra" basta
-//     al no estar los dos en la misma vista.
-//   - Foto individual (mismo formato).
-//   - Un párrafo de trayectoria propio.
-//   - Rol para mostrar bajo el nombre.
-//
-// Los números de ambos ya están atribuidos correctamente en docs/02-paginas.md
-// y pueden pasarse tal cual al prop `atribuciones` de TarjetaPersona en cuanto
-// se resuelva lo de arriba:
-//   Jorge (papá): "40 años" → "asesorando empresas en LATAM"
-//                 "+2,000 empresas" → "asesoradas"
-//   Jorge (hijo): "12 años" → "construyendo productos digitales"
-//                 "+1B MXN/mes" → "procesados por productos que ha liderado"
+// Fotos individuales todavía no existen (docs/05-assets.md) — cada tarjeta
+// usa el avatar de respaldo de TarjetaPersona.astro (inicial sobre el
+// gradiente de marca) en vez de una foto inventada o un <img> roto. Se
+// reemplaza por la foto real en cuanto exista, sin tocar el resto de la
+// tarjeta. Números atribuidos por separado, nunca sumados (docs/02-paginas.md).
+const personas = [
+  {
+    nombre: "Jorge Sierra",
+    rol: "Finanzas corporativas",
+    trayectoria:
+      "40 años asesorando empresas en América Latina: diagnósticos financieros, valuaciones, modelos de inversión y reestructuras.",
+    atribuciones: [
+      { dato: "40 años", contexto: "asesorando empresas en LATAM" },
+      { dato: "+2,000 empresas", contexto: "asesoradas" },
+    ],
+  },
+  {
+    nombre: "Jorge Sierra",
+    rol: "Producto y tecnología",
+    trayectoria:
+      "12 años construyendo productos digitales. Ha liderado productos fintech que hoy procesan más de 1,000 millones de pesos al mes.",
+    atribuciones: [
+      { dato: "12 años", contexto: "construyendo productos digitales" },
+      { dato: "+1,000 MDP/mes", contexto: "procesados por productos que ha liderado" },
+    ],
+  },
+];
 ---
 
 <Base
   title="Nosotros"
-  description="Quiénes construyen Ilhas."
+  description="Quiénes construyen Ilhas: trayectoria individual de cada participante."
 >
-  <section class="section-y">
+  <section class="section-y-sm">
     <div class="container prose">
       <p class="kicker">Nosotros</p>
-      <h1>Página en construcción.</h1>
+      <h1>Quiénes construyen Ilhas.</h1>
       <p class="lead">
-        Todavía no tenemos foto y bio de cada participante de Ilhas. Cuando
-        estén listas, aquí va una tarjeta individual por persona.
+        Participantes de Ilhas, cada quien con su propia trayectoria — no un
+        dúo. El método se apunta a áreas distintas; así crece esta rejilla.
       </p>
     </div>
   </section>
+
+  <section class="section-y bg-white">
+    <div class="container">
+      <div class="personas">
+        {
+          personas.map((p) => (
+            <TarjetaPersona
+              nombre={p.nombre}
+              rol={p.rol}
+              trayectoria={p.trayectoria}
+              atribuciones={p.atribuciones}
+            />
+          ))
+        }
+      </div>
+    </div>
+  </section>
 </Base>
+
+<style>
+  .personas {
+    display: grid;
+    gap: 1.5rem;
+    max-width: 40rem;
+    margin-inline: auto;
+  }
+
+  @media (min-width: 640px) {
+    .personas {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      max-width: none;
+    }
+  }
+</style>

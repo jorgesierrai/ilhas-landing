@@ -13,16 +13,27 @@ interface Props {
   rol: string;
   trayectoria: string;
   atribuciones: Atribucion[];
-  fotoSrc: string;
-  fotoAlt: string;
+  /** Si no hay foto real todavía, se muestra un avatar con la inicial en
+   * vez de un <img> roto — nunca una foto inventada. */
+  fotoSrc?: string;
+  fotoAlt?: string;
 }
 
 const { nombre, rol, trayectoria, atribuciones, fotoSrc, fotoAlt } =
   Astro.props;
+const inicial = nombre.trim().charAt(0).toUpperCase();
 ---
 
 <article class="tarjeta-persona">
-  <img src={fotoSrc} alt={fotoAlt} width="320" height="400" />
+  {
+    fotoSrc ? (
+      <img src={fotoSrc} alt={fotoAlt ?? ""} width="320" height="400" />
+    ) : (
+      <div class="tarjeta-persona__avatar" aria-hidden="true">
+        <span>{inicial}</span>
+      </div>
+    )
+  }
   <div class="tarjeta-persona__body">
     <p class="tarjeta-persona__nombre">{nombre}</p>
     <p class="tarjeta-persona__rol">{rol}</p>
@@ -55,6 +66,22 @@ const { nombre, rol, trayectoria, atribuciones, fotoSrc, fotoAlt } =
     width: 100%;
     aspect-ratio: 4 / 5;
     object-fit: cover;
+  }
+
+  .tarjeta-persona__avatar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    background: var(--ilhas-gradient);
+  }
+
+  .tarjeta-persona__avatar span {
+    font-family: var(--ilhas-font-display);
+    font-weight: 600;
+    font-size: 4rem;
+    color: var(--ilhas-white);
   }
 
   .tarjeta-persona__body {
