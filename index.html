@@ -140,15 +140,6 @@
 </head>
 
 <body class="bg-ilhas-light text-ilhas-text antialiased">
-  <!-- Top Announcement Bar -->
-  <div class="bg-gradient-to-r from-ilhas-gradientStart via-ilhas-primary to-ilhas-gradientEnd gradient-animated text-white py-2 text-center text-xs sm:text-sm font-medium sticky top-0 z-40">
-    <div class="flex items-center justify-center gap-2">
-      <span class="hidden sm:inline">🎉</span>
-      <span><strong>Precio Fundadores:</strong> Solo para los primeros 10 | Quedan <span id="spots-left" class="font-bold countdown-digit">7</span> cupos</span>
-      <span class="hidden sm:inline">⚡</span>
-    </div>
-  </div>
-
   <!-- Navbar -->
   <header class="sticky top-8 z-30 bg-white/80 backdrop-blur-xl border-b border-ilhas-gray/40">
     <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16">
@@ -302,83 +293,6 @@
           <div
             class="absolute -top-10 -right-10 w-48 h-48 rounded-full bg-gradient-to-tr from-ilhas-gradientStart via-ilhas-gradientMid to-ilhas-gradientEnd opacity-40 blur-3xl"
           ></div>
-
-          <!-- Video Container con fallback a dashboard -->
-          <div
-            class="relative bg-gradient-to-br from-ilhas-dark to-ilhas-primary/90 rounded-3xl shadow-soft overflow-hidden hover-lift group"
-            data-aos="fade-left"
-            data-aos-delay="300"
-          >
-            <!-- Aspect ratio container -->
-            <div class="aspect-video relative">
-              <!-- Placeholder de Video -->
-              <div class="absolute inset-0 flex flex-col items-center justify-center p-8 bg-gradient-to-br from-ilhas-dark/95 to-ilhas-primary/80">
-                <!-- Play button icon -->
-                <button 
-                  class="w-20 h-20 rounded-full bg-white/20 backdrop-blur-sm border-2 border-white/40 flex items-center justify-center mb-6 hover:bg-white/30 hover:scale-110 transition-all duration-300 group-hover:animate-pulse-glow"
-                  onclick="alert('Próximamente: Video de presentación de los fundadores.\n\nMientras tanto, aplica abajo para una llamada personal de 15 minutos.')"
-                >
-                  <svg class="w-8 h-8 text-white ml-1" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M8 5v14l11-7z"/>
-                  </svg>
-                </button>
-                
-                <div class="text-center max-w-sm">
-                  <p class="text-white font-display text-xl mb-2">
-                    Conoce a los fundadores
-                  </p>
-                  <p class="text-white/80 text-sm mb-4">
-                    De padre e hijo a tu consejo financiero-tecnológico
-                  </p>
-                  <div class="flex items-center justify-center gap-3 text-white/70 text-xs">
-                    <span class="flex items-center gap-1">
-                      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                      </svg>
-                      2:30 min
-                    </span>
-                    <span>•</span>
-                    <span>Próximamente</span>
-                  </div>
-                </div>
-
-                <!-- Mini preview overlay en la esquina -->
-                <div class="absolute bottom-4 right-4 w-24 h-16 rounded-lg border border-white/20 bg-white/10 backdrop-blur-sm p-2 hidden sm:block">
-                  <div class="w-full h-full rounded bg-gradient-to-br from-ilhas-gradientStart/40 to-ilhas-gradientEnd/40 flex items-center justify-center">
-                    <span class="text-white/60 text-xs font-medium">Preview</span>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Cuando tengas el video, reemplaza el div de arriba con esto: -->
-              <!-- 
-              <iframe 
-                class="absolute inset-0 w-full h-full"
-                src="https://www.youtube.com/embed/TU_VIDEO_ID?controls=1&modestbranding=1&rel=0" 
-                title="Conoce a los fundadores de Ilhas"
-                frameborder="0" 
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                allowfullscreen
-              ></iframe>
-              -->
-            </div>
-
-            <!-- Info bar debajo del video -->
-            <div class="bg-white/95 backdrop-blur-sm px-5 py-3 flex items-center justify-between text-xs">
-              <div class="flex items-center gap-2">
-                <div class="w-8 h-8 rounded-full bg-gradient-to-tr from-ilhas-gradientStart via-ilhas-gradientMid to-ilhas-gradientEnd flex items-center justify-center">
-                  <span class="text-white font-semibold text-xs">▶</span>
-                </div>
-                <div>
-                  <p class="font-semibold text-ilhas-dark text-sm">Video de presentación</p>
-                  <p class="text-ilhas-text/60">40 años + 12 años de experiencia</p>
-                </div>
-              </div>
-              <span class="px-3 py-1 rounded-full bg-ilhas-primary/10 text-ilhas-primary font-medium">
-                Próximamente
-              </span>
-            </div>
-          </div>
 
           <!-- Dashboard alternativo (oculto por ahora, puedes mostrar si quieres) -->
           <div class="hidden mt-6">
@@ -565,111 +479,6 @@
           </div>
         </div>
 
-        <!-- Logos Carousel -->
-        <div class="mb-12" data-aos="fade-up">
-          <p class="text-center text-xs uppercase tracking-wider text-ilhas-text/50 mb-6">
-            Han confiado en nuestra metodología
-          </p>
-          
-          <div class="relative overflow-hidden">
-            <!-- Gradient overlays para efecto fade -->
-            <div class="absolute left-0 top-0 bottom-0 w-20 bg-gradient-to-r from-white to-transparent z-10 pointer-events-none"></div>
-            <div class="absolute right-0 top-0 bottom-0 w-20 bg-gradient-to-l from-white to-transparent z-10 pointer-events-none"></div>
-            
-            <!-- Contenedor del carrusel -->
-            <div class="logos-track flex items-center gap-12 py-6">
-              <!-- Primera serie de logos -->
-              <div class="flex items-center gap-12 animate-scroll">
-                <!-- Logo placeholders - reemplaza con imágenes reales -->
-                <div class="flex-shrink-0 w-32 h-16 bg-white rounded-xl border border-ilhas-gray/60 flex items-center justify-center px-4 hover-lift">
-                  <span class="font-display text-lg text-ilhas-text/40">Empresa 1</span>
-                </div>
-                <div class="flex-shrink-0 w-32 h-16 bg-white rounded-xl border border-ilhas-gray/60 flex items-center justify-center px-4 hover-lift">
-                  <span class="font-display text-lg text-ilhas-text/40">Empresa 2</span>
-                </div>
-                <div class="flex-shrink-0 w-32 h-16 bg-white rounded-xl border border-ilhas-gray/60 flex items-center justify-center px-4 hover-lift">
-                  <span class="font-display text-lg text-ilhas-text/40">Empresa 3</span>
-                </div>
-                <div class="flex-shrink-0 w-32 h-16 bg-white rounded-xl border border-ilhas-gray/60 flex items-center justify-center px-4 hover-lift">
-                  <span class="font-display text-lg text-ilhas-text/40">Empresa 4</span>
-                </div>
-                <div class="flex-shrink-0 w-32 h-16 bg-white rounded-xl border border-ilhas-gray/60 flex items-center justify-center px-4 hover-lift">
-                  <span class="font-display text-lg text-ilhas-text/40">Empresa 5</span>
-                </div>
-                <div class="flex-shrink-0 w-32 h-16 bg-white rounded-xl border border-ilhas-gray/60 flex items-center justify-center px-4 hover-lift">
-                  <span class="font-display text-lg text-ilhas-text/40">Empresa 6</span>
-                </div>
-                <div class="flex-shrink-0 w-32 h-16 bg-white rounded-xl border border-ilhas-gray/60 flex items-center justify-center px-4 hover-lift">
-                  <span class="font-display text-lg text-ilhas-text/40">Empresa 7</span>
-                </div>
-                <div class="flex-shrink-0 w-32 h-16 bg-white rounded-xl border border-ilhas-gray/60 flex items-center justify-center px-4 hover-lift">
-                  <span class="font-display text-lg text-ilhas-text/40">Empresa 8</span>
-                </div>
-              </div>
-              
-              <!-- Segunda serie (duplicado para loop infinito) -->
-              <div class="flex items-center gap-12 animate-scroll" aria-hidden="true">
-                <div class="flex-shrink-0 w-32 h-16 bg-white rounded-xl border border-ilhas-gray/60 flex items-center justify-center px-4 hover-lift">
-                  <span class="font-display text-lg text-ilhas-text/40">Empresa 1</span>
-                </div>
-                <div class="flex-shrink-0 w-32 h-16 bg-white rounded-xl border border-ilhas-gray/60 flex items-center justify-center px-4 hover-lift">
-                  <span class="font-display text-lg text-ilhas-text/40">Empresa 2</span>
-                </div>
-                <div class="flex-shrink-0 w-32 h-16 bg-white rounded-xl border border-ilhas-gray/60 flex items-center justify-center px-4 hover-lift">
-                  <span class="font-display text-lg text-ilhas-text/40">Empresa 3</span>
-                </div>
-                <div class="flex-shrink-0 w-32 h-16 bg-white rounded-xl border border-ilhas-gray/60 flex items-center justify-center px-4 hover-lift">
-                  <span class="font-display text-lg text-ilhas-text/40">Empresa 4</span>
-                </div>
-                <div class="flex-shrink-0 w-32 h-16 bg-white rounded-xl border border-ilhas-gray/60 flex items-center justify-center px-4 hover-lift">
-                  <span class="font-display text-lg text-ilhas-text/40">Empresa 5</span>
-                </div>
-                <div class="flex-shrink-0 w-32 h-16 bg-white rounded-xl border border-ilhas-gray/60 flex items-center justify-center px-4 hover-lift">
-                  <span class="font-display text-lg text-ilhas-text/40">Empresa 6</span>
-                </div>
-                <div class="flex-shrink-0 w-32 h-16 bg-white rounded-xl border border-ilhas-gray/60 flex items-center justify-center px-4 hover-lift">
-                  <span class="font-display text-lg text-ilhas-text/40">Empresa 7</span>
-                </div>
-                <div class="flex-shrink-0 w-32 h-16 bg-white rounded-xl border border-ilhas-gray/60 flex items-center justify-center px-4 hover-lift">
-                  <span class="font-display text-lg text-ilhas-text/40">Empresa 8</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Testimonial placeholders -->
-        <div class="grid md:grid-cols-2 gap-6">
-          <div class="bg-white rounded-2xl border border-ilhas-gray/70 p-6 hover-lift" data-aos="fade-right">
-            <div class="flex items-start gap-4 mb-3">
-              <div class="w-12 h-12 rounded-full bg-gradient-to-tr from-ilhas-gradientStart to-ilhas-primary flex items-center justify-center text-white font-semibold">
-                M
-              </div>
-              <div>
-                <p class="font-semibold text-ilhas-dark">María González</p>
-                <p class="text-xs text-ilhas-text/60">Fundadora, Estudio Creativo</p>
-              </div>
-            </div>
-            <p class="text-sm text-ilhas-text/80 italic">
-              "Antes gastaba más de lo que debía y no sabía por qué. Ahora tengo mi modelo financiero, sé exactamente cuánto puedo invertir y mi flujo nunca ha sido tan claro."
-            </p>
-          </div>
-
-          <div class="bg-white rounded-2xl border border-ilhas-gray/70 p-6 hover-lift" data-aos="fade-left">
-            <div class="flex items-start gap-4 mb-3">
-              <div class="w-12 h-12 rounded-full bg-gradient-to-tr from-ilhas-gradientMid to-ilhas-primary flex items-center justify-center text-white font-semibold">
-                C
-              </div>
-              <div>
-                <p class="font-semibold text-ilhas-dark">Carlos Ramírez</p>
-                <p class="text-xs text-ilhas-text/60">Desarrollador Inmobiliario</p>
-              </div>
-            </div>
-            <p class="text-sm text-ilhas-text/80 italic">
-              "Evaluaba proyectos 'a ojo'. Ahora modelo escenarios, sensibilidad y riesgos como un CFO. Mis inversionistas confían más en mis números que en mi palabra."
-            </p>
-          </div>
-        </div>
       </div>
     </section>
 
@@ -971,67 +780,7 @@
           </p>
         </div>
 
-        <!-- Video de Fundadores (Principal) -->
         <div class="max-w-4xl mx-auto mb-12" data-aos="zoom-in">
-          <div class="relative bg-white rounded-3xl border border-ilhas-gray/70 shadow-soft overflow-hidden hover-lift group">
-            <!-- Aspect ratio container 16:9 -->
-            <div class="aspect-video relative">
-              <!-- Video Placeholder -->
-              <div class="absolute inset-0 flex flex-col items-center justify-center bg-gradient-to-br from-slate-50 via-white to-ilhas-light/50 p-8">
-                <!-- Avatares de los fundadores -->
-                <div class="flex items-center gap-4 mb-6">
-                  <div class="w-16 h-16 rounded-full bg-gradient-to-tr from-ilhas-gradientStart to-ilhas-primary flex items-center justify-center border-4 border-white shadow-lg">
-                    <span class="text-white text-2xl font-bold">F</span>
-                  </div>
-                  <div class="w-20 h-20 rounded-full bg-gradient-to-tr from-ilhas-gradientMid to-ilhas-primaryDark flex items-center justify-center border-4 border-white shadow-lg">
-                    <span class="text-white text-2xl font-bold">J</span>
-                  </div>
-                </div>
-
-                <!-- Play button grande -->
-                <button 
-                  class="w-24 h-24 rounded-full bg-ilhas-primary hover:bg-ilhas-primaryDark flex items-center justify-center mb-6 hover:scale-110 transition-all duration-300 shadow-lg hover:shadow-glow"
-                  onclick="alert('Video próximamente.\n\nMientras tanto, agenda una llamada de 15 min con nosotros para conocer si el bootcamp es para ti.')"
-                >
-                  <svg class="w-10 h-10 text-white ml-1" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M8 5v14l11-7z"/>
-                  </svg>
-                </button>
-
-                <div class="text-center max-w-md">
-                  <p class="font-display text-2xl text-ilhas-dark mb-2">
-                    Nuestra historia
-                  </p>
-                  <p class="text-ilhas-text/70 text-sm mb-4">
-                    Cómo combinamos 40 años de finanzas y 12 años de tecnología para ayudarte a dominar los números de tu negocio
-                  </p>
-                  <div class="flex items-center justify-center gap-4 text-ilhas-text/60 text-xs">
-                    <span class="flex items-center gap-1">
-                      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                      </svg>
-                      3:15 min
-                    </span>
-                    <span>•</span>
-                    <span class="px-2 py-1 rounded-full bg-amber-100 text-amber-700 font-medium">En producción</span>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Cuando tengas el video real, descomenta y reemplaza URL -->
-              <!--
-              <iframe 
-                class="absolute inset-0 w-full h-full"
-                src="https://www.youtube.com/embed/TU_VIDEO_ID" 
-                title="Historia de los fundadores de Ilhas"
-                frameborder="0" 
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                allowfullscreen
-              ></iframe>
-              -->
-            </div>
-          </div>
-
           <!-- CTA debajo del video -->
           <div class="text-center mt-6">
             <p class="text-sm text-ilhas-text/70 mb-3">
@@ -1276,18 +1025,6 @@
       once: true,
       offset: 100
     });
-
-    // Simulación de countdown de cupos (opcional)
-    let spotsLeft = 7;
-    const spotsElement = document.getElementById('spots-left');
-    
-    // Simular cambio cada 30 segundos (puedes remover esto si quieres estático)
-    setInterval(() => {
-      if (spotsLeft > 3) {
-        spotsLeft--;
-        spotsElement.textContent = spotsLeft;
-      }
-    }, 30000);
   </script>
 </body>
 </html>
