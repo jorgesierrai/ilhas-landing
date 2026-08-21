@@ -1,0 +1,112 @@
+/* ==========================================================================
+   Ilhas · tokens de marca
+   Fuente: docs/marca/02-colores.md y 03-tipografia.md
+   No inventes colores ni tipografías fuera de este archivo.
+   Cópialo a src/styles/tokens.css e impórtalo una sola vez.
+   ========================================================================== */
+
+:root {
+  /* --- Color de marca ---------------------------------------------------- */
+  --ilhas-primary:      #7A3CFF;  /* botones, links, acentos, íconos */
+  --ilhas-primary-dark: #622ECC;  /* hover / estado activo */
+
+  /* --- Neutros ----------------------------------------------------------- */
+  --ilhas-dark:  #0E0E0F;  /* tinta: titulares y fondos oscuros. NUNCA #000 */
+  --ilhas-text:  #3C3C44;  /* cuerpo sobre fondo claro */
+  --ilhas-light: #F8FAFF;  /* fondo por defecto (blanco azulado) */
+  --ilhas-gray:  #E8ECF2;  /* bordes, divisores, superficies sutiles */
+  --ilhas-white: #FFFFFF;  /* tarjetas y superficies */
+
+  /* --- Paradas del gradiente --------------------------------------------- */
+  --ilhas-grad-start: #55E8FF;  /* cian */
+  --ilhas-grad-mid:   #8E5BFF;  /* morado */
+  --ilhas-grad-end:   #A14BFF;  /* violeta */
+
+  /* --- Gradiente de marca ------------------------------------------------ */
+  /* Canónico: diagonal abajo-izq → arriba-der. Es la dirección del logo. */
+  --ilhas-gradient: linear-gradient(
+    to top right,
+    var(--ilhas-grad-start) 0%,
+    var(--ilhas-grad-mid) 50%,
+    var(--ilhas-grad-end) 100%
+  );
+
+  /* Variante horizontal para barras y banners full-width: pasa por el primary */
+  --ilhas-gradient-h: linear-gradient(
+    to right,
+    var(--ilhas-grad-start) 0%,
+    var(--ilhas-primary) 50%,
+    var(--ilhas-grad-end) 100%
+  );
+
+  /* --- Opacidades de uso frecuente --------------------------------------- */
+  --ilhas-primary-10: rgba(122, 60, 255, 0.10);  /* chips, fondos de ícono */
+  --ilhas-primary-20: rgba(122, 60, 255, 0.20);  /* halos y blobs con blur */
+
+  /* --- Sombras ----------------------------------------------------------- */
+  --ilhas-shadow-soft:  0 18px 45px rgba(15, 23, 42, 0.06);
+  --ilhas-shadow-glow:  0 0 40px rgba(122, 60, 255, 0.30);
+  --ilhas-shadow-hover: 0 0 40px rgba(122, 60, 255, 0.50);
+
+  /* --- Tipografía -------------------------------------------------------- */
+  /* Space Grotesk 600 → display, titulares, números grandes.
+     Inter 400/500/600 → cuerpo, etiquetas, interfaz.
+     Solo estas dos. Self-hosted en public/assets/fonts/. */
+  --ilhas-font-display: "Space Grotesk", system-ui, sans-serif;
+  --ilhas-font-body:    "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  --ilhas-tracking-display: -0.02em;  /* titulares */
+  --ilhas-tracking-wordmark: -0.8px;  /* solo el wordmark del logo */
+
+  /* --- Escala tipográfica ------------------------------------------------ */
+  --ilhas-fs-display: clamp(3rem, 6vw, 5rem);        /* H1 hero */
+  --ilhas-fs-h2:      clamp(1.875rem, 4vw, 2.25rem); /* sección */
+  --ilhas-fs-h3:      1.25rem;                       /* tarjeta */
+  --ilhas-fs-lead:    1.25rem;                       /* bajo el H1 */
+  --ilhas-fs-body:    1.125rem;                      /* cuerpo. Mínimo 1rem */
+  --ilhas-fs-small:   0.875rem;                      /* etiquetas y kickers */
+  --ilhas-fs-stat:    clamp(1.875rem, 4vw, 3rem);    /* métricas */
+
+  --ilhas-lh-display: 1.05;
+  --ilhas-lh-body:    1.6;
+  --ilhas-measure:    68ch;  /* medida de línea del cuerpo */
+
+  /* --- Layout ------------------------------------------------------------ */
+  --ilhas-radius-card: 1.25rem;  /* 20px */
+  --ilhas-radius-pill: 999px;    /* botones */
+  --ilhas-container:   1140px;
+  --ilhas-gutter:      clamp(1.25rem, 4vw, 3rem);
+  --ilhas-section-y:   clamp(4rem, 9vw, 7.5rem);  /* aire generoso: es la marca */
+}
+
+/* ==========================================================================
+   Reglas de uso (no son decoración, son la marca)
+
+   FONDO      --ilhas-light por defecto; secciones alternas en blanco puro.
+              Mucho espacio negativo.
+   TEXTO      Titulares en --ilhas-dark, cuerpo en --ilhas-text.
+              Sobre fondo oscuro o gradiente, texto blanco.
+   ACENTO     --ilhas-primary para botones, links, íconos y números clave.
+              Un acento morado por bloque, no más.
+   GRADIENTE  Solo en momentos de marca: el isotipo, el hero, el CTA de cierre,
+              o UNA palabra clave del titular. Nunca de fondo a todo:
+              pierde el efecto premium.
+   SUPERFICIE Tarjetas blancas, borde --ilhas-gray, --ilhas-shadow-soft.
+
+   ACCESIBILIDAD
+   - Para texto pequeño usa --ilhas-text o --ilhas-dark sólidos.
+     Evita grises al 60–70% de opacidad en cuerpos largos: quedan al límite de AA.
+   - Botón --ilhas-primary con texto blanco: contraste suficiente.
+   - No uses cian ni violeta claro del gradiente como color de texto funcional
+     sobre blanco. Solo acentos grandes o decorativos.
+   - Sobre gradiente, texto blanco, y verifica que no caiga sobre la zona cian
+     (la más clara).
+
+   PROHIBIDO
+   - Inventar colores fuera de esta paleta (verdes, naranjas, etc.).
+   - Alterar las paradas o la dirección del gradiente del logo.
+   - Usar negro puro #000. La tinta de marca es #0E0E0F.
+   - Space Grotesk en párrafos largos.
+   - Mezclar otras tipografías.
+   - Titulares en MAYÚSCULAS completas (salvo kickers y etiquetas cortas).
+   ========================================================================== */
