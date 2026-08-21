@@ -1,12 +1,181 @@
 ---
 import Base from "../layouts/Base.astro";
+
+// Misma tabla de linaje que docs/02-paginas.md ya documenta para esta página
+// (Biblia de Producto §2). Aquí se lee como portafolio de soluciones para
+// empresas, no como credibilidad de un curso de finanzas — por eso el copy
+// de contexto es distinto al del home, aunque los hechos son los mismos.
+const casos = [
+  {
+    producto: "Stampay",
+    resolvio:
+      "Conciliación bancaria automática (SAT/CFDI ↔ movimientos). Eliminó un proceso manual de 2–3 días por cierre.",
+  },
+  {
+    producto: "Nomcont",
+    resolvio:
+      "Reemplazó hojas de cálculo dispersas por un ledger estructurado y auditable.",
+  },
+  {
+    producto: "Cometa · AI Data Concierge",
+    resolvio:
+      "Interfaz en lenguaje natural sobre la base financiera: “¿cuánto entró hoy?” → respuesta al instante.",
+  },
+  {
+    producto: "Nomada",
+    resolvio: "HRIS y nómina construidos desde cero.",
+  },
+  {
+    producto: "Paystand",
+    resolvio:
+      "AR/AP en pagos B2B: Smart Lockbox y Spend Card, dos productos construidos de cero a uno.",
+  },
+  {
+    producto: "Factumizer",
+    resolvio:
+      "Automatización de facturas CFDI, de idea a producción en menos de una semana.",
+  },
+];
+
+const diagnosticoUrl = "mailto:hola@ilhas.ai?subject=Quiero%20un%20diagn%C3%B3stico";
 ---
 
 <Base
   title="Soluciones"
-  description="Implementación de IA con criterio de producto, aplicada a tu empresa."
+  description="Soluciones de IA que ahorran tiempo y mueven la aguja, en cualquier área de tu empresa. Sin precio genérico: un diagnóstico real de tu caso."
 >
-  <p class="container section-y">
-    Página en construcción.
-  </p>
+  <article>
+    <!-- 01 · Qué resolvemos -->
+    <section class="section-y-sm">
+      <div class="container prose">
+        <h1>
+          Soluciones de IA que ahorran tiempo y mueven la aguja, en
+          cualquier área de tu empresa.
+        </h1>
+        <p class="lead">
+          No somos una agencia de "implementación de IA". Es criterio de
+          producto, aplicado a un proceso que hoy se hace a mano.
+        </p>
+      </div>
+    </section>
+
+    <!-- 02 · Cómo trabajamos -->
+    <section class="section-y-sm bg-white">
+      <div class="container prose">
+        <p class="kicker">Cómo trabajamos</p>
+        <h2>El mismo método, apuntado a tu empresa.</h2>
+        <p>
+          Usamos el Método Ilhas —Identificar, Levantamiento, Hilar,
+          Accionar, Sistematizar— apuntado a tu empresa en vez de a una
+          persona. Mismo sistema, mismo rigor.
+        </p>
+        <p class="link-mt">
+          <a href="/metodo">Conoce el método completo →</a>
+        </p>
+      </div>
+    </section>
+
+    <!-- 03 · Casos -->
+    <section class="section-y-sm">
+      <div class="container">
+        <div class="prose">
+          <p class="kicker">Casos</p>
+          <h2>Esto ya lo construimos para empresas como la tuya.</h2>
+        </div>
+
+        <ul class="casos">
+          {
+            casos.map((caso) => (
+              <li>
+                <p class="casos__producto">{caso.producto}</p>
+                <p class="casos__resolvio">{caso.resolvio}</p>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </section>
+
+    <!-- 04 · CTA de diagnóstico -->
+    <section class="section-y bg-white">
+      <div class="container prose cta-diagnostico">
+        <h2>Cuéntanos qué proceso quieres resolver.</h2>
+        <p class="lead">
+          Sin propuesta enlatada: un diagnóstico real de tu caso, antes de
+          cualquier conversación de precio.
+        </p>
+        <a href={diagnosticoUrl} class="btn btn-primary">
+          Agendar un diagnóstico
+        </a>
+      </div>
+    </section>
+  </article>
 </Base>
+
+<style>
+  .link-mt {
+    margin-top: 1.5rem;
+  }
+
+  .link-mt a {
+    font-family: var(--ilhas-font-body);
+    font-weight: 600;
+    font-size: var(--ilhas-fs-small);
+    color: var(--ilhas-primary);
+    text-decoration: none;
+  }
+
+  /* --- 03 · casos --- */
+  .casos {
+    list-style: none;
+    display: grid;
+    gap: 1.25rem;
+    margin-top: 1.75rem;
+  }
+
+  .casos li {
+    padding: 1.5rem;
+    background: var(--ilhas-white);
+    border: 1px solid var(--ilhas-gray);
+    border-radius: var(--ilhas-radius-card);
+    box-shadow: var(--ilhas-shadow-soft);
+  }
+
+  .casos__producto {
+    font-family: var(--ilhas-font-display);
+    font-weight: 600;
+    color: var(--ilhas-dark);
+  }
+
+  .casos__resolvio {
+    margin-top: 0.5rem;
+    font-size: 0.9375rem;
+    color: var(--ilhas-text);
+  }
+
+  @media (min-width: 640px) {
+    .casos {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .casos {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+
+  /* --- 04 · CTA de diagnóstico --- */
+  .cta-diagnostico {
+    text-align: center;
+  }
+
+  .cta-diagnostico h2,
+  .cta-diagnostico .lead {
+    margin-inline: auto;
+  }
+
+  .cta-diagnostico .btn {
+    margin-top: 1.75rem;
+  }
+</style>

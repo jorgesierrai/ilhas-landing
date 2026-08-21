@@ -1,0 +1,110 @@
+---
+// Tarjeta individual para /nosotros — docs/02-paginas.md: "tarjetas
+// individuales, una por persona, presentadas como participantes de Ilhas,
+// no como dúo". Cada persona trae su propia foto, rol y trayectoria; los
+// números se pasan ya atribuidos (nunca sumados entre personas).
+interface Atribucion {
+  dato: string;
+  contexto: string;
+}
+
+interface Props {
+  nombre: string;
+  rol: string;
+  trayectoria: string;
+  atribuciones: Atribucion[];
+  fotoSrc: string;
+  fotoAlt: string;
+}
+
+const { nombre, rol, trayectoria, atribuciones, fotoSrc, fotoAlt } =
+  Astro.props;
+---
+
+<article class="tarjeta-persona">
+  <img src={fotoSrc} alt={fotoAlt} width="320" height="400" />
+  <div class="tarjeta-persona__body">
+    <p class="tarjeta-persona__nombre">{nombre}</p>
+    <p class="tarjeta-persona__rol">{rol}</p>
+    <p class="tarjeta-persona__trayectoria">{trayectoria}</p>
+    <ul class="tarjeta-persona__atribuciones">
+      {
+        atribuciones.map((a) => (
+          <li>
+            <span class="tarjeta-persona__dato">{a.dato}</span>
+            <span class="tarjeta-persona__contexto">{a.contexto}</span>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</article>
+
+<style>
+  .tarjeta-persona {
+    display: flex;
+    flex-direction: column;
+    background: var(--ilhas-white);
+    border: 1px solid var(--ilhas-gray);
+    border-radius: var(--ilhas-radius-card);
+    overflow: hidden;
+    box-shadow: var(--ilhas-shadow-soft);
+  }
+
+  .tarjeta-persona img {
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+  }
+
+  .tarjeta-persona__body {
+    padding: 1.5rem;
+  }
+
+  .tarjeta-persona__nombre {
+    font-family: var(--ilhas-font-display);
+    font-weight: 600;
+    font-size: 1.25rem;
+    color: var(--ilhas-dark);
+  }
+
+  .tarjeta-persona__rol {
+    margin-top: 0.25rem;
+    font-family: var(--ilhas-font-body);
+    font-weight: 500;
+    font-size: var(--ilhas-fs-small);
+    color: var(--ilhas-primary);
+  }
+
+  .tarjeta-persona__trayectoria {
+    margin-top: 1rem;
+    font-size: 0.9375rem;
+    color: var(--ilhas-text);
+  }
+
+  .tarjeta-persona__atribuciones {
+    list-style: none;
+    display: grid;
+    gap: 0.5rem;
+    margin-top: 1.25rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--ilhas-gray);
+  }
+
+  .tarjeta-persona__atribuciones li {
+    display: flex;
+    gap: 0.5rem;
+    font-size: 0.8125rem;
+  }
+
+  .tarjeta-persona__dato {
+    font-family: var(--ilhas-font-display);
+    font-weight: 600;
+    color: var(--ilhas-dark);
+    flex-shrink: 0;
+  }
+
+  .tarjeta-persona__contexto {
+    color: var(--ilhas-text);
+  }
+</style>
