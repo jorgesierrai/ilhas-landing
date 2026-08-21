@@ -147,6 +147,10 @@ a:hover {
   padding-inline: var(--ilhas-gutter);
 }
 
+.section-y {
+  padding-block: var(--ilhas-section-y);
+}
+
 .visually-hidden {
   position: absolute;
   width: 1px;
