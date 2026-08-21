@@ -6,12 +6,16 @@
 interface Props {
   heading: string;
   lead?: string;
+  /** Tratamiento más grande: para el home, donde este es "el bloque más
+   * importante del sitio" (docs/02-paginas.md). No lo uses en más de un
+   * lugar por página. */
+  prominent?: boolean;
 }
 
-const { heading, lead } = Astro.props;
+const { heading, lead, prominent = false } = Astro.props;
 ---
 
-<div class="bifurcacion">
+<div class:list={["bifurcacion", { "bifurcacion--prominent": prominent }]}>
   <h2>{heading}</h2>
   {lead && <p class="bifurcacion__lead">{lead}</p>}
 
@@ -114,5 +118,22 @@ const { heading, lead } = Astro.props;
     .bifurcacion__cards {
       grid-template-columns: 1fr;
     }
+  }
+
+  /* Tratamiento prominente: tarjetas más grandes, con acento de marca
+     arriba. Reservado para el bloque de bifurcación del home. */
+  .bifurcacion--prominent h2 {
+    font-size: var(--ilhas-fs-h2);
+    max-width: 28ch;
+  }
+
+  .bifurcacion--prominent .bifurcacion__card {
+    padding: 2.5rem;
+    border-top: 4px solid transparent;
+    border-image: var(--ilhas-gradient-h) 1;
+  }
+
+  .bifurcacion--prominent .bifurcacion__title {
+    font-size: 1.75rem;
   }
 </style>

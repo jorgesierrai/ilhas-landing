@@ -151,6 +151,13 @@ a:hover {
   padding-block: var(--ilhas-section-y);
 }
 
+/* Espaciado compacto: para bloques que deben quedar cortos a propósito
+   (p. ej. el home, donde la bifurcación necesita llegar cerca del
+   pliegue). No es el ritmo por defecto — úsalo con intención. */
+.section-y-sm {
+  padding-block: clamp(1.5rem, 3vw, 2.5rem);
+}
+
 /* Tabla que scrollea horizontal en vez de romper el ancho del body.
    El contenedor recorta y da el scroll; la tabla adentro puede ser
    más ancha que la pantalla sin empujar el layout. */
