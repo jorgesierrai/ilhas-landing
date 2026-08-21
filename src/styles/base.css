@@ -1,0 +1,205 @@
+/* ==========================================================================
+   Ilhas · base.css
+   Reset + tipografía base + utilidades mínimas.
+   Depende de los tokens en ./tokens.css (impórtalo primero).
+   ========================================================================== */
+
+/* --- Fuentes, self-hosted (docs/06-stack-y-seguridad.md) ------------------ */
+@font-face {
+  font-family: "Space Grotesk";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("/assets/fonts/space-grotesk-600.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/assets/fonts/inter-400.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("/assets/fonts/inter-500.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("/assets/fonts/inter-600.woff2") format("woff2");
+}
+
+/* --- Reset ------------------------------------------------------------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  line-height: var(--ilhas-lh-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+img,
+picture,
+svg,
+video {
+  display: block;
+  max-width: 100%;
+}
+
+input,
+button,
+textarea,
+select {
+  font: inherit;
+  color: inherit;
+}
+
+p,
+h1,
+h2,
+h3,
+h4 {
+  overflow-wrap: break-word;
+}
+
+/* --- Tipografía base ----------------------------------------------------- */
+body {
+  font-family: var(--ilhas-font-body);
+  font-weight: 400;
+  font-size: var(--ilhas-fs-body);
+  color: var(--ilhas-text);
+  background: var(--ilhas-light);
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--ilhas-font-display);
+  font-weight: 600;
+  color: var(--ilhas-dark);
+  line-height: var(--ilhas-lh-display);
+  letter-spacing: var(--ilhas-tracking-display);
+}
+
+h1 {
+  font-size: var(--ilhas-fs-display);
+}
+
+h2 {
+  font-size: var(--ilhas-fs-h2);
+}
+
+h3,
+h4 {
+  font-size: var(--ilhas-fs-h3);
+}
+
+p {
+  max-width: var(--ilhas-measure);
+}
+
+a {
+  color: var(--ilhas-primary);
+}
+
+a:hover {
+  color: var(--ilhas-primary-dark);
+}
+
+/* --- Foco visible (accesibilidad, sin excepción) -------------------------- */
+:focus-visible {
+  outline: 2px solid var(--ilhas-primary);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* --- Utilidades mínimas --------------------------------------------------- */
+.container {
+  width: 100%;
+  max-width: var(--ilhas-container);
+  margin-inline: auto;
+  padding-inline: var(--ilhas-gutter);
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.skip-link {
+  position: absolute;
+  top: -100%;
+  left: 1rem;
+  z-index: 100;
+  padding: 0.75rem 1.25rem;
+  background: var(--ilhas-dark);
+  color: var(--ilhas-white);
+  border-radius: 0.5rem;
+  font-family: var(--ilhas-font-body);
+  font-weight: 500;
+  text-decoration: none;
+  transition: top 0.15s ease;
+}
+
+.skip-link:focus {
+  top: 1rem;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  border-radius: var(--ilhas-radius-pill);
+  font-family: var(--ilhas-font-body);
+  font-weight: 600;
+  font-size: var(--ilhas-fs-small);
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+}
+
+.btn-primary {
+  background: var(--ilhas-gradient-h);
+  color: var(--ilhas-white);
+  box-shadow: var(--ilhas-shadow-soft);
+}
+
+.btn-primary:hover {
+  box-shadow: var(--ilhas-shadow-hover);
+  color: var(--ilhas-white);
+}
