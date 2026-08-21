@@ -1,12 +1,337 @@
 ---
 import Base from "../layouts/Base.astro";
+
+const puedes = [
+  "Análisis de estados financieros con razones",
+  "Flujo de efectivo",
+  "Modelos y proyecciones",
+  "Presupuesto y control de gestión",
+  "Conciliaciones",
+  "Dashboard sin licencias caras",
+  "Valuación, TIR y VAN",
+  "Reportes que se actualizan solos",
+];
+
+const esParaTi = [
+  "Eres analista, contador, controller, consultor, auditor, tesorero o FP&A — en una empresa o por tu cuenta.",
+  "Ya sabes sacar un ratio, armar un estado, mover un Excel.",
+  "Quieres usar la IA sobre un fundamento correcto, no solo prompts sueltos.",
+];
+
+const noEsParaTi = [
+  "Buscas que la IA piense por ti, en vez de ejecutar lo que tú ya decidiste.",
+  "Tu trabajo del día a día no pasa por números.",
+  "Buscas algo gratis e instantáneo, sin poner el trabajo.",
+];
+
+const webinarUrl =
+  "https://eventos.ilhas.ai/?utm_source=sitio&utm_medium=web&utm_campaign=webinar&utm_content=finanzas";
+
+const faqs = [
+  {
+    pregunta:
+      "¿Cómo se trata la confidencialidad de mis datos si uso IA para analizar información financiera?",
+    respuesta:
+      "Trabajas con tus propios datos, en las herramientas que tú ya usas o autorizas en tu empresa — nunca los subes a un sistema nuestro. En el programa te enseñamos cómo anonimizar cifras sensibles, trabajar con muestras cuando el dato lo exige, y qué configuraciones de privacidad activar en cada herramienta de IA.",
+  },
+  {
+    pregunta: "¿Necesito licencia de Office para el programa? Uso Gmail.",
+    respuesta:
+      "No. Trabajas con lo que ya tienes: Google Sheets, Excel si lo usas, y las versiones gratuitas o de bajo costo de las herramientas de IA que enseñamos. No necesitas comprar ninguna licencia nueva para empezar.",
+  },
+  {
+    pregunta: "¿Cuál IA es mejor para finanzas: Claude, ChatGPT o Gemini?",
+    respuesta:
+      "La pregunta correcta no es cuál herramienta, es con qué criterio la usas. Te enseñamos a evaluar cualquier IA con el mismo método, y en el programa usamos las que mejor sirven para cada tarea financiera específica.",
+  },
+  {
+    pregunta: "¿Solo funciona con Excel, o también analiza PDF?",
+    respuesta:
+      "Trabajas con los formatos que ya manejas: Excel, Sheets, PDF. Te enseñamos cómo conectar cada uno según la herramienta de IA que uses, incluyendo tu Drive.",
+  },
+];
 ---
 
 <Base
   title="Ilhas Finanzas"
-  description="Finanzas con IA, de reportes a decisiones. Reserva tu lugar en el webinar."
+  description="Finanzas con IA, sobre un fundamento correcto. Reserva tu lugar en el webinar Finanzas con IA: de Reportes a Decisiones."
 >
-  <p class="container section-y">
-    Página en construcción.
-  </p>
+  <article>
+    <!-- 01 · El dolor, en sus palabras -->
+    <section class="section-y-sm">
+      <div class="container prose">
+        <h1>Sé de finanzas. Pero sientes que te estás quedando atrás.</h1>
+        <p class="lead">
+          Trabajas muchísimas horas en lo mismo de siempre —reportes,
+          cierres, conciliaciones— y nunca se acaba. Ya probaste ChatGPT y te
+          salió genérico.
+        </p>
+      </div>
+    </section>
+
+    <!-- 02 · Esto es lo que vas a poder hacer -->
+    <section class="section-y-sm bg-white">
+      <div class="container">
+        <h2>Esto es lo que vas a poder hacer</h2>
+        <ul class="puedes">
+          {puedes.map((item) => <li>{item}</li>)}
+        </ul>
+      </div>
+    </section>
+
+    <!-- 03 · Para quién es · para quién no -->
+    <section class="section-y-sm">
+      <div class="container">
+        <div class="filtro">
+          <div class="filtro__col">
+            <h3>Es para ti si…</h3>
+            <ul>
+              {esParaTi.map((item) => <li>{item}</li>)}
+            </ul>
+          </div>
+          <div class="filtro__col">
+            <h3>No es para ti si…</h3>
+            <ul>
+              {noEsParaTi.map((item) => <li>{item}</li>)}
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 04 · Quién lo enseña — la única página donde el 40+12 va junto -->
+    <section class="section-y-sm bg-white">
+      <div class="container">
+        <div class="prose">
+          <p class="kicker">Quién lo enseña</p>
+          <h2>De padre e hijo a tu consejo financiero-tecnológico.</h2>
+        </div>
+
+        <div class="maestros">
+          <div class="maestros__card">
+            <p class="maestros__nombre">Jorge Sierra (papá)</p>
+            <p class="maestros__dato">
+              40 años de criterio financiero. +2,000 empresas asesoradas en
+              América Latina.
+            </p>
+          </div>
+          <div class="maestros__card">
+            <p class="maestros__nombre">Jorge Sierra (hijo)</p>
+            <p class="maestros__dato">
+              12 años construyendo productos digitales. Productos que ha
+              liderado procesan más de 1,000 millones de pesos al mes.
+            </p>
+          </div>
+        </div>
+
+        <p class="maestros__resumen prose">
+          40 años de fundamento financiero, más 12 años construyendo con
+          IA — el método que aprendes en 6 semanas.
+        </p>
+      </div>
+    </section>
+
+    <!-- 05 · CTA único -->
+    <section class="section-y">
+      <div class="container prose cta-webinar">
+        <h2>Un webinar, un lugar.</h2>
+        <p class="lead">
+          <em>Finanzas con IA: de Reportes a Decisiones.</em> Método Ilhas: convierte
+          tus números en decisiones que mueven el negocio, sin ser técnico.
+        </p>
+        <a
+          href={webinarUrl}
+          class="btn btn-primary"
+          rel="noopener noreferrer"
+        >
+          Reservar mi lugar en el webinar
+        </a>
+      </div>
+    </section>
+
+    <!-- 06 · Preguntas que bloquean la compra -->
+    <section class="section-y-sm bg-white">
+      <div class="container prose">
+        <h2>Antes de reservar tu lugar</h2>
+        <div class="faq">
+          {
+            faqs.map((f) => (
+              <details class="faq__item">
+                <summary>{f.pregunta}</summary>
+                <p>{f.respuesta}</p>
+              </details>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+  </article>
 </Base>
+
+<style>
+  /* --- 02 · esto es lo que vas a poder hacer --- */
+  .puedes {
+    list-style: none;
+    display: grid;
+    gap: 0.75rem;
+    margin-top: 1.75rem;
+  }
+
+  .puedes li {
+    padding: 1rem 1.25rem;
+    background: var(--ilhas-light);
+    border: 1px solid var(--ilhas-gray);
+    border-radius: var(--ilhas-radius-card);
+    font-family: var(--ilhas-font-body);
+    font-weight: 500;
+    color: var(--ilhas-dark);
+  }
+
+  @media (min-width: 640px) {
+    .puedes {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .puedes {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+  }
+
+  /* --- 03 · para quién es / no es --- */
+  .filtro {
+    display: grid;
+    gap: 1.5rem;
+    max-width: var(--ilhas-measure);
+    margin-inline: auto;
+  }
+
+  .filtro__col h3 {
+    margin-bottom: 1rem;
+  }
+
+  .filtro__col ul {
+    list-style: none;
+    display: grid;
+    gap: 0.75rem;
+  }
+
+  .filtro__col li {
+    padding-left: 1.25rem;
+    position: relative;
+    color: var(--ilhas-text);
+  }
+
+  .filtro__col li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.55em;
+    width: 0.4rem;
+    height: 0.4rem;
+    border-radius: 50%;
+    background: var(--ilhas-primary);
+  }
+
+  @media (min-width: 768px) {
+    .filtro {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 3rem;
+    }
+  }
+
+  /* --- 04 · quién lo enseña --- */
+  .maestros {
+    display: grid;
+    gap: 1.5rem;
+    margin-top: 1.75rem;
+  }
+
+  .maestros__card {
+    padding: 1.5rem;
+    background: var(--ilhas-light);
+    border: 1px solid var(--ilhas-gray);
+    border-radius: var(--ilhas-radius-card);
+  }
+
+  .maestros__nombre {
+    font-family: var(--ilhas-font-display);
+    font-weight: 600;
+    color: var(--ilhas-dark);
+  }
+
+  .maestros__dato {
+    margin-top: 0.5rem;
+    color: var(--ilhas-text);
+  }
+
+  .maestros__resumen {
+    margin-top: 1.75rem;
+    font-family: var(--ilhas-font-body);
+    font-weight: 500;
+    color: var(--ilhas-dark);
+  }
+
+  @media (min-width: 640px) {
+    .maestros {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  /* --- 05 · CTA único --- */
+  .cta-webinar {
+    text-align: center;
+  }
+
+  .cta-webinar h2,
+  .cta-webinar .lead {
+    margin-inline: auto;
+  }
+
+  .cta-webinar .btn {
+    margin-top: 1.75rem;
+  }
+
+  /* --- 06 · FAQ --- */
+  .faq {
+    display: grid;
+    gap: 0.75rem;
+    margin-top: 1.75rem;
+  }
+
+  .faq__item {
+    padding: 1.25rem 1.5rem;
+    background: var(--ilhas-white);
+    border: 1px solid var(--ilhas-gray);
+    border-radius: var(--ilhas-radius-card);
+  }
+
+  .faq__item summary {
+    cursor: pointer;
+    font-family: var(--ilhas-font-body);
+    font-weight: 600;
+    color: var(--ilhas-dark);
+    list-style: none;
+  }
+
+  .faq__item summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .faq__item summary::after {
+    content: "+";
+    float: right;
+    font-family: var(--ilhas-font-display);
+    color: var(--ilhas-primary);
+  }
+
+  .faq__item[open] summary::after {
+    content: "–";
+  }
+
+  .faq__item p {
+    margin-top: 0.875rem;
+    color: var(--ilhas-text);
+  }
+</style>
