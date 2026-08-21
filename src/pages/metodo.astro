@@ -1,12 +1,374 @@
 ---
 import Base from "../layouts/Base.astro";
+import Bifurcacion from "../components/Bifurcacion.astro";
+
+const pasos = [
+  {
+    letra: "I",
+    paso: "Identificar",
+    oficio: "Discovery — instrumentar y hallar el dolor antes de construir",
+    trabajo: "Cómo se mueve el dinero y dónde se fuga",
+  },
+  {
+    letra: "L",
+    paso: "Levantamiento",
+    oficio: "Continuous Discovery — benchmark, cómo lo hacen los mejores",
+    trabajo: "Sales de tu taller y traes ese estándar",
+  },
+  {
+    letra: "H",
+    paso: "Hilar",
+    oficio: "Opportunity Solution Tree — enhebrar piezas en un resultado",
+    trabajo: "Costos, precios y márgenes en un solo criterio",
+  },
+  {
+    letra: "A",
+    paso: "Accionar",
+    oficio: "Assumption testing + POC — decidir con datos",
+    trabajo: "Decides con números: precio, contratar, invertir",
+  },
+  {
+    letra: "S",
+    paso: "Sistematizar",
+    oficio: "Delivery + automation — el motor que corre solo",
+    trabajo: "La IA como tu equipo, con reportes y alertas automáticos",
+  },
+];
+
+const principios = [
+  {
+    titulo: "Fundamento antes que automatización",
+    texto: "Primero el criterio. Automatizas después, no antes.",
+  },
+  {
+    titulo: "La IA es infraestructura, no un feature",
+    texto:
+      "No es un plus que agregas al final: es la base sobre la que construyes.",
+  },
+  {
+    titulo: "Workflows sobre roles",
+    texto:
+      "No organizas personas haciendo tareas. Organizas el proceso completo, de principio a fin.",
+  },
+  {
+    titulo: "Outcomes sobre outputs",
+    texto: "No mides cuánto produces. Mides qué cambia con lo que produces.",
+  },
+  {
+    titulo: "Builder mindset",
+    texto: "Construyes el sistema. No pides que alguien más te lo construya.",
+  },
+];
 ---
 
 <Base
   title="El Método"
-  description="I·L·H·A·S: el sistema con el que Ilhas convierte criterio en decisiones."
+  description="I·L·H·A·S: el sistema con el que Ilhas convierte criterio en decisiones, tomado del oficio de construir producto."
 >
-  <p class="container section-y">
-    Página en construcción.
-  </p>
+  <article>
+    <!-- 01 · La tesis -->
+    <section class="section-y">
+      <div class="container prose metodo-hero">
+        <p class="kicker">El método</p>
+        <h1>
+          El método no nació en las finanzas. Nació construyendo producto.
+        </h1>
+        <p class="lead">
+          Es un sistema para pensar y decidir, destilado de años construyendo
+          producto — y apuntado a tus números. Finanzas es la puerta de
+          entrada. El método es lo que te llevas.
+        </p>
+      </div>
+    </section>
+
+    <!-- 02 · El hueco -->
+    <section class="section-y bg-white">
+      <div class="container prose">
+        <p class="kicker">El hueco</p>
+        <h2>El 95% de los proyectos de IA fracasa — y no es la tecnología.</h2>
+        <p>
+          Fracasa por falta de criterio. Métele basura a un modelo y no
+          obtienes basura: obtienes basura al cuadrado — la IA no corrige un
+          mal razonamiento, lo amplifica. Por eso el fundamento importa más
+          ahora que antes, no menos.
+        </p>
+      </div>
+    </section>
+
+    <!-- 03 · El ángulo correcto -->
+    <section class="section-y">
+      <div class="container prose">
+        <p class="kicker">El ángulo correcto</p>
+        <h2>No es una metáfora. Es de dónde salió el método.</h2>
+        <p>
+          El Método Ilhas se parece al oficio de construir producto porque
+          nació ahí — no es una comparación, es el origen. No te estamos
+          comparando con nadie: te estamos entregando el mismo sistema que
+          usa quien diseña producto, apuntado a tu trabajo. Sin volverte
+          técnico. Sin esperar a que entre un equipo de ingeniería.
+        </p>
+      </div>
+    </section>
+
+    <!-- 04 · I·L·H·A·S paso por paso -->
+    <section class="section-y bg-white" id="pasos">
+      <div class="container">
+        <div class="prose">
+          <p class="kicker">El método, paso por paso</p>
+          <h2>Cinco pasos. Un mapeo directo a tu trabajo.</h2>
+          <p class="lead">
+            I·L·H·A·S no es un acrónimo bonito: cada letra es un paso real,
+            tomado del oficio de construir producto y apuntado a tus números.
+          </p>
+        </div>
+
+        <div class="table-scroll metodo-tabla">
+          <table>
+            <thead>
+              <tr>
+                <th scope="col">Paso</th>
+                <th scope="col">El oficio de producto</th>
+                <th scope="col">En tu trabajo</th>
+              </tr>
+            </thead>
+            <tbody>
+              {
+                pasos.map((p) => (
+                  <tr>
+                    <th scope="row">
+                      <span class="metodo-tabla__letra">{p.letra}</span>
+                      {p.paso}
+                    </th>
+                    <td>{p.oficio}</td>
+                    <td>{p.trabajo}</td>
+                  </tr>
+                ))
+              }
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- 05 · Hilar = Opportunity Solution Tree -->
+    <section class="section-y">
+      <div class="container prose">
+        <p class="kicker">El paso joya</p>
+        <h2>Hilar: el paso que nadie en &ldquo;finanzas con IA&rdquo; te cuenta.</h2>
+        <p>
+          Hilar es enhebrar piezas sueltas en una sola línea. En construcción
+          de producto eso tiene nombre — Opportunity Solution Tree: tomar
+          oportunidades dispersas y anclarlas a un solo resultado. Mismo
+          verbo, mismo trabajo. Aplicado a tus números, es lo que convierte
+          costos, precios y márgenes sueltos en un solo criterio de decisión.
+        </p>
+      </div>
+    </section>
+
+    <!-- 06 · Los cinco principios -->
+    <section class="section-y bg-white">
+      <div class="container">
+        <div class="prose">
+          <p class="kicker">Los principios</p>
+          <h2>Cinco principios que no se negocian.</h2>
+        </div>
+
+        <ol class="principios">
+          {
+            principios.map((p, i) => (
+              <li class="principios__item">
+                <span class="principios__num">{i + 1}</span>
+                <div>
+                  <p class="principios__titulo">{p.titulo}</p>
+                  <p class="principios__texto">{p.texto}</p>
+                </div>
+              </li>
+            ))
+          }
+        </ol>
+      </div>
+    </section>
+
+    <!-- 07 · No son prompts -->
+    <section class="section-y">
+      <div class="container prose">
+        <p class="kicker">Cómo se usa en la práctica</p>
+        <h2>No son prompts. Es reingeniería del trabajo.</h2>
+        <p>
+          Esto no es una colección de prompts que copias y pegas. El
+          organigrama clásico — personas asignadas a tareas — ya no es el
+          mapa correcto. El mapa correcto es el proceso: qué entra, qué sale,
+          y qué de eso genera dinero. Rediseñas eso, y la IA ejecuta la parte
+          que ya decidiste tú.
+        </p>
+      </div>
+    </section>
+
+    <!-- 08 · BYOS → BYOA -->
+    <section class="section-y bg-white">
+      <div class="container prose">
+        <p class="kicker">A dónde llegas</p>
+        <h2>
+          Llegas con tu hoja de cálculo. Sales con tu propio equipo de
+          agentes.
+        </h2>
+        <p>
+          Empiezas resolviendo con lo que ya tienes: un Excel, un Sheets, tu
+          criterio. Terminas con algo distinto — un ecosistema de agentes de
+          IA que trabaja para ti, diseñado por ti. No llegas a tu empresa a
+          pedir herramientas. Llegas con el sistema ya armado.
+        </p>
+      </div>
+    </section>
+
+    <!-- 09 · El barco y las islas -->
+    <section class="section-y">
+      <div class="container prose">
+        <p class="kicker">Por qué se llama Ilhas</p>
+        <h2>El método es el barco. Finanzas es la primera isla.</h2>
+        <p>
+          Ilhas significa islas, en portugués. El método —I·L·H·A·S— es el
+          barco: te lleva. Finanzas es la primera isla a la que apunta. El
+          método funciona en cualquier área donde haya números y decisiones
+          que tomar. Empezamos por finanzas.
+        </p>
+      </div>
+    </section>
+
+    <!-- 10 · Bifurcación -->
+    <section class="section-y bg-white">
+      <div class="container">
+        <Bifurcacion
+          heading="¿Lo aprendes, o lo implementamos por ti?"
+          lead="Dos maneras de recibir el mismo método. Elige tu carril."
+        />
+      </div>
+    </section>
+  </article>
 </Base>
+
+<style>
+  section > .container > h2,
+  .metodo-hero h1 {
+    margin-top: 0.75rem;
+    max-width: 30ch;
+  }
+
+  section .lead,
+  section > .container.prose > p:not(.kicker):not(.lead) {
+    margin-top: 1.25rem;
+  }
+
+  .metodo-hero h1 {
+    max-width: 22ch;
+  }
+
+  #pasos .prose {
+    text-align: center;
+    margin-bottom: 2.5rem;
+  }
+
+  #pasos .prose h2,
+  #pasos .prose .lead {
+    margin-inline: auto;
+  }
+
+  .metodo-tabla table {
+    background: var(--ilhas-white);
+    border-radius: var(--ilhas-radius-card);
+    overflow: hidden;
+  }
+
+  .metodo-tabla th,
+  .metodo-tabla td {
+    padding: 1rem 1.25rem;
+    text-align: left;
+    font-size: 0.9375rem;
+    border-bottom: 1px solid var(--ilhas-gray);
+    vertical-align: top;
+  }
+
+  .metodo-tabla thead th {
+    font-family: var(--ilhas-font-body);
+    font-weight: 600;
+    font-size: var(--ilhas-fs-small);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--ilhas-text);
+    background: var(--ilhas-light);
+  }
+
+  .metodo-tabla tbody th {
+    font-family: var(--ilhas-font-display);
+    font-weight: 600;
+    color: var(--ilhas-dark);
+    white-space: nowrap;
+  }
+
+  .metodo-tabla tbody td {
+    color: var(--ilhas-text);
+  }
+
+  .metodo-tabla tbody tr:last-child th,
+  .metodo-tabla tbody tr:last-child td {
+    border-bottom: none;
+  }
+
+  .metodo-tabla__letra {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.75rem;
+    height: 1.75rem;
+    margin-right: 0.5rem;
+    border-radius: 50%;
+    background: var(--ilhas-gradient);
+    color: var(--ilhas-white);
+    font-size: 0.8125rem;
+  }
+
+  .principios {
+    list-style: none;
+    display: grid;
+    gap: 1.5rem;
+    margin-top: 2rem;
+  }
+
+  .principios__item {
+    display: flex;
+    gap: 1.25rem;
+    align-items: flex-start;
+  }
+
+  .principios__num {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 50%;
+    background: var(--ilhas-primary-10);
+    color: var(--ilhas-primary);
+    font-family: var(--ilhas-font-display);
+    font-weight: 600;
+  }
+
+  .principios__titulo {
+    font-family: var(--ilhas-font-display);
+    font-weight: 600;
+    font-size: 1.125rem;
+    color: var(--ilhas-dark);
+  }
+
+  .principios__texto {
+    margin-top: 0.25rem;
+    color: var(--ilhas-text);
+  }
+
+  @media (min-width: 768px) {
+    .principios {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+</style>
