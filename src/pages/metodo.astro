@@ -322,7 +322,11 @@ const principios = [
     height: 1.75rem;
     margin-right: 0.5rem;
     border-radius: 50%;
-    background: var(--ilhas-gradient);
+    /* Sólido, no el gradiente: en un círculo de 28px no hay forma de
+       garantizar que el texto blanco no caiga sobre la zona cian —
+       la más clara — lo que rompe el contraste AA. Sólido es el uso
+       documentado para íconos en tokens.css. */
+    background: var(--ilhas-primary);
     color: var(--ilhas-white);
     font-size: 0.8125rem;
   }
