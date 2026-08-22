@@ -141,3 +141,11 @@ vite.config.ts.timestamp-*
 # Astro build output and generated types
 dist/
 .astro/
+
+# macOS
+.DS_Store
+
+# Material fuente sin procesar, no referenciado por ninguna página — las
+# versiones optimizadas que sí se usan viven en src/assets/.
+public/assets/fotos/
+public/assets/ilhas-iconografia/

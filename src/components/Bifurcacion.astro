@@ -20,7 +20,7 @@ const { heading, lead, prominent = false } = Astro.props;
   {lead && <p class="bifurcacion__lead">{lead}</p>}
 
   <div class="bifurcacion__cards">
-    <a href="/finanzas" class="bifurcacion__card">
+    <a href="/finanzas" class="bifurcacion__card reveal">
       <span class="bifurcacion__label">¿Quieres aprenderlo?</span>
       <span class="bifurcacion__title">Ilhas Finanzas</span>
       <span class="bifurcacion__desc"
@@ -29,7 +29,7 @@ const { heading, lead, prominent = false } = Astro.props;
       <span class="bifurcacion__link">Conocer Ilhas Finanzas →</span>
     </a>
 
-    <a href="/soluciones" class="bifurcacion__card">
+    <a href="/soluciones" class="bifurcacion__card reveal">
       <span class="bifurcacion__label"
         >¿Quieres que lo implementemos en tu empresa?</span
       >
@@ -128,9 +128,22 @@ const { heading, lead, prominent = false } = Astro.props;
   }
 
   .bifurcacion--prominent .bifurcacion__card {
+    /* border-image pinta los CUATRO lados (no solo el de arriba) y
+       desactiva border-radius por completo — dejaba las únicas dos
+       tarjetas cuadradas del sitio, con borde cian a la izquierda y
+       magenta a la derecha. La barra de acento va aparte, como
+       pseudo-elemento recortado por el radius real de la tarjeta. */
+    position: relative;
     padding: 2.5rem;
-    border-top: 4px solid transparent;
-    border-image: var(--ilhas-gradient-h) 1;
+    overflow: hidden;
+  }
+
+  .bifurcacion--prominent .bifurcacion__card::before {
+    content: "";
+    position: absolute;
+    inset: 0 0 auto 0;
+    height: 4px;
+    background: var(--ilhas-gradient-h);
   }
 
   .bifurcacion--prominent .bifurcacion__title {

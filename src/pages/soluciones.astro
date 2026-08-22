@@ -1,5 +1,7 @@
 ---
+import { Image } from "astro:assets";
 import Base from "../layouts/Base.astro";
+import iaCaminoIcon from "../assets/icons/ia-camino.png";
 
 // Misma tabla de linaje que docs/02-paginas.md ya documenta para esta página
 // (Biblia de Producto §2). Aquí se lee como portafolio de soluciones para
@@ -47,21 +49,30 @@ const diagnosticoUrl = "mailto:hola@ilhas.ai?subject=Quiero%20un%20diagn%C3%B3st
   <article>
     <!-- 01 · Qué resolvemos -->
     <section class="section-y-sm">
-      <div class="container prose">
-        <h1>
-          Soluciones de IA que ahorran tiempo y mueven la aguja, en
-          cualquier área de tu empresa.
-        </h1>
-        <p class="lead">
-          No somos una agencia de "implementación de IA". Es criterio de
-          producto, aplicado a un proceso que hoy se hace a mano.
-        </p>
+      <div class="container hero-split">
+        <div class="reveal">
+          <h1>
+            Soluciones de IA que ahorran tiempo y mueven{" "}
+            <span class="text-gradient">la aguja</span>, en cualquier área
+            de tu empresa.
+          </h1>
+          <p class="lead">
+            No somos una agencia de "implementación de IA". Es criterio de
+            producto, aplicado a un proceso que hoy se hace a mano.
+          </p>
+          <a href={diagnosticoUrl} class="btn btn-primary hero-split__cta">
+            Agendar un diagnóstico
+          </a>
+        </div>
+        <div class="hero-split__visual" aria-hidden="true">
+          <Image src={iaCaminoIcon} alt="" width="280" height="280" />
+        </div>
       </div>
     </section>
 
     <!-- 02 · Cómo trabajamos -->
     <section class="section-y-sm bg-white">
-      <div class="container prose">
+      <div class="container prose reveal">
         <p class="kicker">Cómo trabajamos</p>
         <h2>El mismo método, apuntado a tu empresa.</h2>
         <p>
@@ -76,9 +87,9 @@ const diagnosticoUrl = "mailto:hola@ilhas.ai?subject=Quiero%20un%20diagn%C3%B3st
     </section>
 
     <!-- 03 · Casos -->
-    <section class="section-y-sm">
+    <section class="section-y-sm bg-dark">
       <div class="container">
-        <div class="prose">
+        <div class="section-head reveal">
           <p class="kicker">Casos</p>
           <h2>Esto ya lo construimos para empresas como la tuya.</h2>
         </div>
@@ -86,7 +97,7 @@ const diagnosticoUrl = "mailto:hola@ilhas.ai?subject=Quiero%20un%20diagn%C3%B3st
         <ul class="casos">
           {
             casos.map((caso) => (
-              <li>
+              <li class="hover-lift reveal">
                 <p class="casos__producto">{caso.producto}</p>
                 <p class="casos__resolvio">{caso.resolvio}</p>
               </li>
@@ -98,7 +109,7 @@ const diagnosticoUrl = "mailto:hola@ilhas.ai?subject=Quiero%20un%20diagn%C3%B3st
 
     <!-- 04 · CTA de diagnóstico -->
     <section class="section-y bg-white">
-      <div class="container prose cta-diagnostico">
+      <div class="container prose prose-center cta-diagnostico reveal">
         <h2>Cuéntanos qué proceso quieres resolver.</h2>
         <p class="lead">
           Sin propuesta enlatada: un diagnóstico real de tu caso, antes de
@@ -113,6 +124,28 @@ const diagnosticoUrl = "mailto:hola@ilhas.ai?subject=Quiero%20un%20diagn%C3%B3st
 </Base>
 
 <style>
+  /* --- 01 · hero: página interior, H1 menor que el del home --- */
+  .hero-split h1 {
+    max-width: 16ch;
+    font-size: clamp(2rem, 3.5vw, 2.75rem);
+  }
+
+  .hero-split__cta {
+    margin-top: 1.75rem;
+  }
+
+  /* --- 02 · kicker/h2/párrafo, mismo patrón que /metodo: sin esto el
+     kicker, el titular y el párrafo quedan pegados entre sí. --- */
+  section > .container.prose > h2 {
+    margin-top: 0.75rem;
+    max-width: 30ch;
+  }
+
+  section .lead,
+  section > .container.prose > p:not(.kicker):not(.lead) {
+    margin-top: 1.25rem;
+  }
+
   .link-mt {
     margin-top: 1.5rem;
   }

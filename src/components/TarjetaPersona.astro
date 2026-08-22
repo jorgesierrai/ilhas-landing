@@ -3,6 +3,9 @@
 // individuales, una por persona, presentadas como participantes de Ilhas,
 // no como dúo". Cada persona trae su propia foto, rol y trayectoria; los
 // números se pasan ya atribuidos (nunca sumados entre personas).
+import { Image } from "astro:assets";
+import type { ImageMetadata } from "astro";
+
 interface Atribucion {
   dato: string;
   contexto: string;
@@ -13,16 +16,36 @@ interface Props {
   rol: string;
   trayectoria: string;
   atribuciones: Atribucion[];
-  fotoSrc: string;
-  fotoAlt: string;
+  /** Si no hay foto real todavía, se muestra un avatar con la inicial en
+   * vez de un <img> roto — nunca una foto inventada. Recortes de cuerpo
+   * completo sangrados por abajo (docs/05-assets.md): el sujeto llega al
+   * borde inferior de la imagen fuente, por eso el recorte de la tarjeta
+   * ancla arriba y deja que el cuerpo sangre por abajo en vez de flotar
+   * centrado con aire debajo. */
+  foto?: ImageMetadata;
+  fotoAlt?: string;
 }
 
-const { nombre, rol, trayectoria, atribuciones, fotoSrc, fotoAlt } =
+const { nombre, rol, trayectoria, atribuciones, foto, fotoAlt } =
   Astro.props;
+const inicial = nombre.trim().charAt(0).toUpperCase();
 ---
 
-<article class="tarjeta-persona">
-  <img src={fotoSrc} alt={fotoAlt} width="320" height="400" />
+<article class="tarjeta-persona hover-lift reveal">
+  {
+    foto ? (
+      <Image
+        src={foto}
+        alt={fotoAlt ?? nombre}
+        width={640}
+        class="tarjeta-persona__foto"
+      />
+    ) : (
+      <div class="tarjeta-persona__avatar" aria-hidden="true">
+        <span>{inicial}</span>
+      </div>
+    )
+  }
   <div class="tarjeta-persona__body">
     <p class="tarjeta-persona__nombre">{nombre}</p>
     <p class="tarjeta-persona__rol">{rol}</p>
@@ -51,10 +74,41 @@ const { nombre, rol, trayectoria, atribuciones, fotoSrc, fotoAlt } =
     box-shadow: var(--ilhas-shadow-soft);
   }
 
-  .tarjeta-persona img {
+  .tarjeta-persona__foto {
+    /* Sin height fijo en el <Image>: así Astro no pre-recorta el webp a
+       una caja centrada en build time (eso decapitaba a Jorge hijo — su
+       fuente es mucho más vertical que el 3:4 que pedíamos). El recorte
+       real lo hace este CSS, con la cabeza como ancla.
+       1:1, no 4:5 — en tarjetas anchas (grid de 2 columnas en un
+       contenedor de 1140px) un 4:5 producía fotos de ~700px de alto,
+       obligando a hacer scroll para ver la foto completa.
+       height:auto explícito — sin esto, el atributo HTML height que
+       Astro genera solo (para preservar la proporción real, muy alta,
+       de la foto fuente) queda como "definido" y le gana a
+       aspect-ratio, así que el navegador ignora por completo el 1:1 y
+       usa la altura original del archivo. */
     width: 100%;
-    aspect-ratio: 4 / 5;
+    height: auto;
+    aspect-ratio: 1 / 1;
     object-fit: cover;
+    object-position: 50% 8%;
+    background: var(--ilhas-light);
+  }
+
+  .tarjeta-persona__avatar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    background: var(--ilhas-gradient);
+  }
+
+  .tarjeta-persona__avatar span {
+    font-family: var(--ilhas-font-display);
+    font-weight: 600;
+    font-size: 4rem;
+    color: var(--ilhas-white);
   }
 
   .tarjeta-persona__body {
@@ -68,11 +122,18 @@ const { nombre, rol, trayectoria, atribuciones, fotoSrc, fotoAlt } =
     color: var(--ilhas-dark);
   }
 
+  /* Chip, no solo texto morado: las dos tarjetas dicen "Jorge Sierra" —
+     sin un rol que pese visualmente, el ojo lo lee como error de
+     copiar-pegar en vez de dos personas distintas. */
   .tarjeta-persona__rol {
-    margin-top: 0.25rem;
+    display: inline-block;
+    margin-top: 0.625rem;
+    padding: 0.25rem 0.75rem;
+    background: var(--ilhas-primary-10);
+    border-radius: var(--ilhas-radius-pill);
     font-family: var(--ilhas-font-body);
-    font-weight: 500;
-    font-size: var(--ilhas-fs-small);
+    font-weight: 600;
+    font-size: 0.875rem;
     color: var(--ilhas-primary);
   }
 
@@ -95,6 +156,20 @@ const { nombre, rol, trayectoria, atribuciones, fotoSrc, fotoAlt } =
     display: flex;
     gap: 0.5rem;
     font-size: 0.8125rem;
+  }
+
+  /* Bajo 480px, "dato" + "contexto" en fila produce sangría colgante fea
+     cuando el contexto envuelve a una segunda línea (queda indentado bajo
+     el dato, en vez de alinearse al borde). Apilados, cada uno ocupa el
+     ancho completo y no hay indentación que corregir. */
+  @media (max-width: 480px) {
+    .tarjeta-persona__atribuciones li {
+      display: block;
+    }
+
+    .tarjeta-persona__dato {
+      display: block;
+    }
   }
 
   .tarjeta-persona__dato {

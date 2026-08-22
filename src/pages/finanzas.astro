@@ -1,5 +1,35 @@
 ---
+import { Image } from "astro:assets";
 import Base from "../layouts/Base.astro";
+import TarjetaPersona from "../components/TarjetaPersona.astro";
+import relojIcon from "../assets/icons/reloj.png";
+import fotoPapa from "../assets/equipo/jorge-papa.png";
+import fotoHijo from "../assets/equipo/jorge-hijo.png";
+
+const maestros = [
+  {
+    nombre: "Jorge Sierra (papá)",
+    rol: "Finanzas corporativas",
+    trayectoria:
+      "40 años de criterio financiero, asesorando empresas en América Latina.",
+    atribuciones: [
+      { dato: "40 años", contexto: "de criterio financiero" },
+      { dato: "+2,000 empresas", contexto: "asesoradas en LATAM" },
+    ],
+    foto: fotoPapa,
+  },
+  {
+    nombre: "Jorge Sierra (hijo)",
+    rol: "Producto y tecnología",
+    trayectoria:
+      "12 años construyendo productos digitales sobre bases financieras reales.",
+    atribuciones: [
+      { dato: "12 años", contexto: "construyendo productos digitales" },
+      { dato: "+1,000 MDP/mes", contexto: "procesados por productos que ha liderado" },
+    ],
+    foto: fotoHijo,
+  },
+];
 
 const puedes = [
   "Análisis de estados financieros con razones",
@@ -59,22 +89,37 @@ const faqs = [
   <article>
     <!-- 01 · El dolor, en sus palabras -->
     <section class="section-y-sm">
-      <div class="container prose">
-        <h1>Sé de finanzas. Pero sientes que te estás quedando atrás.</h1>
-        <p class="lead">
-          Trabajas muchísimas horas en lo mismo de siempre —reportes,
-          cierres, conciliaciones— y nunca se acaba. Ya probaste ChatGPT y te
-          salió genérico.
-        </p>
+      <div class="container hero-split">
+        <div class="reveal">
+          <h1>
+            Sé de finanzas. Pero sientes que te estás{" "}
+            <span class="text-gradient">quedando atrás</span>.
+          </h1>
+          <p class="lead">
+            Trabajas muchísimas horas en lo mismo de siempre —reportes,
+            cierres, conciliaciones— y nunca se acaba. Ya probaste ChatGPT y
+            te salió genérico.
+          </p>
+          <a
+            href={webinarUrl}
+            class="btn btn-primary hero-split__cta"
+            rel="noopener noreferrer"
+          >
+            Reservar mi lugar en el webinar
+          </a>
+        </div>
+        <div class="hero-split__visual" aria-hidden="true">
+          <Image src={relojIcon} alt="" width="280" height="280" />
+        </div>
       </div>
     </section>
 
     <!-- 02 · Esto es lo que vas a poder hacer -->
     <section class="section-y-sm bg-white">
       <div class="container">
-        <h2>Esto es lo que vas a poder hacer</h2>
+        <h2 class="reveal">Esto es lo que vas a poder hacer</h2>
         <ul class="puedes">
-          {puedes.map((item) => <li>{item}</li>)}
+          {puedes.map((item) => <li class="card hover-lift reveal">{item}</li>)}
         </ul>
       </div>
     </section>
@@ -102,29 +147,26 @@ const faqs = [
     <!-- 04 · Quién lo enseña — la única página donde el 40+12 va junto -->
     <section class="section-y-sm bg-white">
       <div class="container">
-        <div class="prose">
+        <div class="prose reveal">
           <p class="kicker">Quién lo enseña</p>
           <h2>De padre e hijo a tu consejo financiero-tecnológico.</h2>
         </div>
 
         <div class="maestros">
-          <div class="maestros__card">
-            <p class="maestros__nombre">Jorge Sierra (papá)</p>
-            <p class="maestros__dato">
-              40 años de criterio financiero. +2,000 empresas asesoradas en
-              América Latina.
-            </p>
-          </div>
-          <div class="maestros__card">
-            <p class="maestros__nombre">Jorge Sierra (hijo)</p>
-            <p class="maestros__dato">
-              12 años construyendo productos digitales. Productos que ha
-              liderado procesan más de 1,000 millones de pesos al mes.
-            </p>
-          </div>
+          {
+            maestros.map((m) => (
+              <TarjetaPersona
+                nombre={m.nombre}
+                rol={m.rol}
+                trayectoria={m.trayectoria}
+                atribuciones={m.atribuciones}
+                foto={m.foto}
+              />
+            ))
+          }
         </div>
 
-        <p class="maestros__resumen prose">
+        <p class="maestros__resumen">
           40 años de fundamento financiero, más 12 años construyendo con
           IA — el método que aprendes en 6 semanas.
         </p>
@@ -132,8 +174,8 @@ const faqs = [
     </section>
 
     <!-- 05 · CTA único -->
-    <section class="section-y">
-      <div class="container prose cta-webinar">
+    <section class="section-y bg-dark">
+      <div class="container prose prose-center cta-webinar reveal">
         <h2>Un webinar, un lugar.</h2>
         <p class="lead">
           <em>Finanzas con IA: de Reportes a Decisiones.</em> Método Ilhas: convierte
@@ -141,7 +183,7 @@ const faqs = [
         </p>
         <a
           href={webinarUrl}
-          class="btn btn-primary"
+          class="btn btn-primary cta-webinar__btn"
           rel="noopener noreferrer"
         >
           Reservar mi lugar en el webinar
@@ -151,12 +193,12 @@ const faqs = [
 
     <!-- 06 · Preguntas que bloquean la compra -->
     <section class="section-y-sm bg-white">
-      <div class="container prose">
+      <div class="container prose reveal">
         <h2>Antes de reservar tu lugar</h2>
         <div class="faq">
           {
             faqs.map((f) => (
-              <details class="faq__item">
+              <details class="faq__item hover-lift">
                 <summary>{f.pregunta}</summary>
                 <p>{f.respuesta}</p>
               </details>
@@ -169,6 +211,16 @@ const faqs = [
 </Base>
 
 <style>
+  /* --- 01 · hero: página interior, H1 menor que el del home --- */
+  .hero-split h1 {
+    max-width: 16ch;
+    font-size: clamp(2rem, 3.5vw, 2.75rem);
+  }
+
+  .hero-split__cta {
+    margin-top: 1.75rem;
+  }
+
   /* --- 02 · esto es lo que vas a poder hacer --- */
   .puedes {
     list-style: none;
@@ -178,12 +230,10 @@ const faqs = [
   }
 
   .puedes li {
-    padding: 1rem 1.25rem;
-    background: var(--ilhas-light);
-    border: 1px solid var(--ilhas-gray);
-    border-radius: var(--ilhas-radius-card);
+    padding: 0.875rem 1rem;
     font-family: var(--ilhas-font-body);
     font-weight: 500;
+    font-size: 0.9375rem;
     color: var(--ilhas-dark);
   }
 
@@ -201,10 +251,12 @@ const faqs = [
 
   /* --- 03 · para quién es / no es --- */
   .filtro {
+    /* Sin max-width propio: .filtro vive directo dentro de .container (no
+       de .prose), así que un max-width + margin-inline:auto aquí lo
+       encogía a la medida de lectura de un párrafo y lo dejaba flotando
+       descentrado a la izquierda del contenedor real de 1140px. */
     display: grid;
     gap: 1.5rem;
-    max-width: var(--ilhas-measure);
-    margin-inline: auto;
   }
 
   .filtro__col h3 {
@@ -246,31 +298,22 @@ const faqs = [
     display: grid;
     gap: 1.5rem;
     margin-top: 1.75rem;
-  }
-
-  .maestros__card {
-    padding: 1.5rem;
-    background: var(--ilhas-light);
-    border: 1px solid var(--ilhas-gray);
-    border-radius: var(--ilhas-radius-card);
-  }
-
-  .maestros__nombre {
-    font-family: var(--ilhas-font-display);
-    font-weight: 600;
-    color: var(--ilhas-dark);
-  }
-
-  .maestros__dato {
-    margin-top: 0.5rem;
-    color: var(--ilhas-text);
+    /* Tope de ancho: sin esto, el grid llena el contenedor de 1140px y
+       la foto de cada tarjeta (TarjetaPersona) crece a ~550px de ancho,
+       obligando a hacer scroll para verla completa. */
+    max-width: 44rem;
   }
 
   .maestros__resumen {
     margin-top: 1.75rem;
+    padding: 1.25rem 1.5rem;
+    background: var(--ilhas-primary-10);
+    border-left: 3px solid var(--ilhas-primary);
+    border-radius: 0 var(--ilhas-radius-card) var(--ilhas-radius-card) 0;
     font-family: var(--ilhas-font-body);
     font-weight: 500;
     color: var(--ilhas-dark);
+    max-width: var(--ilhas-measure);
   }
 
   @media (min-width: 640px) {
@@ -293,6 +336,17 @@ const faqs = [
     margin-top: 1.75rem;
   }
 
+  .cta-webinar__btn {
+    width: 100%;
+  }
+
+  @media (min-width: 480px) {
+    .cta-webinar__btn {
+      width: auto;
+      padding-inline: 3rem;
+    }
+  }
+
   /* --- 06 · FAQ --- */
   .faq {
     display: grid;
@@ -308,6 +362,13 @@ const faqs = [
   }
 
   .faq__item summary {
+    /* flex, no float: float:right desalinea el ícono con la segunda línea
+       en preguntas de dos renglones (el ícono queda flotando a la mitad
+       del bloque en vez de anclado a la primera línea). */
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
     cursor: pointer;
     font-family: var(--ilhas-font-body);
     font-weight: 600;
@@ -321,7 +382,7 @@ const faqs = [
 
   .faq__item summary::after {
     content: "+";
-    float: right;
+    flex-shrink: 0;
     font-family: var(--ilhas-font-display);
     color: var(--ilhas-primary);
   }

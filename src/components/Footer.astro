@@ -4,27 +4,27 @@
 // El año se calcula en build time — sitio 100% estático, cero JS de cliente.
 const year = new Date().getFullYear();
 
-// "Nosotros" fuera hasta que la página tenga contenido real — ver Nav.astro.
 const links = [
   { href: "/metodo", label: "El Método" },
   { href: "/finanzas", label: "Ilhas Finanzas" },
   { href: "/soluciones", label: "Soluciones" },
+  { href: "/nosotros", label: "Nosotros" },
 ];
 ---
 
 <footer class="site-footer">
+  <div class="site-footer__accent" aria-hidden="true"></div>
   <div class="container site-footer__inner">
-    <a href="/" class="site-footer__brand" aria-label="Ilhas — ir al inicio">
-      <img
-        src="/assets/logo/logo-mark.svg"
-        alt=""
-        width="28"
-        height="28"
-      />
-      <span>ilhas</span>
-    </a>
+    <div class="site-footer__brand-col">
+      <a href="/" class="site-footer__brand" aria-label="Ilhas — ir al inicio">
+        <img src="/assets/logo/logo-mark.svg" alt="" width="28" height="28" />
+        <span>ilhas</span>
+      </a>
+      <p class="site-footer__tagline">El método, aplicado a tu trabajo.</p>
+    </div>
 
     <nav class="site-footer__nav" aria-label="Pie de página">
+      <p class="site-footer__heading">Navegación</p>
       <ul>
         {
           links.map((link) => (
@@ -36,23 +36,41 @@ const links = [
       </ul>
     </nav>
 
+    <div class="site-footer__contact">
+      <p class="site-footer__heading">Contacto</p>
+      <a href="mailto:hola@ilhas.ai">hola@ilhas.ai</a>
+    </div>
+
     <p class="site-footer__copy">© {year} Ilhas.</p>
   </div>
 </footer>
 
 <style>
   .site-footer {
-    border-top: 1px solid var(--ilhas-gray);
-    background: var(--ilhas-white);
+    position: relative;
+    background: var(--ilhas-dark);
+    overflow: hidden;
+  }
+
+  .site-footer__accent {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: var(--ilhas-gradient-h);
   }
 
   .site-footer__inner {
+    display: grid;
+    gap: 2.5rem;
+    padding-block: 3rem 2rem;
+  }
+
+  .site-footer__brand-col {
     display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: space-between;
-    gap: 1.5rem;
-    padding-block: 2rem;
+    flex-direction: column;
+    gap: 0.625rem;
   }
 
   .site-footer__brand {
@@ -60,35 +78,74 @@ const links = [
     align-items: center;
     gap: 0.5rem;
     text-decoration: none;
-    color: var(--ilhas-dark);
+    color: var(--ilhas-white);
     font-family: var(--ilhas-font-display);
     font-weight: 600;
     font-size: 1.125rem;
     letter-spacing: var(--ilhas-tracking-wordmark);
+    transition: transform 0.25s ease;
+  }
+
+  .site-footer__brand:hover {
+    transform: translateY(-2px);
+    color: var(--ilhas-white);
+  }
+
+  .site-footer__tagline {
+    font-family: var(--ilhas-font-body);
+    font-size: var(--ilhas-fs-small);
+    color: rgba(248, 250, 255, 0.6);
+    max-width: 28ch;
+  }
+
+  .site-footer__heading {
+    font-family: var(--ilhas-font-body);
+    font-weight: 600;
+    font-size: var(--ilhas-fs-small);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    /* 0.45 medía ~4.37:1 sobre --ilhas-dark — falla AA por poco (necesita
+       4.5:1 en texto de 14px). 0.55 mide ~6:1. */
+    color: rgba(248, 250, 255, 0.55);
+    margin-bottom: 0.875rem;
   }
 
   .site-footer__nav ul {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem 1.5rem;
+    display: grid;
+    gap: 0.625rem;
     list-style: none;
   }
 
-  .site-footer__nav a {
+  .site-footer__nav a,
+  .site-footer__contact a {
+    position: relative;
     font-family: var(--ilhas-font-body);
     font-size: var(--ilhas-fs-small);
-    color: var(--ilhas-text);
+    color: rgba(248, 250, 255, 0.8);
     text-decoration: none;
+    transition: color 0.2s ease;
   }
 
-  .site-footer__nav a:hover {
-    color: var(--ilhas-primary);
+  .site-footer__nav a:hover,
+  .site-footer__contact a:hover {
+    /* --ilhas-primary mide ~3.6:1 sobre --ilhas-dark, insuficiente para
+       texto pequeño (AA pide 4.5:1). --ilhas-grad-start (cian) mide ~13:1. */
+    color: var(--ilhas-grad-start);
   }
 
   .site-footer__copy {
+    grid-column: 1 / -1;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(248, 250, 255, 0.12);
     font-family: var(--ilhas-font-body);
     font-size: var(--ilhas-fs-small);
-    color: var(--ilhas-text);
+    color: rgba(248, 250, 255, 0.5);
     max-width: none;
+  }
+
+  @media (min-width: 640px) {
+    .site-footer__inner {
+      grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr) minmax(0, 1fr);
+    }
   }
 </style>
