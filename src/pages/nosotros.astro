@@ -1,12 +1,14 @@
 ---
 import Base from "../layouts/Base.astro";
 import TarjetaPersona from "../components/TarjetaPersona.astro";
+import fotoPapa from "../assets/equipo/jorge-papa.png";
+import fotoHijo from "../assets/equipo/jorge-hijo.png";
 
-// Fotos individuales todavía no existen (docs/05-assets.md) — cada tarjeta
-// usa el avatar de respaldo de TarjetaPersona.astro (inicial sobre el
-// gradiente de marca) en vez de una foto inventada o un <img> roto. Se
-// reemplaza por la foto real en cuanto exista, sin tocar el resto de la
-// tarjeta. Números atribuidos por separado, nunca sumados (docs/02-paginas.md).
+// Fotos reales (docs/05-assets.md § Fotos del equipo). Números atribuidos
+// por separado, nunca sumados (docs/02-paginas.md). Los dos se llaman
+// Jorge Sierra — el rol y la trayectoria de cada tarjeta los distingue,
+// a propósito sin "(papá)"/"(hijo)": esta página pide explícitamente que
+// no se lean como dúo (ese relato es de /finanzas).
 const personas = [
   {
     nombre: "Jorge Sierra",
@@ -17,6 +19,7 @@ const personas = [
       { dato: "40 años", contexto: "asesorando empresas en LATAM" },
       { dato: "+2,000 empresas", contexto: "asesoradas" },
     ],
+    foto: fotoPapa,
   },
   {
     nombre: "Jorge Sierra",
@@ -27,6 +30,7 @@ const personas = [
       { dato: "12 años", contexto: "construyendo productos digitales" },
       { dato: "+1,000 MDP/mes", contexto: "procesados por productos que ha liderado" },
     ],
+    foto: fotoHijo,
   },
 ];
 ---
@@ -35,8 +39,8 @@ const personas = [
   title="Nosotros"
   description="Quiénes construyen Ilhas: trayectoria individual de cada participante."
 >
-  <section class="section-y-sm">
-    <div class="container prose">
+  <section class="section-y-sm bg-dark">
+    <div class="container prose reveal">
       <p class="kicker">Nosotros</p>
       <h1>Quiénes construyen Ilhas.</h1>
       <p class="lead">
@@ -56,6 +60,7 @@ const personas = [
               rol={p.rol}
               trayectoria={p.trayectoria}
               atribuciones={p.atribuciones}
+              foto={p.foto}
             />
           ))
         }
@@ -65,6 +70,11 @@ const personas = [
 </Base>
 
 <style>
+  /* Página interior: H1 menor que el del home. */
+  h1 {
+    font-size: clamp(2rem, 3.5vw, 2.75rem);
+  }
+
   .personas {
     display: grid;
     gap: 1.5rem;
@@ -75,7 +85,11 @@ const personas = [
   @media (min-width: 640px) {
     .personas {
       grid-template-columns: repeat(2, minmax(0, 1fr));
-      max-width: none;
+      /* Sin tope, el grid llenaba el contenedor de 1140px: tarjetas de
+         ~550px de ancho, foto incluida — obligaba a hacer scroll para
+         verla completa. 44rem mantiene las tarjetas a un tamaño de
+         retrato razonable a cualquier ancho de pantalla. */
+      max-width: 44rem;
     }
   }
 </style>

@@ -51,12 +51,28 @@ Si más adelante hace falta una imagen de esa carpeta, se copia **ese archivo**,
 
 ---
 
+## Fotos del equipo — ya existen
+
+Recortes con fondo transparente, en `src/assets/equipo/`:
+
+| Archivo | Quién | Tamaño |
+|---|---|---|
+| `jorge-hijo.png` | Jorge (hijo) — camisa azul claro | 1291 × 2600, PNG con alfa |
+| `jorge-papa.png` | Jorge (papá) — camisa azul | 1576 × 2600, PNG con alfa |
+
+Van en **`src/assets/`**, no en `public/`: así `astro:assets` genera las variantes AVIF/WebP en el build. Nunca las referencies desde `public/`.
+
+Notas de uso:
+
+- Son **recortes de cuerpo completo, sangrados por abajo**. El sujeto llega al borde inferior de la imagen. Diseña las tarjetas para que se apoyen en el borde de abajo, como las tarjetas de equipo de mispropiasfinanzas.com — no las centres con aire abajo, se ven flotando.
+- Sobre el fondo `--ilhas-light` funcionan tal cual. Si van sobre el gradiente de marca, verifica que la camisa azul claro de Jorge no se pierda contra la parada cian.
+- No les pongas sombra dura ni contorno. Si necesitas separarlos del fondo, usa una superficie detrás (tarjeta blanca con `--ilhas-shadow-soft`), no un efecto sobre la persona.
+- El `alt` describe a la persona, no la foto: `alt="Jorge Sierra"`.
+
 ## Lo que hace falta y todavía no existe
 
 | Asset | Bloquea | Nota |
 |---|---|---|
-| **Foto individual de Jorge** | `/nosotros`, bloque 06 del home | Formato tarjeta vertical, fondo limpio. Referencia de estilo: las tarjetas de equipo de mispropiasfinanzas.com |
-| **Foto individual del papá** | `/nosotros`, bloque 04 de `/finanzas` | Mismo formato |
 | **Logos de clientes reales** | `/soluciones` | Solo si hay permiso de usarlos. **Si no hay, el bloque no se publica** — nada de "Empresa 1…8" |
 | **Testimoniales en video** | Prueba social, cualquier página | Jorge planeaba grabar entrevistas de 15 min a clientes de Ilhas y a asesorados de su papá. Hasta que existan, no hay bloque de testimoniales |
 

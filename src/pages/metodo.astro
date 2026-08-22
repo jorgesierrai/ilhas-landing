@@ -68,10 +68,11 @@ const principios = [
   <article>
     <!-- 01 · La tesis -->
     <section class="section-y">
-      <div class="container prose metodo-hero">
+      <div class="container prose metodo-hero reveal">
         <p class="kicker">El método</p>
         <h1>
-          El método no nació en las finanzas. Nació construyendo producto.
+          El método no nació en las finanzas. Nació construyendo{" "}
+          <span class="text-gradient">producto</span>.
         </h1>
         <p class="lead">
           Es un sistema para pensar y decidir, destilado de años construyendo
@@ -83,7 +84,7 @@ const principios = [
 
     <!-- 02 · El hueco -->
     <section class="section-y bg-white">
-      <div class="container prose">
+      <div class="container prose reveal">
         <p class="kicker">El hueco</p>
         <h2>El 95% de los proyectos de IA fracasa — y no es la tecnología.</h2>
         <p>
@@ -97,7 +98,7 @@ const principios = [
 
     <!-- 03 · El ángulo correcto -->
     <section class="section-y">
-      <div class="container prose">
+      <div class="container prose reveal">
         <p class="kicker">El ángulo correcto</p>
         <h2>No es una metáfora. Es de dónde salió el método.</h2>
         <p>
@@ -111,9 +112,9 @@ const principios = [
     </section>
 
     <!-- 04 · I·L·H·A·S paso por paso -->
-    <section class="section-y bg-white" id="pasos">
+    <section class="section-y bg-dark" id="pasos">
       <div class="container">
-        <div class="prose">
+        <div class="prose reveal">
           <p class="kicker">El método, paso por paso</p>
           <h2>Cinco pasos. Un mapeo directo a tu trabajo.</h2>
           <p class="lead">
@@ -152,7 +153,7 @@ const principios = [
 
     <!-- 05 · Hilar = Opportunity Solution Tree -->
     <section class="section-y">
-      <div class="container prose">
+      <div class="container prose reveal">
         <p class="kicker">El paso joya</p>
         <h2>Hilar: el paso que nadie en &ldquo;finanzas con IA&rdquo; te cuenta.</h2>
         <p>
@@ -168,7 +169,7 @@ const principios = [
     <!-- 06 · Los cinco principios -->
     <section class="section-y bg-white">
       <div class="container">
-        <div class="prose">
+        <div class="prose reveal">
           <p class="kicker">Los principios</p>
           <h2>Cinco principios que no se negocian.</h2>
         </div>
@@ -176,7 +177,7 @@ const principios = [
         <ol class="principios">
           {
             principios.map((p, i) => (
-              <li class="principios__item">
+              <li class="principios__item hover-lift reveal">
                 <span class="principios__num">{i + 1}</span>
                 <div>
                   <p class="principios__titulo">{p.titulo}</p>
@@ -191,7 +192,7 @@ const principios = [
 
     <!-- 07 · No son prompts -->
     <section class="section-y">
-      <div class="container prose">
+      <div class="container prose reveal">
         <p class="kicker">Cómo se usa en la práctica</p>
         <h2>No son prompts. Es reingeniería del trabajo.</h2>
         <p>
@@ -206,7 +207,7 @@ const principios = [
 
     <!-- 08 · BYOS → BYOA -->
     <section class="section-y bg-white">
-      <div class="container prose">
+      <div class="container prose reveal">
         <p class="kicker">A dónde llegas</p>
         <h2>
           Llegas con tu hoja de cálculo. Sales con tu propio equipo de
@@ -223,7 +224,7 @@ const principios = [
 
     <!-- 09 · El barco y las islas -->
     <section class="section-y">
-      <div class="container prose">
+      <div class="container prose reveal">
         <p class="kicker">Por qué se llama Ilhas</p>
         <h2>El método es el barco. Finanzas es la primera isla.</h2>
         <p>
@@ -260,17 +261,15 @@ const principios = [
   }
 
   .metodo-hero h1 {
-    max-width: 22ch;
+    /* Página interior: más chico que el H1 del home a propósito — el
+       home es el que recibe tráfico frío y debe ser el titular más
+       grande del sitio. */
+    max-width: 16ch;
+    font-size: clamp(2rem, 3.5vw, 2.75rem);
   }
 
   #pasos .prose {
-    text-align: center;
     margin-bottom: 2.5rem;
-  }
-
-  #pasos .prose h2,
-  #pasos .prose .lead {
-    margin-inline: auto;
   }
 
   .metodo-tabla table {
@@ -309,6 +308,14 @@ const principios = [
     color: var(--ilhas-text);
   }
 
+  .metodo-tabla tbody tr {
+    transition: background-color 0.2s ease;
+  }
+
+  .metodo-tabla tbody tr:hover {
+    background: var(--ilhas-light);
+  }
+
   .metodo-tabla tbody tr:last-child th,
   .metodo-tabla tbody tr:last-child td {
     border-bottom: none;
@@ -342,6 +349,16 @@ const principios = [
     display: flex;
     gap: 1.25rem;
     align-items: flex-start;
+    padding: 1rem;
+    border-radius: var(--ilhas-radius-card);
+    border: 1px solid transparent;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .principios__item:hover {
+    background: var(--ilhas-light);
+    border-color: var(--ilhas-gray);
+    box-shadow: var(--ilhas-shadow-soft);
   }
 
   .principios__num {

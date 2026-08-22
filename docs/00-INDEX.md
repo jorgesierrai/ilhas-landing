@@ -52,9 +52,6 @@ Estos son los choques concretos. No hay que deliberarlos: ya están resueltos.
 
 No inventes estos. Si el trabajo los necesita, para y pregunta:
 
-- **La línea de identidad de Ilhas** — las 12–16 palabras del hero del home. No existe. Ver `02-paginas.md`.
-- **El nombre y la bio real del papá de Jorge.** Bloquea `/nosotros` y el bloque de autoridad de `/finanzas`.
-- **Fotos individuales** de Jorge y de su papá para las tarjetas de `/nosotros`.
 - **Casos y logos de clientes reales** para `/soluciones`. La tabla de linaje de productos sí está y sí se usa.
 - **Dónde vive el hosting hoy y quién controla el DNS de ilhas.ai.**
 

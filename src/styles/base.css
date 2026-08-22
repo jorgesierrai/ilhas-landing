@@ -51,13 +51,18 @@
 html {
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
+  /* Reserva el espacio de la scrollbar siempre, aparezca o no: entre
+     páginas de alturas distintas, el ancho visible del documento
+     cambiaba según si había o no scrollbar vertical — se sentía como
+     un salto/expansión justo al navegar. */
+  scrollbar-gutter: stable;
 }
 
-html,
-body {
-  height: 100%;
-}
-
+/* Sin height:100% en body: con position:sticky en el header, ese height
+   fija la "containing block" de body en exactamente un viewport de alto
+   — el contenido real es mucho más largo y se sigue viendo (overflow
+   visible), pero el header se "despega" del top en cuanto se pasa esa
+   primera pantalla de scroll, justo el bug que reportó el usuario. */
 body {
   line-height: var(--ilhas-lh-body);
   -webkit-font-smoothing: antialiased;
@@ -158,6 +163,27 @@ a:hover {
   padding-block: clamp(1.5rem, 3vw, 2.5rem);
 }
 
+/* Dos secciones seguidas del MISMO fondo no necesitan doble aire: sin
+   esto, cada una aporta su padding completo y el hueco entre ellas se
+   duplica (hasta 240px de nada, medido en /metodo). Solo colapsa
+   cuando el fondo realmente coincide — si cambia de blanco a
+   --ilhas-light, ese padding completo sigue siendo la transición. */
+.bg-white + .bg-white {
+  padding-top: 0;
+}
+
+.section-y:not(.bg-white):not(.bg-dark) + .section-y:not(.bg-white):not(.bg-dark),
+.section-y-sm:not(.bg-white):not(.bg-dark)
+  + .section-y-sm:not(.bg-white):not(.bg-dark) {
+  padding-top: 0;
+}
+
+/* .bg-dark es un cambio de fondo real (como blanco → light): nunca
+   colapsa contra su vecina, sin importar de qué color venga esa vecina. */
+.bg-dark + .bg-dark {
+  padding-top: 0;
+}
+
 /* Tabla que scrollea horizontal en vez de romper el ancho del body.
    El contenedor recorta y da el scroll; la tabla adentro puede ser
    más ancha que la pantalla sin empujar el layout. */
@@ -177,6 +203,60 @@ a:hover {
   background: var(--ilhas-white);
 }
 
+/* Una sección oscura por página, a propósito: rompe el blanco/gris-claro
+   repetitivo y le da al sitio un punto de contraste real (R5 de la
+   auditoría). Textos e íconos dentro se invierten a claro sobre oscuro. */
+.bg-dark {
+  background: var(--ilhas-dark);
+  color: rgba(248, 250, 255, 0.8);
+}
+
+.bg-dark h1,
+.bg-dark h2,
+.bg-dark h3,
+.bg-dark h4 {
+  color: var(--ilhas-white);
+}
+
+/* --ilhas-primary mide ~3.6:1 sobre --ilhas-dark — falla AA para el
+   kicker (texto pequeño, necesita 4.5:1). --ilhas-grad-start (cian, ya
+   documentado en tokens.css) mide ~13:1 sobre --ilhas-dark. */
+.bg-dark .kicker {
+  color: var(--ilhas-grad-start);
+}
+
+.bg-dark .lead,
+.bg-dark p {
+  color: rgba(248, 250, 255, 0.8);
+}
+
+.bg-dark .card {
+  background: rgba(248, 250, 255, 0.06);
+  border-color: rgba(248, 250, 255, 0.12);
+}
+
+.bg-dark .card .linaje__producto,
+.bg-dark .card .casos__producto {
+  color: var(--ilhas-white);
+}
+
+/* Regla de oro: una tarjeta nunca comparte fondo con su sección — si no,
+   se ve como un contorno vacío en vez de una tarjeta (--ilhas-light
+   sobre --ilhas-light era invisible en varias páginas). Sobre una
+   sección .bg-white, la tarjeta se invierte a --ilhas-light. */
+.card {
+  background: var(--ilhas-white);
+  border: 1px solid var(--ilhas-gray);
+  border-radius: var(--ilhas-radius-card);
+  box-shadow: var(--ilhas-shadow-soft);
+  padding: 1.5rem;
+}
+
+.bg-white .card {
+  background: var(--ilhas-light);
+  box-shadow: none;
+}
+
 .kicker {
   font-family: var(--ilhas-font-body);
   font-weight: 500;
@@ -193,7 +273,31 @@ a:hover {
   color: var(--ilhas-text);
 }
 
-.prose {
+/* La medida de lectura la controla el PÁRRAFO, no el bloque. .prose ya
+   NO declara su propio max-width — ni angosto ni "none". Cuando vivía
+   en el mismo elemento que .container (`class="container prose"`), su
+   max-width (cualquier valor que fuera) le ganaba en la cascada al
+   max-width:1140px de .container porque .prose va después en el
+   archivo — con 68ch producía una caja angosta que el margin-inline:auto
+   heredado de .container centraba sola (el "brinco" de borde izquierdo);
+   con "none" producía una caja que se salía del ancho de 1140px. La
+   única forma segura de que .prose y .container convivan en el mismo
+   elemento es que .prose no toque max-width en absoluto — que .container
+   mande siempre, y que solo los hijos (párrafo, lead, listas, titulares)
+   limiten su propio ancho de lectura. */
+.prose > p,
+.prose > .lead,
+.prose > ul,
+.prose > ol {
+  max-width: var(--ilhas-measure);
+}
+
+.prose > h1,
+.prose > h2 {
+  max-width: 24ch;
+}
+
+.prose-center {
   max-width: var(--ilhas-measure);
   margin-inline: auto;
 }
@@ -259,4 +363,168 @@ a:hover {
   background: var(--ilhas-primary-dark);
   box-shadow: var(--ilhas-shadow-hover);
   color: var(--ilhas-white);
+  transform: scale(1.02);
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--ilhas-dark);
+  border: 1px solid var(--ilhas-gray);
+}
+
+.btn-ghost:hover {
+  border-color: var(--ilhas-primary);
+  color: var(--ilhas-primary);
+}
+
+/* Encabezado de sección ancho: kicker+titular a la izquierda, en vez de
+   un bloque angosto centrado en medio de la página. El texto sigue
+   alineado a la izquierda (measure controlado por .lead/p, no por esto). */
+.section-head {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+@media (min-width: 900px) {
+  .section-head--split {
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: space-between;
+  }
+
+  .section-head--split .lead {
+    max-width: 34ch;
+    text-align: right;
+  }
+}
+
+/* Hero de dos columnas: contenido a la izquierda, ilustración decorativa
+   a la derecha (oculta hasta escritorio). Mismo patrón en home, /finanzas
+   y /soluciones — vive aquí para no repetir el grid tres veces. */
+.hero-split {
+  display: grid;
+  /* minmax(0, 1fr) explícito: sin esto, la columna implícita de una sola
+     pista se dimensiona a "auto" y puede crecer al max-content de su
+     contenido en vez de recortarse al ancho del contenedor — el grid (y
+     el documento entero) se salía por la derecha en viewports angostos. */
+  grid-template-columns: minmax(0, 1fr);
+  gap: 2rem;
+  align-items: center;
+  padding-block: clamp(2.5rem, 6vw, 5rem);
+}
+
+/* La regla de espaciado vivía scopeada a .hero (solo el home la usa) —
+   /finanzas y /soluciones usan .hero-split sin .hero, así que su lead
+   quedaba pegado directo bajo el H1 sin margen. */
+.hero-split .lead {
+  margin-top: 1.25rem;
+}
+
+.hero-split__visual {
+  display: none;
+  justify-self: center;
+}
+
+.hero-split__visual img {
+  width: 100%;
+  max-width: 280px;
+  height: auto;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .hero-split__visual img {
+    animation: ilhas-float 7s ease-in-out infinite;
+  }
+}
+
+@media (min-width: 900px) {
+  .hero-split {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 18rem);
+  }
+
+  .hero-split__visual {
+    display: flex;
+  }
+}
+
+/* --- Vida: hover, gradiente en texto, blobs flotantes, scroll reveal ----- */
+
+.hover-lift {
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.hover-lift:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 60px rgba(15, 23, 42, 0.12);
+}
+
+/* Una frase clave por titular, nunca más de una (docs/marca/03-tipografia.md).
+   Solo en texto grande (H1/H2, ≥24px): el umbral AA para texto de ese
+   tamaño es 3:1, no 4.5:1.
+   Gradiente propio, no --ilhas-gradient-h: ese empieza en el cian de marca,
+   y el texto sobre cian mide ~1.4:1 de contraste — falla incluso el
+   mínimo de texto grande. Este va de primary a violeta, sin tocar el
+   cian; el punto más bajo mide ~4:1, pasa con margen. */
+.text-gradient {
+  background: linear-gradient(
+    to right,
+    var(--ilhas-primary) 0%,
+    var(--ilhas-grad-end) 100%
+  );
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+.blob {
+  position: absolute;
+  border-radius: 50%;
+  background: var(--ilhas-gradient);
+  filter: blur(80px);
+  opacity: 0.35;
+  pointer-events: none;
+  z-index: 0;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .blob {
+    animation: ilhas-float 7s ease-in-out infinite;
+  }
+}
+
+@keyframes ilhas-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-18px);
+  }
+}
+
+/* Aparece al hacer scroll — CSS puro (animation-timeline), cero JS. En
+   navegadores que todavía no soportan scroll-driven animations el
+   contenido simplemente se ve estático desde el inicio: nunca se oculta
+   por completo, así que degrada bien sin JS de respaldo. */
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    .reveal {
+      animation: ilhas-reveal linear both;
+      animation-timeline: view();
+      animation-range: entry 0% cover 25%;
+    }
+  }
+}
+
+@keyframes ilhas-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

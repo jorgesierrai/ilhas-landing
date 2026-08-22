@@ -194,5 +194,5 @@ A nivel marca, cada quien trae lo suyo y la rejilla tiene que poder crecer. El *
 
 Nunca se presentan como resultados de alumnos. Cuando existan resultados reales de alumnos, van en sección aparte y claramente separados.
 
-### 🔒 Bloqueada
-Falta el nombre real y la bio del papá, y las fotos individuales. **No publiques esta página con placeholders.** Si el sitio sale antes, el link del menú apunta a la sección corta del home hasta que esté lista.
+### ✅ Desbloqueada
+Nombre, bio y foto de los dos ya están confirmados y en el sitio (`src/assets/equipo/`). La página está de vuelta en el menú.

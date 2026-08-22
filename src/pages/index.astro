@@ -1,6 +1,8 @@
 ---
+import { Image } from "astro:assets";
 import Base from "../layouts/Base.astro";
 import Bifurcacion from "../components/Bifurcacion.astro";
+import dashboardIcon from "../assets/icons/dashboard.png";
 
 const pasos = [
   { letra: "I", paso: "Identificar", linea: "Cómo se mueve el dinero y dónde se fuga." },
@@ -8,6 +10,12 @@ const pasos = [
   { letra: "H", paso: "Hilar", linea: "Costos, precios y márgenes en un solo criterio." },
   { letra: "A", paso: "Accionar", linea: "Decides con números, no con intuición." },
   { letra: "S", paso: "Sistematizar", linea: "La IA como tu equipo, con alertas automáticas." },
+];
+
+const stats = [
+  { dato: "6", contexto: "productos financieros construidos de cero a uno" },
+  { dato: "+1,000 MDP/mes", contexto: "procesados por productos que Jorge (hijo) ha liderado" },
+  { dato: "+2,000 empresas", contexto: "asesoradas en LATAM por Jorge (papá)" },
 ];
 
 const linaje = [
@@ -50,33 +58,55 @@ const linaje = [
     <!-- 01 · Hero — la línea de identidad -->
     <section class="hero">
       <div class="hero__glow" aria-hidden="true"></div>
-      <div class="container prose hero__content">
-        <h1>
-          El método con el que se construyen productos que mueven millones,
-          apuntado a tu trabajo.
-        </h1>
-        <p class="lead">
-          Dos maneras de recibirlo: que te lo enseñemos, o que te lo hagamos.
-        </p>
-        <div class="hero__ctas">
-          <a href="/finanzas">Quiero aprenderlo →</a>
-          <a href="/soluciones">Quiero implementarlo →</a>
+      <div class="container hero-split">
+        <div class="hero__content">
+          <h1>
+            El método con el que se construyen productos que mueven{" "}
+            <span class="text-gradient">millones</span>, apuntado a tu
+            trabajo.
+          </h1>
+          <p class="lead">
+            Dos maneras de recibirlo: que te lo enseñemos, o que te lo
+            hagamos.
+          </p>
+          <div class="hero__ctas">
+            <a href="/finanzas" class="btn btn-primary">Quiero aprenderlo</a>
+            <a href="/soluciones" class="btn btn-ghost"
+              >Quiero implementarlo</a
+            >
+          </div>
+          <p class="hero__stats">
+            {
+              stats.map((s, i) => (
+                <>
+                  {i > 0 && <span class="hero__stats-sep" aria-hidden="true">·</span>}
+                  <span class="hero__stats-dato">{s.dato}</span>{" "}
+                  <span class="hero__stats-contexto">{s.contexto}</span>
+                </>
+              ))
+            }
+          </p>
+        </div>
+        <div class="hero-split__visual" aria-hidden="true">
+          <Image src={dashboardIcon} alt="" width="380" height="380" />
         </div>
       </div>
     </section>
 
     <!-- 02 · El hueco -->
     <section class="section-y-sm bg-white">
-      <div class="container prose">
-        <p class="kicker">El hueco</p>
-        <h2>El 95% de los proyectos de IA fracasa — y no es la tecnología.</h2>
+      <div class="container">
+        <div class="section-head reveal">
+          <p class="kicker">El hueco</p>
+          <h2>El 95% de los proyectos de IA fracasa — y no es la tecnología.</h2>
+        </div>
       </div>
     </section>
 
     <!-- 03 · El método en cinco pasos, versión corta -->
     <section class="section-y-sm">
       <div class="container">
-        <div class="prose">
+        <div class="section-head reveal">
           <p class="kicker">El método, en corto</p>
           <h2>Cinco pasos: I·L·H·A·S.</h2>
         </div>
@@ -84,7 +114,7 @@ const linaje = [
         <ol class="pasos-corto">
           {
             pasos.map((p) => (
-              <li>
+              <li class="hover-lift reveal">
                 <span class="pasos-corto__letra">{p.letra}</span>
                 <span class="pasos-corto__paso">{p.paso}</span>
                 <span class="pasos-corto__linea">{p.linea}</span>
@@ -110,9 +140,9 @@ const linaje = [
     </section>
 
     <!-- 05 · Prueba — el linaje -->
-    <section class="section-y">
+    <section class="section-y bg-dark">
       <div class="container">
-        <div class="prose">
+        <div class="section-head reveal">
           <p class="kicker">De dónde sale el método</p>
           <h2>No es teoría. Es lo que ya construimos.</h2>
         </div>
@@ -120,7 +150,7 @@ const linaje = [
         <ul class="linaje">
           {
             linaje.map((item) => (
-              <li>
+              <li class="card hover-lift reveal">
                 <p class="linaje__producto">{item.producto}</p>
                 <p class="linaje__resolvio">{item.resolvio}</p>
               </li>
@@ -132,7 +162,7 @@ const linaje = [
 
     <!-- 07 · Cierre -->
     <section class="section-y bg-white">
-      <div class="container prose cierre">
+      <div class="container prose prose-center cierre reveal">
         <h2>¿Todavía no sabes cuál es tu carril?</h2>
         <p>Conoce el método completo antes de decidir.</p>
         <a href="/metodo" class="btn btn-primary">Conocer el método</a>
@@ -148,26 +178,41 @@ const linaje = [
   }
 
   .hero__glow {
+    /* Más lejos y más tenue: dentro de un hero corto con overflow:hidden,
+       un círculo grande se recorta en los cuatro lados y se ve como una
+       mancha rectangular, no como un resplandor. */
     position: absolute;
-    top: -20%;
-    right: -10%;
+    top: -60%;
+    right: -25%;
     width: 32rem;
     height: 32rem;
     background: var(--ilhas-gradient);
-    opacity: 0.18;
+    opacity: 0.12;
     filter: blur(90px);
     border-radius: 50%;
     pointer-events: none;
   }
 
+  .hero-split {
+    /* Más corto que el default de base.css a propósito: el home tiene
+       la bifurcación (bloque 04) como prioridad — debe llegar cerca del
+       pliegue — así que este hero no se estira tanto como los de
+       /finanzas o /soluciones, solo lo suficiente para que no se sienta
+       cortado en seco. */
+    position: relative;
+    padding-block: clamp(2rem, 4vw, 3.5rem);
+  }
+
   .hero__content {
     position: relative;
-    padding-block: clamp(1.5rem, 3vw, 2.5rem);
   }
 
   .hero h1 {
-    max-width: 52ch;
-    font-size: clamp(2.125rem, 3.5vw, 3rem);
+    /* El H1 más grande del sitio a propósito: es el home, el que recibe
+       tráfico frío. Las páginas interiores usan un tamaño menor
+       (ver su propio <style>) — la jerarquía estaba invertida. */
+    font-size: clamp(2.5rem, 4.5vw, 3.75rem);
+    max-width: 20ch;
   }
 
   .hero .lead {
@@ -177,15 +222,33 @@ const linaje = [
   .hero__ctas {
     display: flex;
     flex-wrap: wrap;
-    gap: 1.5rem;
+    gap: 1rem;
     margin-top: 1.75rem;
   }
 
-  .hero__ctas a {
-    font-family: var(--ilhas-font-body);
+  /* --- 01 · stat rail: prueba atribuida arriba del pliegue. Una sola
+     línea de texto, no bloques de números grandes — el bloque 04
+     (bifurcación) manda sobre este bloque: tiene que llegar cerca del
+     pliegue, así que esta franja no puede costar más que un renglón. --- */
+  .hero__stats {
+    margin-top: 1.25rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--ilhas-gray);
+    max-width: none;
+    font-size: 0.8125rem;
+    color: var(--ilhas-text);
+    line-height: 1.6;
+  }
+
+  .hero__stats-sep {
+    margin-inline: 0.625rem;
+    color: var(--ilhas-gray);
+  }
+
+  .hero__stats-dato {
+    font-family: var(--ilhas-font-display);
     font-weight: 600;
-    font-size: var(--ilhas-fs-small);
-    text-decoration: none;
+    color: var(--ilhas-dark);
   }
 
   section > .container.prose > p:not(.kicker):not(.lead) {
@@ -279,12 +342,6 @@ const linaje = [
     margin-top: 2rem;
   }
 
-  .linaje li {
-    padding: 1.5rem;
-    background: var(--ilhas-light);
-    border: 1px solid var(--ilhas-gray);
-    border-radius: var(--ilhas-radius-card);
-  }
 
   .linaje__producto {
     font-family: var(--ilhas-font-display);
@@ -296,6 +353,13 @@ const linaje = [
     margin-top: 0.375rem;
     font-size: 0.9375rem;
     color: var(--ilhas-text);
+  }
+
+  /* Sección de fondo oscuro (R5 auditoría): --ilhas-text sobre
+     --ilhas-dark mide ~1.76:1, falla AA. Mismo claro-sobre-oscuro que
+     el resto de .bg-dark. */
+  .bg-dark .linaje__resolvio {
+    color: rgba(248, 250, 255, 0.7);
   }
 
   @media (min-width: 640px) {
