@@ -1,0 +1,98 @@
+---
+/**
+ * Testimonio — video o cita en texto, SIEMPRE con atribución.
+ *
+ * El build falla si la ranura trae material pero no trae `atribucion`. Es a
+ * propósito: hace estructuralmente imposible repetir el error del index.html
+ * viejo, que publicó "María González, Fundadora, Estudio Creativo" y "Carlos
+ * Ramírez, Desarrollador Inmobiliario" — dos personas que no existen.
+ * Regla 5 de CLAUDE.md y regla 4 de curaduría de PLAN-MEDIOS.md.
+ *
+ * Si el permiso es parcial, `atribucion` va con rol y sector y sin `empresa`
+ * ("Director de operaciones, empresa de manufactura"). Lo que nunca va es un
+ * testimonio sin nadie detrás.
+ */
+import { porId } from "../../data/medios";
+import { hayMedio, rutaVideo } from "../../lib/medios";
+import Ranura from "./Ranura.astro";
+import VideoClip from "./VideoClip.astro";
+
+interface Props {
+  id: string;
+}
+
+const { id } = Astro.props;
+
+const slot = porId(id);
+if (!slot) throw new Error(`Testimonio: no existe la ranura "${id}" en src/data/medios.ts`);
+
+const listo = hayMedio(id);
+
+// La guardia solo se activa cuando hay algo que publicar. Una ranura vacía no
+// necesita atribución todavía — solo el marcador de dev.
+if (listo && !slot.atribucion) {
+  throw new Error(
+    `Testimonio "${id}": hay material pero falta \`atribucion\` en src/data/medios.ts.\n` +
+      `Un testimonio sin nombre y rol no se publica (regla 5 de CLAUDE.md).\n` +
+      `Si el permiso es parcial, usa rol y sector y omite \`empresa\`.`,
+  );
+}
+
+const hayVideo = Boolean(rutaVideo(id, "mp4"));
+const a = slot.atribucion;
+---
+
+{
+  listo && a ? (
+    <figure class="testimonio card">
+      {hayVideo ? (
+        <VideoClip id={id} titulo={`Testimonio de ${a.nombre}`} />
+      ) : (
+        <blockquote class="testimonio__cita">{slot.texto}</blockquote>
+      )}
+      <figcaption class="testimonio__firma">
+        <span class="testimonio__nombre">{a.nombre}</span>
+        <span class="testimonio__rol">
+          {a.rol}
+          {a.empresa && <> · {a.empresa}</>}
+        </span>
+      </figcaption>
+    </figure>
+  ) : (
+    <Ranura slot={slot} />
+  )
+}
+
+<style>
+  .testimonio {
+    margin: 0;
+  }
+
+  .testimonio__cita {
+    margin: 0;
+    font-family: var(--ilhas-font-body);
+    font-size: var(--ilhas-fs-lead);
+    color: var(--ilhas-dark);
+  }
+
+  .testimonio__firma {
+    display: flex;
+    flex-direction: column;
+    gap: 0.125rem;
+    margin-top: 1.25rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--ilhas-gray);
+  }
+
+  .testimonio__nombre {
+    font-family: var(--ilhas-font-display);
+    font-weight: 600;
+    color: var(--ilhas-dark);
+  }
+
+  .testimonio__rol {
+    font-family: var(--ilhas-font-body);
+    font-size: var(--ilhas-fs-small);
+    color: var(--ilhas-text);
+  }
+</style>

@@ -1,0 +1,60 @@
+---
+/**
+ * Ícono SVG inlineado.
+ *
+ * Se inlinea (no va como <img>) para que herede `currentColor` y sirva igual
+ * sobre fondo claro y sobre `.bg-dark`, y para que pese 1 KB en vez de los
+ * 0.5-1.8 MB de los PNG 3D de public/assets/ilhas-iconografia/, que
+ * docs/05-assets.md marca explícitamente como furniture de video, no material
+ * de web.
+ *
+ * Sobre `set:html`: ver el comentario largo en `buscarIcono` de
+ * src/lib/medios.ts. Resumen: estos SVG son literales del repo, leídos en
+ * build time — es la única excepción permitida por
+ * docs/06-stack-y-seguridad.md, y ningún SVG entra sin revisarse a mano.
+ *
+ * Los íconos de este sitio son decorativos: el nombre del paso o de la
+ * capacidad ya va como texto al lado. Por eso `aria-hidden`.
+ */
+import { porId } from "../../data/medios";
+import { buscarIcono } from "../../lib/medios";
+import Ranura from "./Ranura.astro";
+
+interface Props {
+  id: string;
+  /** Lado en rem. El lienzo del SVG es 24×24. */
+  tamano?: string;
+}
+
+const { id, tamano = "1.5rem" } = Astro.props;
+
+const slot = porId(id);
+if (!slot) throw new Error(`Icono: no existe la ranura "${id}" en src/data/medios.ts`);
+
+const svg = buscarIcono(id);
+---
+
+{
+  svg ? (
+    <span class="icono" style={`--icono-lado: ${tamano}`} aria-hidden="true" set:html={svg} />
+  ) : (
+    <Ranura slot={slot} compacta />
+  )
+}
+
+<style>
+  .icono {
+    display: inline-flex;
+    flex-shrink: 0;
+    color: var(--ilhas-primary);
+  }
+
+  .icono :global(svg) {
+    width: var(--icono-lado);
+    height: var(--icono-lado);
+  }
+
+  :global(.bg-dark) .icono {
+    color: var(--ilhas-grad-start);
+  }
+</style>

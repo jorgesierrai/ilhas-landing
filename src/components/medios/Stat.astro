@@ -1,0 +1,47 @@
+---
+/**
+ * Métrica grande. Usa `--ilhas-fs-stat`, el token de tokens.css que hasta hoy
+ * no se usaba en ninguna parte del sitio.
+ *
+ * Regla 4 de CLAUDE.md: los números se atribuyen, nunca se suman. El contexto
+ * de cada Stat dice de quién es el número — el "40 + 12" junto solo existe en
+ * /finanzas, que es donde los dos se juntan.
+ */
+interface Props {
+  dato: string;
+  contexto: string;
+}
+
+const { dato, contexto } = Astro.props;
+---
+
+<div class="stat">
+  <p class="stat__dato">{dato}</p>
+  <p class="stat__contexto">{contexto}</p>
+</div>
+
+<style>
+  .stat__dato {
+    max-width: none;
+    font-family: var(--ilhas-font-display);
+    font-weight: 600;
+    font-size: var(--ilhas-fs-stat);
+    line-height: 1.1;
+    color: var(--ilhas-dark);
+  }
+
+  .stat__contexto {
+    margin-top: 0.375rem;
+    font-family: var(--ilhas-font-body);
+    font-size: var(--ilhas-fs-small);
+    color: var(--ilhas-text);
+  }
+
+  :global(.bg-dark) .stat__dato {
+    color: var(--ilhas-white);
+  }
+
+  :global(.bg-dark) .stat__contexto {
+    color: rgba(248, 250, 255, 0.7);
+  }
+</style>

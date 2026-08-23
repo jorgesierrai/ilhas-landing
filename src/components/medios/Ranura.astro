@@ -1,0 +1,134 @@
+---
+/**
+ * El marcador de una ranura vacía.
+ *
+ * SOLO existe en `npm run dev`. En producción este componente no pinta nada —
+ * regla 5 de CLAUDE.md y regla 6 de docs/01-arquitectura.md: cero placeholders
+ * en producción. Nunca sale una caja punteada al aire.
+ */
+import type { SlotMedio } from "../../data/medios";
+import { rutaEsperada } from "../../lib/medios";
+
+interface Props {
+  slot: SlotMedio;
+  /**
+   * Marcador chico, para ranuras que viven dentro de una lista apretada
+   * (los 13 íconos). Las specs van en el `title` en vez de en la caja: 13
+   * cajas completas dentro de la tira de cinco pasos harían ilegible el dev.
+   */
+  compacta?: boolean;
+}
+
+const { slot, compacta = false } = Astro.props;
+const mostrar = import.meta.env.DEV;
+
+const peso =
+  slot.pesoMaxKB >= 1024
+    ? `${(slot.pesoMaxKB / 1024).toFixed(1).replace(/\.0$/, "")} MB`
+    : `${slot.pesoMaxKB} KB`;
+
+const resumen = `${slot.id} · ${rutaEsperada(slot)} · máx ${peso} · P${slot.prioridad} · ${slot.seccion}`;
+---
+
+{
+  mostrar && compacta && (
+    <span class="ranura-chip" title={resumen}>
+      {slot.id}
+    </span>
+  )
+}
+
+{
+  mostrar && !compacta && (
+    <div class="ranura" data-prioridad={slot.prioridad}>
+      <p class="ranura__id">
+        <span class="ranura__tipo">{slot.tipo}</span>
+        {slot.id}
+        <span class="ranura__prioridad">P{slot.prioridad}</span>
+      </p>
+      <p class="ranura__ruta">{rutaEsperada(slot)}</p>
+      <p class="ranura__specs">
+        máx {peso}
+        {slot.duracion && <> · {slot.duracion}</>}
+        {" · "}
+        {slot.seccion}
+      </p>
+      <p class="ranura__objecion">{slot.objecion}</p>
+      {slot.notas && <p class="ranura__notas">{slot.notas}</p>}
+    </div>
+  )
+}
+
+<style>
+  .ranura {
+    display: flex;
+    flex-direction: column;
+    gap: 0.375rem;
+    padding: 1.25rem;
+    border: 2px dashed var(--ilhas-gray);
+    border-radius: var(--ilhas-radius-card);
+    background: var(--ilhas-light);
+    font-family: var(--ilhas-font-body);
+  }
+
+  .ranura[data-prioridad="1"] {
+    border-color: var(--ilhas-primary);
+  }
+
+  .ranura__id {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem;
+    max-width: none;
+    font-family: var(--ilhas-font-display);
+    font-weight: 600;
+    font-size: 0.9375rem;
+    color: var(--ilhas-dark);
+  }
+
+  .ranura__tipo,
+  .ranura__prioridad {
+    padding: 0.125rem 0.5rem;
+    border-radius: var(--ilhas-radius-pill);
+    background: var(--ilhas-primary-10);
+    color: var(--ilhas-primary);
+    font-family: var(--ilhas-font-body);
+    font-weight: 600;
+    font-size: 0.6875rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .ranura__ruta {
+    max-width: none;
+    font-size: 0.8125rem;
+    color: var(--ilhas-dark);
+    overflow-wrap: anywhere;
+  }
+
+  .ranura__specs,
+  .ranura__objecion,
+  .ranura__notas {
+    max-width: none;
+    font-size: 0.75rem;
+    color: var(--ilhas-text);
+  }
+
+  .ranura__objecion {
+    font-weight: 500;
+    color: var(--ilhas-primary);
+  }
+
+  .ranura-chip {
+    display: inline-block;
+    padding: 0.125rem 0.5rem;
+    border: 1px dashed var(--ilhas-gray);
+    border-radius: var(--ilhas-radius-pill);
+    font-family: var(--ilhas-font-body);
+    font-size: 0.625rem;
+    color: var(--ilhas-text);
+    white-space: nowrap;
+    cursor: help;
+  }
+</style>

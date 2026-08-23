@@ -2,9 +2,50 @@
 
 ## Regla general
 
-Las imágenes viven **en este repositorio**, en `public/assets/`. Son pocas y así se controlan: sin CDN externo, sin dependencias de terceros, sin peticiones fuera del dominio. Eso también es parte de la política de seguridad — ver `06-stack-y-seguridad.md`.
+Las imágenes viven **en este repositorio**. Son pocas y así se controlan: sin CDN externo, sin dependencias de terceros, sin peticiones fuera del dominio. Eso también es parte de la política de seguridad — ver `06-stack-y-seguridad.md`.
 
 Se sirven optimizadas con `astro:assets` (AVIF/WebP con fallback), con `width`/`height` explícitos para no provocar layout shift, y con `alt` real cuando la imagen aporta contenido.
+
+**Dónde va cada cosa:**
+
+| Carpeta | Qué | Por qué ahí |
+|---|---|---|
+| `src/assets/media/capturas/` | Capturas de pantalla | Pasa por `astro:assets`: genera AVIF/WebP y calcula dimensiones |
+| `src/assets/media/fotos/` | Fotos de conferencias | Igual |
+| `src/assets/equipo/` | Recortes del equipo | Igual |
+| `src/assets/iconos/` | SVG monocromos | Se inlinean para heredar `currentColor` |
+| `public/assets/video/` | Loops, clips, pósters y `.vtt` | El video **no** pasa por Vite: se sirve tal cual, ya exportado |
+| `public/assets/logo/` | Logo y favicon | Se referencian por ruta fija |
+
+### La misma regla, extendida al video
+
+Mismos criterios que las imágenes —en el repo, en tu dominio, sin terceros—, con estos topes (`PLAN-MEDIOS.md` Parte 3):
+
+| Tipo | Duración | Peso | Formato |
+|---|---|---|---|
+| **Loop mudo** (los "GIFs") | 8-15 s | `.webm` ≤ 800 KB · `.mp4` ≤ 1.5 MB | `<video autoplay muted loop playsinline>` |
+| **Clip con voz** | 60-90 s | ≤ 12 MB | `<video controls preload="none">` + `.es.vtt` |
+| **Video completo** | 5-40 min | — | YouTube, **enlazado**, nunca incrustado |
+
+Reglas que no se rompen:
+
+- **Ningún video de la página pasa de 90 segundos.** Los completos viven en YouTube y desde el sitio se enlazan. Eso es lo que hace que hospedar el video propio sea gratis y no un problema.
+- **Nada de `.gif`.** Un GIF de 10 s pesa 8-15 MB; el mismo clip en WebM pesa 300-800 KB. Cuando alguien diga "GIF", produce un `<video>`.
+- **Todo clip con voz lleva su `.es.vtt`.** Sin subtítulos no se publica.
+- **Todo video lleva póster** (`.jpg`, ≤ 200 KB) y dimensiones o `aspect-ratio`, para no provocar salto de layout.
+- Exporta con `-movflags +faststart` y `-pix_fmt yuv420p`, o no reproduce bien. Las recetas están en `medios/recetas.md`.
+
+**Antes de publicar cualquier captura**, revisa que no traiga rutas con tu usuario, nombres de clientes, RFC, API keys, correos ni cifras de un cliente identificable. Es la misma disciplina de `06-stack-y-seguridad.md` aplicada a los píxeles.
+
+### El sistema de ranuras
+
+El sitio declara **ranuras** con nombre en `src/data/medios.ts`; tú dejas caer el archivo con ese nombre exacto en la carpeta que le toca y aparece solo, sin tocar código. Una ranura vacía **no pinta nada en producción**.
+
+```bash
+npm run medios     # qué falta, qué pesa de más, qué no tiene atribución
+```
+
+Ver `medios/LEEME.md` para cómo opera y `medios/CHECKLIST.md` para el archivo, la carpeta y el peso de cada uno.
 
 ---
 
@@ -69,12 +110,22 @@ Notas de uso:
 - No les pongas sombra dura ni contorno. Si necesitas separarlos del fondo, usa una superficie detrás (tarjeta blanca con `--ilhas-shadow-soft`), no un efecto sobre la persona.
 - El `alt` describe a la persona, no la foto: `alt="Jorge Sierra"`.
 
+## Testimoniales — desbloqueados, con condición
+
+**Ya existen dos casos reales** (`PLAN-MEDIOS.md` Parte 1, bloque I): el cotizador de una empresa de oncología y los agentes de despiece, optimización y cotización. El bloque de testimoniales de `/soluciones` **ya no está bloqueado por falta de material** — está condicionado a la atribución.
+
+**La regla:** un testimonio va con **nombre y rol**, o con **rol y sector** si el permiso es parcial (*"Director de operaciones, empresa de manufactura"*). Lo que nunca va es un testimonio sin nadie detrás. Regla 5 de `CLAUDE.md`, y este público lo huele.
+
+Está forzado en código, no solo escrito aquí: los datos se llenan en el campo `atribucion` de `src/data/medios.ts`, y **`Testimonio.astro` lanza un error de build si hay material sin atribución**. Es a propósito — hace estructuralmente imposible repetir el error del `index.html` viejo.
+
+Si por ahora solo hay testimonio en texto, también sirve: se llenan `atribucion` + `texto` y no hace falta video.
+
 ## Lo que hace falta y todavía no existe
 
 | Asset | Bloquea | Nota |
 |---|---|---|
-| **Logos de clientes reales** | `/soluciones` | Solo si hay permiso de usarlos. **Si no hay, el bloque no se publica** — nada de "Empresa 1…8" |
-| **Testimoniales en video** | Prueba social, cualquier página | Jorge planeaba grabar entrevistas de 15 min a clientes de Ilhas y a asesorados de su papá. Hasta que existan, no hay bloque de testimoniales |
+| **Logos de clientes reales** | `/soluciones` | Solo si hay permiso de usarlos. **Si no hay, el bloque no se publica** — nada de "Empresa 1…8". La captura del producto es tuya; el logo del cliente no |
+| **Permiso escrito de los dos testimonios** | `/soluciones` §Testimonios | El material existe; falta el permiso de usar nombre, rol y empresa |
 
 ---
 

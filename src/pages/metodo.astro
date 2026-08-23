@@ -1,6 +1,20 @@
 ---
 import Base from "../layouts/Base.astro";
 import Bifurcacion from "../components/Bifurcacion.astro";
+import Captura from "../components/medios/Captura.astro";
+import Loop from "../components/medios/Loop.astro";
+import VideoClip from "../components/medios/VideoClip.astro";
+import { mostrar } from "../lib/medios";
+
+// §07 "No son prompts": las cuatro capturas del sistema de agentes. Es la
+// única prueba de la afirmación que da título a la sección — el bloque más
+// importante de todo el plan de medios.
+const capturasPrompts = [
+  { id: "metodo-prompts-01", marco: "navegador" as const },
+  { id: "metodo-prompts-02", marco: "navegador" as const },
+  { id: "metodo-prompts-03", marco: "terminal" as const },
+  { id: "metodo-prompts-04", marco: "navegador" as const },
+];
 
 const pasos = [
   {
@@ -148,6 +162,16 @@ const principios = [
             </tbody>
           </table>
         </div>
+
+        {/* El diagrama del proceso completo, debajo de la tabla que
+            describe los mismos cinco pasos. */}
+        {
+          mostrar("metodo-timeline") && (
+            <div class="metodo-timeline">
+              <Captura id="metodo-timeline" ancho={1100} />
+            </div>
+          )
+        }
       </div>
     </section>
 
@@ -163,6 +187,15 @@ const principios = [
           verbo, mismo trabajo. Aplicado a tus números, es lo que convierte
           costos, precios y márgenes sueltos en un solo criterio de decisión.
         </p>
+
+        {/* La prueba va DESPUÉS de la afirmación (regla 3 de curaduría). */}
+        {
+          mostrar("metodo-hilar-clip") && (
+            <div class="metodo-clip">
+              <VideoClip id="metodo-hilar-clip" />
+            </div>
+          )
+        }
       </div>
     </section>
 
@@ -192,33 +225,57 @@ const principios = [
 
     <!-- 07 · No son prompts -->
     <section class="section-y">
-      <div class="container prose reveal">
-        <p class="kicker">Cómo se usa en la práctica</p>
-        <h2>No son prompts. Es reingeniería del trabajo.</h2>
-        <p>
-          Esto no es una colección de prompts que copias y pegas. El
-          organigrama clásico — personas asignadas a tareas — ya no es el
-          mapa correcto. El mapa correcto es el proceso: qué entra, qué sale,
-          y qué de eso genera dinero. Rediseñas eso, y la IA ejecuta la parte
-          que ya decidiste tú.
-        </p>
+      <div class="container">
+        <div class="prose reveal">
+          <p class="kicker">Cómo se usa en la práctica</p>
+          <h2>No son prompts. Es reingeniería del trabajo.</h2>
+          <p>
+            Esto no es una colección de prompts que copias y pegas. El
+            organigrama clásico — personas asignadas a tareas — ya no es el
+            mapa correcto. El mapa correcto es el proceso: qué entra, qué sale,
+            y qué de eso genera dinero. Rediseñas eso, y la IA ejecuta la parte
+            que ya decidiste tú.
+          </p>
+        </div>
+
+        {/* Las cuatro capturas del sistema de agentes. La afirmación
+            literal de la sección es "esto no son prompts": estas capturas
+            son la única forma de probarlo. */}
+        {
+          mostrar(...capturasPrompts.map((c) => c.id)) && (
+            <div class="prompts">
+              {capturasPrompts.map((c) => <Captura id={c.id} marco={c.marco} ancho={640} />)}
+            </div>
+          )
+        }
       </div>
     </section>
 
     <!-- 08 · BYOS → BYOA -->
     <section class="section-y bg-white">
-      <div class="container prose reveal">
-        <p class="kicker">A dónde llegas</p>
-        <h2>
-          Llegas con tu hoja de cálculo. Sales con tu propio equipo de
-          agentes.
-        </h2>
-        <p>
-          Empiezas resolviendo con lo que ya tienes: un Excel, un Sheets, tu
-          criterio. Terminas con algo distinto — un ecosistema de agentes de
-          IA que trabaja para ti, diseñado por ti. No llegas a tu empresa a
-          pedir herramientas. Llegas con el sistema ya armado.
-        </p>
+      <div class="container">
+        <div class="prose reveal">
+          <p class="kicker">A dónde llegas</p>
+          <h2>
+            Llegas con tu hoja de cálculo. Sales con tu propio equipo de
+            agentes.
+          </h2>
+          <p>
+            Empiezas resolviendo con lo que ya tienes: un Excel, un Sheets, tu
+            criterio. Terminas con algo distinto — un ecosistema de agentes de
+            IA que trabaja para ti, diseñado por ti. No llegas a tu empresa a
+            pedir herramientas. Llegas con el sistema ya armado.
+          </p>
+        </div>
+
+        {/* "Varios agentes en paralelo" es abstracto hasta que se ve. */}
+        {
+          mostrar("metodo-agentes-loop") && (
+            <div class="metodo-loop">
+              <Loop id="metodo-agentes-loop" />
+            </div>
+          )
+        }
       </div>
     </section>
 
@@ -270,6 +327,33 @@ const principios = [
 
   #pasos .prose {
     margin-bottom: 2.5rem;
+  }
+
+  /* --- Ranuras de medios ---
+     Todos estos contenedores están vacíos hoy: sin archivo, el componente no
+     pinta nada en producción y el margen de arriba no llega a aplicarse
+     porque no hay caja. */
+  .metodo-timeline,
+  .metodo-clip,
+  .metodo-loop {
+    margin-top: 2.5rem;
+  }
+
+  .metodo-clip,
+  .metodo-loop {
+    max-width: 48rem;
+  }
+
+  .prompts {
+    display: grid;
+    gap: 1.5rem;
+    margin-top: 2.5rem;
+  }
+
+  @media (min-width: 768px) {
+    .prompts {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
   }
 
   .metodo-tabla table {

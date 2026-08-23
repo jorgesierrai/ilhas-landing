@@ -2,6 +2,11 @@
 import { Image } from "astro:assets";
 import Base from "../layouts/Base.astro";
 import TarjetaPersona from "../components/TarjetaPersona.astro";
+import Captura from "../components/medios/Captura.astro";
+import Icono from "../components/medios/Icono.astro";
+import Loop from "../components/medios/Loop.astro";
+import VideoClip from "../components/medios/VideoClip.astro";
+import { mostrar } from "../lib/medios";
 import relojIcon from "../assets/icons/reloj.png";
 import fotoPapa from "../assets/equipo/jorge-papa.png";
 import fotoHijo from "../assets/equipo/jorge-hijo.png";
@@ -32,15 +37,19 @@ const maestros = [
 ];
 
 const puedes = [
-  "Análisis de estados financieros con razones",
-  "Flujo de efectivo",
-  "Modelos y proyecciones",
-  "Presupuesto y control de gestión",
-  "Conciliaciones",
-  "Dashboard sin licencias caras",
-  "Valuación, TIR y VAN",
-  "Reportes que se actualizan solos",
+  { texto: "Análisis de estados financieros con razones", icono: "icono-cap-estados" },
+  { texto: "Flujo de efectivo", icono: "icono-cap-flujo" },
+  { texto: "Modelos y proyecciones", icono: "icono-cap-modelos" },
+  { texto: "Presupuesto y control de gestión", icono: "icono-cap-presupuesto" },
+  { texto: "Conciliaciones", icono: "icono-cap-conciliaciones" },
+  { texto: "Dashboard sin licencias caras", icono: "icono-cap-dashboard" },
+  { texto: "Valuación, TIR y VAN", icono: "icono-cap-valuacion" },
+  { texto: "Reportes que se actualizan solos", icono: "icono-cap-reportes" },
 ];
+
+// Las mismas capturas del mercado laboral que el home, como respaldo del
+// "es para ti" — un archivo, dos páginas.
+const capturasMercado = ["home-mercado-01", "home-mercado-02", "home-mercado-03"];
 
 const esParaTi = [
   "Eres analista, contador, controller, consultor, auditor, tesorero o FP&A — en una empresa o por tu cuenta.",
@@ -109,7 +118,9 @@ const faqs = [
           </a>
         </div>
         <div class="hero-split__visual" aria-hidden="true">
-          <Image src={relojIcon} alt="" width="280" height="280" />
+          <Loop id="finanzas-hero-loop" ratio="1 / 1">
+            <Image src={relojIcon} alt="" width="280" height="280" />
+          </Loop>
         </div>
       </div>
     </section>
@@ -119,7 +130,14 @@ const faqs = [
       <div class="container">
         <h2 class="reveal">Esto es lo que vas a poder hacer</h2>
         <ul class="puedes">
-          {puedes.map((item) => <li class="card hover-lift reveal">{item}</li>)}
+          {
+            puedes.map((item) => (
+              <li class="card hover-lift reveal">
+                <Icono id={item.icono} />
+                <span>{item.texto}</span>
+              </li>
+            ))
+          }
         </ul>
       </div>
     </section>
@@ -141,6 +159,15 @@ const faqs = [
             </ul>
           </div>
         </div>
+
+        {/* El respaldo del "es para ti": lo que el mercado pide hoy. */}
+        {
+          mostrar(...capturasMercado) && (
+            <div class="mercado">
+              {capturasMercado.map((id) => <Captura id={id} ancho={640} />)}
+            </div>
+          )
+        }
       </div>
     </section>
 
@@ -170,6 +197,15 @@ const faqs = [
           40 años de fundamento financiero, más 12 años construyendo con
           IA — el método que aprendes en 6 semanas.
         </p>
+
+        {/* Identidad, no oferta: que no mencione temario, precio ni bonos. */}
+        {
+          mostrar("finanzas-edificacion") && (
+            <div class="maestros__clip">
+              <VideoClip id="finanzas-edificacion" />
+            </div>
+          )
+        }
       </div>
     </section>
 
@@ -230,6 +266,11 @@ const faqs = [
   }
 
   .puedes li {
+    /* flex para que el ícono quede junto al texto. Con la ranura del ícono
+       vacía el <li> solo tiene el <span>, y se ve igual que antes. */
+    display: flex;
+    align-items: flex-start;
+    gap: 0.625rem;
     padding: 0.875rem 1rem;
     font-family: var(--ilhas-font-body);
     font-weight: 500;
@@ -293,6 +334,19 @@ const faqs = [
     }
   }
 
+  /* --- 03 · las capturas del mercado laboral (vacías hoy) --- */
+  .mercado {
+    display: grid;
+    gap: 1.25rem;
+    margin-top: 2.5rem;
+  }
+
+  @media (min-width: 768px) {
+    .mercado {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+
   /* --- 04 · quién lo enseña --- */
   .maestros {
     display: grid;
@@ -320,6 +374,11 @@ const faqs = [
     .maestros {
       grid-template-columns: repeat(2, minmax(0, 1fr));
     }
+  }
+
+  .maestros__clip {
+    margin-top: 2rem;
+    max-width: 48rem;
   }
 
   /* --- 05 · CTA único --- */

@@ -1,0 +1,99 @@
+---
+/**
+ * Loop mudo — el reemplazo del "GIF" (PLAN-MEDIOS.md Parte 3: un GIF de 10 s
+ * pesa 8-15 MB; el mismo clip en WebM pesa 300-800 KB).
+ *
+ * Decorativo por definición: va `aria-hidden` y sin controles. Si un video
+ * necesita que lo escuchen o que lo controlen, no es un loop — es un VideoClip.
+ */
+import { porId } from "../../data/medios";
+import { hayMedio, rutaVideo, rutaPoster } from "../../lib/medios";
+import Ranura from "./Ranura.astro";
+
+/**
+ * Respaldo: lo que se pone como hijo (`<slot />`) se pinta mientras la ranura
+ * esté vacía. Así el hero no se queda con una columna hueca en producción
+ * antes de que exista el loop — se queda el ícono de hoy, y el día que llegue
+ * el `.webm` el loop lo sustituye solo.
+ */
+interface Props {
+  id: string;
+  /** Proporción de la caja, para reservar el espacio y no provocar salto de layout. */
+  ratio?: string;
+}
+
+const { id, ratio = "16 / 10" } = Astro.props;
+
+const slot = porId(id);
+if (!slot) throw new Error(`Loop: no existe la ranura "${id}" en src/data/medios.ts`);
+
+const listo = hayMedio(id);
+const webm = rutaVideo(id, "webm");
+const mp4 = rutaVideo(id, "mp4");
+const poster = rutaPoster(id);
+---
+
+{
+  listo ? (
+    <div class="loop" style={`--loop-ratio: ${ratio}`}>
+      {/*
+        Dos elementos, uno solo visible: el CSS de abajo decide cuál, según
+        prefers-reduced-motion. Es la única forma de respetar esa preferencia
+        sin JavaScript, y la CSP prohíbe <script> inline
+        (docs/06-stack-y-seguridad.md).
+      */}
+      <video
+        class="loop__video"
+        autoplay
+        muted
+        loop
+        playsinline
+        preload="metadata"
+        poster={poster ?? undefined}
+        aria-hidden="true"
+        tabindex="-1"
+      >
+        {webm && <source src={webm} type="video/webm" />}
+        {mp4 && <source src={mp4} type="video/mp4" />}
+      </video>
+      {poster && <img class="loop__poster" src={poster} alt="" aria-hidden="true" />}
+    </div>
+  ) : (
+    <>
+      <slot />
+      <Ranura slot={slot} />
+    </>
+  )
+}
+
+<style>
+  .loop {
+    position: relative;
+    aspect-ratio: var(--loop-ratio);
+    overflow: hidden;
+    border-radius: var(--ilhas-radius-card);
+    background: var(--ilhas-light);
+  }
+
+  .loop__video,
+  .loop__poster {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  /* Por defecto se ve el video y el póster está oculto. */
+  .loop__poster {
+    display: none;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .loop__video {
+      display: none;
+    }
+
+    .loop__poster {
+      display: block;
+    }
+  }
+</style>

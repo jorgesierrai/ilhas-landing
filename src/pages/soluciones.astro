@@ -1,7 +1,21 @@
 ---
 import { Image } from "astro:assets";
 import Base from "../layouts/Base.astro";
+import Loop from "../components/medios/Loop.astro";
+import TarjetaCaso from "../components/medios/TarjetaCaso.astro";
+import Testimonio from "../components/medios/Testimonio.astro";
+import { mostrar } from "../lib/medios";
 import iaCaminoIcon from "../assets/icons/ia-camino.png";
+
+const testimonios = [
+  "soluciones-testimonio-oncologia",
+  "soluciones-testimonio-despiece",
+];
+
+// La sección de testimonios no existe en producción mientras no haya material
+// (docs/05-assets.md lo tenía bloqueado por eso). En dev sí, para ver las
+// ranuras.
+const hayTestimonios = mostrar(...testimonios);
 
 // Misma tabla de linaje que docs/02-paginas.md ya documenta para esta página
 // (Biblia de Producto §2). Aquí se lee como portafolio de soluciones para
@@ -10,30 +24,36 @@ import iaCaminoIcon from "../assets/icons/ia-camino.png";
 const casos = [
   {
     producto: "Stampay",
+    capturaId: "producto-stampay",
     resolvio:
       "Conciliación bancaria automática (SAT/CFDI ↔ movimientos). Eliminó un proceso manual de 2–3 días por cierre.",
   },
   {
     producto: "Nomcont",
+    capturaId: "producto-nomcont",
     resolvio:
       "Reemplazó hojas de cálculo dispersas por un ledger estructurado y auditable.",
   },
   {
     producto: "Cometa · AI Data Concierge",
+    capturaId: "producto-cometa",
     resolvio:
       "Interfaz en lenguaje natural sobre la base financiera: “¿cuánto entró hoy?” → respuesta al instante.",
   },
   {
     producto: "Nomada",
+    capturaId: "producto-nomada",
     resolvio: "HRIS y nómina construidos desde cero.",
   },
   {
     producto: "Paystand",
+    capturaId: "producto-paystand",
     resolvio:
       "AR/AP en pagos B2B: Smart Lockbox y Spend Card, dos productos construidos de cero a uno.",
   },
   {
     producto: "Factumizer",
+    capturaId: "producto-factumizer",
     resolvio:
       "Automatización de facturas CFDI, de idea a producción en menos de una semana.",
   },
@@ -65,7 +85,9 @@ const diagnosticoUrl = "mailto:hola@ilhas.ai?subject=Quiero%20un%20diagn%C3%B3st
           </a>
         </div>
         <div class="hero-split__visual" aria-hidden="true">
-          <Image src={iaCaminoIcon} alt="" width="280" height="280" />
+          <Loop id="soluciones-hero-loop" ratio="1 / 1">
+            <Image src={iaCaminoIcon} alt="" width="280" height="280" />
+          </Loop>
         </div>
       </div>
     </section>
@@ -97,15 +119,36 @@ const diagnosticoUrl = "mailto:hola@ilhas.ai?subject=Quiero%20un%20diagn%C3%B3st
         <ul class="casos">
           {
             casos.map((caso) => (
-              <li class="hover-lift reveal">
-                <p class="casos__producto">{caso.producto}</p>
-                <p class="casos__resolvio">{caso.resolvio}</p>
-              </li>
+              <TarjetaCaso
+                producto={caso.producto}
+                resolvio={caso.resolvio}
+                capturaId={caso.capturaId}
+              />
             ))
           }
         </ul>
       </div>
     </section>
+
+    {/* § nueva · Testimonios — no existe en producción mientras no haya
+        material. Los dos casos reales son los activos más caros de este
+        carril y los más delicados: van con atribución o no van. */}
+    {
+      hayTestimonios && (
+        <section class="section-y-sm">
+          <div class="container">
+            <div class="section-head reveal">
+              <p class="kicker">Testimonios</p>
+              <h2>Lo que dicen los que ya lo hicieron.</h2>
+            </div>
+
+            <div class="testimonios">
+              {testimonios.map((id) => <Testimonio id={id} />)}
+            </div>
+          </div>
+        </section>
+      )
+    }
 
     <!-- 04 · CTA de diagnóstico -->
     <section class="section-y bg-white">
@@ -166,26 +209,6 @@ const diagnosticoUrl = "mailto:hola@ilhas.ai?subject=Quiero%20un%20diagn%C3%B3st
     margin-top: 1.75rem;
   }
 
-  .casos li {
-    padding: 1.5rem;
-    background: var(--ilhas-white);
-    border: 1px solid var(--ilhas-gray);
-    border-radius: var(--ilhas-radius-card);
-    box-shadow: var(--ilhas-shadow-soft);
-  }
-
-  .casos__producto {
-    font-family: var(--ilhas-font-display);
-    font-weight: 600;
-    color: var(--ilhas-dark);
-  }
-
-  .casos__resolvio {
-    margin-top: 0.5rem;
-    font-size: 0.9375rem;
-    color: var(--ilhas-text);
-  }
-
   @media (min-width: 640px) {
     .casos {
       grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -195,6 +218,19 @@ const diagnosticoUrl = "mailto:hola@ilhas.ai?subject=Quiero%20un%20diagn%C3%B3st
   @media (min-width: 1024px) {
     .casos {
       grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+
+  /* --- § testimonios --- */
+  .testimonios {
+    display: grid;
+    gap: 1.5rem;
+    margin-top: 1.75rem;
+  }
+
+  @media (min-width: 768px) {
+    .testimonios {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
     }
   }
 

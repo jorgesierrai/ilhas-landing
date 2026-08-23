@@ -1,0 +1,519 @@
+/**
+ * Manifiesto de medios — la lista de todas las ranuras del sitio.
+ *
+ * Fuente de verdad: `medios/CHECKLIST.md` (qué archivo, qué peso, qué carpeta)
+ * y `PLAN-MEDIOS.md` Parte 1 (qué objeción mata cada activo) + Parte 2 (dónde va).
+ *
+ * Cómo se llega a 41 ranuras desde las 36 casillas de material del checklist:
+ * un clip es UNA ranura aunque sean tres archivos (`.mp4` + `.jpg` + `.es.vtt`),
+ * y las tres líneas de íconos traen 13 casillas en línea. 40 ranuras salen de
+ * las casillas; la 41 es `metodo-timeline`, que el checklist lista aparte en
+ * "ya existen en el repo" porque su archivo fuente ya estaba aquí.
+ *
+ * REGLA DEL NOMBRE: el `id` es el nombre del archivo sin extensión.
+ * Minúsculas, guiones medios, sin acentos, sin guiones bajos.
+ */
+
+export type TipoMedio = "loop" | "clip" | "captura" | "foto" | "icono";
+export type Pagina =
+  | "home"
+  | "metodo"
+  | "soluciones"
+  | "finanzas"
+  | "nosotros"
+  | "compartido";
+
+export interface Atribucion {
+  nombre: string;
+  rol: string;
+  empresa?: string;
+}
+
+export interface SlotMedio {
+  /** = nombre del archivo sin extensión. Minúsculas, guiones medios, sin acentos. */
+  id: string;
+  tipo: TipoMedio;
+  pagina: Pagina;
+  /** Etiqueta legible de la sección, p. ej. "§07 No son prompts" */
+  seccion: string;
+  prioridad: 1 | 2 | 3;
+  /** La objeción que mata, tomada de PLAN-MEDIOS.md. Documenta por qué existe la ranura. */
+  objecion: string;
+  /** alt real. Cadena vacía SOLO si el medio es puramente decorativo. */
+  alt: string;
+  caption?: string;
+  duracion?: string;
+  /** Máximo en KB. Lo usa scripts/medios-check.mjs. */
+  pesoMaxKB: number;
+  notas?: string;
+  /** Obligatorio cuando tipo === "clip" y la sección es de testimonios. */
+  atribucion?: Atribucion;
+  /** Alternativa al video en un testimonio: cita en texto. */
+  texto?: string;
+}
+
+/**
+ * Los `alt` y `caption` de aquí son BORRADOR (restricción 5 del brief de la
+ * iteración 1: el copy lo escribe Jorge). Describen lo que se espera ver para
+ * que la ranura sea usable el día que llegue el archivo — no son copy final.
+ */
+export const MEDIOS: SlotMedio[] = [
+  // ===================================================================
+  // PRIORIDAD 1 — ya existe el material, solo hay que exportarlo
+  // ===================================================================
+
+  // --- Capturas de producto (B/H) · se usan DOS veces: home §05 y /soluciones §03
+  {
+    id: "producto-stampay",
+    tipo: "captura",
+    pagina: "compartido",
+    seccion: "home §05 Linaje · /soluciones §03 Casos",
+    prioridad: 1,
+    objecion: "«¿Y tú qué has construido?» · «¿Tienes track record real?»",
+    alt: "Pantalla de conciliación bancaria automática de Stampay",
+    caption: "Stampay · conciliación bancaria automática",
+    pesoMaxKB: 400,
+    notas:
+      "1600 px de ancho, ratio 16:10. Tapa nombres de clientes, RFC y montos reales antes de exportar.",
+  },
+  {
+    id: "producto-nomcont",
+    tipo: "captura",
+    pagina: "compartido",
+    seccion: "home §05 Linaje · /soluciones §03 Casos",
+    prioridad: 1,
+    objecion: "«¿Y tú qué has construido?» · «¿Tienes track record real?»",
+    alt: "Ledger estructurado y auditable de Nomcont",
+    caption: "Nomcont · ledger estructurado",
+    pesoMaxKB: 400,
+    notas: "1600 px de ancho, ratio 16:10.",
+  },
+  {
+    id: "producto-cometa",
+    tipo: "captura",
+    pagina: "compartido",
+    seccion: "home §05 Linaje · /soluciones §03 Casos",
+    prioridad: 1,
+    objecion: "«¿Y tú qué has construido?» · «¿Tienes track record real?»",
+    alt: "Interfaz de lenguaje natural de Cometa respondiendo una pregunta sobre la base financiera",
+    caption: "Cometa · AI Data Concierge",
+    pesoMaxKB: 400,
+    notas: "Que se vea una pregunta real escrita. 1600 px de ancho.",
+  },
+  {
+    id: "producto-nomada",
+    tipo: "captura",
+    pagina: "compartido",
+    seccion: "home §05 Linaje · /soluciones §03 Casos",
+    prioridad: 1,
+    objecion: "«¿Y tú qué has construido?» · «¿Tienes track record real?»",
+    alt: "Pantalla del HRIS y nómina de Nomada",
+    caption: "Nomada · HRIS y nómina",
+    pesoMaxKB: 400,
+    notas: "1600 px de ancho, ratio 16:10.",
+  },
+  {
+    id: "producto-paystand",
+    tipo: "captura",
+    pagina: "compartido",
+    seccion: "home §05 Linaje · /soluciones §03 Casos",
+    prioridad: 1,
+    objecion: "«¿Y tú qué has construido?» · «¿Tienes track record real?»",
+    alt: "Pantalla de Smart Lockbox de Paystand",
+    caption: "Paystand · AR/AP en pagos B2B",
+    pesoMaxKB: 400,
+    notas: "Smart Lockbox o Spend Card. 1600 px de ancho.",
+  },
+  {
+    id: "producto-factumizer",
+    tipo: "captura",
+    pagina: "compartido",
+    seccion: "home §05 Linaje · /soluciones §03 Casos",
+    prioridad: 1,
+    objecion: "«¿Y tú qué has construido?» · «¿Tienes track record real?»",
+    alt: "Automatización de facturas CFDI en Factumizer",
+    caption: "Factumizer · automatización de CFDI",
+    pesoMaxKB: 400,
+    notas: "1600 px de ancho, ratio 16:10.",
+  },
+
+  // --- El sistema de agentes (A) · el bloque más importante de la lista
+  {
+    id: "metodo-prompts-01",
+    tipo: "captura",
+    pagina: "metodo",
+    seccion: "§07 No son prompts",
+    prioridad: 1,
+    objecion: "«Esto es teoría» · «Es puro prompt copiado»",
+    alt: "Estructura de carpetas de Claude con agentes, skills y comandos",
+    caption: "La estructura: agentes, skills y comandos",
+    pesoMaxKB: 400,
+    notas:
+      "Súbele el tamaño de fuente ANTES de capturar. Recorta al bloque que importa, no a la ventana entera.",
+  },
+  {
+    id: "metodo-prompts-02",
+    tipo: "captura",
+    pagina: "metodo",
+    seccion: "§07 No son prompts",
+    prioridad: 1,
+    objecion: "«Esto es teoría» · «Es puro prompt copiado»",
+    alt: "Flujo de trabajo completo de un agente, de entrada a salida",
+    caption: "El flujo completo, de entrada a salida",
+    pesoMaxKB: 400,
+    notas: "Súbele el tamaño de fuente antes de capturar.",
+  },
+  {
+    id: "metodo-prompts-03",
+    tipo: "captura",
+    pagina: "metodo",
+    seccion: "§07 No son prompts",
+    prioridad: 1,
+    objecion: "«Esto es teoría» · «Es puro prompt copiado»",
+    alt: "Terminal con una herramienta del agente ejecutándose",
+    caption: "La herramienta corriendo",
+    pesoMaxKB: 400,
+    notas: "Marco 'terminal'. Súbele el tamaño de fuente antes de capturar.",
+  },
+  {
+    id: "metodo-prompts-04",
+    tipo: "captura",
+    pagina: "metodo",
+    seccion: "§07 No son prompts",
+    prioridad: 1,
+    objecion: "«Esto es teoría» · «Es puro prompt copiado»",
+    alt: "Reporte generado automáticamente por el sistema de agentes",
+    caption: "El resultado que salió solo",
+    pesoMaxKB: 400,
+    notas: "1600 px de ancho.",
+  },
+
+  // --- La entrevista de radio 2018 (E) · el activo más fuerte del inventario
+  {
+    id: "nosotros-radio-2018",
+    tipo: "clip",
+    pagina: "nosotros",
+    seccion: "§ Autoridad",
+    prioridad: 1,
+    objecion: "«Llegaste con la ola» ← la objeción más cara",
+    alt: "Entrevista en Radio Imagen, 2018, hablando de inteligencia artificial",
+    caption: "Radio Imagen · 2018",
+    duracion: "45-60 s",
+    pesoMaxKB: 8192,
+    notas:
+      "Elige el tramo donde hablas de hacia dónde va la IA, no donde te presentan. El año va en el diseño, no quemado en el video. 1280 px de ancho.",
+  },
+
+  // ===================================================================
+  // PRIORIDAD 2 — hay que grabar, cortar o pedir permiso
+  // ===================================================================
+
+  // --- Los dos testimonios (I) · sección nueva en /soluciones
+  {
+    id: "soluciones-testimonio-oncologia",
+    tipo: "clip",
+    pagina: "soluciones",
+    seccion: "§ Testimonios",
+    prioridad: 2,
+    objecion: "«¿Le funcionó a alguien más?»",
+    alt: "Testimonio en video sobre el cotizador construido para una empresa de oncología",
+    duracion: "60-90 s",
+    pesoMaxKB: 12288,
+    notas:
+      "SIN ATRIBUCIÓN NO SE PUBLICA. Llena `atribucion` con el permiso por escrito. Si el permiso es parcial: rol y sector, sin nombre de empresa. Si por ahora solo hay cita en texto, llena `atribucion` + `texto` y no hace falta video.",
+  },
+  {
+    id: "soluciones-testimonio-despiece",
+    tipo: "clip",
+    pagina: "soluciones",
+    seccion: "§ Testimonios",
+    prioridad: 2,
+    objecion: "«¿Le funcionó a alguien más?»",
+    alt: "Testimonio en video sobre los agentes de despiece, optimización y cotización",
+    duracion: "60-90 s",
+    pesoMaxKB: 12288,
+    notas:
+      "SIN ATRIBUCIÓN NO SE PUBLICA. Mismas reglas que el testimonio de oncología.",
+  },
+
+  // --- Tu historia (G) · sección nueva en /nosotros
+  {
+    id: "nosotros-historia-01",
+    tipo: "clip",
+    pagina: "nosotros",
+    seccion: "§ La historia",
+    prioridad: 2,
+    objecion: "«¿Por qué padre e hijo?» · «¿Por qué finanzas?»",
+    alt: "Jorge Sierra contando cómo tomó el camino de la tecnología y el producto",
+    caption: "Quién eres",
+    duracion: "60-90 s",
+    pesoMaxKB: 12288,
+    notas: "Corte del podcast: «Yo tomé otro camino: 12 años construyendo tecnología y productos».",
+  },
+  {
+    id: "nosotros-historia-02",
+    tipo: "clip",
+    pagina: "nosotros",
+    seccion: "§ La historia",
+    prioridad: 2,
+    objecion: "«¿Por qué padre e hijo?» · «¿Por qué finanzas?»",
+    alt: "Jorge Sierra contando que arrancó una empresa de inteligencia artificial en 2016",
+    caption: "El ancla de años",
+    duracion: "60-90 s",
+    pesoMaxKB: 12288,
+    notas: "Corte del podcast: «En 2016 arranqué una empresa de inteligencia artificial».",
+  },
+  {
+    id: "nosotros-historia-03",
+    tipo: "clip",
+    pagina: "nosotros",
+    seccion: "§ La historia",
+    prioridad: 2,
+    objecion: "«¿Por qué padre e hijo?» · «¿Por qué finanzas?»",
+    alt: "Jorge Sierra contando cómo le propuso a su papá automatizar su conocimiento con IA",
+    caption: "El origen de Ilhas",
+    duracion: "60-90 s",
+    pesoMaxKB: 12288,
+    notas:
+      "El más importante de los tres: es la razón de existir del negocio y hoy no está escrita en ninguna página.",
+  },
+
+  // --- Conferencia (D)
+  {
+    id: "nosotros-conferencia",
+    tipo: "foto",
+    pagina: "nosotros",
+    seccion: "§ Autoridad",
+    prioridad: 2,
+    objecion: "«¿Quién eres tú para enseñar?»",
+    alt: "Jorge Sierra dando una conferencia de inteligencia artificial ante público",
+    caption: "Conferencia de IA",
+    pesoMaxKB: 500,
+    notas: "2400 px de ancho. Que se vea el público, no solo el ponente.",
+  },
+  {
+    id: "nosotros-conferencia-clip",
+    tipo: "clip",
+    pagina: "nosotros",
+    seccion: "§ Autoridad",
+    prioridad: 2,
+    objecion: "«¿Quién eres tú para enseñar?»",
+    alt: "Fragmento de una conferencia de inteligencia artificial",
+    duracion: "45 s",
+    pesoMaxKB: 12288,
+    notas: "Opcional si la foto de conferencia es buena.",
+  },
+
+  // ===================================================================
+  // PRIORIDAD 3 — cuando el resto esté arriba
+  // ===================================================================
+
+  // --- Loops mudos (A)
+  {
+    id: "home-hero-loop",
+    tipo: "loop",
+    pagina: "home",
+    seccion: "§01 Hero",
+    prioridad: 3,
+    objecion: "«Esto es teoría» · «Es puro prompt copiado»",
+    alt: "",
+    duracion: "8-15 s",
+    pesoMaxKB: 1536,
+    notas:
+      "Un agente corriendo: terminal + dashboard actualizándose. webm ≤ 800 KB · mp4 ≤ 1.5 MB · póster .jpg obligatorio. Decorativo: aria-hidden.",
+  },
+  {
+    id: "soluciones-hero-loop",
+    tipo: "loop",
+    pagina: "soluciones",
+    seccion: "§01 Qué resolvemos",
+    prioridad: 3,
+    objecion: "«Esto es teoría» · «Es puro prompt copiado»",
+    alt: "",
+    duracion: "8-15 s",
+    pesoMaxKB: 1536,
+    notas: "El producto en movimiento. webm ≤ 800 KB · mp4 ≤ 1.5 MB · póster .jpg obligatorio.",
+  },
+  {
+    id: "finanzas-hero-loop",
+    tipo: "loop",
+    pagina: "finanzas",
+    seccion: "§01 El dolor",
+    prioridad: 3,
+    objecion: "«Esto es teoría» · «Es puro prompt copiado»",
+    alt: "",
+    duracion: "8-15 s",
+    pesoMaxKB: 1536,
+    notas:
+      "Un análisis financiero ejecutándose. NO el VSL (regla 1 de CLAUDE.md). webm ≤ 800 KB · mp4 ≤ 1.5 MB.",
+  },
+  {
+    id: "metodo-agentes-loop",
+    tipo: "loop",
+    pagina: "metodo",
+    seccion: "§08 A dónde llegas",
+    prioridad: 3,
+    objecion: "«Esto es teoría» · «Es puro prompt copiado»",
+    alt: "",
+    duracion: "8-15 s",
+    pesoMaxKB: 1536,
+    notas:
+      "Varios agentes trabajando en paralelo. La frase de la sección es abstracta hasta que se ve. webm ≤ 800 KB · mp4 ≤ 1.5 MB.",
+  },
+
+  // --- El paso joya en video (A)
+  {
+    id: "metodo-hilar-clip",
+    tipo: "clip",
+    pagina: "metodo",
+    seccion: "§05 Hilar, el paso joya",
+    prioridad: 3,
+    objecion: "«Esto es teoría»",
+    alt: "Jorge Sierra explicando el paso Hilar del método I·L·H·A·S",
+    duracion: "60-90 s",
+    pesoMaxKB: 12288,
+    notas:
+      "Es el punto de mayor densidad conceptual del sitio: merece cara y voz. Sale del podcast o se graba a propósito.",
+  },
+
+  // --- El mercado laboral (C) · se usa dos veces: home §02 y /finanzas §03
+  {
+    id: "home-mercado-01",
+    tipo: "captura",
+    pagina: "compartido",
+    seccion: "home §02 El hueco · /finanzas §03 Es para ti si",
+    prioridad: 3,
+    objecion: "«¿De verdad lo necesito?» · «¿No es moda?»",
+    alt: "Vacante de Data Scientist con inteligencia artificial entre las habilidades requeridas",
+    caption: "Lo que hoy se le pide a un Data Scientist",
+    pesoMaxKB: 400,
+    notas:
+      "Recorta a la lista de skills, no a la vacante completa. Tapa el nombre de la empresa salvo que sea pública y relevante.",
+  },
+  {
+    id: "home-mercado-02",
+    tipo: "captura",
+    pagina: "compartido",
+    seccion: "home §02 El hueco · /finanzas §03 Es para ti si",
+    prioridad: 3,
+    objecion: "«¿De verdad lo necesito?» · «¿No es moda?»",
+    alt: "Vacante de Product Manager con inteligencia artificial entre las habilidades requeridas",
+    caption: "Lo que hoy se le pide a un Product Manager",
+    pesoMaxKB: 400,
+    notas: "Recorta a la lista de skills. Tapa el nombre de la empresa.",
+  },
+  {
+    id: "home-mercado-03",
+    tipo: "captura",
+    pagina: "compartido",
+    seccion: "home §02 El hueco · /finanzas §03 Es para ti si",
+    prioridad: 3,
+    objecion: "«¿De verdad lo necesito?» · «¿No es moda?»",
+    alt: "Vacante de Diseñador con inteligencia artificial entre las habilidades requeridas",
+    caption: "Lo que hoy se le pide a un Diseñador",
+    pesoMaxKB: 400,
+    notas: "Recorta a la lista de skills. Tapa el nombre de la empresa.",
+  },
+
+  // --- Edificación papá-hijo (J)
+  {
+    id: "finanzas-edificacion",
+    tipo: "clip",
+    pagina: "finanzas",
+    seccion: "§04 Quién lo enseña",
+    prioridad: 3,
+    objecion: "«¿Los dos de verdad trabajan juntos?»",
+    alt: "Jorge Sierra papá y Jorge Sierra hijo hablando de su trabajo en conjunto",
+    duracion: "60-90 s",
+    pesoMaxKB: 12288,
+    notas:
+      "IDENTIDAD, NO OFERTA: que no mencione temario, precio ni bonos. El VSL no va en el sitio (regla 1 de CLAUDE.md).",
+  },
+
+  // --- Íconos de los cinco pasos (F) · home §03
+  ...(
+    [
+      ["i", "Identificar"],
+      ["l", "Levantamiento"],
+      ["h", "Hilar"],
+      ["a", "Accionar"],
+      ["s", "Sistematizar"],
+    ] as const
+  ).map(
+    ([letra, paso]): SlotMedio => ({
+      id: `icono-paso-${letra}`,
+      tipo: "icono",
+      pagina: "home",
+      seccion: "§03 Los cinco pasos",
+      prioridad: 3,
+      objecion: "(no mata objeción — es sistema visual)",
+      // Decorativo: el nombre del paso ya va como texto al lado.
+      alt: "",
+      pesoMaxKB: 8,
+      notas: `Paso ${letra.toUpperCase()} · ${paso}. SVG monocromo, stroke="currentColor", lienzo 24×24, sin fill fijo.`,
+    }),
+  ),
+
+  // --- Íconos de las ocho capacidades (F) · /finanzas §02
+  ...(
+    [
+      ["estados", "Análisis de estados financieros con razones"],
+      ["flujo", "Flujo de efectivo"],
+      ["modelos", "Modelos y proyecciones"],
+      ["presupuesto", "Presupuesto y control de gestión"],
+      ["conciliaciones", "Conciliaciones"],
+      ["dashboard", "Dashboard sin licencias caras"],
+      ["valuacion", "Valuación, TIR y VAN"],
+      ["reportes", "Reportes que se actualizan solos"],
+    ] as const
+  ).map(
+    ([clave, capacidad]): SlotMedio => ({
+      id: `icono-cap-${clave}`,
+      tipo: "icono",
+      pagina: "finanzas",
+      seccion: "§02 Las ocho capacidades",
+      prioridad: 3,
+      objecion: "(no mata objeción — es sistema visual)",
+      // Decorativo: la capacidad ya va como texto en el chip.
+      alt: "",
+      pesoMaxKB: 8,
+      notas: `${capacidad}. SVG monocromo, stroke="currentColor", lienzo 24×24, sin fill fijo.`,
+    }),
+  ),
+
+  // ===================================================================
+  // Ranura 41 — su archivo fuente ya vivía en el repo
+  // ===================================================================
+  {
+    id: "metodo-timeline",
+    tipo: "captura",
+    pagina: "metodo",
+    seccion: "§04 I·L·H·A·S paso por paso",
+    prioridad: 1,
+    objecion: "«Esto es teoría»",
+    alt: "Diagrama del proceso completo del método I·L·H·A·S, de Identificar a Sistematizar",
+    caption: "El método completo, de principio a fin",
+    pesoMaxKB: 400,
+    notas:
+      "Copiado de public/assets/ilhas-iconografia/full-timeline.png, que está en .gitignore. La copia en src/assets/media/capturas/ sí se commitea, para que pase por astro:assets.",
+  },
+];
+
+// --- Helpers de consulta ---------------------------------------------------
+
+/**
+ * Ranuras de una página. OJO: no incluye las de `pagina: "compartido"`
+ * (las capturas de producto y las del mercado laboral), que por diseño viven
+ * en dos páginas a la vez. Pídelas por id con `porId`.
+ */
+export function porPagina(p: Pagina): SlotMedio[] {
+  return MEDIOS.filter((m) => m.pagina === p);
+}
+
+export function porId(id: string): SlotMedio | undefined {
+  return MEDIOS.find((m) => m.id === id);
+}
+
+export function porPrioridad(n: 1 | 2 | 3): SlotMedio[] {
+  return MEDIOS.filter((m) => m.prioridad === n);
+}
