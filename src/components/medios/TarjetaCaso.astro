@@ -1,13 +1,17 @@
 ---
 /**
- * Tarjeta de producto — reemplaza el marcado de `.linaje li` en el home y de
+ * Tarjeta de construcción — el marcado de `.linaje li` en el home y de
  * `.casos li` en /soluciones. Un archivo, dos páginas: las mismas seis
  * capturas `producto-*` se usan en los dos lugares.
  *
- * Si la ranura de la captura está vacía, la tarjeta se ve como hoy: nombre del
- * producto + qué resolvió. Seis nombres no prueban nada; seis pantallas sí
- * (PLAN-MEDIOS.md Parte 2) — pero mientras la pantalla no exista, el texto
- * solo sigue siendo válido.
+ * Se titula por **lo que resuelve**, no por el nombre del producto
+ * (`medios/BRIEF-historial.md` §2). La marca y el año van como línea
+ * secundaria, y son opcionales de facto: los productos bajo NDA pasan solo
+ * el año.
+ *
+ * Si la ranura de la captura está vacía, la tarjeta se ve solo con texto.
+ * Seis nombres no prueban nada; seis pantallas sí (PLAN-MEDIOS.md Parte 2) —
+ * pero mientras la pantalla no exista, el texto solo sigue siendo válido.
  *
  * Regla de PLAN-MEDIOS.md §Casos: la captura del producto es tuya; el logo del
  * cliente no. Sin permiso escrito no va el logo — pero la pantalla sí.
@@ -17,13 +21,16 @@ import { mostrar } from "../../lib/medios";
 import Captura from "./Captura.astro";
 
 interface Props {
-  producto: string;
-  resolvio: string;
+  /** Lo que resuelve. Es el titular de la tarjeta. */
+  titulo: string;
+  /** Qué hizo, en concreto. */
+  detalle?: string;
+  /** Línea secundaria: marca y año. Solo el año cuando hay NDA. */
+  marca?: string;
   capturaId?: string;
-  sector?: string;
 }
 
-const { producto, resolvio, capturaId, sector } = Astro.props;
+const { titulo, detalle, marca, capturaId } = Astro.props;
 
 // Falla temprano si alguien escribe mal el id, en vez de callar la captura.
 if (capturaId && !porId(capturaId)) {
@@ -41,9 +48,9 @@ if (capturaId && !porId(capturaId)) {
       </div>
     )
   }
-  <p class="tarjeta-caso__producto">{producto}</p>
-  {sector && <p class="tarjeta-caso__sector">{sector}</p>}
-  <p class="tarjeta-caso__resolvio">{resolvio}</p>
+  <p class="tarjeta-caso__titulo">{titulo}</p>
+  {marca && <p class="tarjeta-caso__marca">{marca}</p>}
+  {detalle && <p class="tarjeta-caso__detalle">{detalle}</p>}
 </li>
 
 <style>
@@ -55,36 +62,38 @@ if (capturaId && !porId(capturaId)) {
     margin-bottom: 1.25rem;
   }
 
-  .tarjeta-caso__producto {
+  .tarjeta-caso__titulo {
     font-family: var(--ilhas-font-display);
     font-weight: 600;
     color: var(--ilhas-dark);
   }
 
-  .tarjeta-caso__sector {
+  .tarjeta-caso__marca {
     margin-top: 0.25rem;
     font-family: var(--ilhas-font-body);
     font-size: var(--ilhas-fs-small);
     color: var(--ilhas-primary);
   }
 
-  .tarjeta-caso__resolvio {
-    margin-top: 0.375rem;
+  .tarjeta-caso__detalle {
+    margin-top: 0.625rem;
     font-size: 0.9375rem;
     color: var(--ilhas-text);
   }
 
   /* Sobre sección oscura, el texto se invierte. `.bg-dark .card` de base.css
      ya cambia el fondo de la tarjeta; aquí van los colores del texto. */
-  :global(.bg-dark) .tarjeta-caso__producto {
+  :global(.bg-dark) .tarjeta-caso__titulo {
     color: var(--ilhas-white);
   }
 
-  :global(.bg-dark) .tarjeta-caso__resolvio {
+  :global(.bg-dark) .tarjeta-caso__detalle {
     color: rgba(248, 250, 255, 0.7);
   }
 
-  :global(.bg-dark) .tarjeta-caso__sector {
+  /* --ilhas-primary mide ~3.6:1 sobre --ilhas-dark y falla AA para texto
+     pequeño. El cian de marca mide ~13:1. */
+  :global(.bg-dark) .tarjeta-caso__marca {
     color: var(--ilhas-grad-start);
   }
 </style>

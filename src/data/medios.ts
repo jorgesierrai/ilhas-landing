@@ -77,16 +77,17 @@ export const MEDIOS: SlotMedio[] = [
       "1600 px de ancho, ratio 16:10. Tapa nombres de clientes, RFC y montos reales antes de exportar.",
   },
   {
-    id: "producto-nomcont",
+    id: "producto-cobranza",
     tipo: "captura",
     pagina: "compartido",
     seccion: "home §05 Linaje · /soluciones §03 Casos",
     prioridad: 1,
     objecion: "«¿Y tú qué has construido?» · «¿Tienes track record real?»",
-    alt: "Ledger estructurado y auditable de Nomcont",
-    caption: "Nomcont · ledger estructurado",
+    alt: "Tablero de cobranza automática con la razón por la que falló cada cargo",
+    caption: "Cobranza automática con reglas · 2026",
     pesoMaxKB: 400,
-    notas: "1600 px de ancho, ratio 16:10.",
+    notas:
+      "Renombrada desde su id anterior: la etiqueta vieja no correspondía a lo que muestra la captura. Jorge tiene los derechos de la imagen (confirmado 24 ago 2026). El alt describe la pantalla por su función, igual que el título de la tarjeta.",
   },
   {
     id: "producto-cometa",
@@ -125,16 +126,17 @@ export const MEDIOS: SlotMedio[] = [
     notas: "Smart Lockbox o Spend Card. 1600 px de ancho.",
   },
   {
-    id: "producto-factumizer",
+    id: "producto-pagos-intl",
     tipo: "captura",
     pagina: "compartido",
     seccion: "home §05 Linaje · /soluciones §03 Casos",
     prioridad: 1,
     objecion: "«¿Y tú qué has construido?» · «¿Tienes track record real?»",
-    alt: "Automatización de facturas CFDI en Factumizer",
-    caption: "Factumizer · automatización de CFDI",
+    alt: "Tablero de operaciones de pago con el estado de cada cobro internacional",
+    caption: "Clasificación de pagos internacionales con agentes · 2026",
     pesoMaxKB: 400,
-    notas: "1600 px de ancho, ratio 16:10.",
+    notas:
+      "Renombrada desde su id anterior: la etiqueta vieja no correspondía a lo que muestra la captura. Jorge tiene los derechos de la imagen (confirmado 24 ago 2026). El alt describe la pantalla por su función, igual que el título de la tarjeta.",
   },
 
   // --- El sistema de agentes (A) · el bloque más importante de la lista

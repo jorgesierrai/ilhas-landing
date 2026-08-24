@@ -5,6 +5,7 @@ import Loop from "../components/medios/Loop.astro";
 import TarjetaCaso from "../components/medios/TarjetaCaso.astro";
 import Testimonio from "../components/medios/Testimonio.astro";
 import { mostrar } from "../lib/medios";
+import { PRODUCTOS } from "../data/productos";
 import iaCaminoIcon from "../assets/icons/ia-camino.png";
 
 const testimonios = [
@@ -17,47 +18,6 @@ const testimonios = [
 // ranuras.
 const hayTestimonios = mostrar(...testimonios);
 
-// Misma tabla de linaje que docs/02-paginas.md ya documenta para esta página
-// (Biblia de Producto §2). Aquí se lee como portafolio de soluciones para
-// empresas, no como credibilidad de un curso de finanzas — por eso el copy
-// de contexto es distinto al del home, aunque los hechos son los mismos.
-const casos = [
-  {
-    producto: "Stampay",
-    capturaId: "producto-stampay",
-    resolvio:
-      "Conciliación bancaria automática (SAT/CFDI ↔ movimientos). Eliminó un proceso manual de 2–3 días por cierre.",
-  },
-  {
-    producto: "Nomcont",
-    capturaId: "producto-nomcont",
-    resolvio:
-      "Reemplazó hojas de cálculo dispersas por un ledger estructurado y auditable.",
-  },
-  {
-    producto: "Cometa · AI Data Concierge",
-    capturaId: "producto-cometa",
-    resolvio:
-      "Interfaz en lenguaje natural sobre la base financiera: “¿cuánto entró hoy?” → respuesta al instante.",
-  },
-  {
-    producto: "Nomada",
-    capturaId: "producto-nomada",
-    resolvio: "HRIS y nómina construidos desde cero.",
-  },
-  {
-    producto: "Paystand",
-    capturaId: "producto-paystand",
-    resolvio:
-      "AR/AP en pagos B2B: Smart Lockbox y Spend Card, dos productos construidos de cero a uno.",
-  },
-  {
-    producto: "Factumizer",
-    capturaId: "producto-factumizer",
-    resolvio:
-      "Automatización de facturas CFDI, de idea a producción en menos de una semana.",
-  },
-];
 
 const diagnosticoUrl = "mailto:hola@ilhas.ai?subject=Quiero%20un%20diagn%C3%B3stico";
 ---
@@ -118,11 +78,12 @@ const diagnosticoUrl = "mailto:hola@ilhas.ai?subject=Quiero%20un%20diagn%C3%B3st
 
         <ul class="casos">
           {
-            casos.map((caso) => (
+            PRODUCTOS.map((p) => (
               <TarjetaCaso
-                producto={caso.producto}
-                resolvio={caso.resolvio}
-                capturaId={caso.capturaId}
+                titulo={p.titulo}
+                detalle={p.detalle}
+                marca={p.marca}
+                capturaId={p.capturaId}
               />
             ))
           }
