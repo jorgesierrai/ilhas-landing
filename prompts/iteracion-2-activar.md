@@ -6,7 +6,9 @@
 
 ## Contexto
 
-Lee primero: `medios/LEEME.md`, `medios/CHECKLIST.md`, `PLAN-MEDIOS.md` (Partes 2 y 5) y `CLAUDE.md`.
+Lee primero: `medios/LEEME.md`, `medios/CHECKLIST.md`, `PLAN-MEDIOS.md` (Partes 2 y 5), `medios/ESTADO.md` y `CLAUDE.md`.
+
+**Y para la sección de radio de `/nosotros`, lee `medios/BRIEF-autoridad-radio.md`** — trae el layout ya aprobado por Jorge, los textos exactos, la liga y las specs del video vertical. No lo reinventes: está decidido.
 
 La Iteración 1 dejó el sistema montado y las ranuras colocadas. Ahora hay material real adentro. **El trabajo de esta iteración no es agregar ranuras: es que el sitio se vea bien con el contenido real puesto.**
 
@@ -20,6 +22,8 @@ Corre `npm run medios` y trabaja solo sobre lo que está en verde.
 
 - Las secciones nuevas envueltas en `hayMedio()` ya se encienden solas. Verifica que **cada una tenga su encabezado escrito** — kicker, H2 y, donde aplique, un párrafo. Si el copy todavía no existe, déjalo con un TODO visible en el código, **nunca en el HTML generado**.
 - Las secciones que sigan sin material se quedan apagadas. No las fuerces ni las llenes con otra cosa.
+- **`/nosotros` § Autoridad ya tiene material** (`nosotros-radio-2018`). Constrúyela siguiendo `medios/BRIEF-autoridad-radio.md` al pie de la letra, incluida la decisión pendiente que el brief marca sobre la segunda cita.
+- **`/soluciones` § Testimonios sigue apagada** y es correcto: `Testimonio.astro` revienta el build a propósito si hay material sin `atribucion`. No desactives esa validación por ninguna razón.
 
 ---
 
@@ -27,7 +31,7 @@ Corre `npm run medios` y trabaja solo sobre lo que está en verde.
 
 Revisa a **1440, 768 y 390 px** y corrige:
 
-1. **Alturas desiguales.** Las capturas de producto no van a tener todas el mismo alto real. Fija `aspect-ratio` en la tarjeta y `object-fit: cover` para que la rejilla no quede rasgada.
+1. **Alturas desiguales — esto ya está medido y va a pasar.** Las seis capturas de producto tienen ratios reales de **0.46, 1.56, 1.58, 1.84, 1.85 y 2.24** (`producto-cometa` es la vertical y es el peor caso). En reja de tres columnas van a quedar rasgadas. Fija `aspect-ratio: 16 / 10` en la tarjeta con `object-fit: cover` y `object-position` ajustado por captura, de modo que el recorte caiga sobre la zona que importa de cada una. No redimensiones los archivos: el recorte lo hace el CSS.
 2. **El peso visual del loop del hero.** Si el ojo se va al video antes que al titular, el loop está mal puesto: bájale el tamaño, quítale contraste o muévelo abajo del pliegue. **Regla 6 de la Parte 5 de `PLAN-MEDIOS.md`.**
 3. **La rejilla de `/metodo` §07.** Cuatro capturas de terminal juntas se convierten en ruido gris si se escalan mucho. Considera 2×2 con `figcaption` visible en vez de 4 en fila.
 4. **Los pósters de video.** Verifica que ninguno cause salto de layout: todo `<video>` con `aspect-ratio` declarado.

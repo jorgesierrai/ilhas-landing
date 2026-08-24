@@ -220,7 +220,12 @@ export const MEDIOS: SlotMedio[] = [
     duracion: "60-90 s",
     pesoMaxKB: 12288,
     notas:
-      "SIN ATRIBUCIÓN NO SE PUBLICA. Llena `atribucion` con el permiso por escrito. Si el permiso es parcial: rol y sector, sin nombre de empresa. Si por ahora solo hay cita en texto, llena `atribucion` + `texto` y no hace falta video.",
+      "Atribución tomada de lo que ella misma dice en cámara (segundo 0-5). Nombre de empresa confirmado por Jorge el 24 ago 2026.",
+    atribucion: {
+      nombre: "Irlanda Morgan",
+      rol: "Directora de operaciones",
+      empresa: "Morgan Centro de Alta Especialidad",
+    },
   },
   {
     id: "soluciones-testimonio-despiece",
@@ -233,7 +238,12 @@ export const MEDIOS: SlotMedio[] = [
     duracion: "60-90 s",
     pesoMaxKB: 12288,
     notas:
-      "SIN ATRIBUCIÓN NO SE PUBLICA. Mismas reglas que el testimonio de oncología.",
+      "Atribución dada por Jorge (24 ago 2026). VERIFICAR si «Extrusión de Aleaciones» es la empresa o el área.",
+    atribucion: {
+      nombre: "Jesús Flores",
+      rol: "Gerente de Operaciones",
+      empresa: "Extrusión de Aleaciones",
+    },
   },
 
   // --- Tu historia (G) · sección nueva en /nosotros

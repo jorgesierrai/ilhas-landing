@@ -149,3 +149,7 @@ dist/
 # versiones optimizadas que sí se usan viven en src/assets/.
 public/assets/fotos/
 public/assets/ilhas-iconografia/
+
+# Material crudo de video: nunca se commitea (GitHub bloquea >100 MB por archivo)
+_material-crudo/
+*.mov
