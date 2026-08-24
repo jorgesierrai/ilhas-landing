@@ -69,9 +69,28 @@ Si el hosting es otro (Vercel, S3+CloudFront), traduce las mismas cabeceras a su
 
 > ⚠️ La CSP de arriba es estricta a propósito: **`script-src 'self'` sin `unsafe-inline`**. Eso significa **cero `<script>` inline y cero `onclick=` en el HTML**. Si algo necesita JS, va en un archivo `.js` propio. Si más adelante entra un pixel de Meta o Google Analytics, hay que añadir su dominio explícitamente y documentar por qué — no aflojar la política entera.
 
+### El video y la CSP
+
+La CSP **no declara `media-src`**, así que el video hereda de `default-src 'self'`. Las consecuencias exactas, hoy:
+
+- ✅ Un `<video>` servido **desde nuestro propio dominio** funciona sin tocar nada. Es lo que hace `public/assets/video/`.
+- ❌ Un iframe de **YouTube o Vimeo está bloqueado por completo** — no es que se vea mal: no carga. Tampoco hay `frame-src`, y `frame-ancestors 'none'` + `X-Frame-Options: DENY` van en la misma dirección.
+- ❌ Un `<video>` apuntando a **cualquier dominio externo** también está bloqueado.
+
+O sea: el sitio ya está configurado para servir nuestro propio video y para rechazar el de todos los demás. **No hay que tocar la CSP para agregar video propio.**
+
+**El día que la biblioteca se mude a `media.ilhas.ai`** (Cloudflare R2, cuando pase de ~250 MB — ver `PLAN-MEDIOS.md` Parte 3), el diff es exactamente este:
+
+```diff
+- default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; …
++ default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data: https://media.ilhas.ai; media-src 'self' https://media.ilhas.ai; …
+```
+
+Sigue sin haber player de terceros: es nuestro `<video>` nativo apuntando a nuestro subdominio. **Lo que no se hace es incrustar YouTube o Vimeo**: obliga a abrir `frame-src`, mete su interfaz y sus recomendados dentro de la página, y tira el Lighthouse que este documento pone como requisito.
+
 ### Reglas de código
 
-- **Nada de `set:html`** con contenido que no sea literal escrito en el repo. Sin excepción.
+- **Nada de `set:html`** con contenido que no sea literal escrito en el repo. La única excepción viva son los SVG de `src/assets/iconos/`, que se inlinean para heredar `currentColor`: son literales del repo, leídos en build time, nunca de red ni de input de usuario. A cambio, **ningún SVG entra a esa carpeta sin abrirse en un editor y revisarse a mano** — un SVG puede traer `<script>` o `on*=` adentro. `npm run medios` avisa si detecta alguno, pero la revisión es humana.
 - Todo enlace externo: `rel="noopener noreferrer"`. Los enlaces a `eventos.ilhas.ai` también.
 - **Ningún formulario en este sitio captura leads.** El registro al webinar es de Go High Level y vive allá. Si algún día se agrega un formulario, no se procesa aquí.
 - Sin `eval`, sin `new Function`, sin `innerHTML` dinámico.

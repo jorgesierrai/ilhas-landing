@@ -2,15 +2,27 @@
 import { Image } from "astro:assets";
 import Base from "../layouts/Base.astro";
 import Bifurcacion from "../components/Bifurcacion.astro";
+import BandaAutoridad from "../components/medios/BandaAutoridad.astro";
+import Captura from "../components/medios/Captura.astro";
+import Icono from "../components/medios/Icono.astro";
+import Loop from "../components/medios/Loop.astro";
+import TarjetaCaso from "../components/medios/TarjetaCaso.astro";
+import { hayMedio, mostrar } from "../lib/medios";
 import dashboardIcon from "../assets/icons/dashboard.png";
 
 const pasos = [
-  { letra: "I", paso: "Identificar", linea: "Cómo se mueve el dinero y dónde se fuga." },
-  { letra: "L", paso: "Levantamiento", linea: "Traes el estándar de los mejores." },
-  { letra: "H", paso: "Hilar", linea: "Costos, precios y márgenes en un solo criterio." },
-  { letra: "A", paso: "Accionar", linea: "Decides con números, no con intuición." },
-  { letra: "S", paso: "Sistematizar", linea: "La IA como tu equipo, con alertas automáticas." },
+  { letra: "I", paso: "Identificar", linea: "Cómo se mueve el dinero y dónde se fuga.", icono: "icono-paso-i" },
+  { letra: "L", paso: "Levantamiento", linea: "Traes el estándar de los mejores.", icono: "icono-paso-l" },
+  { letra: "H", paso: "Hilar", linea: "Costos, precios y márgenes en un solo criterio.", icono: "icono-paso-h" },
+  { letra: "A", paso: "Accionar", linea: "Decides con números, no con intuición.", icono: "icono-paso-a" },
+  { letra: "S", paso: "Sistematizar", linea: "La IA como tu equipo, con alertas automáticas.", icono: "icono-paso-s" },
 ];
+
+const capturasMercado = ["home-mercado-01", "home-mercado-02", "home-mercado-03"];
+
+// La banda de autoridad se enciende con el clip de radio: es la prueba que la
+// sostiene. Hasta entonces el home queda como está hoy.
+const hayBanda = hayMedio("nosotros-radio-2018") || import.meta.env.DEV;
 
 const stats = [
   { dato: "6", contexto: "productos financieros construidos de cero a uno" },
@@ -23,29 +35,35 @@ const linaje = [
     producto: "Stampay",
     resolvio:
       "Conciliación bancaria automática. Eliminó un proceso manual de 2–3 días por cierre.",
+    capturaId: "producto-stampay",
   },
   {
     producto: "Nomcont",
     resolvio:
       "Reemplazó hojas de cálculo dispersas por un ledger estructurado y auditable.",
+    capturaId: "producto-nomcont",
   },
   {
     producto: "Cometa · AI Data Concierge",
     resolvio:
       "Preguntas en lenguaje natural sobre tu base financiera, respuesta al instante.",
+    capturaId: "producto-cometa",
   },
   {
     producto: "Nomada",
     resolvio: "HRIS y nómina construidos desde cero.",
+    capturaId: "producto-nomada",
   },
   {
     producto: "Paystand",
     resolvio: "AR/AP en pagos B2B: dos productos construidos de cero a uno.",
+    capturaId: "producto-paystand",
   },
   {
     producto: "Factumizer",
     resolvio:
       "Automatización de facturas CFDI, de idea a producción en menos de una semana.",
+    capturaId: "producto-factumizer",
   },
 ];
 ---
@@ -88,10 +106,28 @@ const linaje = [
           </p>
         </div>
         <div class="hero-split__visual" aria-hidden="true">
-          <Image src={dashboardIcon} alt="" width="380" height="380" />
+          <Loop id="home-hero-loop" ratio="1 / 1">
+            <Image src={dashboardIcon} alt="" width="380" height="380" />
+          </Loop>
         </div>
       </div>
     </section>
+
+    {/* Banda de autoridad — tira delgada, no una sección. Se enciende con
+        el clip de radio, que es la prueba que la sostiene. */}
+    {
+      hayBanda && (
+        <div class="container banda-autoridad">
+          <BandaAutoridad
+            items={[
+              { etiqueta: "Radio Imagen", año: "2018" },
+              { etiqueta: "Conferencias de IA" },
+              { etiqueta: "6 productos financieros construidos de cero a uno" },
+            ]}
+          />
+        </div>
+      )
+    }
 
     <!-- 02 · El hueco -->
     <section class="section-y-sm bg-white">
@@ -100,6 +136,16 @@ const linaje = [
           <p class="kicker">El hueco</p>
           <h2>El 95% de los proyectos de IA fracasa — y no es la tecnología.</h2>
         </div>
+
+        {/* Las capturas del mercado laboral: convierten el 95% de
+            estadística suelta en "mira lo que están pidiendo". */}
+        {
+          mostrar(...capturasMercado) && (
+            <div class="mercado">
+              {capturasMercado.map((id) => <Captura id={id} ancho={640} />)}
+            </div>
+          )
+        }
       </div>
     </section>
 
@@ -116,6 +162,7 @@ const linaje = [
             pasos.map((p) => (
               <li class="hover-lift reveal">
                 <span class="pasos-corto__letra">{p.letra}</span>
+                <Icono id={p.icono} />
                 <span class="pasos-corto__paso">{p.paso}</span>
                 <span class="pasos-corto__linea">{p.linea}</span>
               </li>
@@ -150,10 +197,11 @@ const linaje = [
         <ul class="linaje">
           {
             linaje.map((item) => (
-              <li class="card hover-lift reveal">
-                <p class="linaje__producto">{item.producto}</p>
-                <p class="linaje__resolvio">{item.resolvio}</p>
-              </li>
+              <TarjetaCaso
+                producto={item.producto}
+                resolvio={item.resolvio}
+                capturaId={item.capturaId}
+              />
             ))
           }
         </ul>
@@ -255,6 +303,26 @@ const linaje = [
     margin-top: 1.25rem;
   }
 
+  /* --- Banda de autoridad --- */
+  .banda-autoridad {
+    margin-top: 0.5rem;
+  }
+
+  /* --- 02 · las capturas del mercado laboral ---
+     Vacío hoy: sin archivos, .mercado no tiene hijos en producción y no
+     ocupa nada (el gap de un grid sin hijos no pinta). */
+  .mercado {
+    display: grid;
+    gap: 1.25rem;
+    margin-top: 2rem;
+  }
+
+  @media (min-width: 768px) {
+    .mercado {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+
   /* --- 03 · pasos versión corta --- */
   .pasos-corto {
     list-style: none;
@@ -334,32 +402,14 @@ const linaje = [
     }
   }
 
-  /* --- 05 · linaje --- */
+  /* --- 05 · linaje ---
+     El marcado y los colores de cada tarjeta viven en TarjetaCaso.astro
+     (incluido el claro-sobre-oscuro de .bg-dark). Aquí solo la rejilla. */
   .linaje {
     list-style: none;
     display: grid;
     gap: 1.5rem;
     margin-top: 2rem;
-  }
-
-
-  .linaje__producto {
-    font-family: var(--ilhas-font-display);
-    font-weight: 600;
-    color: var(--ilhas-dark);
-  }
-
-  .linaje__resolvio {
-    margin-top: 0.375rem;
-    font-size: 0.9375rem;
-    color: var(--ilhas-text);
-  }
-
-  /* Sección de fondo oscuro (R5 auditoría): --ilhas-text sobre
-     --ilhas-dark mide ~1.76:1, falla AA. Mismo claro-sobre-oscuro que
-     el resto de .bg-dark. */
-  .bg-dark .linaje__resolvio {
-    color: rgba(248, 250, 255, 0.7);
   }
 
   @media (min-width: 640px) {

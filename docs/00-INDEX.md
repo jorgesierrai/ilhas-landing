@@ -20,6 +20,19 @@ Si tratas los tres como si fueran igual de vigentes, vas a producir una mezcla i
 | `06-stack-y-seguridad.md` | Cómo se construye y cómo se protege | Vigente |
 | `marca/` | Cómo se **ve** Ilhas: color, tipografía, logo, layout | Sistema visual vigente · mensajería parcialmente superada |
 
+## Medios (video, capturas, íconos) — fuera de `docs/`
+
+El material visual tiene su propio cuerpo de documentación, en la raíz:
+
+| Archivo | Qué |
+|---|---|
+| `PLAN-MEDIOS.md` | Qué activo va en qué bloque y **qué objeción mata**. La decisión de fondo |
+| `medios/ESTADO.md` | **En qué quedó el trabajo**, qué decisiones se tomaron, qué falta. **Léelo si retomas el tema** |
+| `medios/LEEME.md` | Cómo opera el sistema de ranuras |
+| `medios/CHECKLIST.md` | Archivo por archivo: nombre exacto, carpeta, peso máximo |
+| `medios/recetas.md` | Los comandos de `ffmpeg` para exportar |
+| `prompts/iteracion-*.md` | Los briefs de cada iteración |
+
 ## Orden de precedencia
 
 Cuando dos documentos se contradigan, gana el de arriba:

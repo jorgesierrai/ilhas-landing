@@ -1,6 +1,9 @@
 ---
 import Base from "../layouts/Base.astro";
 import TarjetaPersona from "../components/TarjetaPersona.astro";
+import Captura from "../components/medios/Captura.astro";
+import VideoClip from "../components/medios/VideoClip.astro";
+import { mostrar } from "../lib/medios";
 import fotoPapa from "../assets/equipo/jorge-papa.png";
 import fotoHijo from "../assets/equipo/jorge-hijo.png";
 
@@ -33,6 +36,23 @@ const personas = [
     foto: fotoHijo,
   },
 ];
+
+// Tres cortes del podcast, no el episodio. El tercero es el origen de Ilhas
+// y hoy no está escrito en ninguna página del sitio.
+const historia = [
+  "nosotros-historia-01",
+  "nosotros-historia-02",
+  "nosotros-historia-03",
+];
+
+// Ninguna de las dos secciones nuevas existe en producción mientras no haya
+// material. En dev sí, para poder ver las ranuras.
+const hayHistoria = mostrar(...historia);
+const hayAutoridad = mostrar(
+  "nosotros-conferencia",
+  "nosotros-radio-2018",
+  "nosotros-conferencia-clip",
+);
 ---
 
 <Base
@@ -67,6 +87,62 @@ const personas = [
       </div>
     </div>
   </section>
+
+  {/* § nueva · La historia — tres cortes de 60-90 s del podcast. */}
+  {
+    hayHistoria && (
+      <section class="section-y">
+        <div class="container">
+          <div class="section-head reveal">
+            <p class="kicker">La historia</p>
+            <h2>De dónde sale Ilhas.</h2>
+          </div>
+
+          <div class="historia">
+            {historia.map((id) => <VideoClip id={id} />)}
+          </div>
+        </div>
+      </section>
+    )
+  }
+
+  {/* § nueva · Autoridad — la conferencia a ancho completo y la radio de
+      2018, con el año en tratamiento gráfico (regla 4 de curaduría: la
+      fecha es parte de la prueba). */}
+  {
+    hayAutoridad && (
+      <section class="section-y bg-dark">
+        <div class="container">
+          <div class="section-head reveal">
+            <p class="kicker">Autoridad</p>
+            <h2>Hablando de IA en radio nacional desde 2018.</h2>
+          </div>
+
+          {
+            mostrar("nosotros-conferencia") && (
+              <div class="autoridad__foto">
+                <Captura id="nosotros-conferencia" ancho={1100} />
+              </div>
+            )
+          }
+
+          {
+            mostrar("nosotros-radio-2018", "nosotros-conferencia-clip") && (
+              <div class="autoridad__clips">
+                {mostrar("nosotros-radio-2018") && (
+                  <div class="autoridad__radio">
+                    <p class="autoridad__anio">2018</p>
+                    <VideoClip id="nosotros-radio-2018" />
+                  </div>
+                )}
+                <VideoClip id="nosotros-conferencia-clip" />
+              </div>
+            )
+          }
+        </div>
+      </section>
+    )
+  }
 </Base>
 
 <style>
@@ -80,6 +156,37 @@ const personas = [
     gap: 1.5rem;
     max-width: 40rem;
     margin-inline: auto;
+  }
+
+  /* --- § la historia y § autoridad (vacías hoy) --- */
+  .historia,
+  .autoridad__clips {
+    display: grid;
+    gap: 1.5rem;
+    margin-top: 2rem;
+  }
+
+  .autoridad__foto {
+    margin-top: 2rem;
+  }
+
+  .autoridad__anio {
+    font-family: var(--ilhas-font-display);
+    font-weight: 600;
+    font-size: var(--ilhas-fs-stat);
+    line-height: 1;
+    color: var(--ilhas-grad-start);
+    margin-bottom: 0.75rem;
+  }
+
+  @media (min-width: 768px) {
+    .historia {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .autoridad__clips {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
   }
 
   @media (min-width: 640px) {

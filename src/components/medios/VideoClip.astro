@@ -1,0 +1,84 @@
+---
+/**
+ * Clip con voz — máximo 90 s (regla 5 de curaduría, PLAN-MEDIOS.md Parte 5).
+ *
+ * Nunca autoplay: tiene audio. `preload="none"` para que un clip de 12 MB no
+ * se descargue en cuanto alguien abre la página; el póster es lo que se ve
+ * hasta que el visitante decide reproducir.
+ */
+import { porId } from "../../data/medios";
+import { hayMedio, rutaVideo, rutaPoster, rutaSubtitulos } from "../../lib/medios";
+import Ranura from "./Ranura.astro";
+
+interface Props {
+  id: string;
+  titulo?: string;
+  ratio?: string;
+}
+
+const { id, titulo, ratio = "16 / 9" } = Astro.props;
+
+const slot = porId(id);
+if (!slot) throw new Error(`VideoClip: no existe la ranura "${id}" en src/data/medios.ts`);
+
+const listo = hayMedio(id);
+const mp4 = rutaVideo(id, "mp4");
+const poster = rutaPoster(id);
+const vtt = rutaSubtitulos(id);
+const etiqueta = titulo ?? slot.alt;
+---
+
+{
+  listo && mp4 ? (
+    <figure class="clip">
+      <video
+        class="clip__video"
+        controls
+        preload="none"
+        playsinline
+        poster={poster ?? undefined}
+        style={`--clip-ratio: ${ratio}`}
+        aria-label={etiqueta}
+      >
+        <source src={mp4} type="video/mp4" />
+        {vtt && (
+          <track kind="captions" src={vtt} srclang="es" label="Español" default />
+        )}
+      </video>
+      {(slot.caption || slot.duracion) && (
+        <figcaption class="clip__pie">
+          {slot.caption}
+          {slot.caption && slot.duracion && " · "}
+          {slot.duracion}
+        </figcaption>
+      )}
+    </figure>
+  ) : (
+    <Ranura slot={slot} />
+  )
+}
+
+<style>
+  .clip {
+    margin: 0;
+  }
+
+  .clip__video {
+    width: 100%;
+    aspect-ratio: var(--clip-ratio);
+    border-radius: var(--ilhas-radius-card);
+    background: var(--ilhas-dark);
+  }
+
+  .clip__pie {
+    margin-top: 0.75rem;
+    font-family: var(--ilhas-font-body);
+    font-size: var(--ilhas-fs-small);
+    color: var(--ilhas-text);
+  }
+
+  /* Sobre sección oscura --ilhas-text mide 1.76:1 y falla AA. */
+  :global(.bg-dark) .clip__pie {
+    color: rgba(248, 250, 255, 0.7);
+  }
+</style>

@@ -1,0 +1,255 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ilhas · Línea de tiempo (vista previa)</title>
+
+<!-- Fuentes self-hosted del repo. Rutas relativas desde medios/ -->
+<style>
+@font-face{font-family:"Space Grotesk";font-weight:600;font-display:swap;
+  src:url("../public/assets/fonts/space-grotesk-600.woff2") format("woff2")}
+@font-face{font-family:"Inter";font-weight:400;font-display:swap;
+  src:url("../public/assets/fonts/inter-400.woff2") format("woff2")}
+@font-face{font-family:"Inter";font-weight:500;font-display:swap;
+  src:url("../public/assets/fonts/inter-500.woff2") format("woff2")}
+@font-face{font-family:"Inter";font-weight:600;font-display:swap;
+  src:url("../public/assets/fonts/inter-600.woff2") format("woff2")}
+
+/* ── Tokens: copiados tal cual de src/styles/tokens.css ─────────────── */
+:root{
+  --ilhas-primary:#7A3CFF; --ilhas-primary-dark:#622ECC;
+  --ilhas-dark:#0E0E0F; --ilhas-text:#3C3C44; --ilhas-light:#F8FAFF;
+  --ilhas-gray:#E8ECF2; --ilhas-white:#FFF;
+  --ilhas-grad-start:#55E8FF; --ilhas-grad-mid:#8E5BFF; --ilhas-grad-end:#A14BFF;
+  --ilhas-gradient:linear-gradient(to top right,var(--ilhas-grad-start) 0%,var(--ilhas-grad-mid) 50%,var(--ilhas-grad-end) 100%);
+  --ilhas-font-display:"Space Grotesk",system-ui,sans-serif;
+  --ilhas-font-body:"Inter",system-ui,-apple-system,sans-serif;
+  --ilhas-tracking-display:-.02em;
+  --ilhas-fs-stat:clamp(1.875rem,4vw,3rem);
+  --ilhas-fs-small:.875rem;
+  --ilhas-radius-card:1.25rem;
+  --ilhas-container:1140px;
+  --ilhas-gutter:clamp(1.25rem,4vw,3rem);
+  /* Solo para superficie oscura — no son colores nuevos, son opacidades del blanco */
+  --sobre-oscuro:rgba(255,255,255,.68);
+  --linea-oscura:rgba(255,255,255,.12);
+}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:var(--ilhas-dark);color:var(--sobre-oscuro);
+  font-family:var(--ilhas-font-body);line-height:1.6;-webkit-font-smoothing:antialiased}
+.container{width:100%;max-width:var(--ilhas-container);margin-inline:auto;padding-inline:var(--ilhas-gutter)}
+.seccion{padding-block:clamp(3.5rem,6vw,5.5rem)}
+.kicker{font-family:var(--ilhas-font-body);font-weight:500;font-size:var(--ilhas-fs-small);
+  letter-spacing:.06em;text-transform:uppercase;color:var(--ilhas-grad-start);margin:0}
+h2{font-family:var(--ilhas-font-display);font-weight:600;color:var(--ilhas-white);
+  letter-spacing:var(--ilhas-tracking-display);line-height:1.05;
+  font-size:clamp(1.875rem,4vw,2.25rem);max-width:22ch;margin:.75rem 0 0}
+.lead{margin:1.25rem 0 0;max-width:60ch;font-size:1.0625rem}
+
+/* ── La línea ────────────────────────────────────────────────────────
+   Spine vertical. En desktop va al centro y las entradas alternan
+   izquierda (fundamento) / derecha (construcción). En móvil el spine
+   se va a la izquierda y todo cae a la derecha — sin cambiar el HTML. */
+.tl{position:relative;margin-top:3rem;list-style:none;padding:0}
+.tl::before{content:"";position:absolute;left:11px;top:0;bottom:0;width:2px;
+  background:linear-gradient(to bottom,
+    var(--ilhas-grad-start) 0%,
+    var(--ilhas-grad-mid) 22%,
+    var(--ilhas-grad-end) 38%,
+    var(--linea-oscura) 62%)}
+
+.hito{position:relative;padding-left:3rem;padding-bottom:2.75rem}
+.hito:last-child{padding-bottom:0}
+.nodo{position:absolute;left:4px;top:.55rem;width:16px;height:16px;border-radius:50%;
+  background:var(--ilhas-primary)}
+/* El nodo con prueba: relleno de gradiente, anillo y glow — el mismo
+   tratamiento que tenía el 2016 destacado en la versión de video. */
+.hito--prueba .nodo{left:0;top:.35rem;width:24px;height:24px;
+  background:var(--ilhas-gradient);
+  box-shadow:0 0 0 4px rgba(122,60,255,.25), 0 0 28px rgba(122,60,255,.55)}
+.hito--hoy .nodo{background:var(--ilhas-white)}
+
+.anio{font-family:var(--ilhas-font-display);font-weight:600;color:var(--ilhas-white);
+  letter-spacing:var(--ilhas-tracking-display);line-height:1;font-size:1.5rem;margin:0}
+.hito--prueba .anio{font-size:var(--ilhas-fs-stat);
+  text-shadow:0 0 32px rgba(122,60,255,.45)}
+.carril{display:inline-block;margin:.5rem 0 0;padding:.15rem .55rem;border-radius:999px;
+  font-size:.6875rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase}
+.carril--f{color:var(--ilhas-grad-start);background:rgba(85,232,255,.10)}
+.carril--c{color:#C4A6FF;background:rgba(122,60,255,.16)}
+.titulo{margin:.5rem 0 0;font-family:var(--ilhas-font-display);font-weight:600;
+  font-size:1.125rem;color:var(--ilhas-white);letter-spacing:var(--ilhas-tracking-display)}
+.detalle{margin:.375rem 0 0;font-size:.9375rem;max-width:46ch}
+.marca{margin:.375rem 0 0;font-size:.8125rem;color:rgba(255,255,255,.42)}
+
+/* Tarjeta de prueba: el video o la foto que cuelga del hito */
+.prueba{margin-top:1rem;max-width:420px;border-radius:var(--ilhas-radius-card);
+  overflow:hidden;border:1px solid var(--linea-oscura);background:rgba(255,255,255,.03)}
+.prueba video,.prueba img{display:block;width:100%;height:auto}
+.prueba--vertical{max-width:300px}
+.prueba figcaption{padding:.75rem 1rem;font-size:.8125rem;color:rgba(255,255,255,.5)}
+
+@media (min-width:900px){
+  .tl::before{left:50%;transform:translateX(-1px)}
+  .hito{width:50%;padding-left:0;padding-right:3rem;text-align:right}
+  .hito .nodo{left:auto;right:-8px}
+  .hito--prueba .nodo{right:-12px}
+  .hito .carril,.hito .prueba{margin-left:auto}
+  .hito .detalle{margin-left:auto}
+  .hito--c{margin-left:50%;padding-right:0;padding-left:3rem;text-align:left}
+  .hito--c .nodo{right:auto;left:-8px}
+  .hito--c.hito--prueba .nodo{left:-12px}
+  .hito--c .carril,.hito--c .prueba,.hito--c .detalle{margin-left:0;margin-right:auto}
+}
+</style>
+</head>
+<body>
+
+<section class="seccion">
+  <div class="container">
+    <p class="kicker">De dónde sale esto</p>
+    <h2>Once años metidos en esto, con recibos.</h2>
+    <p class="lead">
+      A la izquierda, lo que hemos entendido de la IA. A la derecha, lo que hemos
+      construido con ella — casi todo infraestructura financiera para fintechs.
+      Los tres hitos que brillan tienen video o foto: no es un relato, está grabado.
+      <!-- TODO copy · Jorge ajusta este párrafo -->
+    </p>
+
+    <ol class="tl">
+
+      <li class="hito hito--f">
+        <p class="anio">2014</p>
+        <span class="carril carril--f">Fundamento</span>
+        <p class="titulo">Especialidad en optimización y algoritmos ML</p>
+      </li>
+
+      <li class="hito hito--f">
+        <p class="anio">2016</p>
+        <span class="carril carril--f">Fundamento</span>
+        <p class="titulo">Investigación y desarrollo de algoritmos</p>
+        <p class="detalle">Organización de recursos y estimaciones.</p>
+        <p class="marca">Coophi</p>
+      </li>
+
+      <li class="hito hito--f">
+        <p class="anio">2017</p>
+        <span class="carril carril--f">Fundamento</span>
+        <p class="titulo">Procesamiento de lenguaje natural</p>
+        <p class="marca">Coophi</p>
+      </li>
+
+      <li class="hito hito--f hito--prueba">
+        <p class="anio">nov 2017</p>
+        <span class="carril carril--f">Fundamento</span>
+        <p class="titulo">Lo cuenta en un escenario</p>
+        <p class="detalle">Presenta Coophi y hacia dónde ve que va la IA.</p>
+        <figure class="prueba">
+          <video controls preload="none" playsinline
+                 poster="../public/assets/video/nosotros-conferencia-clip.jpg">
+            <source src="../public/assets/video/nosotros-conferencia-clip.mp4" type="video/mp4">
+            <track kind="captions" srclang="es" label="Español" default
+                   src="../public/assets/video/nosotros-conferencia-clip.es.vtt">
+          </video>
+          <figcaption>Conferencia · noviembre 2017 · 21 s</figcaption>
+        </figure>
+      </li>
+
+      <li class="hito hito--f hito--prueba">
+        <p class="anio">ene 2018</p>
+        <span class="carril carril--f">Fundamento</span>
+        <p class="titulo">Lo cuenta en radio nacional</p>
+        <p class="detalle">Imagen Radio · RMX. La nota se titula
+          «¿Buscas un asistente virtual?, conoce a Coophi».</p>
+        <figure class="prueba prueba--vertical">
+          <video controls preload="none" playsinline
+                 poster="../public/assets/video/nosotros-radio-2018.jpg">
+            <source src="../public/assets/video/nosotros-radio-2018.mp4" type="video/mp4">
+            <track kind="captions" srclang="es" label="Español" default
+                   src="../public/assets/video/nosotros-radio-2018.es.vtt">
+          </video>
+          <figcaption>Imagen Radio · enero 2018</figcaption>
+        </figure>
+      </li>
+
+      <li class="hito hito--f hito--prueba">
+        <p class="anio">abr 2018</p>
+        <span class="carril carril--f">Fundamento</span>
+        <p class="titulo">Talent Land</p>
+        <p class="detalle">Sala llena, hablando de cómo se construye IA.</p>
+        <figure class="prueba">
+          <img src="../src/assets/media/fotos/nosotros-conferencia.jpg"
+               alt="Jorge Sierra en el escenario de Talent Land ante una sala llena"
+               width="2400" height="1245" loading="lazy">
+          <figcaption>Talent Land · abril 2018</figcaption>
+        </figure>
+      </li>
+
+      <li class="hito hito--c">
+        <p class="anio">2018</p>
+        <span class="carril carril--c">Construcción</span>
+        <p class="titulo">HRIS y nómina desde cero</p>
+        <p class="marca">Nomada</p>
+      </li>
+
+      <li class="hito hito--c">
+        <p class="anio">2020</p>
+        <span class="carril carril--c">Construcción</span>
+        <p class="titulo">AR/AP en pagos B2B</p>
+        <p class="detalle">Smart Lockbox y Spend Card: dos productos de cero a uno.</p>
+        <p class="marca">Paystand</p>
+      </li>
+
+      <li class="hito hito--c">
+        <p class="anio">2022</p>
+        <span class="carril carril--c">Construcción</span>
+        <p class="titulo">Conciliación bancaria automática</p>
+        <p class="detalle">SAT/CFDI contra movimientos. Eliminó dos a tres días
+          de trabajo manual por cierre.</p>
+        <p class="marca">Stampay</p>
+      </li>
+
+      <li class="hito hito--f">
+        <p class="anio">2023</p>
+        <span class="carril carril--f">Fundamento</span>
+        <p class="titulo">ChatGPT 3 para contenido y product marketing</p>
+      </li>
+
+      <li class="hito hito--c">
+        <p class="anio">2025</p>
+        <span class="carril carril--c">Construcción</span>
+        <p class="titulo">Consultas en lenguaje natural sobre la base financiera</p>
+        <p class="detalle">«¿Cuánto entró hoy?» → respuesta al instante.</p>
+        <p class="marca">Cometa</p>
+      </li>
+
+      <li class="hito hito--c">
+        <p class="anio">2026</p>
+        <span class="carril carril--c">Construcción</span>
+        <p class="titulo">Clasificación de pagos internacionales con agentes</p>
+        <p class="detalle">Mide la tasa de aprobación real y detecta en qué paso
+          se atoran los cobros.</p>
+      </li>
+
+      <li class="hito hito--c">
+        <p class="anio">2026</p>
+        <span class="carril carril--c">Construcción</span>
+        <p class="titulo">Cobranza automática con reglas</p>
+        <p class="detalle">Diagnostica por qué falló el cargo; el agente decide
+          cuándo reintentar, a qué cuenta y con qué método.</p>
+      </li>
+
+      <li class="hito hito--f hito--hoy">
+        <p class="anio">2026</p>
+        <span class="carril carril--f">Fundamento</span>
+        <p class="titulo">Ilhas</p>
+        <p class="detalle">El método, destilado y apuntado al trabajo de otros.</p>
+      </li>
+
+    </ol>
+  </div>
+</section>
+
+</body>
+</html>

@@ -1,0 +1,90 @@
+---
+/**
+ * Tarjeta de producto — reemplaza el marcado de `.linaje li` en el home y de
+ * `.casos li` en /soluciones. Un archivo, dos páginas: las mismas seis
+ * capturas `producto-*` se usan en los dos lugares.
+ *
+ * Si la ranura de la captura está vacía, la tarjeta se ve como hoy: nombre del
+ * producto + qué resolvió. Seis nombres no prueban nada; seis pantallas sí
+ * (PLAN-MEDIOS.md Parte 2) — pero mientras la pantalla no exista, el texto
+ * solo sigue siendo válido.
+ *
+ * Regla de PLAN-MEDIOS.md §Casos: la captura del producto es tuya; el logo del
+ * cliente no. Sin permiso escrito no va el logo — pero la pantalla sí.
+ */
+import { porId } from "../../data/medios";
+import { mostrar } from "../../lib/medios";
+import Captura from "./Captura.astro";
+
+interface Props {
+  producto: string;
+  resolvio: string;
+  capturaId?: string;
+  sector?: string;
+}
+
+const { producto, resolvio, capturaId, sector } = Astro.props;
+
+// Falla temprano si alguien escribe mal el id, en vez de callar la captura.
+if (capturaId && !porId(capturaId)) {
+  throw new Error(
+    `TarjetaCaso: no existe la ranura "${capturaId}" en src/data/medios.ts`,
+  );
+}
+---
+
+<li class="tarjeta-caso card hover-lift reveal">
+  {
+    capturaId && mostrar(capturaId) && (
+      <div class="tarjeta-caso__captura">
+        <Captura id={capturaId} ancho={640} mostrarPie={false} />
+      </div>
+    )
+  }
+  <p class="tarjeta-caso__producto">{producto}</p>
+  {sector && <p class="tarjeta-caso__sector">{sector}</p>}
+  <p class="tarjeta-caso__resolvio">{resolvio}</p>
+</li>
+
+<style>
+  .tarjeta-caso {
+    list-style: none;
+  }
+
+  .tarjeta-caso__captura {
+    margin-bottom: 1.25rem;
+  }
+
+  .tarjeta-caso__producto {
+    font-family: var(--ilhas-font-display);
+    font-weight: 600;
+    color: var(--ilhas-dark);
+  }
+
+  .tarjeta-caso__sector {
+    margin-top: 0.25rem;
+    font-family: var(--ilhas-font-body);
+    font-size: var(--ilhas-fs-small);
+    color: var(--ilhas-primary);
+  }
+
+  .tarjeta-caso__resolvio {
+    margin-top: 0.375rem;
+    font-size: 0.9375rem;
+    color: var(--ilhas-text);
+  }
+
+  /* Sobre sección oscura, el texto se invierte. `.bg-dark .card` de base.css
+     ya cambia el fondo de la tarjeta; aquí van los colores del texto. */
+  :global(.bg-dark) .tarjeta-caso__producto {
+    color: var(--ilhas-white);
+  }
+
+  :global(.bg-dark) .tarjeta-caso__resolvio {
+    color: rgba(248, 250, 255, 0.7);
+  }
+
+  :global(.bg-dark) .tarjeta-caso__sector {
+    color: var(--ilhas-grad-start);
+  }
+</style>

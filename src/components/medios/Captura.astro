@@ -1,0 +1,122 @@
+---
+/**
+ * Captura de pantalla o foto, optimizada por astro:assets.
+ *
+ * El marco (ventana de navegador o de terminal) es CSS, nunca parte del PNG:
+ * así se puede cambiar sin reexportar y no se degrada al escalar.
+ * Igual las anotaciones — van en HTML, no quemadas en el pixel
+ * (PLAN-MEDIOS.md Parte 3), para que se lean con lector de pantalla.
+ */
+import { Image } from "astro:assets";
+import { porId } from "../../data/medios";
+import { buscarImagen } from "../../lib/medios";
+import Ranura from "./Ranura.astro";
+
+interface Props {
+  id: string;
+  marco?: "navegador" | "terminal" | "ninguno";
+  /** Ancho al que se sirve. El original se queda intacto. */
+  ancho?: number;
+  /** Sobrescribe el caption del manifiesto cuando la misma captura se usa en dos páginas. */
+  caption?: string;
+  /** `false` cuando el contexto ya nombra la captura (p. ej. dentro de TarjetaCaso). */
+  mostrarPie?: boolean;
+}
+
+const {
+  id,
+  marco = "ninguno",
+  ancho = 800,
+  caption,
+  mostrarPie = true,
+} = Astro.props;
+
+const slot = porId(id);
+if (!slot) throw new Error(`Captura: no existe la ranura "${id}" en src/data/medios.ts`);
+
+const imagen = buscarImagen(id);
+const pie = mostrarPie ? (caption ?? slot.caption) : undefined;
+---
+
+{
+  imagen ? (
+    <figure class="captura" data-marco={marco}>
+      <div class="captura__marco">
+        {marco !== "ninguno" && (
+          <div class="captura__barra" aria-hidden="true">
+            <span /><span /><span />
+          </div>
+        )}
+        <Image
+          src={imagen}
+          alt={slot.alt}
+          width={ancho}
+          class="captura__img"
+          loading="lazy"
+        />
+      </div>
+      {pie && <figcaption class="captura__pie">{pie}</figcaption>}
+    </figure>
+  ) : (
+    <Ranura slot={slot} />
+  )
+}
+
+<style>
+  .captura {
+    margin: 0;
+  }
+
+  .captura__marco {
+    overflow: hidden;
+    border: 1px solid var(--ilhas-gray);
+    border-radius: var(--ilhas-radius-card);
+    background: var(--ilhas-white);
+  }
+
+  .captura[data-marco="terminal"] .captura__marco {
+    background: var(--ilhas-dark);
+    border-color: var(--ilhas-dark);
+  }
+
+  .captura__barra {
+    display: flex;
+    align-items: center;
+    gap: 0.375rem;
+    padding: 0.625rem 0.875rem;
+    border-bottom: 1px solid var(--ilhas-gray);
+  }
+
+  .captura[data-marco="terminal"] .captura__barra {
+    border-bottom-color: rgba(248, 250, 255, 0.12);
+  }
+
+  .captura__barra span {
+    width: 0.625rem;
+    height: 0.625rem;
+    border-radius: 50%;
+    background: var(--ilhas-gray);
+  }
+
+  .captura[data-marco="terminal"] .captura__barra span {
+    background: rgba(248, 250, 255, 0.24);
+  }
+
+  .captura__img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  .captura__pie {
+    margin-top: 0.75rem;
+    font-family: var(--ilhas-font-body);
+    font-size: var(--ilhas-fs-small);
+    color: var(--ilhas-text);
+  }
+
+  /* Sobre sección oscura --ilhas-text mide 1.76:1 y falla AA. */
+  :global(.bg-dark) .captura__pie {
+    color: rgba(248, 250, 255, 0.7);
+  }
+</style>

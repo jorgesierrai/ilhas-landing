@@ -36,9 +36,14 @@ Un **hub de marca con cinco páginas**, no un scroll de ventas:
 
 ## Estado del repositorio
 
-- Rama de trabajo: **`revision-landing`**.
-- El `index.html` de la raíz es el sitio viejo (una landing de bootcamp de 1,293 líneas, sin rutas). Se conserva como referencia hasta que el sitio nuevo esté completo, luego se borra.
-- **Deuda urgente e independiente de todo lo demás:** ese `index.html` está publicado hoy con testimoniales inventados (María González, Carlos Ramírez), `[Nombre de tu papá]`, logos "Empresa 1–8" y videos "Próximamente". Es lo primero que se corrige. Ver `docs/06-stack-y-seguridad.md`.
+*Actualizado: 22 ago 2026.*
+
+- Rama de trabajo: **`fix-comentarios`**.
+- **El sitio nuevo en Astro está completo**: las cinco rutas existen en `src/pages/`, con la auditoría visual (`AUDITORIA-VISUAL.md`) ya aplicada.
+- El `index.html` de la raíz es el sitio viejo (landing de bootcamp, sin rutas). **No lo borres**: Jorge lo conserva para revisar qué rescatar. Ya se le quitaron los testimoniales inventados, los logos "Empresa 1–8", los videos "Próximamente" y el contador de cupos. Le queda un `[Nombre de tu papá]`, que ya no importa porque esa página no se publica.
+- **Sistema de medios (video, capturas, íconos): montado, esperando material.** El sitio declara 41 *ranuras* con nombre; dejas caer un archivo con el nombre exacto y aparece solo, sin tocar código. Una ranura vacía no pinta nada en producción.
+  - **Si vas a trabajar en medios, lee `medios/ESTADO.md` primero.**
+  - `npm run medios` te dice qué falta, qué pesa de más y qué no tiene atribución.
 
 ## Convenciones de código
 
@@ -55,5 +60,6 @@ Un **hub de marca con cinco páginas**, no un scroll de ventas:
 - [ ] ¿El copy usa el vocabulario de `docs/04-voz-del-cliente.md` y no invenciones?
 - [ ] ¿Los colores y tipografías salen de `docs/marca/`?
 - [ ] ¿Corre `npm run build` sin warnings?
+- [ ] Si tocaste medios: ¿`npm run medios` sin ningún ⚠?
 - [ ] ¿Pasa el checklist de seguridad de `docs/06-stack-y-seguridad.md`?
 - [ ] ¿Se ve premium, claro y sin humo? ¿Podría vivir junto a Apple, Mindvalley o MasterClass?
