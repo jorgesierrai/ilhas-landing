@@ -106,9 +106,8 @@ export const MEDIOS: SlotMedio[] = [
     alt: "Interfaz de lenguaje natural de Cometa respondiendo una pregunta sobre la base financiera",
     caption: "Cometa · AI Data Concierge",
     pesoMaxKB: 400,
-    sinUsar: true,
     notas:
-      "SIN USAR: el archivo que hay NO es Cometa. Es la app de pagos de un colegio, con el nombre de una persona, una solicitud de admisión y un adeudo vencido de $170,394.36 a la vista. No empata con lo que la tarjeta afirma y publica datos de un tercero. Reemplaza el PNG por la captura correcta y quita este `sinUsar`.",
+      "Datos dummy inventados por Jorge, no de un cliente (confirmado 24 ago 2026). 1320x2868: la más vertical de las seis, se recorta al 16/10 de la tarjeta.",
   },
   {
     id: "producto-nomada",
