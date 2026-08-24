@@ -45,13 +45,14 @@ const etiqueta = titulo ?? slot.alt;
           <track kind="captions" src={vtt} srclang="es" label="Español" default />
         )}
       </video>
-      {(slot.caption || slot.duracion) && (
-        <figcaption class="clip__pie">
-          {slot.caption}
-          {slot.caption && slot.duracion && " · "}
-          {slot.duracion}
-        </figcaption>
-      )}
+      {/*
+        Solo `caption`. `duracion` NO va aquí: es una nota de producción para
+        saber a qué largo cortar el clip, no texto para el visitante. Se
+        publicaba y se leía "Radio Imagen · 2018 · 45-60 s"; peor, anunciaba
+        rangos que el archivo final no cumple (el clip de conferencia decía
+        "45 s" durando 21). El largo real ya lo dice el propio <video>.
+      */}
+      {slot.caption && <figcaption class="clip__pie">{slot.caption}</figcaption>}
     </figure>
   ) : (
     <Ranura slot={slot} />
