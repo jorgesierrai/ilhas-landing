@@ -14,9 +14,23 @@ interface Props {
   id: string;
   titulo?: string;
   ratio?: string;
+  /** Chrome de ventana alrededor del video. Ver `.marco` en base.css. */
+  marco?: "navegador" | "terminal" | "ninguno";
+  /**
+   * Tope de ancho del video. Los verticales lo necesitan: a más de ~440 px
+   * la fuente de 1080 px baja de densidad y se ve suave y barata
+   * (medios/BRIEF-autoridad-radio.md, spec 1).
+   */
+  maxAncho?: string;
 }
 
-const { id, titulo, ratio = "16 / 9" } = Astro.props;
+const {
+  id,
+  titulo,
+  ratio = "16 / 9",
+  marco = "ninguno",
+  maxAncho,
+} = Astro.props;
 
 const slot = porId(id);
 if (!slot) throw new Error(`VideoClip: no existe la ranura "${id}" en src/data/medios.ts`);
@@ -30,21 +44,28 @@ const etiqueta = titulo ?? slot.alt;
 
 {
   listo && mp4 ? (
-    <figure class="clip">
-      <video
-        class="clip__video"
-        controls
-        preload="none"
-        playsinline
-        poster={poster ?? undefined}
-        style={`--clip-ratio: ${ratio}`}
-        aria-label={etiqueta}
-      >
-        <source src={mp4} type="video/mp4" />
-        {vtt && (
-          <track kind="captions" src={vtt} srclang="es" label="Español" default />
+    <figure class="clip" style={maxAncho ? `--clip-max: ${maxAncho}` : undefined}>
+      <div class:list={["marco", marco === "terminal" && "marco--terminal"]}>
+        {marco !== "ninguno" && (
+          <div class="marco__barra" aria-hidden="true">
+            <span /><span /><span />
+          </div>
         )}
-      </video>
+        <video
+          class="clip__video"
+          controls
+          preload="none"
+          playsinline
+          poster={poster ?? undefined}
+          style={`--clip-ratio: ${ratio}`}
+          aria-label={etiqueta}
+        >
+          <source src={mp4} type="video/mp4" />
+          {vtt && (
+            <track kind="captions" src={vtt} srclang="es" label="Español" default />
+          )}
+        </video>
+      </div>
       {/*
         Solo `caption`. `duracion` NO va aquí: es una nota de producción para
         saber a qué largo cortar el clip, no texto para el visitante. Se
@@ -62,13 +83,20 @@ const etiqueta = titulo ?? slot.alt;
 <style>
   .clip {
     margin: 0;
+    max-width: var(--clip-max, none);
   }
 
   .clip__video {
+    display: block;
     width: 100%;
     aspect-ratio: var(--clip-ratio);
-    border-radius: var(--ilhas-radius-card);
     background: var(--ilhas-dark);
+  }
+
+  /* Sin marco el video pone su propio radio; con marco lo pone el contenedor
+     (si no, las esquinas del video se salen del chrome). */
+  .clip .marco:not(:has(.marco__barra)) .clip__video {
+    border-radius: var(--ilhas-radius-card);
   }
 
   .clip__pie {

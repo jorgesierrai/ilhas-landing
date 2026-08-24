@@ -81,7 +81,10 @@ const { items } = Astro.props;
     padding: 0.125rem 0.5rem;
     border-radius: var(--ilhas-radius-pill);
     background: var(--ilhas-primary-10);
-    color: var(--ilhas-primary);
+    /* -dark, no --ilhas-primary: el chip es texto de 12 px sobre el morado al
+       10%, y ahí el primary mide 4.44:1 — falla AA por muy poco. El oscuro
+       mide 6.26:1 sobre el mismo fondo. */
+    color: var(--ilhas-primary-dark);
     font-family: var(--ilhas-font-display);
     font-weight: 600;
     font-size: 0.75rem;

@@ -24,10 +24,24 @@ interface Props {
    * centrado con aire debajo. */
   foto?: ImageMetadata;
   fotoAlt?: string;
+  /**
+   * `true` cuando la tarjeta está arriba del pliegue. Astro pone
+   * `loading="lazy"` por defecto, y diferir justo el elemento LCP es el error
+   * clásico de rendimiento: en /nosotros la foto del equipo ES el LCP, y con
+   * lazy medía 4.1 s.
+   */
+  prioritaria?: boolean;
 }
 
-const { nombre, rol, trayectoria, atribuciones, foto, fotoAlt } =
-  Astro.props;
+const {
+  nombre,
+  rol,
+  trayectoria,
+  atribuciones,
+  foto,
+  fotoAlt,
+  prioritaria = false,
+} = Astro.props;
 const inicial = nombre.trim().charAt(0).toUpperCase();
 ---
 
@@ -39,6 +53,8 @@ const inicial = nombre.trim().charAt(0).toUpperCase();
         alt={fotoAlt ?? nombre}
         width={640}
         class="tarjeta-persona__foto"
+        loading={prioritaria ? "eager" : "lazy"}
+        fetchpriority={prioritaria ? "high" : undefined}
       />
     ) : (
       <div class="tarjeta-persona__avatar" aria-hidden="true">

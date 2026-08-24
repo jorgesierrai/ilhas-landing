@@ -298,10 +298,11 @@ export const MEDIOS: SlotMedio[] = [
     seccion: "§ Autoridad",
     prioridad: 2,
     objecion: "«¿Quién eres tú para enseñar?»",
-    alt: "Jorge Sierra dando una conferencia de inteligencia artificial ante público",
-    caption: "Conferencia de IA",
+    alt: "Sala llena en la conferencia de Jorge Sierra sobre inteligencia artificial en Talent Land",
+    caption: "Talent Land · abril 2018",
     pesoMaxKB: 500,
-    notas: "2400 px de ancho. Que se vea el público, no solo el ponente.",
+    notas:
+      "2400 px de ancho. Es la que prueba escala: se ve el público, no solo el ponente. Va más grande que el clip — no inviertas ese orden de peso.",
   },
   {
     id: "nosotros-conferencia-clip",
@@ -310,10 +311,11 @@ export const MEDIOS: SlotMedio[] = [
     seccion: "§ Autoridad",
     prioridad: 2,
     objecion: "«¿Quién eres tú para enseñar?»",
-    alt: "Fragmento de una conferencia de inteligencia artificial",
-    duracion: "45 s",
+    alt: "Jorge Sierra en el escenario presentando su empresa de inteligencia artificial",
+    duracion: "20.8 s",
     pesoMaxKB: 12288,
-    notas: "Opcional si la foto de conferencia es buena.",
+    notas:
+      "PENDIENTE DE JORGE: los dos briefs del 24 ago se contradicen sobre este clip. BRIEF-historial lo da como conferencia de noviembre 2017 sin nombre de evento; el addendum de BRIEF-autoridad-radio lo da como Talent Land. Por eso va SIN caption: no se publica una fecha ni un evento que no esté confirmado.",
   },
 
   // ===================================================================

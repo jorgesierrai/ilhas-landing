@@ -41,9 +41,9 @@ const pie = mostrarPie ? (caption ?? slot.caption) : undefined;
 {
   imagen ? (
     <figure class="captura" data-marco={marco}>
-      <div class="captura__marco">
+      <div class:list={["marco", marco === "terminal" && "marco--terminal"]}>
         {marco !== "ninguno" && (
-          <div class="captura__barra" aria-hidden="true">
+          <div class="marco__barra" aria-hidden="true">
             <span /><span /><span />
           </div>
         )}
@@ -65,41 +65,6 @@ const pie = mostrarPie ? (caption ?? slot.caption) : undefined;
 <style>
   .captura {
     margin: 0;
-  }
-
-  .captura__marco {
-    overflow: hidden;
-    border: 1px solid var(--ilhas-gray);
-    border-radius: var(--ilhas-radius-card);
-    background: var(--ilhas-white);
-  }
-
-  .captura[data-marco="terminal"] .captura__marco {
-    background: var(--ilhas-dark);
-    border-color: var(--ilhas-dark);
-  }
-
-  .captura__barra {
-    display: flex;
-    align-items: center;
-    gap: 0.375rem;
-    padding: 0.625rem 0.875rem;
-    border-bottom: 1px solid var(--ilhas-gray);
-  }
-
-  .captura[data-marco="terminal"] .captura__barra {
-    border-bottom-color: rgba(248, 250, 255, 0.12);
-  }
-
-  .captura__barra span {
-    width: 0.625rem;
-    height: 0.625rem;
-    border-radius: 50%;
-    background: var(--ilhas-gray);
-  }
-
-  .captura[data-marco="terminal"] .captura__barra span {
-    background: rgba(248, 250, 255, 0.24);
   }
 
   .captura__img {

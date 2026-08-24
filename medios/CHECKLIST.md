@@ -17,12 +17,12 @@ Marca la casilla cuando el archivo esté en su carpeta con el nombre exacto. Ver
 
 Se usan **dos veces cada una**: en el linaje del home (§05) y en los casos de `/soluciones` (§03). Un archivo, dos lugares.
 
-- [ ] `producto-stampay.png` — la pantalla de conciliación bancaria
-- [ ] `producto-nomcont.png` — el ledger estructurado
-- [ ] `producto-cometa.png` — la interfaz de lenguaje natural, con una pregunta real escrita
-- [ ] `producto-nomada.png` — el HRIS / nómina
-- [ ] `producto-paystand.png` — Smart Lockbox o Spend Card
-- [ ] `producto-factumizer.png` — la automatización de CFDI
+- [x] `producto-stampay.png` — la pantalla de conciliación bancaria
+- [x] `producto-cobranza.png` — el tablero de reintentos de cobro *(antes `producto-nomcont`)*
+- [x] `producto-cometa.png` — la interfaz de lenguaje natural, con una pregunta real escrita
+- [x] `producto-nomada.png` — el HRIS / nómina
+- [x] `producto-paystand.png` — Smart Lockbox o Spend Card
+- [x] `producto-pagos-intl.png` — estados de pago internacionales *(antes `producto-factumizer`)*
 
 > **Antes de exportar:** tapa nombres de clientes, RFC, montos reales y correos. Si una pantalla no se puede despersonalizar, no va — mejor cinco capturas limpias que seis con un dato que no debía salir.
 
@@ -31,19 +31,19 @@ Se usan **dos veces cada una**: en el linaje del home (§05) y en los casos de `
 
 Van juntas en `/metodo` §07 *"No son prompts. Es reingeniería del trabajo."* — **es el bloque más importante de toda esta lista.** Es la única prueba de la afirmación que da título a la sección.
 
-- [ ] `metodo-prompts-01.png` — la estructura de carpetas de Claude (agentes, skills, comandos)
-- [ ] `metodo-prompts-02.png` — un flujo de trabajo completo, de entrada a salida
-- [ ] `metodo-prompts-03.png` — una herramienta corriendo (terminal o log del agente ejecutando)
-- [ ] `metodo-prompts-04.png` — el resultado: el archivo, el reporte o el dashboard que salió solo
+- [x] `metodo-prompts-01.png` — la estructura de carpetas de Claude (agentes, skills, comandos)
+- [x] `metodo-prompts-02.png` — un flujo de trabajo completo, de entrada a salida
+- [x] `metodo-prompts-03.png` — una herramienta corriendo (terminal o log del agente ejecutando)
+- [x] `metodo-prompts-04.png` — el resultado: el archivo, el reporte o el dashboard que salió solo
 
 > **Súbele el tamaño de fuente antes de capturar.** Una ventana completa de VS Code escalada a 600 px es ilegible. Recorta al bloque que importa, no a la ventana entera.
 
 ## La entrevista de radio, 2018 — 3 archivos
 📁 `public/assets/video/` · **el activo más fuerte que tienes**
 
-- [ ] `nosotros-radio-2018.mp4` — corte de **45-60 s**, máx **8 MB**, 1280 px de ancho
-- [ ] `nosotros-radio-2018.jpg` — póster, máx 200 KB
-- [ ] `nosotros-radio-2018.es.vtt` — subtítulos (obligatorio: hay voz)
+- [x] `nosotros-radio-2018.mp4` — corte de **45-60 s**, máx **8 MB**, 1280 px de ancho
+- [x] `nosotros-radio-2018.jpg` — póster, máx 200 KB
+- [x] `nosotros-radio-2018.es.vtt` — subtítulos (obligatorio: hay voz)
 
 > Elige el tramo donde hablas de **hacia dónde va la IA**, no donde te presentan. El año va en el diseño, no en el video.
 
@@ -55,12 +55,12 @@ Van juntas en `/metodo` §07 *"No son prompts. Es reingeniería del trabajo."* �
 ## Los dos testimonios — 6 archivos
 📁 `public/assets/video/` · sección **nueva** en `/soluciones`
 
-- [ ] `soluciones-testimonio-oncologia.mp4` — 60-90 s, máx 12 MB
-- [ ] `soluciones-testimonio-oncologia.jpg` — póster
-- [ ] `soluciones-testimonio-oncologia.es.vtt` — subtítulos
-- [ ] `soluciones-testimonio-despiece.mp4` — 60-90 s, máx 12 MB
-- [ ] `soluciones-testimonio-despiece.jpg` — póster
-- [ ] `soluciones-testimonio-despiece.es.vtt` — subtítulos
+- [x] `soluciones-testimonio-oncologia.mp4` — 60-90 s, máx 12 MB
+- [x] `soluciones-testimonio-oncologia.jpg` — póster
+- [x] `soluciones-testimonio-oncologia.es.vtt` — subtítulos
+- [x] `soluciones-testimonio-despiece.mp4` — 60-90 s, máx 12 MB
+- [x] `soluciones-testimonio-despiece.jpg` — póster
+- [x] `soluciones-testimonio-despiece.es.vtt` — subtítulos
 
 > ⚠️ **Sin atribución no se publican.** Antes de exportar, consigue por escrito el permiso de usar nombre, rol y empresa. Si el permiso es parcial, va rol y sector (*"Director de operaciones, empresa de manufactura"*). Los datos se escriben en `src/data/medios.ts`, campo `atribucion` — **el build falla si un testimonio no lo trae**, a propósito.
 >
@@ -80,8 +80,8 @@ Del podcast que ya grabaste. **Tres cortes de 60-90 s, no el episodio.** Sugeren
 ## Conferencia — 2 archivos
 📁 `src/assets/media/fotos/` y `public/assets/video/`
 
-- [ ] `nosotros-conferencia.jpg` — foto a ancho completo, 2400 px, máx 500 KB. Que se vea el público, no solo tú
-- [ ] `nosotros-conferencia-clip.mp4` + `.jpg` + `.es.vtt` — 45 s (opcional si la foto es buena)
+- [x] `nosotros-conferencia.jpg` — foto a ancho completo, 2400 px, máx 500 KB. Que se vea el público, no solo tú
+- [x] `nosotros-conferencia-clip.mp4` + `.jpg` + `.es.vtt` — 45 s (opcional si la foto es buena)
 
 ---
 

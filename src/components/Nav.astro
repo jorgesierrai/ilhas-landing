@@ -24,13 +24,23 @@ const isCurrent = (href: string) =>
 <header class="site-header">
   <div class="container site-header__inner">
     <a href="/" class="site-header__brand" aria-label="Ilhas — ir al inicio">
+      {/*
+        Isotipo como <img> + wordmark como texto, el mismo patrón que el
+        footer. logo.svg pesa 19 KB porque trae la fuente incrustada en
+        base64: un <img> es un documento aislado y no hereda las fuentes de
+        la página, así que el archivo tiene que cargarlas él. Aquí no hace
+        falta — Space Grotesk ya está cargada y precargada — y esos 19 KB
+        estaban en la ruta crítica de las cinco páginas. El isotipo solo
+        pesa 517 B.
+      */}
       <img
-        src="/assets/logo/logo.svg"
-        alt="Ilhas"
-        width="118"
-        height="36"
-        class="site-header__logo"
+        src="/assets/logo/logo-mark.svg"
+        alt=""
+        width="32"
+        height="32"
+        class="site-header__isotipo"
       />
+      <span class="site-header__wordmark">ilhas</span>
     </a>
 
     <!-- Escritorio: nav normal, siempre visible, oculta por media query en
@@ -121,12 +131,22 @@ const isCurrent = (href: string) =>
   .site-header__brand {
     display: flex;
     align-items: center;
+    gap: 0.5rem;
     flex-shrink: 0;
+    text-decoration: none;
   }
 
-  .site-header__logo {
+  .site-header__isotipo {
+    width: 2rem;
     height: 2rem;
-    width: auto;
+  }
+
+  .site-header__wordmark {
+    font-family: var(--ilhas-font-display);
+    font-weight: 600;
+    font-size: 1.375rem;
+    letter-spacing: var(--ilhas-tracking-wordmark);
+    color: var(--ilhas-dark);
   }
 
   .site-header__nav--desktop {
