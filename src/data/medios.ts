@@ -238,7 +238,7 @@ export const MEDIOS: SlotMedio[] = [
     duracion: "60-90 s",
     pesoMaxKB: 12288,
     notas:
-      "Atribución dada por Jorge (24 ago 2026). VERIFICAR si «Extrusión de Aleaciones» es la empresa o el área.",
+      "Atribución dada y verificada por Jorge (24 ago 2026).",
     atribucion: {
       nombre: "Jesús Flores",
       rol: "Gerente de Operaciones",

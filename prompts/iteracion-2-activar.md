@@ -40,6 +40,17 @@ Revisa a **1440, 768 y 390 px** y corrige:
 
 ---
 
+## Trabajo 2b · Corregir lo que ya está montado y se ve mal
+
+Estos cuatro se detectaron mirando la sección de Autoridad ya construida. **Arréglalos antes de seguir:**
+
+1. **Se está publicando metadato interno.** `src/components/medios/VideoClip.astro` (líneas ~48-52) mete `slot.duracion` en el `<figcaption>`. Por eso en la página se lee `Radio Imagen · 2018 · 45-60 s`. Ese campo es una nota de producción para Jorge, no texto para el visitante. **Sácalo del render** — el caption se queda solo con `slot.caption`. Mismo bug hace que el clip de conferencia anuncie "45 s" cuando dura 21.
+2. **El H2 de la sección de Autoridad dice "desde 2018".** Con las conferencias de noviembre 2017, ahora es **desde 2017**.
+3. **El pie de la foto de conferencia dice "Conferencia de IA"** — genérico. Ahí va el evento y la fecha: `Talent Land · abril 2018`.
+4. **El video de radio se está pintando muy chico.** `medios/BRIEF-autoridad-radio.md` pide 360-420 px de ancho de display (tope 440); en la versión montada se ve alrededor de 300, y con mucho negro alrededor.
+
+---
+
 ## Trabajo 3 · Contenido y accesibilidad
 
 - **Revisa cada `alt` del manifiesto** con la imagen real delante. Un `alt` de borrador escrito sin ver la imagen casi siempre está mal. Los loops decorativos van con `alt=""` y `aria-hidden="true"`; las capturas que aportan información van con `alt` real.
