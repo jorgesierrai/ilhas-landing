@@ -4,6 +4,7 @@ import TarjetaPersona from "../components/TarjetaPersona.astro";
 import Captura from "../components/medios/Captura.astro";
 import VideoClip from "../components/medios/VideoClip.astro";
 import Stat from "../components/medios/Stat.astro";
+import Historial from "../components/Historial.astro";
 import { mostrar } from "../lib/medios";
 import fotoPapa from "../assets/equipo/jorge-papa.png";
 import fotoHijo from "../assets/equipo/jorge-hijo.png";
@@ -107,6 +108,29 @@ const hayAutoridad = mostrar(
       </section>
     )
   }
+
+  {/* § nueva · La línea de tiempo — medios/BRIEF-historial.md §1.
+      Los hitos viven en src/data/historial.ts: para agregar un año se edita
+      ese archivo, no este.
+
+      TODO copy · Jorge escribe el párrafo de intro. El borrador de
+      medios/timeline-preview.html decía:
+        «A la izquierda, lo que hemos entendido de la IA. A la derecha, lo que
+         hemos construido con ella — casi todo infraestructura financiera para
+         fintechs. Los tres hitos que brillan tienen video o foto: no es un
+         relato, está grabado.»
+      Ojo: la última frase ya no aplica — la prueba en video vive en
+      § Autoridad, aquí abajo, no colgando de la línea. */}
+  <section class="section-y bg-dark">
+    <div class="container">
+      <div class="section-head reveal">
+        <p class="kicker">De dónde sale esto</p>
+        <h2>Once años metidos en esto, con recibos.</h2>
+      </div>
+
+      <Historial />
+    </div>
+  </section>
 
   {/* § nueva · Autoridad — layout, textos y specs de
       medios/BRIEF-autoridad-radio.md. Tres piezas que cuentan la misma

@@ -165,13 +165,12 @@ const principios = [
 
         {/* El diagrama del proceso completo, debajo de la tabla que
             describe los mismos cinco pasos. */}
-        {
-          mostrar("metodo-timeline") && (
-            <div class="metodo-timeline">
-              <Captura id="metodo-timeline" ancho={1100} />
-            </div>
-          )
-        }
+        {/* metodo-timeline.png sale de aquí: era furniture de video —
+            horizontal, pensada para que el tiempo revele los nodos uno por
+            uno. En una página todo aterriza de golpe y catorce hitos a lo
+            ancho dan 80 px cada uno. La versión vertical que la reemplaza
+            vive en /nosotros. La ranura se queda en el manifiesto por si
+            vuelve (medios/BRIEF-historial.md §1). */}
       </div>
     </section>
 
@@ -333,7 +332,6 @@ const principios = [
      Todos estos contenedores están vacíos hoy: sin archivo, el componente no
      pinta nada en producción y el margen de arriba no llega a aplicarse
      porque no hay caja. */
-  .metodo-timeline,
   .metodo-clip,
   .metodo-loop {
     margin-top: 2.5rem;

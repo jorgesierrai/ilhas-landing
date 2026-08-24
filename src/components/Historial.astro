@@ -1,0 +1,272 @@
+---
+/**
+ * La línea de tiempo — portada de `medios/timeline-preview.html`.
+ *
+ * Vertical y no horizontal a propósito: `metodo-timeline.png` era furniture de
+ * video, donde el tiempo revela los nodos uno por uno. Una página no tiene eje
+ * de tiempo — todo aterriza de golpe, y catorce hitos horizontales a 1140 px
+ * dan 80 px por hito. Ilegible, y en móvil imposible.
+ *
+ * La versión vertical conserva el lenguaje visual (spine con gradiente, nodos
+ * con glow y anillo, años en Space Grotesk, fondo tinta) y además aguanta
+ * cualquier número de hitos y funciona en móvil sin cambiar el marcado.
+ *
+ * Cero JavaScript. Los hitos viven en `src/data/historial.ts`: para agregar un
+ * año se edita ese archivo, nunca este.
+ */
+import { HISTORIAL } from "../data/historial";
+import { porId } from "../data/medios";
+import { mostrar } from "../lib/medios";
+import Captura from "./medios/Captura.astro";
+import VideoClip from "./medios/VideoClip.astro";
+
+interface Props {
+  /**
+   * Cuelga de cada hito con `pruebaId` su video o su foto.
+   *
+   * Apagado por decisión de Jorge (24 ago 2026): los tres activos ya viven en
+   * la § Autoridad de /nosotros y saldrían dos veces en la misma página. Los
+   * nodos brillantes siguen marcando cuáles son los hitos con prueba; la
+   * prueba misma está más abajo.
+   */
+  conPrueba?: boolean;
+}
+
+const { conPrueba = false } = Astro.props;
+
+const carrilCorto = { fundamento: "f", construccion: "c" } as const;
+
+// Falla el build si un hito apunta a una ranura que no existe, en vez de
+// callarse la prueba.
+for (const h of HISTORIAL) {
+  if (h.pruebaId && !porId(h.pruebaId)) {
+    throw new Error(
+      `Historial: el hito "${h.anio} · ${h.titulo}" apunta a la ranura "${h.pruebaId}", que no existe en src/data/medios.ts`,
+    );
+  }
+}
+---
+
+<ol class="tl">
+  {
+    HISTORIAL.map((h) => (
+      <li
+        class:list={[
+          "hito",
+          `hito--${carrilCorto[h.carril]}`,
+          h.pruebaId && "hito--prueba",
+          h.hoy && "hito--hoy",
+        ]}
+      >
+        <span class="nodo" aria-hidden="true" />
+        <p class="anio">{h.anio}</p>
+        <span class:list={["carril", `carril--${carrilCorto[h.carril]}`]}>
+          {h.carril === "fundamento" ? "Fundamento" : "Construcción"}
+        </span>
+        <p class="titulo">{h.titulo}</p>
+        {h.detalle && <p class="detalle">{h.detalle}</p>}
+        {h.marca && <p class="marca">{h.marca}</p>}
+
+        {
+          conPrueba && h.pruebaId && mostrar(h.pruebaId) && (
+            <div class="prueba">
+              {porId(h.pruebaId)?.tipo === "foto" ? (
+                <Captura id={h.pruebaId} ancho={840} />
+              ) : (
+                <VideoClip id={h.pruebaId} marco="navegador" maxAncho="380px" />
+              )}
+            </div>
+          )
+        }
+      </li>
+    ))
+  }
+</ol>
+
+<style>
+  /* Spine vertical. En escritorio va al centro y las entradas alternan
+     izquierda (fundamento) / derecha (construcción). En móvil el spine se va a
+     la izquierda y todo cae a la derecha — sin cambiar el marcado. */
+  .tl {
+    position: relative;
+    margin-top: 3rem;
+    list-style: none;
+    padding: 0;
+  }
+
+  .tl::before {
+    content: "";
+    position: absolute;
+    left: 11px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: linear-gradient(
+      to bottom,
+      var(--ilhas-grad-start) 0%,
+      var(--ilhas-grad-mid) 22%,
+      var(--ilhas-grad-end) 38%,
+      rgba(248, 250, 255, 0.12) 62%
+    );
+  }
+
+  .hito {
+    position: relative;
+    padding-left: 3rem;
+    padding-bottom: 2.75rem;
+  }
+
+  .hito:last-child {
+    padding-bottom: 0;
+  }
+
+  .nodo {
+    position: absolute;
+    left: 4px;
+    top: 0.55rem;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: var(--ilhas-primary);
+  }
+
+  /* El nodo con prueba: relleno de gradiente, anillo y glow — el mismo
+     tratamiento que tenía el 2016 destacado en la versión de video. */
+  .hito--prueba .nodo {
+    left: 0;
+    top: 0.35rem;
+    width: 24px;
+    height: 24px;
+    background: var(--ilhas-gradient);
+    box-shadow:
+      0 0 0 4px rgba(122, 60, 255, 0.25),
+      0 0 28px rgba(122, 60, 255, 0.55);
+  }
+
+  .hito--hoy .nodo {
+    background: var(--ilhas-white);
+  }
+
+  .anio {
+    font-family: var(--ilhas-font-display);
+    font-weight: 600;
+    color: var(--ilhas-white);
+    letter-spacing: var(--ilhas-tracking-display);
+    line-height: 1;
+    font-size: 1.5rem;
+    margin: 0;
+    max-width: none;
+  }
+
+  .hito--prueba .anio {
+    font-size: var(--ilhas-fs-stat);
+    text-shadow: 0 0 32px rgba(122, 60, 255, 0.45);
+  }
+
+  .carril {
+    display: inline-block;
+    margin-top: 0.5rem;
+    padding: 0.15rem 0.55rem;
+    border-radius: var(--ilhas-radius-pill);
+    font-family: var(--ilhas-font-body);
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .carril--f {
+    color: var(--ilhas-grad-start);
+    background: rgba(85, 232, 255, 0.1);
+  }
+
+  /* Violeta claro, no --ilhas-primary: sobre tinta el primary mide ~3.6:1 y
+     falla AA. Este mide ~7:1. */
+  .carril--c {
+    color: #c4a6ff;
+    background: rgba(122, 60, 255, 0.16);
+  }
+
+  .titulo {
+    margin-top: 0.5rem;
+    font-family: var(--ilhas-font-display);
+    font-weight: 600;
+    font-size: 1.125rem;
+    color: var(--ilhas-white);
+    letter-spacing: var(--ilhas-tracking-display);
+    max-width: 34ch;
+  }
+
+  .detalle {
+    margin-top: 0.375rem;
+    font-size: 0.9375rem;
+    max-width: 46ch;
+    color: rgba(248, 250, 255, 0.72);
+  }
+
+  .marca {
+    margin-top: 0.375rem;
+    font-size: 0.8125rem;
+    /* 0.42 medía 3.4:1 y fallaba AA; 0.6 mide ~7:1. */
+    color: rgba(248, 250, 255, 0.6);
+  }
+
+  .prueba {
+    margin-top: 1rem;
+    max-width: 420px;
+  }
+
+  @media (min-width: 900px) {
+    .tl::before {
+      left: 50%;
+      transform: translateX(-1px);
+    }
+
+    .hito {
+      width: 50%;
+      padding-left: 0;
+      padding-right: 3rem;
+      text-align: right;
+    }
+
+    .hito .nodo {
+      left: auto;
+      right: -8px;
+    }
+
+    .hito--prueba .nodo {
+      right: -12px;
+    }
+
+    .hito .carril,
+    .hito .prueba,
+    .hito .titulo,
+    .hito .detalle {
+      margin-left: auto;
+    }
+
+    .hito--c {
+      margin-left: 50%;
+      padding-right: 0;
+      padding-left: 3rem;
+      text-align: left;
+    }
+
+    .hito--c .nodo {
+      right: auto;
+      left: -8px;
+    }
+
+    .hito--c.hito--prueba .nodo {
+      left: -12px;
+    }
+
+    .hito--c .carril,
+    .hito--c .prueba,
+    .hito--c .titulo,
+    .hito--c .detalle {
+      margin-left: 0;
+      margin-right: auto;
+    }
+  }
+</style>
