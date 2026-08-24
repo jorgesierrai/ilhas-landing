@@ -50,6 +50,13 @@ export interface SlotMedio {
   atribucion?: Atribucion;
   /** Alternativa al video en un testimonio: cita en texto. */
   texto?: string;
+  /**
+   * `true` cuando la ranura tiene archivo pero NINGUNA página la usa a
+   * propósito. Sin esto `npm run medios` la reporta como ⚠, que es justo lo
+   * que queremos: el archivo está, se ve verde, y no sale en el sitio.
+   * Ponlo solo con la razón escrita en `notas`.
+   */
+  sinUsar?: boolean;
 }
 
 /**
@@ -99,7 +106,9 @@ export const MEDIOS: SlotMedio[] = [
     alt: "Interfaz de lenguaje natural de Cometa respondiendo una pregunta sobre la base financiera",
     caption: "Cometa · AI Data Concierge",
     pesoMaxKB: 400,
-    notas: "Que se vea una pregunta real escrita. 1600 px de ancho.",
+    sinUsar: true,
+    notas:
+      "SIN USAR: el archivo que hay NO es Cometa. Es la app de pagos de un colegio, con el nombre de una persona, una solicitud de admisión y un adeudo vencido de $170,394.36 a la vista. No empata con lo que la tarjeta afirma y publica datos de un tercero. Reemplaza el PNG por la captura correcta y quita este `sinUsar`.",
   },
   {
     id: "producto-nomada",
@@ -508,8 +517,9 @@ export const MEDIOS: SlotMedio[] = [
     alt: "Diagrama del proceso completo del método I·L·H·A·S, de Identificar a Sistematizar",
     caption: "El método completo, de principio a fin",
     pesoMaxKB: 400,
+    sinUsar: true,
     notas:
-      "Copiado de public/assets/ilhas-iconografia/full-timeline.png, que está en .gitignore. La copia en src/assets/media/capturas/ sí se commitea, para que pase por astro:assets.",
+      "SIN USAR a propósito: salió de /metodo §04 porque era furniture de video (medios/BRIEF-historial.md §1). La reemplazó la línea vertical de /nosotros. La ranura se queda por si vuelve.",
   },
 ];
 

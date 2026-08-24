@@ -5,10 +5,17 @@
  *   ✗  falta el archivo         → NO falla: faltar material es lo normal
  *   ⚠  hay un problema real     → sale con código 1, para poder engancharlo a CI
  *
- * Un ⚠ es una de tres cosas:
+ * Un ⚠ es una de cuatro cosas:
  *   - el archivo pesa más que su `pesoMaxKB`
  *   - un clip con voz no trae su `.es.vtt`, o un video no trae póster
  *   - un testimonio tiene material pero no tiene `atribucion`
+ *   - la ranura está lista pero NO aparece en el HTML de dist/
+ *
+ * Esa última cierra un punto ciego real: el script daba "0 con problema" con
+ * una imagen que ya no usaba ninguna página. Un archivo verde que no sale en
+ * el sitio es trabajo tirado, o —peor— una ranura que alguien cree publicada
+ * y no lo está. Las que están sin usar a propósito se marcan con
+ * `sinUsar: true` en el manifiesto, con la razón escrita en `notas`.
  *
  * Córrelo antes de cada commit. Es el que evita que se publique un video de
  * 40 MB o un testimonio sin atribuir.
@@ -28,6 +35,7 @@ const MAX_WEBM_KB = 800;
 const MAX_POSTER_KB = 200;
 
 const DIR_VIDEO = path.join(RAIZ, "public", "assets", "video");
+const DIR_DIST = path.join(RAIZ, "dist");
 const DIR_CAPTURAS = path.join(RAIZ, "src", "assets", "media", "capturas");
 const DIR_FOTOS = path.join(RAIZ, "src", "assets", "media", "fotos");
 const DIR_ICONOS = path.join(RAIZ, "src", "assets", "iconos");
@@ -47,6 +55,39 @@ function buscarImagen(dir, id) {
 }
 
 const existe = (ruta) => (fs.existsSync(ruta) ? ruta : null);
+
+/**
+ * Todo el HTML de dist/ concatenado, para saber qué ranuras salieron de
+ * verdad. `null` si no hay build: en ese caso no se puede verificar y el
+ * script lo dice en vez de callarse.
+ */
+function htmlDelBuild() {
+  if (!fs.existsSync(DIR_DIST)) return null;
+  const paginas = [];
+  const recorrer = (dir) => {
+    for (const e of fs.readdirSync(dir, { withFileTypes: true })) {
+      const ruta = path.join(dir, e.name);
+      if (e.isDirectory()) recorrer(ruta);
+      else if (e.name.endsWith(".html")) paginas.push(fs.readFileSync(ruta, "utf8"));
+    }
+  };
+  recorrer(DIR_DIST);
+  return paginas.length ? paginas.join("\n") : null;
+}
+
+const HTML = htmlDelBuild();
+
+/**
+ * ¿Salió esta ranura en el HTML?
+ *
+ * Basta con buscar el id: Astro conserva el nombre del archivo en el del
+ * asset que emite (producto-stampay.DmePZr66_Z1dHdav.webp), y el video se
+ * referencia por su ruta literal.
+ */
+function apareceEnBuild(slot) {
+  if (!HTML) return null;
+  return HTML.includes(slot.id);
+}
 
 /**
  * Revisa una ranura. Devuelve { estado: "ok" | "falta" | "problema", detalle }.
@@ -113,9 +154,22 @@ function revisar(slot) {
     }
   }
 
+  // La ranura está lista: ¿de verdad salió en alguna página?
+  const enBuild = apareceEnBuild(slot);
+  if (enBuild === false && !slot.sinUsar) {
+    avisos.push("lista pero NO aparece en el HTML de dist/ — ninguna página la usa");
+  }
+  if (enBuild === true && slot.sinUsar) {
+    avisos.push("marcada `sinUsar` pero SÍ aparece en dist/ — quita la marca");
+  }
+
   return {
     estado: avisos.length ? "problema" : "ok",
-    detalle: avisos.length ? avisos.join(" · ") : partes.join(" · "),
+    detalle: avisos.length
+      ? avisos.join(" · ")
+      : [partes.join(" · "), slot.sinUsar ? "(sin usar a propósito)" : ""]
+          .filter(Boolean)
+          .join("  "),
   };
 }
 
@@ -143,8 +197,17 @@ for (const prioridad of [1, 2, 3]) {
 }
 
 console.log(
-  `\n${listas} de ${MEDIOS.length} listas · ${problemas} con problema\n`,
+  `\n${listas} de ${MEDIOS.length} listas · ${problemas} con problema`,
 );
+
+if (HTML === null) {
+  console.log(
+    "  ⚠ No hay dist/: no se pudo verificar que las ranuras listas salgan\n" +
+      "    en el HTML. Corre `npm run build` y vuelve a correr esto.\n",
+  );
+} else {
+  console.log("");
+}
 
 // Un ✗ es el estado normal entre las dos iteraciones y no debe fallar.
 // Un ⚠ sí: es material que ya está pero que no se puede publicar como está.

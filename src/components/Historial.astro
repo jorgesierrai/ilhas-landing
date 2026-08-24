@@ -36,6 +36,17 @@ const { conPrueba = false } = Astro.props;
 
 const carrilCorto = { fundamento: "f", construccion: "c" } as const;
 
+/**
+ * El lado alterna por ÍNDICE, no por carril: en zigzag, en orden de aparición.
+ *
+ * Por carril era más expresivo —izquierda lo que se entendió, derecha lo que
+ * se construyó— pero deja tramos largos con un lado muerto: seis hitos de
+ * fundamento seguidos al principio, y tres de construcción entre 2018 y 2022.
+ * El carril se sigue leyendo por el chip y por el color del nodo, que ya
+ * distinguen los dos tipos sin depender de la posición.
+ */
+const lado = (i: number) => (i % 2 === 0 ? "izq" : "der");
+
 // Falla el build si un hito apunta a una ranura que no existe, en vez de
 // callarse la prueba.
 for (const h of HISTORIAL) {
@@ -49,10 +60,11 @@ for (const h of HISTORIAL) {
 
 <ol class="tl">
   {
-    HISTORIAL.map((h) => (
+    HISTORIAL.map((h, i) => (
       <li
         class:list={[
           "hito",
+          `hito--${lado(i)}`,
           `hito--${carrilCorto[h.carril]}`,
           h.pruebaId && "hito--prueba",
           h.hoy && "hito--hoy",
@@ -110,12 +122,8 @@ for (const h of HISTORIAL) {
     );
   }
 
-  /* Ritmo apretado a propósito: son catorce hitos y seis de fundamento van
-     seguidos, así que con el espaciado del preview la línea sola medía
-     ~3,000 px. La alternancia se mantiene por CARRIL —no por índice— porque
-     ese mapeo izquierda/derecha ES el argumento del brief: a la izquierda lo
-     que se entendió, a la derecha lo que se construyó. Un zigzag por orden
-     de aparición se ve más compacto pero deja el lado sin significado. */
+  /* Ritmo apretado: son catorce hitos y con el espaciado del preview la
+     línea sola medía ~3,000 px. */
   .hito {
     position: relative;
     padding-left: 3rem;
@@ -253,28 +261,34 @@ for (const h of HISTORIAL) {
       margin-left: auto;
     }
 
-    .hito--c {
+    .hito--der {
       margin-left: 50%;
       padding-right: 0;
       padding-left: 3rem;
       text-align: left;
     }
 
-    .hito--c .nodo {
+    .hito--der .nodo {
       right: auto;
       left: -8px;
     }
 
-    .hito--c.hito--prueba .nodo {
+    .hito--der.hito--prueba .nodo {
       left: -12px;
     }
 
-    .hito--c .carril,
-    .hito--c .prueba,
-    .hito--c .titulo,
-    .hito--c .detalle {
+    .hito--der .carril,
+    .hito--der .prueba,
+    .hito--der .titulo,
+    .hito--der .detalle {
       margin-left: 0;
       margin-right: auto;
+    }
+
+    /* En zigzag, cada hito arranca a la altura del anterior: sin esto el
+       lado izquierdo se apila contra sí mismo y vuelve el hueco. */
+    .hito + .hito {
+      margin-top: -1.5rem;
     }
   }
 </style>
