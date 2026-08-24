@@ -26,6 +26,13 @@ export interface Producto {
   marca: string;
   /** Ranura de la captura, en src/data/medios.ts. */
   capturaId: string;
+  /**
+   * Desde dónde recortar la captura al 16/10 de la tarjeta. Las seis fuentes
+   * van de 0.46 a 2.24 de proporción, así que sin normalizar la reja queda
+   * rasgada (Trabajo 2, punto 1 de prompts/iteracion-2-activar.md).
+   * Por defecto ancla arriba, que es donde vive lo que se lee de una UI.
+   */
+  recorte?: string;
 }
 
 export const PRODUCTOS: Producto[] = [
@@ -47,7 +54,16 @@ export const PRODUCTOS: Producto[] = [
     titulo: "Consultas en lenguaje natural sobre la base financiera",
     detalle: "«¿Cuánto entró hoy?» → respuesta al instante",
     marca: "Cometa · 2025",
-    capturaId: "producto-cometa",
+    // SIN CAPTURA A PROPÓSITO (24 ago 2026).
+    // El archivo producto-cometa.png NO es Cometa: es la app de pagos de un
+    // colegio, con el nombre de una persona ("¡Hola Jose Jorge!"), una
+    // solicitud de admisión en curso, un adeudo vencido de $170,394.36 y
+    // contenido de staging a la vista ("Creando comunicado", "Juliancito").
+    // No empata con lo que la tarjeta afirma y además publica datos de un
+    // tercero. La tarjeta se degrada sola a solo texto, que es el
+    // comportamiento de diseño. Para reactivarla: deja el PNG correcto en
+    // src/assets/media/capturas/producto-cometa.png y vuelve a poner
+    // `capturaId: "producto-cometa"` aquí.
   },
   {
     titulo: "HRIS y nómina desde cero",

@@ -110,10 +110,16 @@ for (const h of HISTORIAL) {
     );
   }
 
+  /* Ritmo apretado a propósito: son catorce hitos y seis de fundamento van
+     seguidos, así que con el espaciado del preview la línea sola medía
+     ~3,000 px. La alternancia se mantiene por CARRIL —no por índice— porque
+     ese mapeo izquierda/derecha ES el argumento del brief: a la izquierda lo
+     que se entendió, a la derecha lo que se construyó. Un zigzag por orden
+     de aparición se ve más compacto pero deja el lado sin significado. */
   .hito {
     position: relative;
     padding-left: 3rem;
-    padding-bottom: 2.75rem;
+    padding-bottom: 1.5rem;
   }
 
   .hito:last-child {
@@ -153,19 +159,21 @@ for (const h of HISTORIAL) {
     color: var(--ilhas-white);
     letter-spacing: var(--ilhas-tracking-display);
     line-height: 1;
-    font-size: 1.5rem;
+    font-size: 1.25rem;
     margin: 0;
     max-width: none;
   }
 
+  /* Los tres con prueba sí crecen, pero menos que el token completo: a 3rem
+     cada uno agregaba ~40 px de alto a una línea que ya era larga. */
   .hito--prueba .anio {
-    font-size: var(--ilhas-fs-stat);
+    font-size: clamp(1.75rem, 3vw, 2.25rem);
     text-shadow: 0 0 32px rgba(122, 60, 255, 0.45);
   }
 
   .carril {
     display: inline-block;
-    margin-top: 0.5rem;
+    margin-top: 0.375rem;
     padding: 0.15rem 0.55rem;
     border-radius: var(--ilhas-radius-pill);
     font-family: var(--ilhas-font-body);
@@ -188,7 +196,7 @@ for (const h of HISTORIAL) {
   }
 
   .titulo {
-    margin-top: 0.5rem;
+    margin-top: 0.375rem;
     font-family: var(--ilhas-font-display);
     font-weight: 600;
     font-size: 1.125rem;

@@ -28,9 +28,11 @@ interface Props {
   /** Línea secundaria: marca y año. Solo el año cuando hay NDA. */
   marca?: string;
   capturaId?: string;
+  /** Desde dónde recortar la captura dentro del 16/10 de la tarjeta. */
+  recorte?: string;
 }
 
-const { titulo, detalle, marca, capturaId } = Astro.props;
+const { titulo, detalle, marca, capturaId, recorte = "50% 0%" } = Astro.props;
 
 // Falla temprano si alguien escribe mal el id, en vez de callar la captura.
 if (capturaId && !porId(capturaId)) {
@@ -43,7 +45,7 @@ if (capturaId && !porId(capturaId)) {
 <li class="tarjeta-caso card hover-lift reveal">
   {
     capturaId && mostrar(capturaId) && (
-      <div class="tarjeta-caso__captura">
+      <div class="tarjeta-caso__captura" style={`--recorte: ${recorte}`}>
         <Captura id={capturaId} ancho={640} mostrarPie={false} />
       </div>
     )
@@ -54,12 +56,39 @@ if (capturaId && !porId(capturaId)) {
 </li>
 
 <style>
+  /* Columna flex para que el detalle empuje hacia abajo y las tarjetas de
+     una misma fila terminen parejas aunque unas tengan párrafo y otras no. */
   .tarjeta-caso {
+    display: flex;
+    flex-direction: column;
     list-style: none;
   }
 
+  /* Proporción fija: las seis fuentes van de 0.46 a 2.24 y sin esto la fila
+     queda rasgada — producto-cometa es casi el triple de alto que ancho. */
   .tarjeta-caso__captura {
     margin-bottom: 1.25rem;
+    aspect-ratio: 16 / 10;
+    overflow: hidden;
+    border-radius: var(--ilhas-radius-card);
+  }
+
+  .tarjeta-caso__captura :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: var(--recorte);
+  }
+
+  /* El marco del <Captura> no manda aquí: la caja de arriba ya recorta. */
+  .tarjeta-caso__captura :global(.marco) {
+    height: 100%;
+    border: 0;
+    border-radius: 0;
+  }
+
+  .tarjeta-caso__captura :global(figure) {
+    height: 100%;
   }
 
   .tarjeta-caso__titulo {

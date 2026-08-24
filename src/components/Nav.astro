@@ -99,24 +99,32 @@ const isCurrent = (href: string) =>
 
 <style>
   .site-header {
-    /* El fondo sólido-casi-opaco es el requisito de legibilidad; el blur
-       es una mejora que puede faltar. El minificador del build se queda
-       a veces solo con -webkit-backdrop-filter y tira la propiedad
-       estándar — Chrome moderno no honra el prefijo, así que sin este
-       fallback el header quedaba como un velo sin blur real. */
+    /* El fondo casi opaco es el requisito de legibilidad; el blur es una
+       mejora que puede faltar. NO declarar aquí ni en el @supports la
+       variante -webkit-: el minificador ve las dos con el mismo valor,
+       decide que una sobra y se queda con la prefijada — y Chrome moderno
+       ya NO soporta -webkit-backdrop-filter (medido: CSS.supports da false).
+       El resultado era el peor de los dos mundos: el @supports sí entraba
+       y bajaba la opacidad, pero el blur nunca se aplicaba, así que el
+       contenido se veía pasar por el header. Hallazgo R1 de
+       AUDITORIA-VISUAL.md, que ya había reaparecido una vez.
+       Sin la prefijada no hay nada que deduplicar. Los navegadores que solo
+       soportan la prefijada no pasan el @supports y se quedan con el fondo
+       opaco, que es el comportamiento seguro. */
     position: sticky;
     top: 0;
     z-index: 40;
-    background: rgba(248, 250, 255, 0.96);
+    background: rgba(248, 250, 255, 0.97);
     border-bottom: 1px solid var(--ilhas-gray);
   }
 
-  @supports (backdrop-filter: blur(1px)) or
-    (-webkit-backdrop-filter: blur(1px)) {
+  @supports (backdrop-filter: blur(1px)) {
     .site-header {
-      background: rgba(248, 250, 255, 0.82);
+      /* 0.88 y no 0.82: aunque el blur funcione, este header pasa por
+         encima de secciones .bg-dark en /nosotros y /metodo, y con menos
+         alfa el texto oscuro del menú pierde contraste contra la tinta. */
+      background: rgba(248, 250, 255, 0.88);
       backdrop-filter: saturate(180%) blur(16px);
-      -webkit-backdrop-filter: saturate(180%) blur(16px);
     }
   }
 
