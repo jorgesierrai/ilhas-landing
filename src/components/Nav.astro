@@ -6,9 +6,11 @@
 // escalera de valor (docs/01-arquitectura.md). No existe agendador propio todavía.
 interface Props {
   currentPath: string;
+  /** Ver `heroOscuro` en Base.astro. */
+  heroOscuro?: boolean;
 }
 
-const { currentPath } = Astro.props;
+const { currentPath, heroOscuro = false } = Astro.props;
 
 const navItems = [
   { href: "/metodo", label: "El Método" },
@@ -21,7 +23,7 @@ const isCurrent = (href: string) =>
   currentPath === href || currentPath === `${href}/`;
 ---
 
-<header class="site-header">
+<header class:list={["site-header", heroOscuro && "site-header--opaco"]}>
   <div class="container site-header__inner">
     <a href="/" class="site-header__brand" aria-label="Ilhas — ir al inicio">
       {/*
@@ -118,6 +120,14 @@ const isCurrent = (href: string) =>
     border-bottom: 1px solid var(--ilhas-gray);
   }
 
+  /* Sobre hero oscuro: opaco y sin hairline. No transparente — hacerlo bien
+     pediría estado de scroll, y este sitio no manda JS al cliente. Va después
+     del @supports de abajo para ganarle a la regla del blur. */
+  .site-header--opaco {
+    background: var(--ilhas-light);
+    border-bottom-color: transparent;
+  }
+
   @supports (backdrop-filter: blur(1px)) {
     .site-header {
       /* 0.88 y no 0.82: aunque el blur funcione, este header pasa por
@@ -125,6 +135,11 @@ const isCurrent = (href: string) =>
          alfa el texto oscuro del menú pierde contraste contra la tinta. */
       background: rgba(248, 250, 255, 0.88);
       backdrop-filter: saturate(180%) blur(16px);
+    }
+
+    .site-header--opaco {
+      background: var(--ilhas-light);
+      backdrop-filter: none;
     }
   }
 

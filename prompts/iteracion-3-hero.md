@@ -89,7 +89,7 @@ en `base.css`:
 
 **Subtítulo:**
 
-> Convertimos años de experiencia creando infraestructura crítica en un método
+> Convertimos años de experiencia creando productos e infraestructura crítica en un sistema
 > probado. Todo lo que aprendimos escalando productos de millones de dólares y
 > empresas unicornio, ahora adaptado para potenciar tus ventas, finanzas y
 > operaciones.

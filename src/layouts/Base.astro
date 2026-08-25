@@ -9,9 +9,22 @@ import "../styles/base.css";
 interface Props {
   title: string;
   description: string;
+  /**
+   * `true` cuando la PRIMERA sección de la página tiene fondo oscuro.
+   *
+   * El header es claro y sticky. Sobre un fondo claro se ve mejor esmerilado
+   * y con su hairline; sobre uno oscuro esa hairline no separa nada —la
+   * frontera ya la hace el salto de luminosidad— y la translucidez le mete
+   * suciedad del contenido al pasar por debajo. Ahí va opaco y sin borde.
+   *
+   * Lo declara la página porque es la página la que sabe de qué color
+   * arranca. Si /nosotros o cualquier otra estrena hero oscuro, se le pone
+   * esta bandera y ya.
+   */
+  heroOscuro?: boolean;
 }
 
-const { title, description } = Astro.props;
+const { title, description, heroOscuro = false } = Astro.props;
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 const pageTitle = title === "Ilhas" ? title : `${title} · Ilhas`;
 ---
@@ -67,7 +80,7 @@ const pageTitle = title === "Ilhas" ? title : `${title} · Ilhas`;
   </head>
   <body>
     <a href="#main" class="skip-link">Saltar al contenido principal</a>
-    <Nav currentPath={Astro.url.pathname} />
+    <Nav currentPath={Astro.url.pathname} heroOscuro={heroOscuro} />
     <main id="main">
       <slot />
     </main>
