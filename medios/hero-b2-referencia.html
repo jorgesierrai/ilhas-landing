@@ -1,0 +1,151 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8">
+<title>Ilhas · Hero B2 — referencia visual del home</title>
+<!--
+  ============================================================================
+  REFERENCIA DEL HERO DEL HOME · aprobada por Jorge el 25 ago 2026 (opción B2)
+  ============================================================================
+
+  Esto NO es el componente final: es la referencia visual de la que se porta.
+  Ábrela directo con doble clic — las rutas son relativas a `medios/`, así que
+  la foto y las cuatro fuentes resuelven sin servidor.
+
+  Los tokens de :root están copiados tal cual de `src/styles/tokens.css`.
+  Cero JavaScript.
+
+  Las cuatro decisiones que hay que conservar al portarla están numeradas
+  abajo en los comentarios del CSS. Si algo se ve distinto en el sitio, la
+  causa está en una de esas cuatro.
+-->
+<style>
+@font-face{font-family:"Space Grotesk";font-weight:600;font-display:swap;
+  src:url("../public/assets/fonts/space-grotesk-600.woff2") format("woff2")}
+@font-face{font-family:"Inter";font-weight:400;font-display:swap;
+  src:url("../public/assets/fonts/inter-400.woff2") format("woff2")}
+@font-face{font-family:"Inter";font-weight:600;font-display:swap;
+  src:url("../public/assets/fonts/inter-600.woff2") format("woff2")}
+
+:root{
+  --ilhas-primary:#7A3CFF; --ilhas-dark:#0E0E0F; --ilhas-grad-end:#A14BFF;
+  --ilhas-font-display:"Space Grotesk",system-ui,sans-serif;
+  --ilhas-font-body:"Inter",system-ui,-apple-system,sans-serif;
+  --ilhas-tracking-display:-.02em;
+  --ilhas-radius-pill:999px;
+  --ilhas-container:1140px;
+  --ilhas-gutter:clamp(1.25rem,4vw,3rem);
+  /* solo sobre superficie oscura: opacidades del blanco, no colores nuevos */
+  --sobre-oscuro:rgba(255,255,255,.70);
+  --linea-oscura:rgba(255,255,255,.16);
+}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:var(--ilhas-dark);font-family:var(--ilhas-font-body);line-height:1.6}
+
+.hero{position:relative;min-height:620px;display:flex;align-items:center;overflow:hidden;
+  background:var(--ilhas-dark)}
+
+/* 1 · La foto SANGRA desde la derecha y se disuelve hacia la izquierda con
+      máscara. No es una caja con una sombra encima: es la imagen misma
+      desapareciendo. Si esto se cambia por un `box-shadow` o por un div con
+      degradado sobre una foto contenida, se pierde el efecto entero. */
+.hero__foto{position:absolute;top:0;right:0;height:100%;width:56%;z-index:1;
+  -webkit-mask-image:linear-gradient(to right,transparent 0%,rgba(0,0,0,.5) 26%,#000 58%);
+          mask-image:linear-gradient(to right,transparent 0%,rgba(0,0,0,.5) 26%,#000 58%)}
+.hero__foto img{width:100%;height:100%;object-fit:cover;object-position:18% 40%}
+
+/* 2 · Velo de contraste, para que el texto pase AA sobre cualquier zona de la
+      foto. Las paradas están calibradas: .92 a 40% deja el H1 sobre negro casi
+      puro, y .44 a 64% es lo más que se puede aclarar sin que la última métrica
+      choque con el hombro de Jorge. Moverlas es reabrir las dos cosas. */
+.hero__velo{position:absolute;inset:0;z-index:2;
+  background:linear-gradient(95deg,
+    rgba(14,14,15,.98) 0%, rgba(14,14,15,.92) 40%,
+    rgba(14,14,15,.44) 64%, rgba(14,14,15,.12) 100%)}
+
+.hero__inner{position:relative;z-index:3;width:100%;max-width:var(--ilhas-container);
+  margin-inline:auto;padding-inline:var(--ilhas-gutter)}
+
+h1{font-family:var(--ilhas-font-display);font-weight:600;color:#fff;
+  letter-spacing:var(--ilhas-tracking-display);line-height:1.06;
+  font-size:clamp(2.1rem,3.5vw,3.05rem);max-width:16ch;margin:0}
+/* 3 · «con IA» en el gradiente de marca, y con `white-space:nowrap` para que
+      nunca se parta entre líneas. Sobre fondo oscuro el tramo morado→violeta
+      pasa contraste de texto grande; el cian NO se toca aquí. */
+h1 .text-gradient{white-space:nowrap;
+  background:linear-gradient(to right,#B98BFF 0%,var(--ilhas-grad-end) 100%);
+  -webkit-background-clip:text;background-clip:text;color:transparent}
+
+.hero__lead{margin:1.1rem 0 0;font-size:1.0625rem;max-width:46ch;color:var(--sobre-oscuro)}
+
+.hero__ctas{display:flex;gap:.75rem;margin-top:1.6rem;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;justify-content:center;
+  padding:.8rem 1.6rem;border-radius:var(--ilhas-radius-pill);
+  font-family:var(--ilhas-font-body);font-weight:600;font-size:.875rem;
+  text-decoration:none;border:1px solid transparent;cursor:pointer}
+.btn-primary{background:var(--ilhas-primary);color:#fff}
+.btn-ghost{background:transparent;color:#fff;border-color:rgba(255,255,255,.30)}
+
+/* 4 · Métricas en FILA debajo del texto, no en columna a la derecha.
+      La columna derecha (el patrón de Kinzal) aquí no funciona: esa mitad la
+      ocupan Jorge y la pantalla, que son dos sujetos fijos. Cualquier número
+      puesto ahí aterriza encima de uno de los dos. */
+.hero__kpis{display:flex;gap:2rem;margin-top:2.1rem;flex-wrap:wrap}
+.kpi{border-left:2px solid var(--linea-oscura);padding-left:1rem}
+.kpi b{display:block;font-family:var(--ilhas-font-display);font-weight:600;color:#fff;
+  letter-spacing:var(--ilhas-tracking-display);line-height:1;
+  font-size:clamp(1.7rem,2.7vw,2.4rem);white-space:nowrap}
+.kpi b i{font-style:normal;color:var(--ilhas-grad-end)}
+.kpi span{display:block;margin-top:.35rem;font-size:.72rem;letter-spacing:.08em;
+  text-transform:uppercase;color:rgba(255,255,255,.62)}
+
+.hero__credito{position:absolute;left:var(--ilhas-gutter);bottom:18px;z-index:3;
+  margin:0;font-size:.75rem;color:rgba(255,255,255,.38)}
+
+/* Móvil: la foto pasa a ser una banda arriba y el texto queda abajo.
+   Nunca texto encima de la foto en pantallas angostas — ahí no hay ancho
+   suficiente para que la máscara separe una cosa de la otra. */
+@media (max-width:899px){
+  .hero{min-height:0;flex-direction:column;align-items:stretch}
+  .hero__foto{position:relative;width:100%;height:240px;
+    -webkit-mask-image:linear-gradient(to bottom,#000 60%,transparent 100%);
+            mask-image:linear-gradient(to bottom,#000 60%,transparent 100%)}
+  .hero__foto img{object-position:22% 40%}
+  .hero__velo{display:none}
+  .hero__inner{padding-block:1.5rem 3rem}
+  .hero__kpis{gap:1.5rem}
+  .hero__credito{position:static;margin-top:1.5rem;padding-inline:0}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style></head><body>
+
+<section class="hero">
+  <div class="hero__foto">
+    <img src="../src/assets/media/fotos/home-hero-conferencia.jpg"
+         alt="Jorge Sierra en el escenario de Talent Land, frente a una pantalla que pregunta «¿Quién sea puede crear inteligencia artificial?»"
+         width="1440" height="1148">
+  </div>
+  <div class="hero__velo" aria-hidden="true"></div>
+
+  <div class="hero__inner">
+    <h1>Tecnología de clase mundial. Accesible para tu empresa
+      <span class="text-gradient">con IA</span>.</h1>
+
+    <p class="hero__lead">Convertimos años de experiencia creando infraestructura
+      crítica en un método probado. Todo lo que aprendimos escalando productos de
+      millones de dólares y empresas unicornio, ahora adaptado para potenciar tus
+      ventas, finanzas y operaciones.</p>
+
+    <div class="hero__ctas">
+      <a class="btn btn-primary" href="/finanzas">Quiero aprenderlo</a>
+      <a class="btn btn-ghost" href="/soluciones">Quiero implementarlo</a>
+    </div>
+
+    <div class="hero__kpis">
+      <div class="kpi"><b>+1,000<i> MDP</i></b><span>al mes, volumen respaldado</span></div>
+      <div class="kpi"><b>6<i>+</i></b><span>startups · infraestructura creada</span></div>
+      <div class="kpi"><b>2016<i>→</i></b><span>desarrollando IA</span></div>
+    </div>
+  </div>
+
+  <p class="hero__credito">Talent Land · abril 2018</p>
+</section>
+
+</body></html>
