@@ -40,7 +40,16 @@ const pageTitle = title === "Ilhas" ? title : `${title} · Ilhas`;
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/site.webmanifest" />
 
-    <!-- Fuentes self-hosted: van arriba del pliegue en cada página -->
+    <!--
+      Fuentes self-hosted. Solo se precargan DOS, no las cuatro: el titular
+      (Space Grotesk 600) y el cuerpo (Inter 400) son las que pintan el primer
+      texto de cualquier página. Precargar las cuatro ponía ~96 KB de fuentes
+      a competir con la imagen LCP en la misma ventana de ancho de banda, y el
+      "render delay" se comía el 61% del LCP en /nosotros.
+      Inter 500 y 600 se descubren desde el CSS y entran con `font-display:
+      swap`, así que el texto se pinta con la fuente de respaldo y cambia
+      cuando llegan — nunca se queda en blanco esperándolas.
+    -->
     <link
       rel="preload"
       href="/assets/fonts/space-grotesk-600.woff2"
@@ -51,20 +60,6 @@ const pageTitle = title === "Ilhas" ? title : `${title} · Ilhas`;
     <link
       rel="preload"
       href="/assets/fonts/inter-400.woff2"
-      as="font"
-      type="font/woff2"
-      crossorigin
-    />
-    <link
-      rel="preload"
-      href="/assets/fonts/inter-500.woff2"
-      as="font"
-      type="font/woff2"
-      crossorigin
-    />
-    <link
-      rel="preload"
-      href="/assets/fonts/inter-600.woff2"
       as="font"
       type="font/woff2"
       crossorigin

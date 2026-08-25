@@ -7,7 +7,9 @@ import Captura from "../components/medios/Captura.astro";
 import Icono from "../components/medios/Icono.astro";
 import Loop from "../components/medios/Loop.astro";
 import TarjetaCaso from "../components/medios/TarjetaCaso.astro";
-import { hayMedio, mostrar } from "../lib/medios";
+import Stat from "../components/medios/Stat.astro";
+import { mostrar } from "../lib/medios";
+import { PRODUCTOS } from "../data/productos";
 import dashboardIcon from "../assets/icons/dashboard.png";
 
 const pasos = [
@@ -20,52 +22,12 @@ const pasos = [
 
 const capturasMercado = ["home-mercado-01", "home-mercado-02", "home-mercado-03"];
 
-// La banda de autoridad se enciende con el clip de radio: es la prueba que la
-// sostiene. Hasta entonces el home queda como está hoy.
-const hayBanda = hayMedio("nosotros-radio-2018") || import.meta.env.DEV;
-
 const stats = [
   { dato: "6", contexto: "productos financieros construidos de cero a uno" },
   { dato: "+1,000 MDP/mes", contexto: "procesados por productos que Jorge (hijo) ha liderado" },
   { dato: "+2,000 empresas", contexto: "asesoradas en LATAM por Jorge (papá)" },
 ];
 
-const linaje = [
-  {
-    producto: "Stampay",
-    resolvio:
-      "Conciliación bancaria automática. Eliminó un proceso manual de 2–3 días por cierre.",
-    capturaId: "producto-stampay",
-  },
-  {
-    producto: "Nomcont",
-    resolvio:
-      "Reemplazó hojas de cálculo dispersas por un ledger estructurado y auditable.",
-    capturaId: "producto-nomcont",
-  },
-  {
-    producto: "Cometa · AI Data Concierge",
-    resolvio:
-      "Preguntas en lenguaje natural sobre tu base financiera, respuesta al instante.",
-    capturaId: "producto-cometa",
-  },
-  {
-    producto: "Nomada",
-    resolvio: "HRIS y nómina construidos desde cero.",
-    capturaId: "producto-nomada",
-  },
-  {
-    producto: "Paystand",
-    resolvio: "AR/AP en pagos B2B: dos productos construidos de cero a uno.",
-    capturaId: "producto-paystand",
-  },
-  {
-    producto: "Factumizer",
-    resolvio:
-      "Automatización de facturas CFDI, de idea a producción en menos de una semana.",
-    capturaId: "producto-factumizer",
-  },
-];
 ---
 
 <Base
@@ -93,17 +55,9 @@ const linaje = [
               >Quiero implementarlo</a
             >
           </div>
-          <p class="hero__stats">
-            {
-              stats.map((s, i) => (
-                <>
-                  {i > 0 && <span class="hero__stats-sep" aria-hidden="true">·</span>}
-                  <span class="hero__stats-dato">{s.dato}</span>{" "}
-                  <span class="hero__stats-contexto">{s.contexto}</span>
-                </>
-              ))
-            }
-          </p>
+          <div class="hero__stats">
+            {stats.map((s) => <Stat dato={s.dato} contexto={s.contexto} />)}
+          </div>
         </div>
         <div class="hero-split__visual" aria-hidden="true">
           <Loop id="home-hero-loop" ratio="1 / 1">
@@ -113,21 +67,21 @@ const linaje = [
       </div>
     </section>
 
-    {/* Banda de autoridad — tira delgada, no una sección. Se enciende con
-        el clip de radio, que es la prueba que la sostiene. */}
-    {
-      hayBanda && (
-        <div class="container banda-autoridad">
-          <BandaAutoridad
-            items={[
-              { etiqueta: "Radio Imagen", año: "2018" },
-              { etiqueta: "Conferencias de IA" },
-              { etiqueta: "6 productos financieros construidos de cero a uno" },
-            ]}
-          />
-        </div>
-      )
-    }
+    {/* Banda de autoridad — medios/BRIEF-historial.md §3. Tira delgada, no
+        una sección, y SIN los tres videos: el home tiene ocho segundos, y
+        meterle la prueba completa lo mata y hace que no se vea ninguno. La
+        banda vende en dos segundos y manda a /nosotros a quien la quiera. */}
+    <div class="container banda-autoridad">
+      <BandaAutoridad
+        titulo="Hablando de IA en público desde 2017."
+        items={[
+          { año: "nov 2017", etiqueta: "conferencia" },
+          { año: "ene 2018", etiqueta: "radio nacional" },
+          { año: "abr 2018", etiqueta: "Talent Land" },
+        ]}
+        href="/nosotros"
+      />
+    </div>
 
     <!-- 02 · El hueco -->
     <section class="section-y-sm bg-white">
@@ -196,11 +150,13 @@ const linaje = [
 
         <ul class="linaje">
           {
-            linaje.map((item) => (
+            PRODUCTOS.map((p) => (
               <TarjetaCaso
-                producto={item.producto}
-                resolvio={item.resolvio}
-                capturaId={item.capturaId}
+                titulo={p.titulo}
+                detalle={p.detalle}
+                marca={p.marca}
+                capturaId={p.capturaId}
+                recorte={p.recorte}
               />
             ))
           }
@@ -274,29 +230,23 @@ const linaje = [
     margin-top: 1.75rem;
   }
 
-  /* --- 01 · stat rail: prueba atribuida arriba del pliegue. Una sola
-     línea de texto, no bloques de números grandes — el bloque 04
-     (bifurcación) manda sobre este bloque: tiene que llegar cerca del
-     pliegue, así que esta franja no puede costar más que un renglón. --- */
+  /* --- 01 · riel de datos: los tres números atribuidos, con Stat.astro y
+     --ilhas-fs-stat. Cuesta alto de hero y empuja la bifurcación hacia
+     abajo; es un intercambio consciente entre peso de la prueba y qué tan
+     cerca del pliegue llega el bloque 04. --- */
   .hero__stats {
-    margin-top: 1.25rem;
-    padding-top: 1rem;
+    display: grid;
+    gap: 1.25rem;
+    margin-top: 1.5rem;
+    padding-top: 1.25rem;
     border-top: 1px solid var(--ilhas-gray);
-    max-width: none;
-    font-size: 0.8125rem;
-    color: var(--ilhas-text);
-    line-height: 1.6;
   }
 
-  .hero__stats-sep {
-    margin-inline: 0.625rem;
-    color: var(--ilhas-gray);
-  }
-
-  .hero__stats-dato {
-    font-family: var(--ilhas-font-display);
-    font-weight: 600;
-    color: var(--ilhas-dark);
+  @media (min-width: 640px) {
+    .hero__stats {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1.5rem;
+    }
   }
 
   section > .container.prose > p:not(.kicker):not(.lead) {
@@ -410,6 +360,10 @@ const linaje = [
     display: grid;
     gap: 1.5rem;
     margin-top: 2rem;
+    /* start, no stretch: una tarjeta sin párrafo de detalle no tiene por qué
+       estirarse a la altura de la más alta de su fila y dejar ~140 px de
+       vacío abajo. Cada tarjeta mide lo que mide su contenido. */
+    align-items: start;
   }
 
   @media (min-width: 640px) {

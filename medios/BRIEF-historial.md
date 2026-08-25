@@ -60,7 +60,13 @@ Hoy las tarjetas de `/` §05 y `/soluciones` §03 se titulan con el nombre del p
 | Clasificación de pagos internacionales con agentes | Mide la tasa de aprobación real y detecta en qué paso se atoran los cobros | 2026 |
 | Cobranza automática con reglas | Diagnostica por qué falló el cargo; el agente decide cuándo reintentar, a qué cuenta y con qué método | 2026 |
 
-### ⚠️ Los dos últimos están bajo NDA
+### ~~⚠️ Los dos últimos están bajo NDA~~ · CORREGIDO 24 ago 2026
+
+> **Jorge tiene los derechos de los dos.** Lo de abajo se escribió sobre el
+> supuesto de un NDA que no aplica. Las capturas **se publican**, y los ids
+> neutros (`producto-pagos-intl`, `producto-cobranza`) se quedan porque la
+> etiqueta vieja no correspondía a lo que muestra la pantalla — no por una
+> restricción legal. El titulado por función es de §2 y sigue vigente.
 
 **No llevan nombre de producto ni de cliente. Ninguno de los dos.** Se describen por la clase de problema, que es experiencia de Jorge, no información del cliente.
 

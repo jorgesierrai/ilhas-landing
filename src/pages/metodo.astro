@@ -165,13 +165,12 @@ const principios = [
 
         {/* El diagrama del proceso completo, debajo de la tabla que
             describe los mismos cinco pasos. */}
-        {
-          mostrar("metodo-timeline") && (
-            <div class="metodo-timeline">
-              <Captura id="metodo-timeline" ancho={1100} />
-            </div>
-          )
-        }
+        {/* metodo-timeline.png sale de aquí: era furniture de video —
+            horizontal, pensada para que el tiempo revele los nodos uno por
+            uno. En una página todo aterriza de golpe y catorce hitos a lo
+            ancho dan 80 px cada uno. La versión vertical que la reemplaza
+            vive en /nosotros. La ranura se queda en el manifiesto por si
+            vuelve (medios/BRIEF-historial.md §1). */}
       </div>
     </section>
 
@@ -244,7 +243,7 @@ const principios = [
         {
           mostrar(...capturasPrompts.map((c) => c.id)) && (
             <div class="prompts">
-              {capturasPrompts.map((c) => <Captura id={c.id} marco={c.marco} ancho={640} />)}
+              {capturasPrompts.map((c) => <Captura id={c.id} marco={c.marco} ancho={900} />)}
             </div>
           )
         }
@@ -333,7 +332,6 @@ const principios = [
      Todos estos contenedores están vacíos hoy: sin archivo, el componente no
      pinta nada en producción y el margen de arriba no llega a aplicarse
      porque no hay caja. */
-  .metodo-timeline,
   .metodo-clip,
   .metodo-loop {
     margin-top: 2.5rem;
@@ -344,16 +342,17 @@ const principios = [
     max-width: 48rem;
   }
 
+  /* Una por fila, no 2x2. A dos columnas cada captura caía en ~505 px y el
+     código de la primera se volvía ruido gris — que es exactamente lo que
+     esta sección NO puede permitirse: su titular afirma "no son prompts" y
+     estas capturas son la única prueba. A 900 px el esquema se lee.
+     El tope de ancho es menor que el del contenedor a propósito: una captura
+     a 1140 px con una fuente de 1300 px se sirve por debajo de retina. */
   .prompts {
     display: grid;
-    gap: 1.5rem;
+    gap: 2.5rem;
     margin-top: 2.5rem;
-  }
-
-  @media (min-width: 768px) {
-    .prompts {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
+    max-width: 900px;
   }
 
   .metodo-tabla table {

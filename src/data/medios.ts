@@ -50,6 +50,13 @@ export interface SlotMedio {
   atribucion?: Atribucion;
   /** Alternativa al video en un testimonio: cita en texto. */
   texto?: string;
+  /**
+   * `true` cuando la ranura tiene archivo pero NINGUNA página la usa a
+   * propósito. Sin esto `npm run medios` la reporta como ⚠, que es justo lo
+   * que queremos: el archivo está, se ve verde, y no sale en el sitio.
+   * Ponlo solo con la razón escrita en `notas`.
+   */
+  sinUsar?: boolean;
 }
 
 /**
@@ -77,16 +84,17 @@ export const MEDIOS: SlotMedio[] = [
       "1600 px de ancho, ratio 16:10. Tapa nombres de clientes, RFC y montos reales antes de exportar.",
   },
   {
-    id: "producto-nomcont",
+    id: "producto-cobranza",
     tipo: "captura",
     pagina: "compartido",
     seccion: "home §05 Linaje · /soluciones §03 Casos",
     prioridad: 1,
     objecion: "«¿Y tú qué has construido?» · «¿Tienes track record real?»",
-    alt: "Ledger estructurado y auditable de Nomcont",
-    caption: "Nomcont · ledger estructurado",
+    alt: "Tablero de cobranza automática con la razón por la que falló cada cargo",
+    caption: "Cobranza automática con reglas · 2026",
     pesoMaxKB: 400,
-    notas: "1600 px de ancho, ratio 16:10.",
+    notas:
+      "Renombrada desde su id anterior: la etiqueta vieja no correspondía a lo que muestra la captura. Jorge tiene los derechos de la imagen (confirmado 24 ago 2026). El alt describe la pantalla por su función, igual que el título de la tarjeta.",
   },
   {
     id: "producto-cometa",
@@ -98,7 +106,8 @@ export const MEDIOS: SlotMedio[] = [
     alt: "Interfaz de lenguaje natural de Cometa respondiendo una pregunta sobre la base financiera",
     caption: "Cometa · AI Data Concierge",
     pesoMaxKB: 400,
-    notas: "Que se vea una pregunta real escrita. 1600 px de ancho.",
+    notas:
+      "Datos dummy inventados por Jorge, no de un cliente (confirmado 24 ago 2026). 1320x2868: la más vertical de las seis, se recorta al 16/10 de la tarjeta.",
   },
   {
     id: "producto-nomada",
@@ -125,16 +134,17 @@ export const MEDIOS: SlotMedio[] = [
     notas: "Smart Lockbox o Spend Card. 1600 px de ancho.",
   },
   {
-    id: "producto-factumizer",
+    id: "producto-pagos-intl",
     tipo: "captura",
     pagina: "compartido",
     seccion: "home §05 Linaje · /soluciones §03 Casos",
     prioridad: 1,
     objecion: "«¿Y tú qué has construido?» · «¿Tienes track record real?»",
-    alt: "Automatización de facturas CFDI en Factumizer",
-    caption: "Factumizer · automatización de CFDI",
+    alt: "Tablero de operaciones de pago con el estado de cada cobro internacional",
+    caption: "Clasificación de pagos internacionales con agentes · 2026",
     pesoMaxKB: 400,
-    notas: "1600 px de ancho, ratio 16:10.",
+    notas:
+      "Renombrada desde su id anterior: la etiqueta vieja no correspondía a lo que muestra la captura. Jorge tiene los derechos de la imagen (confirmado 24 ago 2026). El alt describe la pantalla por su función, igual que el título de la tarjeta.",
   },
 
   // --- El sistema de agentes (A) · el bloque más importante de la lista
@@ -296,10 +306,11 @@ export const MEDIOS: SlotMedio[] = [
     seccion: "§ Autoridad",
     prioridad: 2,
     objecion: "«¿Quién eres tú para enseñar?»",
-    alt: "Jorge Sierra dando una conferencia de inteligencia artificial ante público",
-    caption: "Conferencia de IA",
+    alt: "Sala llena en la conferencia de Jorge Sierra sobre inteligencia artificial en Talent Land",
+    caption: "Talent Land · abril 2018",
     pesoMaxKB: 500,
-    notas: "2400 px de ancho. Que se vea el público, no solo el ponente.",
+    notas:
+      "2400 px de ancho. Es la que prueba escala: se ve el público, no solo el ponente. Va más grande que el clip — no inviertas ese orden de peso.",
   },
   {
     id: "nosotros-conferencia-clip",
@@ -308,10 +319,11 @@ export const MEDIOS: SlotMedio[] = [
     seccion: "§ Autoridad",
     prioridad: 2,
     objecion: "«¿Quién eres tú para enseñar?»",
-    alt: "Fragmento de una conferencia de inteligencia artificial",
-    duracion: "45 s",
+    alt: "Jorge Sierra en el escenario presentando su empresa de inteligencia artificial",
+    duracion: "20.8 s",
     pesoMaxKB: 12288,
-    notas: "Opcional si la foto de conferencia es buena.",
+    notas:
+      "PENDIENTE DE JORGE: los dos briefs del 24 ago se contradicen sobre este clip. BRIEF-historial lo da como conferencia de noviembre 2017 sin nombre de evento; el addendum de BRIEF-autoridad-radio lo da como Talent Land. Por eso va SIN caption: no se publica una fecha ni un evento que no esté confirmado.",
   },
 
   // ===================================================================
@@ -504,8 +516,9 @@ export const MEDIOS: SlotMedio[] = [
     alt: "Diagrama del proceso completo del método I·L·H·A·S, de Identificar a Sistematizar",
     caption: "El método completo, de principio a fin",
     pesoMaxKB: 400,
+    sinUsar: true,
     notas:
-      "Copiado de public/assets/ilhas-iconografia/full-timeline.png, que está en .gitignore. La copia en src/assets/media/capturas/ sí se commitea, para que pase por astro:assets.",
+      "SIN USAR a propósito: salió de /metodo §04 porque era furniture de video (medios/BRIEF-historial.md §1). La reemplazó la línea vertical de /nosotros. La ranura se queda por si vuelve.",
   },
 ];
 

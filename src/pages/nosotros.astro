@@ -3,6 +3,8 @@ import Base from "../layouts/Base.astro";
 import TarjetaPersona from "../components/TarjetaPersona.astro";
 import Captura from "../components/medios/Captura.astro";
 import VideoClip from "../components/medios/VideoClip.astro";
+import Stat from "../components/medios/Stat.astro";
+import Historial from "../components/Historial.astro";
 import { mostrar } from "../lib/medios";
 import fotoPapa from "../assets/equipo/jorge-papa.png";
 import fotoHijo from "../assets/equipo/jorge-hijo.png";
@@ -81,6 +83,7 @@ const hayAutoridad = mostrar(
               trayectoria={p.trayectoria}
               atribuciones={p.atribuciones}
               foto={p.foto}
+              prioritaria
             />
           ))
         }
@@ -106,36 +109,109 @@ const hayAutoridad = mostrar(
     )
   }
 
-  {/* § nueva · Autoridad — la conferencia a ancho completo y la radio de
-      2018, con el año en tratamiento gráfico (regla 4 de curaduría: la
-      fecha es parte de la prueba). */}
+  {/* § nueva · La línea de tiempo — medios/BRIEF-historial.md §1.
+      Los hitos viven en src/data/historial.ts: para agregar un año se edita
+      ese archivo, no este.
+
+      TODO copy · Jorge escribe el párrafo de intro. El borrador de
+      medios/timeline-preview.html decía:
+        «A la izquierda, lo que hemos entendido de la IA. A la derecha, lo que
+         hemos construido con ella — casi todo infraestructura financiera para
+         fintechs. Los tres hitos que brillan tienen video o foto: no es un
+         relato, está grabado.»
+      Ojo: la última frase ya no aplica — la prueba en video vive en
+      § Autoridad, aquí abajo, no colgando de la línea. */}
+  <section class="section-y bg-dark">
+    <div class="container">
+      <div class="section-head reveal">
+        <p class="kicker">De dónde sale esto</p>
+        <h2>Once años metidos en esto, con recibos.</h2>
+      </div>
+
+      <Historial />
+    </div>
+  </section>
+
+  {/* § nueva · Autoridad — layout, textos y specs de
+      medios/BRIEF-autoridad-radio.md. Tres piezas que cuentan la misma
+      historia: en 2018 Jorge no opinaba sobre IA, tenía una empresa de IA,
+      la presentaba en radio nacional y la defendía en un escenario grande.
+      La sección deja leer eso sin explicarlo. */}
   {
     hayAutoridad && (
       <section class="section-y bg-dark">
         <div class="container">
           <div class="section-head reveal">
-            <p class="kicker">Autoridad</p>
-            <h2>Hablando de IA en radio nacional desde 2018.</h2>
+            <p class="kicker">Imagen Radio · enero 2018</p>
+            <h2>Hablando de IA en público desde 2017.</h2>
           </div>
 
+          {/* El bloque de radio: video vertical a la izquierda, el año y las
+              dos citas a la derecha. En móvil se apila. */}
+          {
+            mostrar("nosotros-radio-2018") && (
+              <div class="radio reveal">
+                <VideoClip
+                  id="nosotros-radio-2018"
+                  ratio="1080 / 1816"
+                  marco="navegador"
+                  maxAncho="420px"
+                />
+
+                <div class="radio__texto">
+                  <Stat dato="2018" contexto="hablando de IA en radio nacional" />
+
+                  <blockquote class="radio__cita">
+                    Nosotros lo que estamos haciendo es diseñar una plataforma
+                    que introduzca inteligencia artificial, lenguaje natural y
+                    análisis de datos.
+                  </blockquote>
+
+                  <blockquote class="radio__cita">
+                    Creemos en el rediseño de la dinámica en la que la gente
+                    puede hacer proyectos.
+                    {/* Esta segunda cita NO se oye en el corte de 10.8 s. Se
+                        marca como de la entrevista completa para que quien le
+                        dé play y no la escuche no dude — es la salida (a) de
+                        la decisión pendiente del brief. La (b) es que Jorge
+                        extienda el corte con el tramo 1:44-1:50. */}
+                    <footer class="radio__fuente">
+                      En la entrevista completa
+                    </footer>
+                  </blockquote>
+
+                  <p class="radio__firma">
+                    Jorge Sierra · Imagen Radio · enero de 2018
+                  </p>
+
+                  <p class="radio__enlace">
+                    <a
+                      href="https://www.rmx.com.mx/entrevistas/buscas-un-asistente-virtual-conoce-coophi"
+                      rel="noopener noreferrer"
+                    >
+                      Nota original en rmx.com.mx →
+                    </a>
+                  </p>
+                </div>
+              </div>
+            )
+          }
+
+          {/* La conferencia. La foto de sala llena es la que prueba escala;
+              el clip prueba que hablaba. No inviertas el orden de peso: la
+              foto va más grande que el clip. */}
           {
             mostrar("nosotros-conferencia") && (
-              <div class="autoridad__foto">
+              <div class="autoridad__foto reveal">
                 <Captura id="nosotros-conferencia" ancho={1100} />
               </div>
             )
           }
 
           {
-            mostrar("nosotros-radio-2018", "nosotros-conferencia-clip") && (
-              <div class="autoridad__clips">
-                {mostrar("nosotros-radio-2018") && (
-                  <div class="autoridad__radio">
-                    <p class="autoridad__anio">2018</p>
-                    <VideoClip id="nosotros-radio-2018" />
-                  </div>
-                )}
-                <VideoClip id="nosotros-conferencia-clip" />
+            mostrar("nosotros-conferencia-clip") && (
+              <div class="autoridad__clip reveal">
+                <VideoClip id="nosotros-conferencia-clip" marco="navegador" />
               </div>
             )
           }
@@ -158,34 +234,95 @@ const hayAutoridad = mostrar(
     margin-inline: auto;
   }
 
-  /* --- § la historia y § autoridad (vacías hoy) --- */
-  .historia,
-  .autoridad__clips {
+  /* --- § la historia --- */
+  .historia {
     display: grid;
     gap: 1.5rem;
     margin-top: 2rem;
   }
 
-  .autoridad__foto {
-    margin-top: 2rem;
+  /* --- § autoridad · el bloque de radio ---
+     Video vertical a la izquierda, año y citas a la derecha. En móvil,
+     una sola columna con el video arriba. */
+  .radio {
+    display: grid;
+    gap: 2rem;
+    margin-top: 2.5rem;
+    align-items: start;
   }
 
-  .autoridad__anio {
-    font-family: var(--ilhas-font-display);
-    font-weight: 600;
-    font-size: var(--ilhas-fs-stat);
-    line-height: 1;
+  .radio__texto {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .radio__cita {
+    margin: 0;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(248, 250, 255, 0.12);
+    font-family: var(--ilhas-font-body);
+    font-size: var(--ilhas-fs-lead);
+    color: var(--ilhas-white);
+    text-wrap: pretty;
+  }
+
+  /* Las comillas van en CSS, no en el texto: así el contenido del
+     blockquote se puede citar y traducir sin arrastrarlas. */
+  .radio__cita::before {
+    content: open-quote;
+  }
+
+  .radio__cita::after {
+    content: close-quote;
+  }
+
+  .radio__fuente {
+    margin-top: 0.75rem;
+    font-size: var(--ilhas-fs-small);
+    color: rgba(248, 250, 255, 0.55);
+  }
+
+  .radio__fuente::before {
+    content: "— ";
+  }
+
+  .radio__firma,
+  .radio__enlace {
+    font-family: var(--ilhas-font-body);
+    font-size: var(--ilhas-fs-small);
+    color: rgba(248, 250, 255, 0.7);
+  }
+
+  .radio__enlace a {
     color: var(--ilhas-grad-start);
-    margin-bottom: 0.75rem;
+    text-decoration: none;
+  }
+
+  .radio__enlace a:hover {
+    text-decoration: underline;
+  }
+
+  /* --- § autoridad · la conferencia --- */
+  .autoridad__foto {
+    margin-top: 3rem;
+  }
+
+  .autoridad__clip {
+    margin-top: 1.5rem;
+    max-width: 48rem;
   }
 
   @media (min-width: 768px) {
     .historia {
       grid-template-columns: repeat(3, minmax(0, 1fr));
     }
+  }
 
-    .autoridad__clips {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
+  @media (min-width: 900px) {
+    .radio {
+      grid-template-columns: minmax(0, 420px) minmax(0, 1fr);
+      gap: 3rem;
     }
   }
 
