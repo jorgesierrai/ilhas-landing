@@ -54,7 +54,7 @@ const kpis = [
             <Image
               src={fotoHero}
               alt={altHero}
-              widths={[900, 1440]}
+              widths={[900, 1300]}
               sizes="(max-width: 899px) 100vw, 56vw"
               loading="eager"
               fetchpriority="high"
@@ -66,8 +66,9 @@ const kpis = [
 
       <div class="hero__inner">
         <h1>
-          Tecnología de <span class="text-gradient">clase mundial</span>.
-          Accesible para tu empresa <span class="text-gradient">con IA</span>.
+          Tecnología y experiencia de{" "}
+          <span class="text-gradient">clase mundial</span>. Accesible para tu
+          empresa <span class="text-gradient">con IA</span>.
         </h1>
 
         <p class="hero__lead">
@@ -254,9 +255,14 @@ const kpis = [
   }
 
   /* 2 · Velo de contraste, para que el texto pase AA sobre cualquier zona de
-        la foto. Las paradas están calibradas: .92 a 40% deja el H1 sobre negro
-        casi puro, y .44 a 64% es lo más que se puede aclarar sin que la última
-        métrica choque con el hombro de Jorge. Moverlas reabre las dos cosas. */
+        la foto.
+        Ajustado el 25 ago: Jorge cae entre el 50% y el 57% del hero, justo
+        donde el velo original iba de .72 a .58 y se lo comía. La meseta
+        oscura se mantiene hasta 42% —que es donde terminan el H1 y el
+        párrafo, lo medí— y a partir de ahí baja más rápido. Sobre Jorge pasa
+        de .72/.58 a .62/.38.
+        Las métricas sí quedan sobre zona más clara que antes; por eso llevan
+        sombra propia (ver .hero__kpis abajo). */
   .hero__velo {
     position: absolute;
     inset: 0;
@@ -264,9 +270,9 @@ const kpis = [
     background: linear-gradient(
       95deg,
       rgba(14, 14, 15, 0.98) 0%,
-      rgba(14, 14, 15, 0.92) 40%,
-      rgba(14, 14, 15, 0.44) 64%,
-      rgba(14, 14, 15, 0.12) 100%
+      rgba(14, 14, 15, 0.9) 42%,
+      rgba(14, 14, 15, 0.18) 56%,
+      rgba(14, 14, 15, 0.02) 100%
     );
   }
 
@@ -280,8 +286,12 @@ const kpis = [
   }
 
   .hero h1 {
-    max-width: 16ch;
-    font-size: clamp(2.1rem, 3.5vw, 3.05rem);
+    /* 19ch y no 16: con el titular nuevo, a 16ch caía en cinco líneas y el
+       bloque de texto se comía el hero. A 19ch son cuatro y el texto sigue
+       terminando antes del 45% del ancho, o sea lejos de Jorge y de la
+       pantalla. */
+    max-width: 19ch;
+    font-size: clamp(2.1rem, 3.4vw, 2.9rem);
     line-height: 1.06;
     color: var(--ilhas-white);
   }
@@ -342,6 +352,10 @@ const kpis = [
     flex-wrap: wrap;
     gap: 2rem;
     margin-top: 2.1rem;
+    /* La tercera métrica queda sobre la parte clara de la foto desde que se
+       aclaró el velo. La sombra la sostiene sin volver a oscurecer a Jorge:
+       es protección local en vez de global. */
+    text-shadow: 0 1px 12px rgba(14, 14, 15, 0.95);
   }
 
   .hero__credito {

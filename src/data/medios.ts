@@ -159,7 +159,7 @@ export const MEDIOS: SlotMedio[] = [
     caption: "Talent Land · abril 2018",
     pesoMaxKB: 400,
     notas:
-      "Recorte propio para el hero, no reutilices el de /nosotros: aquí la foto se enmascara y sangra desde la derecha, así que el encuadre tiene que aguantar que el 26% izquierdo desaparezca. Es el LCP del home — nunca lazy.",
+      "Recorte propio para el hero, no reutilices el de /nosotros: aquí la foto se enmascara y sangra desde la derecha, así que el encuadre tiene que aguantar que el 26% izquierdo desaparezca. Es el LCP del home — nunca lazy. Rehecho el 25 ago desde nosotros-conferencia-detalle.jpg (extract 300,180,1300x1060) porque el recorte anterior cortaba la palabra «crear» de la pregunta; lleva linear(1,+28) para levantar sombras sin quemar la pantalla, que es la parte más clara.",
   },
 
   // --- El sistema de agentes (A) · el bloque más importante de la lista
