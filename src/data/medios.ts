@@ -147,6 +147,21 @@ export const MEDIOS: SlotMedio[] = [
       "Renombrada desde su id anterior: la etiqueta vieja no correspondía a lo que muestra la captura. Jorge tiene los derechos de la imagen (confirmado 24 ago 2026). El alt describe la pantalla por su función, igual que el título de la tarjeta.",
   },
 
+  // --- La foto del hero del home (D) · aprobada 25 ago 2026
+  {
+    id: "home-hero-conferencia",
+    tipo: "foto",
+    pagina: "home",
+    seccion: "§01 Hero",
+    prioridad: 1,
+    objecion: "«¿Quién eres tú?» · «¿Esto es real o es una landing más?»",
+    alt: "Jorge Sierra en el escenario de Talent Land, frente a una pantalla que pregunta «¿Quién sea puede crear inteligencia artificial?»",
+    caption: "Talent Land · abril 2018",
+    pesoMaxKB: 400,
+    notas:
+      "Recorte propio para el hero, no reutilices el de /nosotros: aquí la foto se enmascara y sangra desde la derecha, así que el encuadre tiene que aguantar que el 26% izquierdo desaparezca. Es el LCP del home — nunca lazy.",
+  },
+
   // --- El sistema de agentes (A) · el bloque más importante de la lista
   {
     id: "metodo-prompts-01",
@@ -341,8 +356,9 @@ export const MEDIOS: SlotMedio[] = [
     alt: "",
     duracion: "8-15 s",
     pesoMaxKB: 1536,
+    sinUsar: true,
     notas:
-      "Un agente corriendo: terminal + dashboard actualizándose. webm ≤ 800 KB · mp4 ≤ 1.5 MB · póster .jpg obligatorio. Decorativo: aria-hidden.",
+      "SIN USAR desde el 25 ago 2026: el hero del home lo ocupa la foto de Talent Land (home-hero-conferencia). La ranura se conserva por si el loop vuelve en otra sección. Un agente corriendo: terminal + dashboard actualizándose. webm ≤ 800 KB · mp4 ≤ 1.5 MB · póster .jpg obligatorio. Decorativo: aria-hidden.",
   },
   {
     id: "soluciones-hero-loop",

@@ -10,13 +10,26 @@
 interface Props {
   dato: string;
   contexto: string;
+  /**
+   * Unidad o símbolo que va pegado al número, en violeta: " MDP", "+", "→".
+   * Va DENTRO del número para que no se separe de él al envolver.
+   */
+  unidad?: string;
+  /**
+   * "hero": regla vertical a la izquierda y etiqueta en versalitas con
+   * tracking. Es el tratamiento del hero del home.
+   *
+   * Sin props nuevas este componente tiene que renderizar exactamente igual
+   * que antes: /nosotros depende de eso (verificado con diff del HTML).
+   */
+  variante?: "hero";
 }
 
-const { dato, contexto } = Astro.props;
+const { dato, contexto, unidad, variante } = Astro.props;
 ---
 
-<div class="stat">
-  <p class="stat__dato">{dato}</p>
+<div class:list={["stat", variante && `stat--${variante}`]}>
+  <p class="stat__dato">{dato}{unidad && <i class="stat__unidad">{unidad}</i>}</p>
   <p class="stat__contexto">{contexto}</p>
 </div>
 
@@ -43,5 +56,32 @@ const { dato, contexto } = Astro.props;
 
   :global(.bg-dark) .stat__contexto {
     color: rgba(248, 250, 255, 0.7);
+  }
+
+  /* --- variante "hero" --------------------------------------------------- */
+  .stat--hero {
+    border-left: 2px solid rgba(255, 255, 255, 0.16);
+    padding-left: 1rem;
+  }
+
+  .stat--hero .stat__dato {
+    font-size: clamp(1.7rem, 2.7vw, 2.4rem);
+    line-height: 1;
+    color: var(--ilhas-white);
+    white-space: nowrap;
+  }
+
+  .stat--hero .stat__contexto {
+    margin-top: 0.35rem;
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    /* .62 mide 7.7:1 sobre tinta. */
+    color: rgba(255, 255, 255, 0.62);
+  }
+
+  .stat__unidad {
+    font-style: normal;
+    color: var(--ilhas-grad-end);
   }
 </style>

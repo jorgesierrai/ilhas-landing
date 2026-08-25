@@ -5,12 +5,17 @@ import Bifurcacion from "../components/Bifurcacion.astro";
 import BandaAutoridad from "../components/medios/BandaAutoridad.astro";
 import Captura from "../components/medios/Captura.astro";
 import Icono from "../components/medios/Icono.astro";
-import Loop from "../components/medios/Loop.astro";
 import TarjetaCaso from "../components/medios/TarjetaCaso.astro";
 import Stat from "../components/medios/Stat.astro";
-import { mostrar } from "../lib/medios";
+import { buscarImagen, mostrar } from "../lib/medios";
+import { porId } from "../data/medios";
 import { PRODUCTOS } from "../data/productos";
-import dashboardIcon from "../assets/icons/dashboard.png";
+
+// La foto del hero va por el sistema de ranuras pero NO por Captura.astro:
+// ese componente mete <figure> + <figcaption> y loading="lazy", y las tres
+// cosas pelean con un hero absoluto que además es el LCP del home.
+const fotoHero = buscarImagen("home-hero-conferencia");
+const altHero = porId("home-hero-conferencia")!.alt;
 
 const pasos = [
   { letra: "I", paso: "Identificar", linea: "Cómo se mueve el dinero y dónde se fuga.", icono: "icono-paso-i" },
@@ -22,10 +27,12 @@ const pasos = [
 
 const capturasMercado = ["home-mercado-01", "home-mercado-02", "home-mercado-03"];
 
-const stats = [
-  { dato: "6", contexto: "productos financieros construidos de cero a uno" },
-  { dato: "+1,000 MDP/mes", contexto: "procesados por productos que Jorge (hijo) ha liderado" },
-  { dato: "+2,000 empresas", contexto: "asesoradas en LATAM por Jorge (papá)" },
+// Métricas del hero. El copy es de Jorge y va literal (brief de la
+// iteración 3): número, unidad en violeta, y etiqueta en versalitas.
+const kpis = [
+  { dato: "+1,000", unidad: " MDP", contexto: "al mes, volumen respaldado" },
+  { dato: "6", unidad: "+", contexto: "startups · infraestructura creada" },
+  { dato: "2016", unidad: "→", contexto: "desarrollando IA" },
 ];
 
 ---
@@ -36,35 +43,59 @@ const stats = [
 >
   <article>
     <!-- 01 · Hero — la línea de identidad -->
+    <!-- 01 · Hero — la foto de Talent Land, opción B2 aprobada el 25 ago 2026.
+         Referencia: medios/hero-b2-referencia.html · las cuatro decisiones de
+         CSS están numeradas en el <style> de abajo. -->
     <section class="hero">
-      <div class="hero__glow" aria-hidden="true"></div>
-      <div class="container hero-split">
-        <div class="hero__content">
-          <h1>
-            El método con el que se construyen productos que mueven{" "}
-            <span class="text-gradient">millones</span>, apuntado a tu
-            trabajo.
-          </h1>
-          <p class="lead">
-            Dos maneras de recibirlo: que te lo enseñemos, o que te lo
-            hagamos.
-          </p>
-          <div class="hero__ctas">
-            <a href="/finanzas" class="btn btn-primary">Quiero aprenderlo</a>
-            <a href="/soluciones" class="btn btn-ghost"
-              >Quiero implementarlo</a
-            >
+      {
+        fotoHero && (
+          <div class="hero__foto">
+            <Image
+              src={fotoHero}
+              alt={altHero}
+              widths={[900, 1440]}
+              sizes="(max-width: 899px) 100vw, 56vw"
+              loading="eager"
+              fetchpriority="high"
+            />
           </div>
-          <div class="hero__stats">
-            {stats.map((s) => <Stat dato={s.dato} contexto={s.contexto} />)}
-          </div>
+        )
+      }
+      <div class="hero__velo" aria-hidden="true"></div>
+
+      <div class="hero__inner">
+        <h1>
+          Tecnología de <span class="text-gradient">clase mundial</span>.
+          Accesible para tu empresa <span class="text-gradient">con IA</span>.
+        </h1>
+
+        <p class="hero__lead">
+          Convertimos años de experiencia creando infraestructura crítica en un
+          método probado. Todo lo que aprendimos escalando productos de millones
+          de dólares y empresas unicornio, ahora adaptado para potenciar tus
+          ventas, finanzas y operaciones.
+        </p>
+
+        <div class="hero__ctas">
+          <a href="/finanzas" class="btn btn-primary">Quiero aprenderlo</a>
+          <a href="/soluciones" class="btn btn-ghost-oscuro">Quiero implementarlo</a>
         </div>
-        <div class="hero-split__visual" aria-hidden="true">
-          <Loop id="home-hero-loop" ratio="1 / 1">
-            <Image src={dashboardIcon} alt="" width="380" height="380" />
-          </Loop>
+
+        <div class="hero__kpis">
+          {
+            kpis.map((k) => (
+              <Stat
+                dato={k.dato}
+                unidad={k.unidad}
+                contexto={k.contexto}
+                variante="hero"
+              />
+            ))
+          }
         </div>
       </div>
+
+      {fotoHero && <p class="hero__credito">Talent Land · abril 2018</p>}
     </section>
 
     {/* Banda de autoridad — medios/BRIEF-historial.md §3. Tira delgada, no
@@ -176,76 +207,192 @@ const stats = [
 </Base>
 
 <style>
+  /* ===================================================================
+     01 · HERO — opción B2. Referencia: medios/hero-b2-referencia.html
+     Las cuatro decisiones numeradas de esa referencia, portadas tal cual.
+     =================================================================== */
   .hero {
     position: relative;
+    display: flex;
+    align-items: center;
+    min-height: 620px;
     overflow: hidden;
+    background: var(--ilhas-dark);
   }
 
-  .hero__glow {
-    /* Más lejos y más tenue: dentro de un hero corto con overflow:hidden,
-       un círculo grande se recorta en los cuatro lados y se ve como una
-       mancha rectangular, no como un resplandor. */
+  /* 1 · La foto SANGRA desde la derecha y se disuelve hacia la izquierda con
+        máscara. No es una caja con una sombra encima: es la imagen misma
+        desapareciendo. Cambiar esto por un box-shadow o por un div con
+        degradado sobre una foto contenida pierde el efecto entero. */
+  .hero__foto {
     position: absolute;
-    top: -60%;
-    right: -25%;
-    width: 32rem;
-    height: 32rem;
-    background: var(--ilhas-gradient);
-    opacity: 0.12;
-    filter: blur(90px);
-    border-radius: 50%;
-    pointer-events: none;
+    top: 0;
+    right: 0;
+    z-index: 1;
+    width: 56%;
+    height: 100%;
+    -webkit-mask-image: linear-gradient(
+      to right,
+      transparent 0%,
+      rgba(0, 0, 0, 0.5) 26%,
+      #000 58%
+    );
+    mask-image: linear-gradient(
+      to right,
+      transparent 0%,
+      rgba(0, 0, 0, 0.5) 26%,
+      #000 58%
+    );
   }
 
-  .hero-split {
-    /* Más corto que el default de base.css a propósito: el home tiene
-       la bifurcación (bloque 04) como prioridad — debe llegar cerca del
-       pliegue — así que este hero no se estira tanto como los de
-       /finanzas o /soluciones, solo lo suficiente para que no se sienta
-       cortado en seco. */
-    position: relative;
-    padding-block: clamp(2rem, 4vw, 3.5rem);
+  .hero__foto :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 18% 40%;
   }
 
-  .hero__content {
+  /* 2 · Velo de contraste, para que el texto pase AA sobre cualquier zona de
+        la foto. Las paradas están calibradas: .92 a 40% deja el H1 sobre negro
+        casi puro, y .44 a 64% es lo más que se puede aclarar sin que la última
+        métrica choque con el hombro de Jorge. Moverlas reabre las dos cosas. */
+  .hero__velo {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    background: linear-gradient(
+      95deg,
+      rgba(14, 14, 15, 0.98) 0%,
+      rgba(14, 14, 15, 0.92) 40%,
+      rgba(14, 14, 15, 0.44) 64%,
+      rgba(14, 14, 15, 0.12) 100%
+    );
+  }
+
+  .hero__inner {
     position: relative;
+    z-index: 3;
+    width: 100%;
+    max-width: var(--ilhas-container);
+    margin-inline: auto;
+    padding-inline: var(--ilhas-gutter);
   }
 
   .hero h1 {
-    /* El H1 más grande del sitio a propósito: es el home, el que recibe
-       tráfico frío. Las páginas interiores usan un tamaño menor
-       (ver su propio <style>) — la jerarquía estaba invertida. */
-    font-size: clamp(2.5rem, 4.5vw, 3.75rem);
-    max-width: 20ch;
+    max-width: 16ch;
+    font-size: clamp(2.1rem, 3.5vw, 3.05rem);
+    line-height: 1.06;
+    color: var(--ilhas-white);
   }
 
-  .hero .lead {
-    margin-top: 1rem;
+  /* 3 · Las frases clave en el gradiente de marca, con white-space:nowrap
+        para que nunca se partan entre líneas. Sobre fondo oscuro este tramo
+        —violeta claro → violeta— mide de 7.5:1 a 4.6:1, así que pasa AA de
+        texto grande con margen. El cian NO se toca aquí: sobre tinta es el
+        único tramo del gradiente de marca que se ve barato.
+        Ojo: pisa a .text-gradient de base.css, que arranca en --ilhas-primary
+        y sobre oscuro se apaga demasiado. */
+  .hero h1 .text-gradient {
+    white-space: nowrap;
+    background: linear-gradient(
+      to right,
+      #b98bff 0%,
+      var(--ilhas-grad-end) 100%
+    );
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+  }
+
+  .hero__lead {
+    margin-top: 1.1rem;
+    max-width: 46ch;
+    font-size: 1.0625rem;
+    /* .70 mide 9.6:1 sobre tinta. */
+    color: rgba(255, 255, 255, 0.7);
   }
 
   .hero__ctas {
     display: flex;
     flex-wrap: wrap;
-    gap: 1rem;
-    margin-top: 1.75rem;
+    gap: 0.75rem;
+    margin-top: 1.6rem;
   }
 
-  /* --- 01 · riel de datos: los tres números atribuidos, con Stat.astro y
-     --ilhas-fs-stat. Cuesta alto de hero y empuja la bifurcación hacia
-     abajo; es un intercambio consciente entre peso de la prueba y qué tan
-     cerca del pliegue llega el bloque 04. --- */
-  .hero__stats {
-    display: grid;
-    gap: 1.25rem;
-    margin-top: 1.5rem;
-    padding-top: 1.25rem;
-    border-top: 1px solid var(--ilhas-gray);
+  /* .btn-ghost de base.css es para fondo claro: su borde gris y su texto
+     --ilhas-dark desaparecen sobre tinta. Esta es la misma pieza, invertida.
+     No toca la regla compartida. */
+  .btn-ghost-oscuro {
+    background: transparent;
+    color: var(--ilhas-white);
+    border: 1px solid rgba(255, 255, 255, 0.3);
   }
 
-  @media (min-width: 640px) {
-    .hero__stats {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
+  .btn-ghost-oscuro:hover {
+    border-color: var(--ilhas-white);
+    color: var(--ilhas-white);
+  }
+
+  /* 4 · Métricas en FILA debajo del texto, no en columna a la derecha. Esa
+        mitad la ocupan Jorge y la pantalla, que son dos sujetos fijos:
+        cualquier número puesto ahí aterriza encima de uno de los dos. */
+  .hero__kpis {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    margin-top: 2.1rem;
+  }
+
+  .hero__credito {
+    position: absolute;
+    left: var(--ilhas-gutter);
+    bottom: 18px;
+    z-index: 3;
+    max-width: none;
+    font-size: 0.75rem;
+    /* .46 y no el .38 de la referencia: a 12 px, .38 mide 3.55:1 y falla AA.
+       .46 mide 4.68:1. Sigue siendo blanco con opacidad, no un color nuevo. */
+    color: rgba(255, 255, 255, 0.46);
+  }
+
+  /* Móvil: la foto pasa a ser una banda arriba y el texto queda abajo. Nunca
+     texto encima de la foto en pantallas angostas — ahí no hay ancho
+     suficiente para que la máscara separe una cosa de la otra. */
+  @media (max-width: 899px) {
+    .hero {
+      min-height: 0;
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    .hero__foto {
+      position: relative;
+      width: 100%;
+      height: 240px;
+      -webkit-mask-image: linear-gradient(to bottom, #000 60%, transparent 100%);
+      mask-image: linear-gradient(to bottom, #000 60%, transparent 100%);
+    }
+
+    .hero__foto :global(img) {
+      object-position: 22% 40%;
+    }
+
+    .hero__velo {
+      display: none;
+    }
+
+    .hero__inner {
+      padding-block: 1.5rem 3rem;
+    }
+
+    .hero__kpis {
       gap: 1.5rem;
+    }
+
+    .hero__credito {
+      position: static;
+      margin-top: 1.5rem;
+      padding-inline: 0;
     }
   }
 

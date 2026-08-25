@@ -36,12 +36,13 @@ Un **hub de marca con cinco páginas**, no un scroll de ventas:
 
 ## Estado del repositorio
 
-*Actualizado: 22 ago 2026.*
+*Actualizado: 25 ago 2026.*
 
-- Rama de trabajo: **`fix-comentarios`**.
+- Rama de trabajo: **`hero-conferencia`**, que sale de `fix-comentarios-2-de-assets`.
+  El sistema de medios vive en la rama de assets y el trabajo del hero depende de él.
 - **El sitio nuevo en Astro está completo**: las cinco rutas existen en `src/pages/`, con la auditoría visual (`AUDITORIA-VISUAL.md`) ya aplicada.
 - El `index.html` de la raíz es el sitio viejo (landing de bootcamp, sin rutas). **No lo borres**: Jorge lo conserva para revisar qué rescatar. Ya se le quitaron los testimoniales inventados, los logos "Empresa 1–8", los videos "Próximamente" y el contador de cupos. Le queda un `[Nombre de tu papá]`, que ya no importa porque esa página no se publica.
-- **Sistema de medios (video, capturas, íconos): montado, esperando material.** El sitio declara 41 *ranuras* con nombre; dejas caer un archivo con el nombre exacto y aparece solo, sin tocar código. Una ranura vacía no pinta nada en producción.
+- **Sistema de medios (video, capturas, íconos): montado, esperando material.** El sitio declara 42 *ranuras* con nombre; dejas caer un archivo con el nombre exacto y aparece solo, sin tocar código. Una ranura vacía no pinta nada en producción.
   - **Si vas a trabajar en medios, lee `medios/ESTADO.md` primero.**
   - `npm run medios` te dice qué falta, qué pesa de más y qué no tiene atribución.
 
