@@ -1,22 +1,29 @@
 <!doctype html><html lang="es"><head><meta charset="utf-8">
-<title>Ilhas · La bifurcación, rehecha</title>
+<title>Ilhas · La bifurcación — carril genérico</title>
 <!--
   ==========================================================================
-  §04 LA BIFURCACIÓN · propuesta del 25 ago 2026
+  §04 LA BIFURCACIÓN · v2, 25 ago 2026
   ==========================================================================
-  Diagnóstico de Jorge, correcto: las dos tarjetas describen CÓMO SE ENTREGA
-  («el método, enseñado» / «aplicado en tu empresa»), no QUÉ TE LLEVAS. Nadie
-  compra logística. Y no se conectan con lo de arriba.
+  Cambio pedido por Jorge: el carril de aprender es GENÉRICO. El método sirve
+  para cualquier área; «Ilhas Finanzas» es la primera isla, no el producto.
 
-  Tres cambios, no uno:
-   1. El encabezado hace de puente con §02 — «ya sabes qué tiene que pasar».
-   2. Cada tarjeta abre con el RESULTADO, no con la entrega.
-   3. Cada carril trae su propio respaldo atribuido, que es lo que Jorge pidió.
+  Cómo se resuelve sin contradecirse: la promesa universal vive arriba, y la
+  puerta que existe hoy vive en su propio recuadro abajo. Así los chips de
+  finanzas dejan de pelearse con la promesa genérica — se vuelven la prueba de
+  que la puerta es real.
 
-  Tres fondos para elegir. El copy es andamio: lo escribe Jorge.
-  Las cifras salen de finanzas.astro (los maestros) y de los dos testimonios.
+  ⚠️ Regla 3 de CLAUDE.md: NO se anuncian islas futuras, ni con «próximamente».
+  «Abierto hoy» no anuncia nada: es un hecho del presente. El visitante
+  extrapola solo, que es exactamente lo que la regla quiere.
 
-  Rutas relativas a `medios/`. Cero JavaScript.
+  ⚠️ La tarjeta de aprender YA NO es un <a>: lleva dos puertas (la isla y el
+  método) y dos ligas anidadas es HTML inválido. Es <div> con dos <a> adentro.
+
+  Carril 2 con menos IA: se cayó «no somos una agencia de implementación de IA»
+  — negar algo obliga a nombrarlo, y mete la palabra en la página. Ahora se
+  describe el trabajo: levantar, construir, dejar funcionando, mantener.
+
+  Copy de andamio: lo escribe Jorge. Rutas relativas a `medios/`. Cero JS.
 -->
 <style>
 @font-face{font-family:"Space Grotesk";font-weight:600;font-display:swap;
@@ -37,8 +44,8 @@
   --ilhas-font-body:"Inter",system-ui,-apple-system,sans-serif;
   --ilhas-tracking-display:-.02em;
   --ilhas-fs-h2:clamp(1.875rem,4vw,2.25rem); --ilhas-fs-small:.875rem;
-  --ilhas-radius-card:1.25rem; --ilhas-container:1140px;
-  --ilhas-gutter:clamp(1.25rem,4vw,3rem);
+  --ilhas-radius-card:1.25rem; --ilhas-radius-pill:999px;
+  --ilhas-container:1140px; --ilhas-gutter:clamp(1.25rem,4vw,3rem);
   --ilhas-shadow-soft:0 18px 45px rgba(15,23,42,.06);
   --ilhas-shadow-hover:0 0 40px rgba(122,60,255,.28);
 }
@@ -55,69 +62,116 @@ h2{font-family:var(--ilhas-font-display);font-weight:600;color:var(--ilhas-dark)
   letter-spacing:.08em;text-transform:uppercase;padding:10px clamp(1.25rem,4vw,3rem)}
 .etiqueta-demo i{font-style:normal;color:#9b9bab;text-transform:none;letter-spacing:0}
 
-/* --- fondos de sección ------------------------------------------------- */
-.f-light{background:var(--ilhas-light)}
-.f-dark{background:var(--ilhas-dark)}
-/* Lavado de gradiente: la marca aparece sin volverse fondo. tokens.css dice
-   que el gradiente es momento de marca, nunca superficie completa — por eso
-   va al 7% y solo en la esquina, no de pared a pared. */
 .f-lavado{background:
   radial-gradient(120% 90% at 88% 0%, rgba(122,60,255,.13) 0%, rgba(122,60,255,0) 62%),
   radial-gradient(90% 70% at 0% 100%, rgba(85,232,255,.10) 0%, rgba(85,232,255,0) 60%),
   var(--ilhas-light)}
 
-/* --- el bloque ---------------------------------------------------------- */
 .bif{text-align:center}
-.bif .kicker{font-family:var(--ilhas-font-body);font-weight:500;
-  font-size:var(--ilhas-fs-small);letter-spacing:.06em;text-transform:uppercase;
-  color:var(--ilhas-primary);margin:0 0 1rem}
+.bif .kicker{font-weight:500;font-size:var(--ilhas-fs-small);letter-spacing:.06em;
+  text-transform:uppercase;color:var(--ilhas-primary);margin:0 0 1rem}
 .bif h2{max-width:26ch;margin-inline:auto}
-.bif__lead{max-width:52ch;margin:1.1rem auto 0;color:var(--ilhas-text)}
-.f-dark .bif h2{color:var(--ilhas-white)}
-.f-dark .bif__lead{color:rgba(248,250,255,.78)}
-.f-dark .bif .kicker{color:var(--ilhas-grad-start)}
+.bif__lead{max-width:54ch;margin:1.1rem auto 0;color:var(--ilhas-text)}
 
 .bif__cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1.5rem;
-  margin-top:2.75rem;text-align:left}
+  margin-top:2.75rem;text-align:left;align-items:stretch}
 .card{position:relative;display:flex;flex-direction:column;overflow:hidden;
   padding:2.5rem;background:var(--ilhas-white);border:1px solid var(--ilhas-gray);
-  border-radius:var(--ilhas-radius-card);box-shadow:var(--ilhas-shadow-soft);
-  text-decoration:none;color:inherit;transition:box-shadow .2s ease,transform .2s ease}
-.card:hover{box-shadow:var(--ilhas-shadow-hover);transform:translateY(-2px)}
+  border-radius:var(--ilhas-radius-card);box-shadow:var(--ilhas-shadow-soft)}
 .card::before{content:"";position:absolute;inset:0 0 auto 0;height:4px;
   background:var(--ilhas-gradient-h)}
-.f-dark .card{border-color:transparent}
 
 .card__label{font-weight:500;font-size:var(--ilhas-fs-small);color:var(--ilhas-primary)}
 .card__title{margin-top:.4rem;font-family:var(--ilhas-font-display);font-weight:600;
   font-size:1.75rem;color:var(--ilhas-dark);letter-spacing:var(--ilhas-tracking-display);
   line-height:1.1}
-/* EL RESULTADO — lo que hoy no está. Va en display y grande a propósito:
-   es la razón de hacer clic, no un pie de tarjeta. */
 .card__resultado{margin-top:1rem;font-family:var(--ilhas-font-display);font-weight:600;
   font-size:1.0625rem;line-height:1.35;color:var(--ilhas-dark);
   letter-spacing:var(--ilhas-tracking-display)}
 .card__detalle{margin-top:.75rem;font-size:1rem;color:var(--ilhas-text)}
-/* LO CONCRETO — qué es exactamente, en la lengua del visitante. */
-.card__lista{margin:1.25rem 0 0;padding:0;list-style:none;display:flex;flex-wrap:wrap;
-  gap:.4rem}
-.card__lista li{font-size:.8125rem;padding:.3rem .7rem;border-radius:999px;
-  background:rgba(122,60,255,.08);color:var(--ilhas-primary);font-weight:500}
-/* EL RESPALDO — cada carril con su propia prueba, atribuida. */
-.card__prueba{margin-top:auto;padding-top:1.5rem;display:flex;gap:1.5rem;flex-wrap:wrap}
+
+/* ---------------------------------------------------------------------------
+   EL RECUADRO «ABIERTO HOY» — la pieza que resuelve la contradicción.
+   Arriba la promesa es universal: el método sirve en cualquier área. Abajo,
+   separado y con su propia superficie, la puerta que existe HOY. Así los chips
+   de finanzas dejan de contradecir la promesa genérica y pasan a ser la prueba
+   de que la puerta es real.
+   Regla 3 de CLAUDE.md: NO se anuncian islas futuras. «Hoy» no anuncia nada —
+   el visitante extrapola solo, que es justo lo que la regla quiere.
+--------------------------------------------------------------------------- */
+.abierto{margin-top:1.5rem;padding:1.25rem;border-radius:.875rem;
+  background:rgba(122,60,255,.05);border:1px solid rgba(122,60,255,.14)}
+.abierto__tag{display:inline-flex;align-items:center;gap:.4rem;
+  font-size:.6875rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--ilhas-primary)}
+.abierto__tag::before{content:"";width:6px;height:6px;border-radius:50%;
+  background:var(--ilhas-primary)}
+.abierto__isla{display:block;margin-top:.45rem;font-family:var(--ilhas-font-display);
+  font-weight:600;font-size:1.125rem;color:var(--ilhas-dark);
+  letter-spacing:var(--ilhas-tracking-display)}
+.abierto__isla small{display:block;margin-top:.2rem;font-family:var(--ilhas-font-body);
+  font-weight:400;font-size:.875rem;color:var(--ilhas-text);letter-spacing:0}
+.abierto__para{margin:.6rem 0 0;font-size:.875rem;color:var(--ilhas-text)}
+.card__lista{margin:.9rem 0 0;padding:0;list-style:none;display:flex;flex-wrap:wrap;gap:.4rem}
+.card__lista li{font-size:.8125rem;padding:.3rem .7rem;border-radius:var(--ilhas-radius-pill);
+  background:var(--ilhas-white);border:1px solid rgba(122,60,255,.18);
+  color:var(--ilhas-primary);font-weight:500}
+.card--hacemos .card__lista{margin-top:1.25rem}
+.card--hacemos .card__lista li{background:rgba(122,60,255,.07);border-color:transparent}
+
+.card__prueba{margin-top:1.5rem;display:flex;gap:1.25rem;flex-wrap:wrap}
 .card__prueba div{border-left:2px solid var(--ilhas-gray);padding-left:.75rem}
 .card__prueba b{display:block;font-family:var(--ilhas-font-display);font-weight:600;
   font-size:1.125rem;color:var(--ilhas-dark);letter-spacing:var(--ilhas-tracking-display);
   line-height:1.1;white-space:nowrap}
-.card__prueba span{display:block;margin-top:.2rem;font-size:.75rem;color:#71717f;
-  max-width:20ch}
-.card__link{margin-top:1.5rem;font-weight:600;font-size:var(--ilhas-fs-small);
-  color:var(--ilhas-primary)}
+.card__prueba span{display:block;margin-top:.2rem;font-size:.75rem;color:#71717f;max-width:22ch}
+
+/* Prueba en UNA línea dentro del recuadro: dos bloques de stat ahí adentro
+   quedaban apretados y estiraban la tarjeta 120 px de más. */
+.abierto__prueba{margin-top:1rem;padding-top:.9rem;border-top:1px solid rgba(122,60,255,.14);
+  font-size:.8125rem;color:#71717f}
+.abierto__prueba b{font-family:var(--ilhas-font-display);font-weight:600;
+  color:var(--ilhas-dark);letter-spacing:var(--ilhas-tracking-display)}
+
+/* El recuadro del carril 2: los tres tiempos del trabajo. Es la respuesta
+   directa a «¿lo implementan y qué? no entiendo» — se enseña la secuencia
+   en vez de describirla. Y equilibra la altura contra el recuadro de la isla. */
+.proceso{margin-top:1.5rem;padding:1.25rem;border-radius:.875rem;
+  background:rgba(122,60,255,.05);border:1px solid rgba(122,60,255,.14)}
+.proceso__tag{display:inline-flex;align-items:center;gap:.4rem;font-size:.6875rem;
+  font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--ilhas-primary)}
+.proceso__tag::before{content:"";width:6px;height:6px;border-radius:50%;
+  background:var(--ilhas-primary)}
+.proceso ol{margin:.75rem 0 0;padding:0;list-style:none;display:grid;gap:.55rem;
+  counter-reset:paso}
+.proceso li{display:grid;grid-template-columns:1.4rem minmax(0,1fr);gap:.6rem;
+  align-items:baseline;font-size:.9375rem;color:var(--ilhas-text);counter-increment:paso}
+.proceso li::before{content:counter(paso);display:inline-flex;align-items:center;
+  justify-content:center;width:1.4rem;height:1.4rem;border-radius:50%;
+  background:var(--ilhas-white);border:1px solid rgba(122,60,255,.25);
+  font-family:var(--ilhas-font-display);font-weight:600;font-size:.6875rem;
+  color:var(--ilhas-primary);align-self:center}
+.proceso li b{font-weight:600;color:var(--ilhas-dark)}
+
+/* Dos puertas en la tarjeta de aprender: la isla abierta y el método completo.
+   Por eso la tarjeta ya NO puede ser un <a> — dos ligas anidadas es HTML
+   inválido y un desastre con lector de pantalla. Es <div> con dos <a> adentro. */
+.card__acciones{margin-top:auto;padding-top:1.75rem;display:flex;flex-wrap:wrap;
+  align-items:center;gap:.5rem 1.25rem}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.4rem;
+  padding:.7rem 1.4rem;border-radius:var(--ilhas-radius-pill);font-weight:600;
+  font-size:var(--ilhas-fs-small);text-decoration:none;border:1px solid transparent;
+  transition:background .2s ease,border-color .2s ease,color .2s ease}
+.btn-primary{background:var(--ilhas-primary);color:var(--ilhas-white)}
+.btn-primary:hover{background:var(--ilhas-primary-dark)}
+.enlace{font-weight:600;font-size:var(--ilhas-fs-small);color:var(--ilhas-primary);
+  text-decoration:none}
+.enlace:hover{text-decoration:underline}
 
 @media (max-width:760px){.bif__cards{grid-template-columns:1fr}}
 </style></head><body>
-<div class="etiqueta-demo">A · Fondo claro — <i>--ilhas-light. El más discreto: blanco (§02) → gris claro → oscuro (§05)</i></div>
-<div id="d1"><section class="section-y f-light">
+<div class="etiqueta-demo">§04 · Bifurcación v2 — <i>carril de aprender genérico, con la isla abierta adentro</i></div>
+<div id="d1"><section class="section-y f-lavado">
   <div class="container">
     <div class="bif">
       <p class="kicker">La bifurcación</p>
@@ -126,142 +180,73 @@ h2{font-family:var(--ilhas-font-display);font-weight:600;color:var(--ilhas-dark)
         cambia son las manos.</p>
 
       <div class="bif__cards">
-        <a class="card" href="/finanzas">
-          <span class="card__label">Lo haces tú</span>
-          <span class="card__title">Ilhas Finanzas</span>
-          <span class="card__resultado">Llegas con tu Excel. Sales con tu propio
-            equipo de agentes trabajando sobre tus números.</span>
-          <span class="card__detalle">Te enseñamos a aplicar los cinco pasos a tus
-            propias finanzas, hasta que corran sin ti.</span>
-          <ul class="card__lista">
-            <li>Estados financieros</li><li>Flujo de efectivo</li>
-            <li>Modelos y proyecciones</li><li>Reportes que se actualizan solos</li>
-          </ul>
-          <span class="card__prueba">
-            <div><b>40 años</b><span>de criterio financiero — Jorge Sierra (papá)</span></div>
-            <div><b>+2,000</b><span>empresas asesoradas en LATAM</span></div>
-          </span>
-          <span class="card__link">Conocer Ilhas Finanzas →</span>
-        </a>
 
-        <a class="card" href="/soluciones">
+        <!-- ============ CARRIL 1 · GENÉRICO ============================ -->
+        <div class="card card--aprendes">
+          <span class="card__label">Lo aprendes tú</span>
+          <span class="card__title">Aprende el método</span>
+          <p class="card__resultado">Llegas con tu hoja de cálculo. Sales con tu
+            propio equipo de agentes trabajando en tu área.</p>
+          <p class="card__detalle">Los cinco pasos son los mismos en cualquier
+            área. Lo que cambia es a dónde los apuntas.</p>
+
+          <div class="abierto">
+            <span class="abierto__tag">Abierto hoy</span>
+            <span class="abierto__isla">Ilhas Finanzas
+              <small>Finanzas para negocios — la primera isla.</small></span>
+            <p class="abierto__para">Para analista, contador, controller,
+              consultor, auditor, tesorero o FP&amp;A.</p>
+            <ul class="card__lista">
+              <li>Estados financieros</li><li>Flujo de efectivo</li>
+              <li>Modelos y proyecciones</li><li>Reportes que se actualizan solos</li>
+            </ul>
+            <p class="abierto__prueba"><b>40 años</b> de criterio financiero y
+              <b>+2,000</b> empresas asesoradas en LATAM — Jorge Sierra (papá).</p>
+          </div>
+
+          <div class="card__acciones">
+            <a class="btn btn-primary" href="/finanzas">Conocer Ilhas Finanzas</a>
+            <a class="enlace" href="/metodo">Conocer el método →</a>
+          </div>
+        </div>
+
+        <!-- ============ CARRIL 2 · MENOS IA, MÁS TRABAJO =============== -->
+        <div class="card card--hacemos">
           <span class="card__label">Lo hacemos nosotros</span>
           <span class="card__title">Soluciones</span>
-          <span class="card__resultado">Escogemos un proceso que hoy se hace a mano
-            y lo dejamos corriendo solo.</span>
-          <span class="card__detalle">No somos una agencia de «implementación de
-            IA»: es criterio de producto aplicado a tu operación. Empieza con un
-            diagnóstico de tu caso, no con un paquete.</span>
+          <p class="card__resultado">Escogemos un proceso que hoy se hace a mano
+            y lo dejamos corriendo solo.</p>
+          <p class="card__detalle">Lo levantamos, lo construimos y lo dejamos
+            funcionando — con quien lo mantenga después. Empieza con un
+            diagnóstico de tu caso, no con un paquete.</p>
+
+          <div class="proceso">
+            <span class="proceso__tag">Cómo empieza</span>
+            <ol>
+              <li><span><b>Diagnóstico de tu caso.</b> Vemos el proceso real, no
+                una plantilla.</span></li>
+              <li><span><b>Lo construimos.</b> Sobre tus números y tus reglas, no
+                sobre supuestos.</span></li>
+              <li><span><b>Queda corriendo.</b> Y alguien lo mantiene después —
+                ahí es donde se cae la mayoría.</span></li>
+            </ol>
+          </div>
+
           <ul class="card__lista">
             <li>Cotización</li><li>Conciliación</li>
             <li>Cobranza</li><li>Reportes de operación</li>
           </ul>
-          <span class="card__prueba">
+
+          <div class="card__prueba">
             <div><b>3–4 h → 20 min</b><span>cotizador · Morgan Centro de Alta Especialidad</span></div>
             <div><b>5–6 días → minutos</b><span>despiece y cotización · Extrusión de Aleaciones</span></div>
-          </span>
-          <span class="card__link">Conocer Soluciones →</span>
-        </a>
-      </div>
-    </div>
-  </div>
-</section></div>
-<div class="etiqueta-demo">B · Fondo oscuro — <i>el bloque más importante se lleva el contraste más fuerte del sitio</i></div>
-<div id="d2"><section class="section-y f-dark">
-  <div class="container">
-    <div class="bif">
-      <p class="kicker">La bifurcación</p>
-      <h2>Ya sabes qué tiene que pasar. Falta decidir quién lo hace.</h2>
-      <p class="bif__lead">El mismo método en los dos carriles. Lo único que
-        cambia son las manos.</p>
+          </div>
 
-      <div class="bif__cards">
-        <a class="card" href="/finanzas">
-          <span class="card__label">Lo haces tú</span>
-          <span class="card__title">Ilhas Finanzas</span>
-          <span class="card__resultado">Llegas con tu Excel. Sales con tu propio
-            equipo de agentes trabajando sobre tus números.</span>
-          <span class="card__detalle">Te enseñamos a aplicar los cinco pasos a tus
-            propias finanzas, hasta que corran sin ti.</span>
-          <ul class="card__lista">
-            <li>Estados financieros</li><li>Flujo de efectivo</li>
-            <li>Modelos y proyecciones</li><li>Reportes que se actualizan solos</li>
-          </ul>
-          <span class="card__prueba">
-            <div><b>40 años</b><span>de criterio financiero — Jorge Sierra (papá)</span></div>
-            <div><b>+2,000</b><span>empresas asesoradas en LATAM</span></div>
-          </span>
-          <span class="card__link">Conocer Ilhas Finanzas →</span>
-        </a>
+          <div class="card__acciones">
+            <a class="btn btn-primary" href="/soluciones">Conocer Soluciones</a>
+          </div>
+        </div>
 
-        <a class="card" href="/soluciones">
-          <span class="card__label">Lo hacemos nosotros</span>
-          <span class="card__title">Soluciones</span>
-          <span class="card__resultado">Escogemos un proceso que hoy se hace a mano
-            y lo dejamos corriendo solo.</span>
-          <span class="card__detalle">No somos una agencia de «implementación de
-            IA»: es criterio de producto aplicado a tu operación. Empieza con un
-            diagnóstico de tu caso, no con un paquete.</span>
-          <ul class="card__lista">
-            <li>Cotización</li><li>Conciliación</li>
-            <li>Cobranza</li><li>Reportes de operación</li>
-          </ul>
-          <span class="card__prueba">
-            <div><b>3–4 h → 20 min</b><span>cotizador · Morgan Centro de Alta Especialidad</span></div>
-            <div><b>5–6 días → minutos</b><span>despiece y cotización · Extrusión de Aleaciones</span></div>
-          </span>
-          <span class="card__link">Conocer Soluciones →</span>
-        </a>
-      </div>
-    </div>
-  </div>
-</section></div>
-<div class="etiqueta-demo">C · Lavado de marca — <i>claro con el gradiente al 13% en las esquinas — momento de marca sin volverse pared</i></div>
-<div id="d3"><section class="section-y f-lavado">
-  <div class="container">
-    <div class="bif">
-      <p class="kicker">La bifurcación</p>
-      <h2>Ya sabes qué tiene que pasar. Falta decidir quién lo hace.</h2>
-      <p class="bif__lead">El mismo método en los dos carriles. Lo único que
-        cambia son las manos.</p>
-
-      <div class="bif__cards">
-        <a class="card" href="/finanzas">
-          <span class="card__label">Lo haces tú</span>
-          <span class="card__title">Ilhas Finanzas</span>
-          <span class="card__resultado">Llegas con tu Excel. Sales con tu propio
-            equipo de agentes trabajando sobre tus números.</span>
-          <span class="card__detalle">Te enseñamos a aplicar los cinco pasos a tus
-            propias finanzas, hasta que corran sin ti.</span>
-          <ul class="card__lista">
-            <li>Estados financieros</li><li>Flujo de efectivo</li>
-            <li>Modelos y proyecciones</li><li>Reportes que se actualizan solos</li>
-          </ul>
-          <span class="card__prueba">
-            <div><b>40 años</b><span>de criterio financiero — Jorge Sierra (papá)</span></div>
-            <div><b>+2,000</b><span>empresas asesoradas en LATAM</span></div>
-          </span>
-          <span class="card__link">Conocer Ilhas Finanzas →</span>
-        </a>
-
-        <a class="card" href="/soluciones">
-          <span class="card__label">Lo hacemos nosotros</span>
-          <span class="card__title">Soluciones</span>
-          <span class="card__resultado">Escogemos un proceso que hoy se hace a mano
-            y lo dejamos corriendo solo.</span>
-          <span class="card__detalle">No somos una agencia de «implementación de
-            IA»: es criterio de producto aplicado a tu operación. Empieza con un
-            diagnóstico de tu caso, no con un paquete.</span>
-          <ul class="card__lista">
-            <li>Cotización</li><li>Conciliación</li>
-            <li>Cobranza</li><li>Reportes de operación</li>
-          </ul>
-          <span class="card__prueba">
-            <div><b>3–4 h → 20 min</b><span>cotizador · Morgan Centro de Alta Especialidad</span></div>
-            <div><b>5–6 días → minutos</b><span>despiece y cotización · Extrusión de Aleaciones</span></div>
-          </span>
-          <span class="card__link">Conocer Soluciones →</span>
-        </a>
       </div>
     </div>
   </div>

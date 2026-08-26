@@ -1,5 +1,10 @@
 # Iteración 4 — El hueco, y la data dentro del método
 
+> **Esta corrida NO toca la bifurcación ni el mapa de la empresa.** Eso es la
+> iteración 5 (`prompts/iteracion-5-bifurcacion-mapa.md`) y **depende de esta**:
+> el encabezado de la bifurcación dice «ya sabes qué tiene que pasar», y eso
+> solo es cierto si §02 ya existe. Corre la 4, revísala, y luego la 5.
+
 **Para Claude Code. Ejecuta esto tal cual, de arriba a abajo.**
 Decidido con Jorge el 25 ago 2026. Son dos cambios que van juntos porque
 sostienen el mismo argumento: **§02 del home dice que la causa #1 del fracaso
