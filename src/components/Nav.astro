@@ -23,7 +23,7 @@ const isCurrent = (href: string) =>
   currentPath === href || currentPath === `${href}/`;
 ---
 
-<header class:list={["site-header", heroOscuro && "site-header--opaco"]}>
+<header class:list={["site-header", heroOscuro && "site-header--hero-oscuro"]}>
   <div class="container site-header__inner">
     <a href="/" class="site-header__brand" aria-label="Ilhas — ir al inicio">
       {/*
@@ -101,46 +101,34 @@ const isCurrent = (href: string) =>
 
 <style>
   .site-header {
-    /* El fondo casi opaco es el requisito de legibilidad; el blur es una
-       mejora que puede faltar. NO declarar aquí ni en el @supports la
-       variante -webkit-: el minificador ve las dos con el mismo valor,
-       decide que una sobra y se queda con la prefijada — y Chrome moderno
-       ya NO soporta -webkit-backdrop-filter (medido: CSS.supports da false).
-       El resultado era el peor de los dos mundos: el @supports sí entraba
-       y bajaba la opacidad, pero el blur nunca se aplicaba, así que el
-       contenido se veía pasar por el header. Hallazgo R1 de
-       AUDITORIA-VISUAL.md, que ya había reaparecido una vez.
-       Sin la prefijada no hay nada que deduplicar. Los navegadores que solo
-       soportan la prefijada no pasan el @supports y se quedan con el fondo
-       opaco, que es el comportamiento seguro. */
+    /* OPACO EN LAS CINCO RUTAS. Decisión de Jorge, 26 ago 2026: el header se
+       comporta igual en todo el sitio.
+
+       Antes era translúcido con blur en las páginas de hero claro y opaco solo
+       donde el hero era oscuro, así que la barra cambiaba de material según en
+       qué página estuvieras. Además el esmerilado era el bug que más veces
+       volvió en este repositorio (R1 de AUDITORIA-VISUAL.md, tres
+       reapariciones): había que declarar `backdrop-filter` SIN la variante
+       -webkit- porque el minificador deduplicaba las dos y se quedaba con la
+       prefijada, que Chrome moderno ya no soporta —medido, `CSS.supports` da
+       false—; el @supports entraba igual, bajaba la opacidad y el blur nunca
+       corría, así que el contenido se veía pasar por debajo del menú.
+
+       Con el fondo opaco esa clase entera de bug deja de existir: no hay
+       @supports, no hay prefijo que deduplicar y no hay estado de scroll que
+       simular sin JS. */
     position: sticky;
     top: 0;
     z-index: 40;
-    background: rgba(248, 250, 255, 0.97);
+    background: var(--ilhas-light);
     border-bottom: 1px solid var(--ilhas-gray);
   }
 
-  /* Sobre hero oscuro: opaco y sin hairline. No transparente — hacerlo bien
-     pediría estado de scroll, y este sitio no manda JS al cliente. Va después
-     del @supports de abajo para ganarle a la regla del blur. */
-  .site-header--opaco {
-    background: var(--ilhas-light);
+  /* Sobre hero oscuro la hairline no separa nada: la frontera ya la hace el
+     salto de luminosidad, y el filete gris encima de la tinta se lee como una
+     costura suelta. Es lo único que sigue distinguiendo a esas páginas. */
+  .site-header--hero-oscuro {
     border-bottom-color: transparent;
-  }
-
-  @supports (backdrop-filter: blur(1px)) {
-    .site-header {
-      /* 0.88 y no 0.82: aunque el blur funcione, este header pasa por
-         encima de secciones .bg-dark en /nosotros y /metodo, y con menos
-         alfa el texto oscuro del menú pierde contraste contra la tinta. */
-      background: rgba(248, 250, 255, 0.88);
-      backdrop-filter: saturate(180%) blur(16px);
-    }
-
-    .site-header--opaco {
-      background: var(--ilhas-light);
-      backdrop-filter: none;
-    }
   }
 
   .site-header__inner {

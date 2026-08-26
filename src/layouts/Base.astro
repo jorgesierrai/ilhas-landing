@@ -12,10 +12,11 @@ interface Props {
   /**
    * `true` cuando la PRIMERA sección de la página tiene fondo oscuro.
    *
-   * El header es claro y sticky. Sobre un fondo claro se ve mejor esmerilado
-   * y con su hairline; sobre uno oscuro esa hairline no separa nada —la
-   * frontera ya la hace el salto de luminosidad— y la translucidez le mete
-   * suciedad del contenido al pasar por debajo. Ahí va opaco y sin borde.
+   * El header es claro, sticky y **opaco en las cinco rutas** (decisión de
+   * Jorge, 26 ago 2026: se comporta igual en todo el sitio). Lo único que
+   * cambia esta bandera es la hairline de abajo: sobre un hero oscuro no
+   * separa nada —la frontera ya la hace el salto de luminosidad— y el filete
+   * gris sobre la tinta se lee como una costura suelta, así que se quita.
    *
    * Lo declara la página porque es la página la que sabe de qué color
    * arranca. Si /nosotros o cualquier otra estrena hero oscuro, se le pone
