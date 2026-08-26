@@ -10,6 +10,7 @@ import { mostrar } from "../lib/medios";
 import relojIcon from "../assets/icons/reloj.png";
 import fotoPapa from "../assets/equipo/jorge-papa.png";
 import fotoHijo from "../assets/equipo/jorge-hijo.png";
+import MapaEmpresa from "../components/MapaEmpresa.astro";
 
 const maestros = [
   {
@@ -139,6 +140,25 @@ const faqs = [
             ))
           }
         </ul>
+      </div>
+    </section>
+
+    <!-- 02b · Por dónde se empieza — el mapa con el cimiento resaltado -->
+    {/* Responde la pregunta que /finanzas nunca contestaba: «¿por qué finanzas
+        primero?». Las dos capas de arriba se apagan pero NO se ocultan — el
+        argumento necesita verlas sosteniéndose sobre la de abajo. */}
+    <section class="section-y-sm">
+      <div class="container">
+        <div class="prose reveal">
+          <p class="kicker">Por dónde se empieza</p>
+          <h2>Se empieza abajo. Siempre.</h2>
+          <p class="lead">
+            Si el cimiento está flojo, automatizar arriba solo amplifica el
+            desorden. Por eso la primera isla es finanzas.
+          </p>
+        </div>
+
+        <MapaEmpresa variante="cimiento" />
       </div>
     </section>
 

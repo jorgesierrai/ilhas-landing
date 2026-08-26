@@ -70,24 +70,30 @@ Los dos `.es.vtt` ya están hechos y cuadran con estos cortes exactos. Cópialos
 
 En `src/data/medios.ts`:
 
+> **Resuelto el 24 ago 2026.** Las dos atribuciones ya están confirmadas por
+> Jorge y viven en `src/data/medios.ts`. Lo de abajo es el estado en que quedó,
+> no una tarea pendiente. Los dos créditos **se publican**: la cita del home
+> §02, las dos líneas de prueba de la bifurcación y las dos fichas marcadas del
+> mapa de `/soluciones` dependen de esto.
+
 ```ts
 // soluciones-testimonio-oncologia
 atribucion: {
   nombre: "Irlanda Morgan",
   rol: "Directora de operaciones",
-  empresa: "Morgan Centro de Especialidad",   // ⚠️ verifica el nombre exacto
+  empresa: "Morgan Centro de Alta Especialidad",   // confirmado por Jorge
 },
 
 // soluciones-testimonio-despiece
 atribucion: {
-  nombre: "…",        // ⚠️ falta: en el video no se identifica
-  rol: "…",
-  empresa: "…",       // o quítalo y deja rol + sector
+  nombre: "Jesús Flores",
+  rol: "Gerente de Operaciones",
+  empresa: "Extrusión de Aleaciones",              // confirmado por Jorge
 },
 ```
 
-- **Oncología:** Irlanda se presenta sola en cámara, así que la atribución coincide con lo que el visitante escucha. Solo verifica si la empresa es *"Morgan Centro de Especialidad"* o *"Morgan Central de Especialidad"* — la transcripción automática no distingue.
-- **Despiece:** en el video **nunca dice quién es**. Necesitas nombre y cargo, o cargo y sector (*"Director de operaciones, empresa de cancelería de aluminio"*). Sin eso el build falla a propósito.
+- **Oncología:** Irlanda se presenta sola en cámara, así que la atribución coincide con lo que el visitante escucha. La transcripción automática dudaba entre *"Centro de Especialidad"* y *"Central de Especialidad"*; el nombre correcto es **Morgan Centro de Alta Especialidad**.
+- **Despiece:** en el video nunca dice quién es. El nombre y el cargo los dio Jorge directamente.
 
 ---
 

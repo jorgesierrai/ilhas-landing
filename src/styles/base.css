@@ -172,9 +172,10 @@ a:hover {
   padding-top: 0;
 }
 
-.section-y:not(.bg-white):not(.bg-dark) + .section-y:not(.bg-white):not(.bg-dark),
-.section-y-sm:not(.bg-white):not(.bg-dark)
-  + .section-y-sm:not(.bg-white):not(.bg-dark) {
+.section-y:not(.bg-white):not(.bg-dark):not(.bg-lavado)
+  + .section-y:not(.bg-white):not(.bg-dark):not(.bg-lavado),
+.section-y-sm:not(.bg-white):not(.bg-dark):not(.bg-lavado)
+  + .section-y-sm:not(.bg-white):not(.bg-dark):not(.bg-lavado) {
   padding-top: 0;
 }
 
@@ -201,6 +202,35 @@ a:hover {
 
 .bg-white {
   background: var(--ilhas-white);
+}
+
+/* Lavado de marca: --ilhas-light con el gradiente muy diluido en dos esquinas
+   opuestas. Es la tercera superficie clara del sitio, y existe para un caso
+   concreto: dos secciones .bg-white seguidas colapsan su padding y se leen como
+   una sola. La bifurcación del home venía justo después de §02 y quedaba pegada
+   a él.
+
+   Va en radial y nunca de pared a pared porque tokens.css es explícito: el
+   gradiente es momento de marca, no superficie. Al 13% y 10% se siente el
+   cambio de aire sin que la sección se vuelva "la sección morada".
+
+   Oscuro NO era opción: §05 (el linaje) ya es .bg-dark y .bg-dark + .bg-dark
+   colapsa igual — la bifurcación se habría fundido con el linaje en un solo
+   bloque negro de ~2,100 px, justo el bloque que docs/02-paginas.md llama "el
+   más importante del sitio". */
+.bg-lavado {
+  background:
+    radial-gradient(
+      120% 90% at 88% 0%,
+      rgba(122, 60, 255, 0.13) 0%,
+      rgba(122, 60, 255, 0) 62%
+    ),
+    radial-gradient(
+      90% 70% at 0% 100%,
+      rgba(85, 232, 255, 0.1) 0%,
+      rgba(85, 232, 255, 0) 60%
+    ),
+    var(--ilhas-light);
 }
 
 /* Una sección oscura por página, a propósito: rompe el blanco/gris-claro

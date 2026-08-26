@@ -258,10 +258,20 @@ const kpis = [
     </section>
 
     <!-- 04 · La bifurcación — el bloque más importante del sitio -->
-    <section class="bifurcacion-section bg-white">
+    {/* Va con lavado de marca, no en blanco: §02 arriba también es .bg-white y
+        .bg-white + .bg-white colapsa el padding, así que la bifurcación se leía
+        como continuación del hueco en vez de como sección nueva. Tampoco puede
+        ir oscura — §05 (el linaje) ya lo es y las dos se fundirían. Ver la nota
+        de .bg-lavado en src/styles/base.css.
+
+        El H2 dice "ya sabes qué tiene que pasar": eso SOLO es verdad porque §02
+        acaba de explicarlo. Si §02 se recorta, esta frase se queda sin piso. */}
+    <section class="section-y bg-lavado">
       <div class="container">
         <Bifurcacion
-          heading="¿Quieres aprenderlo, o quieres que lo implementemos?"
+          kicker="La bifurcación"
+          heading="Ya sabes qué tiene que pasar. Falta decidir quién lo hace."
+          lead="El mismo método en los dos carriles. Lo único que cambia son las manos."
           prominent
         />
       </div>
@@ -834,11 +844,6 @@ const kpis = [
   /* --- 04 · bifurcación: padding-top reducido a propósito (el bloque
      tiene que llegar cerca del pliegue), padding-bottom completo (sigue
      siendo el bloque más importante del sitio, no se achica). --- */
-  .bifurcacion-section {
-    padding-top: clamp(1.5rem, 3vw, 2.5rem);
-    padding-bottom: var(--ilhas-section-y);
-  }
-
   /* --- 07 · cierre --- */
   .cierre {
     text-align: center;
