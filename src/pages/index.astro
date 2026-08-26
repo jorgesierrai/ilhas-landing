@@ -189,7 +189,7 @@ const kpis = [
           el fundamento está flojo, amplifica eso.
         </p>
 
-        <div class="mapa reveal">
+        <div class="mapa mapa--espina reveal">
           <div class="mapa__encabezados" aria-hidden="true">
             <span>Lo que reportan que falló</span>
             <span>La parte del Método que la cubre</span>
@@ -222,6 +222,17 @@ const kpis = [
               </div>
             ))
           }
+
+          {/* C · El remate. Al comerse §03, el home perdió el único lugar
+              donde el acrónimo se deletreaba, así que el visitante veía cinco
+              círculos con letras sueltas sin conectar que arman el nombre de
+              la casa. Va después de la quinta fila, cuando ya las vio pasar:
+              la línea nada más cierra la puerta. La segunda frase sale de
+              docs/01-arquitectura.md, no es invención. */}
+          <p class="remate">
+            Cinco pasos. Cinco letras: <em>I·L·H·A·S</em>.<br />
+            El método es el barco; las islas son a dónde lo apuntas.
+          </p>
 
           <p class="mapa__link">
             <a href="/metodo">Conoce el método completo →</a>
@@ -573,19 +584,29 @@ const kpis = [
     border-bottom-color: var(--ilhas-primary);
   }
 
+  /* Grid de dos filas y no flex: con el copy nuevo de I y L —más largo,
+     porque ahora nombran los datos— en flex las filas 1 y 2 se partían y las
+     3-5 no, y quedaba inconsistente. Así las cinco se ven igual: badge y
+     nombre arriba, descripción abajo alineada bajo el nombre.
+     NO lo devuelvas a flex: con este copy se vuelve a partir. */
   .paso {
-    display: flex;
-    align-items: baseline;
-    flex-wrap: wrap;
-    gap: 0.5rem 0.75rem;
+    display: grid;
+    grid-template-columns: 1.75rem minmax(0, 1fr);
+    gap: 0.3rem 0.75rem;
+    align-items: center;
+  }
+
+  .paso__nombre,
+  .paso__linea {
+    grid-column: 2;
   }
 
   .paso__letra {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    align-self: center;
-    flex: 0 0 auto;
+    grid-row: 1;
+    grid-column: 1;
     width: 1.75rem;
     height: 1.75rem;
     border-radius: 50%;
@@ -609,9 +630,35 @@ const kpis = [
     color: var(--ilhas-text);
   }
 
+  .remate {
+    margin-top: 1.75rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--ilhas-gray);
+    max-width: 34ch;
+    font-family: var(--ilhas-font-display);
+    font-weight: 600;
+    font-size: clamp(1.05rem, 1.9vw, 1.35rem);
+    line-height: 1.25;
+    letter-spacing: var(--ilhas-tracking-display);
+    color: var(--ilhas-dark);
+  }
+
+  /* Morado sólido, NUNCA el gradiente de marca: tokens.css lo prohíbe
+     explícito para texto funcional sobre blanco, y en gradiente la I cae en
+     la zona cian y no pasa AA. */
+  .remate em {
+    font-style: normal;
+    letter-spacing: 0.1em;
+    color: var(--ilhas-primary);
+  }
+
   .mapa__link {
     margin-top: 1.75rem;
     font-size: 1rem;
+  }
+
+  .remate + .mapa__link {
+    margin-top: 1.25rem;
   }
 
   .mapa__link a,
@@ -677,9 +724,10 @@ const kpis = [
          —más largas, porque ahora nombran los datos— a 1.4 se partían en dos
          renglones, y la de I aguantaba hasta 1.8. El brief manda ensanchar la columna, nunca acortar el
          copy. */
-      grid-template-columns: minmax(0, 1fr) minmax(0, 2.1fr);
-      gap: 1.75rem;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr);
+      gap: 2rem;
       padding-bottom: 0.9rem;
+      align-items: end;
     }
 
     .mapa__encabezados span {
@@ -690,9 +738,59 @@ const kpis = [
     }
 
     .mapa__fila {
-      grid-template-columns: minmax(0, 1fr) minmax(0, 2.1fr);
-      gap: 1.75rem;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr);
+      gap: 2rem;
       align-items: center;
+    }
+
+    /* A · La espina: una línea vertical detrás de los cinco badges. No dice
+       nada, agrupa — el ojo lee I-L-H-A-S hacia abajo como una palabra y no
+       como cinco marcas sueltas. Mismo lenguaje que el spine de la línea de
+       tiempo de /nosotros.
+       Vive dentro del media query a propósito: en móvil las filas se apilan y
+       la línea quedaría cortada por el texto de la falla. */
+    /* `stretch` es lo que hace que la espina sea continua: la fila mide más
+       que .paso (la columna de la falla es más alta), así que con .paso a su
+       altura natural el trazo se cortaba entre fila y fila. Estirado, cada
+       tramo va de borde a borde de su fila y, como las filas son contiguas,
+       los cinco se tocan. `align-content` mantiene el contenido centrado. */
+    .mapa--espina .paso {
+      position: relative;
+      align-self: stretch;
+      align-content: center;
+    }
+
+    .mapa--espina .paso::before {
+      content: "";
+      position: absolute;
+      left: calc(0.875rem - 1px);
+      /* -1.5rem = el padding-block de la fila. Con .paso estirado, el trazo
+         cruza ese espacio y engancha con el de la fila siguiente. Sin el
+         stretch de arriba estos 24 px no alcanzaban, porque .paso quedaba
+         centrado y sobraba aire por los dos lados. */
+      top: -1.5rem;
+      bottom: -1.5rem;
+      z-index: 0;
+      width: 2px;
+      background: var(--ilhas-primary);
+      opacity: 0.2;
+    }
+
+    /* Nace y muere en el centro del primer y del último badge, no en el borde
+       de la fila: si no, sobresale por arriba y por abajo. Medido: con .paso
+       estirado, el centro del badge queda a 1.5rem de su borde superior, en
+       las cinco filas por igual. */
+    .mapa--espina .mapa__fila:first-of-type .paso::before {
+      top: 1.5rem;
+    }
+
+    .mapa--espina .mapa__fila:last-of-type .paso::before {
+      bottom: calc(100% - 1.5rem);
+    }
+
+    .mapa--espina .paso__letra {
+      position: relative;
+      z-index: 1;
     }
 
     .prueba {
