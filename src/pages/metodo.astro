@@ -1,6 +1,7 @@
 ---
 import Base from "../layouts/Base.astro";
 import Bifurcacion from "../components/Bifurcacion.astro";
+import MapaEmpresa from "../components/MapaEmpresa.astro";
 import Captura from "../components/medios/Captura.astro";
 import Loop from "../components/medios/Loop.astro";
 import VideoClip from "../components/medios/VideoClip.astro";
@@ -200,6 +201,25 @@ const principios = [
             ancho dan 80 px cada uno. La versión vertical que la reemplaza
             vive en /nosotros. La ranura se queda en el manifiesto por si
             vuelve (medios/BRIEF-historial.md §1). */}
+      </div>
+    </section>
+
+    <!-- 04b · Dónde entra el método — el mapa de la empresa -->
+    {/* Va DESPUÉS del acrónimo, no antes: primero el método, luego dónde
+        aplica. Al revés el visitante ve trece áreas sin saber todavía qué se
+        les hace. */}
+    <section class="section-y bg-white">
+      <div class="container">
+        <div class="prose reveal">
+          <p class="kicker">Dónde entra el método</p>
+          <h2>Toda empresa es lo mismo en tres capas.</h2>
+          <p class="lead">
+            El método no cambia de área a área. Lo que cambia es a dónde lo
+            apuntas — y con qué capa te conviene empezar.
+          </p>
+        </div>
+
+        <MapaEmpresa variante="limpio" />
       </div>
     </section>
 

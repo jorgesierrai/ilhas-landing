@@ -3,6 +3,7 @@ import { Image } from "astro:assets";
 import Base from "../layouts/Base.astro";
 import Loop from "../components/medios/Loop.astro";
 import TarjetaCaso from "../components/medios/TarjetaCaso.astro";
+import MapaEmpresa from "../components/MapaEmpresa.astro";
 import Testimonio from "../components/medios/Testimonio.astro";
 import { mostrar } from "../lib/medios";
 import { PRODUCTOS } from "../data/productos";
@@ -65,6 +66,22 @@ const diagnosticoUrl = "mailto:hola@ilhas.ai?subject=Quiero%20un%20diagn%C3%B3st
         <p class="link-mt">
           <a href="/metodo">Conoce el método completo →</a>
         </p>
+      </div>
+    </section>
+
+    <!-- 02b · Dónde ya entramos — el mapa con la prueba encima -->
+    {/* El mismo mapa de /metodo, pero con el punto morado donde Ilhas ya
+        construyó. Convierte el diagrama de promesa en historial sin una línea
+        de copy — y prepara los casos de abajo, que son esos mismos puntos
+        contados largo. */}
+    <section class="section-y-sm">
+      <div class="container">
+        <div class="prose reveal">
+          <p class="kicker">Dónde ya entramos</p>
+          <h2>No es un catálogo. Es dónde ya lo hicimos.</h2>
+        </div>
+
+        <MapaEmpresa variante="prueba" />
       </div>
     </section>
 

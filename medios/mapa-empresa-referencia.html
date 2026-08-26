@@ -1,0 +1,299 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8">
+<title>Ilhas · El mapa de la empresa en tres capas</title>
+<!--
+  ==========================================================================
+  EL MAPA DE LA EMPRESA · clasificación de Jorge, 26 ago 2026
+  ==========================================================================
+  Un solo componente (MapaEmpresa.astro), cuatro trabajos distintos según la
+  página. Aquí están las cuatro variantes.
+
+  POR QUÉ SE VE COMO SE VE — las decisiones que hacen el argumento:
+
+  1. Es UN objeto con tres estratos, no tres tarjetas. Esquinas redondeadas
+     solo por fuera, bordes internos a hueso. Tres cajas separadas se leen
+     como categorías; un bloque estratificado se lee como estructura.
+
+  2. La barra izquierda gana peso hacia abajo (.28 → .55 → 1). Es el
+     gradiente de carga. Nadie lo lee; todos lo sienten.
+
+  3. El cimiento es oscuro y con más aire vertical que las otras dos. Se ve
+     más denso y con más pisada — que es lo que hace un cimiento. El
+     argumento «el fundamento sostiene» no se escribe: se dibuja.
+
+  4. Cero colores nuevos. Todo sale de tokens.css: la marca en opacidades,
+     --ilhas-dark para el cimiento, --ilhas-light para la capa intermedia.
+
+  Copy de andamio: lo escribe Jorge. Rutas relativas a `medios/`. Cero JS.
+-->
+<style>
+@font-face{font-family:"Space Grotesk";font-weight:600;font-display:swap;
+  src:url("../public/assets/fonts/space-grotesk-600.woff2") format("woff2")}
+@font-face{font-family:"Inter";font-weight:400;font-display:swap;
+  src:url("../public/assets/fonts/inter-400.woff2") format("woff2")}
+@font-face{font-family:"Inter";font-weight:500;font-display:swap;
+  src:url("../public/assets/fonts/inter-500.woff2") format("woff2")}
+@font-face{font-family:"Inter";font-weight:600;font-display:swap;
+  src:url("../public/assets/fonts/inter-600.woff2") format("woff2")}
+:root{
+  --ilhas-primary:#7A3CFF; --ilhas-dark:#0E0E0F; --ilhas-text:#3C3C44;
+  --ilhas-light:#F8FAFF; --ilhas-gray:#E8ECF2; --ilhas-white:#FFF;
+  --ilhas-grad-start:#55E8FF; --ilhas-grad-end:#A14BFF;
+  --ilhas-font-display:"Space Grotesk",system-ui,sans-serif;
+  --ilhas-font-body:"Inter",system-ui,-apple-system,sans-serif;
+  --ilhas-tracking-display:-.02em;
+  --ilhas-fs-h2:clamp(1.875rem,4vw,2.25rem); --ilhas-fs-small:.875rem;
+  --ilhas-radius-card:1.25rem; --ilhas-radius-pill:999px;
+  --ilhas-container:1140px; --ilhas-gutter:clamp(1.25rem,4vw,3rem);
+  --ilhas-shadow-soft:0 18px 45px rgba(15,23,42,.06);
+}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;font-family:var(--ilhas-font-body);font-size:1.125rem;
+  color:var(--ilhas-text);background:var(--ilhas-white);line-height:1.6}
+h2{font-family:var(--ilhas-font-display);font-weight:600;color:var(--ilhas-dark);
+  line-height:1.05;letter-spacing:var(--ilhas-tracking-display);
+  font-size:var(--ilhas-fs-h2);margin:0;max-width:24ch}
+.container{width:100%;max-width:var(--ilhas-container);margin-inline:auto;
+  padding-inline:var(--ilhas-gutter)}
+.section-y{padding-block:clamp(3rem,7vw,5rem)}
+.kicker{font-weight:500;font-size:var(--ilhas-fs-small);letter-spacing:.06em;
+  text-transform:uppercase;color:var(--ilhas-primary);margin:0 0 1rem}
+.lead{margin:1.1rem 0 0;max-width:56ch;color:var(--ilhas-text)}
+.etiqueta-demo{background:var(--ilhas-dark);color:#fff;font-weight:600;font-size:13px;
+  letter-spacing:.08em;text-transform:uppercase;padding:10px clamp(1.25rem,4vw,3rem)}
+.etiqueta-demo i{font-style:normal;color:#9b9bab;text-transform:none;letter-spacing:0}
+
+/* ===========================================================================
+   EL MAPA · tres estratos, no tres tarjetas.
+   Esquinas redondeadas SOLO por fuera y bordes internos a hueso: así el ojo
+   lee UN objeto con tres capas, no tres cajas sueltas. Ese detalle es la
+   diferencia entre «diagrama» y «lista con marcos».
+=========================================================================== */
+.mapa{margin-top:2.5rem;border:1px solid var(--ilhas-gray);
+  border-radius:var(--ilhas-radius-card);overflow:hidden;
+  box-shadow:var(--ilhas-shadow-soft);background:var(--ilhas-white)}
+
+.capa{position:relative;display:grid;gap:1rem;padding:1.6rem 1.75rem 1.6rem 2.25rem;
+  border-bottom:1px solid var(--ilhas-gray)}
+.capa:last-child{border-bottom:none}
+
+/* La barra de la izquierda gana peso hacia abajo: .28 → .55 → 1.
+   Es el gradiente de carga. Nadie lo lee conscientemente y todos lo sienten. */
+.capa::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;
+  background:var(--ilhas-primary)}
+.capa--externa::before{opacity:.28}
+.capa--motor::before{opacity:.55}
+.capa--base::before{opacity:1}
+
+.capa__nombre{display:block;font-family:var(--ilhas-font-display);font-weight:600;
+  font-size:1.0625rem;color:var(--ilhas-dark);letter-spacing:var(--ilhas-tracking-display);
+  line-height:1.2}
+.capa__que{display:block;margin-top:.25rem;font-size:.8125rem;color:#71717f}
+
+.capa__fichas{margin:0;padding:0;list-style:none;display:flex;flex-wrap:wrap;gap:.5rem;
+  align-content:center}
+.ficha{padding:.5rem 1rem;border-radius:var(--ilhas-radius-pill);font-size:.9375rem;
+  font-weight:500;color:var(--ilhas-text);background:var(--ilhas-white);
+  border:1px solid var(--ilhas-gray);white-space:nowrap}
+
+/* --- Capa 2: superficie intermedia -------------------------------------- */
+.capa--motor{background:var(--ilhas-light)}
+
+/* --- Capa 3: el cimiento. Oscura, con más aire vertical: se ve más densa y
+       con más pisada, que es exactamente lo que hace un cimiento. --------- */
+.capa--base{background:var(--ilhas-dark);padding-block:2rem;border-bottom:none}
+.capa--base .capa__nombre{color:var(--ilhas-white)}
+.capa--base .capa__que{color:rgba(248,250,255,.62)}
+.capa--base .ficha{background:rgba(248,250,255,.08);border-color:rgba(248,250,255,.18);
+  color:var(--ilhas-white)}
+
+/* ===========================================================================
+   VARIANTE «PRUEBA» · para /soluciones. El punto marca dónde Ilhas YA
+   construyó. Convierte el mapa de promesa en historial sin una línea de copy.
+=========================================================================== */
+.ficha--prueba{display:inline-flex;flex-direction:column;align-items:flex-start;
+  gap:.1rem;white-space:normal;border-color:rgba(122,60,255,.45);
+  background:rgba(122,60,255,.06)}
+.ficha--prueba > span{display:inline-flex;align-items:center;gap:.45rem}
+.ficha--prueba > span::before{content:"";width:7px;height:7px;border-radius:50%;
+  background:var(--ilhas-primary);flex:0 0 auto}
+.ficha--prueba small{font-size:.75rem;color:#71717f;padding-left:1.15rem}
+.capa--base .ficha--prueba{background:rgba(122,60,255,.22);
+  border-color:rgba(161,75,255,.55)}
+.capa--base .ficha--prueba small{color:rgba(248,250,255,.7)}
+.leyenda{margin-top:1rem;font-size:.8125rem;color:#71717f;display:flex;
+  align-items:center;gap:.5rem}
+.leyenda::before{content:"";width:7px;height:7px;border-radius:50%;
+  background:var(--ilhas-primary)}
+
+/* ===========================================================================
+   VARIANTE «CIMIENTO» · para /finanzas. Las dos capas de arriba se apagan
+   para que la de abajo mande. No se ocultan: el argumento necesita que se
+   vean, apagadas, sosteniéndose sobre la que sí importa.
+=========================================================================== */
+.mapa--cimiento .capa--externa,
+.mapa--cimiento .capa--motor{opacity:.42}
+.mapa--cimiento .capa--base{box-shadow:0 -14px 40px rgba(122,60,255,.18)}
+
+/* ===========================================================================
+   VERSIÓN HOME · solo los tres nombres, dentro de la tarjeta. ~90 px.
+=========================================================================== */
+.tarjeta-demo{max-width:520px;padding:2.5rem;background:var(--ilhas-white);
+  border:1px solid var(--ilhas-gray);border-radius:var(--ilhas-radius-card);
+  box-shadow:var(--ilhas-shadow-soft)}
+.capas-mini{margin-top:1.25rem;display:grid;gap:.4rem}
+.capas-mini li{list-style:none;display:flex;gap:.75rem;align-items:stretch;
+  font-size:.9375rem}
+.capas-mini li::before{content:"";flex:0 0 3px;min-height:1.4rem;border-radius:2px;
+  background:var(--ilhas-primary)}
+.capas-mini li > div{min-width:0}
+.capas-mini li:nth-child(1)::before{opacity:.28}
+.capas-mini li:nth-child(2)::before{opacity:.55}
+.capas-mini li b{font-weight:600;color:var(--ilhas-dark)}
+.capas-mini li span{color:#71717f;font-size:.8125rem}
+.remate-mini{margin-top:1.1rem;font-size:.9375rem;color:var(--ilhas-text)}
+.remate-mini b{color:var(--ilhas-dark)}
+
+@media (min-width:900px){
+  .capa{grid-template-columns:minmax(0,15rem) minmax(0,1fr);gap:2rem;align-items:center}
+}
+@media (max-width:899px){
+  .ficha{white-space:normal}
+}
+</style></head><body>
+
+<div class="etiqueta-demo">1 · El mapa completo — <i>para /metodo. Nada resaltado: la universalidad es el argumento</i></div>
+<section class="section-y"><div class="container">
+  <p class="kicker">Dónde entra el método</p>
+  <h2>Toda empresa es lo mismo en tres capas.</h2>
+  <p class="lead">El método no cambia de área a área. Lo que cambia es a dónde lo
+    apuntas — y con qué capa te conviene empezar.</p>
+  <div class="mapa ">
+  <div class="capa capa--externa">
+    <div class="capa__rotulo"><span class="capa__nombre">Cadena de ingresos</span><span class="capa__que">Lo que el cliente ve</span></div>
+    <ul class="capa__fichas">
+      <li class="ficha">Marketing</li>
+      <li class="ficha">Ventas y cierre</li>
+      <li class="ficha">Posventa y soporte</li>
+      <li class="ficha">Cobranza</li>
+    </ul>
+  </div>
+  <div class="capa capa--motor">
+    <div class="capa__rotulo"><span class="capa__nombre">Motor de valor</span><span class="capa__que">Donde se construye lo que se vendió</span></div>
+    <ul class="capa__fichas">
+      <li class="ficha">Ingeniería y desarrollo</li>
+      <li class="ficha">Cadena de suministro</li>
+      <li class="ficha">Producción y manufactura</li>
+      <li class="ficha">Ejecución y entrega</li>
+    </ul>
+  </div>
+  <div class="capa capa--base">
+    <div class="capa__rotulo"><span class="capa__nombre">Cimiento</span><span class="capa__que">Lo que sostiene a las otras dos</span></div>
+    <ul class="capa__fichas">
+      <li class="ficha">Finanzas corporativas</li>
+      <li class="ficha">Contabilidad e impuestos</li>
+      <li class="ficha">Administración</li>
+      <li class="ficha">Talento humano</li>
+      <li class="ficha">Tecnología</li>
+    </ul>
+  </div>
+</div>
+</div></section>
+
+<div class="etiqueta-demo">2 · Con prueba — <i>para /soluciones. El punto marca dónde ya construimos</i></div>
+<section class="section-y"><div class="container">
+  <p class="kicker">Dónde ya entramos</p>
+  <h2>No es un catálogo. Es dónde ya lo hicimos.</h2>
+  <div class="mapa mapa--prueba">
+  <div class="capa capa--externa">
+    <div class="capa__rotulo"><span class="capa__nombre">Cadena de ingresos</span><span class="capa__que">Lo que el cliente ve</span></div>
+    <ul class="capa__fichas">
+      <li class="ficha">Marketing</li>
+      <li class="ficha ficha--prueba"><span>Ventas y cierre</span><small>cotizador · Morgan</small></li>
+      <li class="ficha">Posventa y soporte</li>
+      <li class="ficha ficha--prueba"><span>Cobranza</span><small>cobranza automática</small></li>
+    </ul>
+  </div>
+  <div class="capa capa--motor">
+    <div class="capa__rotulo"><span class="capa__nombre">Motor de valor</span><span class="capa__que">Donde se construye lo que se vendió</span></div>
+    <ul class="capa__fichas">
+      <li class="ficha">Ingeniería y desarrollo</li>
+      <li class="ficha">Cadena de suministro</li>
+      <li class="ficha ficha--prueba"><span>Producción y manufactura</span><small>despiece · Extrusión de Aleaciones</small></li>
+      <li class="ficha">Ejecución y entrega</li>
+    </ul>
+  </div>
+  <div class="capa capa--base">
+    <div class="capa__rotulo"><span class="capa__nombre">Cimiento</span><span class="capa__que">Lo que sostiene a las otras dos</span></div>
+    <ul class="capa__fichas">
+      <li class="ficha ficha--prueba"><span>Finanzas corporativas</span><small>Cometa</small></li>
+      <li class="ficha ficha--prueba"><span>Contabilidad e impuestos</span><small>Stampay</small></li>
+      <li class="ficha ficha--prueba"><span>Administración</span><small>Paystand</small></li>
+      <li class="ficha ficha--prueba"><span>Talento humano</span><small>Nomada</small></li>
+      <li class="ficha">Tecnología</li>
+    </ul>
+  </div>
+</div>
+  <p class="leyenda">Las áreas marcadas son donde Ilhas ya construyó y dejó
+    corriendo un sistema.</p>
+</div></section>
+
+<div class="etiqueta-demo">3 · Cimiento resaltado — <i>para /finanzas. Responde «¿por qué finanzas primero?»</i></div>
+<section class="section-y"><div class="container">
+  <p class="kicker">Por dónde se empieza</p>
+  <h2>Se empieza abajo. Siempre.</h2>
+  <p class="lead">Si el cimiento está flojo, automatizar arriba solo amplifica el
+    desorden. Por eso la primera isla es finanzas.</p>
+  <div class="mapa mapa--cimiento">
+  <div class="capa capa--externa">
+    <div class="capa__rotulo"><span class="capa__nombre">Cadena de ingresos</span><span class="capa__que">Lo que el cliente ve</span></div>
+    <ul class="capa__fichas">
+      <li class="ficha">Marketing</li>
+      <li class="ficha">Ventas y cierre</li>
+      <li class="ficha">Posventa y soporte</li>
+      <li class="ficha">Cobranza</li>
+    </ul>
+  </div>
+  <div class="capa capa--motor">
+    <div class="capa__rotulo"><span class="capa__nombre">Motor de valor</span><span class="capa__que">Donde se construye lo que se vendió</span></div>
+    <ul class="capa__fichas">
+      <li class="ficha">Ingeniería y desarrollo</li>
+      <li class="ficha">Cadena de suministro</li>
+      <li class="ficha">Producción y manufactura</li>
+      <li class="ficha">Ejecución y entrega</li>
+    </ul>
+  </div>
+  <div class="capa capa--base">
+    <div class="capa__rotulo"><span class="capa__nombre">Cimiento</span><span class="capa__que">Lo que sostiene a las otras dos</span></div>
+    <ul class="capa__fichas">
+      <li class="ficha">Finanzas corporativas</li>
+      <li class="ficha">Contabilidad e impuestos</li>
+      <li class="ficha">Administración</li>
+      <li class="ficha">Talento humano</li>
+      <li class="ficha">Tecnología</li>
+    </ul>
+  </div>
+</div>
+</div></section>
+
+<div class="etiqueta-demo">4 · Versión home — <i>dentro de la tarjeta genérica. Solo los tres nombres, ~90 px</i></div>
+<section class="section-y"><div class="container">
+  <div class="tarjeta-demo">
+    <p style="margin:0;font-weight:500;font-size:.875rem;color:var(--ilhas-primary)">Lo aprendes tú</p>
+    <p style="margin:.4rem 0 0;font-family:var(--ilhas-font-display);font-weight:600;
+       font-size:1.75rem;color:var(--ilhas-dark);letter-spacing:-.02em;line-height:1.1">Aprende el método</p>
+    <p style="margin:1rem 0 0;font-family:var(--ilhas-font-display);font-weight:600;
+       font-size:1.0625rem;line-height:1.35;color:var(--ilhas-dark);letter-spacing:-.02em">
+       Llegas con una idea de dónde estás perdiendo tiempo y dinero. Sales con tu
+       propio equipo de agentes trabajando en tu área.</p>
+    <ul class="capas-mini">
+      <li><div><b>Cadena de ingresos</b> <span>· marketing, ventas, cobranza</span></div></li>
+      <li><div><b>Motor de valor</b> <span>· producción, suministro, entrega</span></div></li>
+      <li><div><b>Cimiento</b> <span>· finanzas, contabilidad, administración</span></div></li>
+    </ul>
+    <p class="remate-mini">Los cinco pasos son los mismos en las tres.
+      <b>Hoy la puerta abierta está en el cimiento</b> — porque si abajo está
+      flojo, automatizar arriba solo amplifica el desorden.</p>
+  </div>
+</div></section>
+
+</body></html>

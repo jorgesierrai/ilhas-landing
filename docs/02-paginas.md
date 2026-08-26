@@ -41,10 +41,18 @@ I·L·H·A·S en una línea cada uno. Nada más. Link a `/metodo`.
 
 **04 · La bifurcación — el bloque más importante del sitio**
 Dos tarjetas grandes, iguales en peso visual:
-- **¿Quieres aprenderlo?** → Ilhas Finanzas → `/finanzas`
-- **¿Quieres que lo implementemos en tu empresa?** → Soluciones → `/soluciones`
+- **Lo aprendes tú** → Aprende el método → `/metodo`, con la isla abierta (`/finanzas`) adentro
+- **Lo hacemos nosotros** → Soluciones → `/soluciones`
 
 Este bloque *es* el conector. Todo lo demás del home existe para darle permiso de funcionar. No lo entierres abajo y no lo hagas chiquito.
+
+> **Reescrito el 26 ago 2026** (`prompts/iteracion-5-bifurcacion-mapa.md`). Tres cosas cambiaron y ninguna es cosmética:
+>
+> - **El carril de aprender es genérico.** Antes se titulaba «Ilhas Finanzas», como si el producto fuera finanzas. El producto es el **método**; Finanzas es la primera isla, y por eso vive en su propio recuadro `● Abierto hoy` dentro de la tarjeta. Así los chips de finanzas dejan de contradecir la promesa universal y pasan a ser la prueba de que la puerta es real. Regla 3 de `CLAUDE.md` intacta: «abierto hoy» es un hecho del presente, no un anuncio de islas futuras.
+> - **Las tarjetas dicen qué te llevas, no cómo se entrega.** «El método, enseñado» describía logística. Nadie compra logística.
+> - **El H2 depende de §02.** «Ya sabes qué tiene que pasar» solo es verdad porque el hueco y el mapa I·L·H·A·S acaban de explicarlo arriba. Si §02 se recorta, esta frase se queda sin piso.
+>
+> La sección va con **lavado de marca** (`.bg-lavado`), no en blanco ni en oscuro: `.bg-white + .bg-white` colapsa contra §02 y `.bg-dark + .bg-dark` la fundiría con §05.
 
 **05 · Prueba — el linaje**
 Los productos que Jorge ya construyó, presentados como evidencia de que el método salió de algún lado real: Stampay, Nomcont, el Data Concierge de Cometa, Nomada, Paystand, Factumizer. Una línea cada uno: qué dolor resuelve.
@@ -85,6 +93,15 @@ Biblia de Producto §0 (tesis), §2 (linaje), §9 (finanzas primero, universal d
    | **A — Accionar** | Assumption testing + POC — decidir con datos | Decides con números: precio, contratar, invertir |
    | **S — Sistematizar** | Delivery + automation — el motor que corre solo | La IA como tu equipo, con alertas y mantenimiento |
 
+4b. **Dónde entra el método — el mapa de la empresa** (variante `limpio`, nada resaltado: la universalidad *es* el argumento). Va **después** del acrónimo, no antes: primero el método, luego dónde aplica. Al revés el visitante ve trece áreas sin saber todavía qué se les hace.
+
+> **El mapa de la empresa — añadido el 26 ago 2026.** Un solo componente
+> (`src/components/MapaEmpresa.astro`, datos en `src/data/mapa.ts`) con la
+> clasificación de Jorge: toda empresa son trece áreas en tres capas —cadena de
+> ingresos, motor de valor, cimiento— y el método no cambia de capa a capa. Se
+> reusa en cuatro lugares con tres variantes y una versión mini. Los rótulos
+> salen del mismo archivo en los cuatro: no pueden desincronizarse.
+
 5. **Hilar = Opportunity Solution Tree — el paso joya.** "Hilar" es enhebrar piezas sueltas en una sola línea, y eso es exactamente el trabajo de un OST: tomar oportunidades regadas y anclarlas a un solo resultado. Mismo verbo, mismo trabajo. Nadie en el espacio de "finanzas con IA" está contando esto.
 6. **Los cinco principios** — fundamento antes que automatización · la IA es infraestructura, no un feature · workflows sobre roles · outcomes sobre outputs · builder mindset.
 7. **No son prompts: es reingeniería del trabajo.** El organigrama ha muerto. No organizas humanos haciendo tareas: organizas procesos lineales de inputs → outputs que generan dinero.
@@ -119,6 +136,9 @@ Fuente literal: `03-ntpvs.md` (Nicho) y `04-voz-del-cliente.md`.
 **02 · Esto es lo que vas a poder hacer**
 Rejilla con las tareas reales, **en las palabras que el cliente usa**: análisis de estados financieros con razones · flujo de efectivo · modelos y proyecciones · presupuesto y control de gestión · conciliaciones · dashboard sin licencias caras · valuación, TIR y VAN · reportes que se actualizan solos.
 No es un temario y no es una FAQ. Es el espejo: el visitante se ve. Fuente: `04-voz-del-cliente.md`.
+
+**02b · Por dónde se empieza — el mapa con el cimiento resaltado**
+El mismo mapa, variante `cimiento`. Contesta la pregunta que `/finanzas` nunca contestaba: *«¿por qué finanzas primero?»* — si el cimiento está flojo, automatizar arriba solo amplifica el desorden. Las dos capas de arriba se **apagan pero no se ocultan**: el argumento necesita verlas sosteniéndose sobre la que sí importa.
 
 **03 · Para quién es · para quién no**
 El filtro sube el valor percibido y ahorra soporte. Corto, dos columnas.
@@ -158,6 +178,7 @@ Temario, precio, bonos, garantía, cupos, contador regresivo, la oferta. **Todo 
 
 1. **Qué resolvemos** — soluciones de IA que ahorran tiempo y mueven la aguja, en cualquier área. No es una agencia de "implementación de IA": es criterio de producto aplicado a un proceso que hoy se hace a mano.
 2. **Cómo trabajamos** — el mismo I·L·H·A·S, apuntado a la empresa en vez de a una persona. Conecta con `/metodo`.
+2b. **Dónde ya entramos — el mapa con la prueba encima** (variante `prueba`). El punto morado marca las siete áreas de trece donde Ilhas ya construyó: convierte el diagrama de promesa en historial sin una línea de copy, y prepara los casos de abajo, que son esos mismos puntos contados largo. **Va con su leyenda**: sin ella los puntos no significan nada. **Cobranza va sin nombre de producto ni de cliente** — está bajo NDA y se describe por la clase de problema, igual que en `src/data/productos.ts`.
 3. **Casos** — la tabla de linaje, presentada como portafolio:
 
    | Producto | Qué resolvió |

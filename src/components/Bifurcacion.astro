@@ -1,45 +1,256 @@
 ---
-// Los dos carriles del método (docs/01-arquitectura.md). El contenido de las
-// dos tarjetas es fijo a propósito: son las mismas dos puertas en cualquier
-// página que las use (/metodo hoy, / más adelante). Solo el encabezado
-// que las presenta cambia según el contexto de la página.
+// Los dos carriles del método (docs/01-arquitectura.md): te lo enseñamos o te
+// lo hacemos. El contenido de las dos tarjetas es fijo a propósito — son las
+// mismas dos puertas en cualquier página que las use. Solo el encabezado que
+// las presenta cambia según el contexto.
+//
+// Dos versiones, no dos componentes:
+//
+//   - COMPACTA (`/metodo` §10). Es la de siempre: dos tarjetas-enlace de una
+//     línea. No la toques — /metodo ya es la página más alta del sitio.
+//   - PROMINENTE (home §04). La reescritura del 26 ago 2026. Referencia:
+//     `medios/bifurcacion-referencia.html`.
+//
+// Lo que cambió en la prominente y por qué:
+//
+//   1. El carril de aprender es GENÉRICO. Antes decía "Ilhas Finanzas" como si
+//      fuera el producto; el producto es el MÉTODO, y Finanzas es la primera
+//      isla. La promesa universal va arriba y la puerta que existe hoy va
+//      abajo, en su propio recuadro. Así los chips de finanzas dejan de
+//      pelearse con la promesa y se vuelven la prueba de que la puerta es real.
+//   2. Las dos tarjetas describían CÓMO SE ENTREGA ("el método, enseñado" /
+//      "aplicado en tu empresa"). Nadie compra logística. Ahora dicen qué te
+//      llevas.
+//   3. El carril 2 ya no dice "no somos una agencia de implementación de IA":
+//      negar algo obliga a nombrarlo y mete la palabra en la página. Ahora se
+//      describe el trabajo — levantar, construir, dejar funcionando, mantener.
+//   4. La tarjeta de aprender ya NO es un <a>: lleva dos puertas (la isla y el
+//      método) y anidar dos <a> es HTML inválido y un desastre con lector de
+//      pantalla. Es un <div> con dos <a> adentro.
+//
+// ⚠️ El H2 del home dice «Ya sabes qué tiene que pasar». Eso SOLO es verdad
+// porque §02 (el hueco + el mapa I·L·H·A·S) ya lo explicó arriba. Las dos
+// secciones se sostienen mutuamente: si alguien recorta §02, esta frase se
+// queda sin piso y hay que reescribirla.
+//
+// ⚠️ Regla 3 de CLAUDE.md: no se anuncian islas futuras, ni con
+// "próximamente". "Abierto hoy" no anuncia nada — es un hecho del presente, y
+// el visitante extrapola solo, que es justo lo que la regla quiere. No agregues
+// nombres de islas futuras ni "y más áreas".
+import { CAPAS } from "../data/mapa";
+
 interface Props {
   heading: string;
   lead?: string;
+  /** Etiqueta sobre el H2. Opcional: /metodo §10 no la lleva. */
+  kicker?: string;
   /** Tratamiento más grande: para el home, donde este es "el bloque más
    * importante del sitio" (docs/02-paginas.md). No lo uses en más de un
    * lugar por página. */
   prominent?: boolean;
 }
 
-const { heading, lead, prominent = false } = Astro.props;
+const { heading, lead, kicker, prominent = false } = Astro.props;
+
+// Los cuatro chips del carril de aprender. Son el alcance de la isla abierta,
+// no del método: por eso viven dentro del recuadro "Abierto hoy".
+const alcanceFinanzas = [
+  "Estados financieros",
+  "Flujo de efectivo",
+  "Modelos y proyecciones",
+  "Reportes que se actualizan solos",
+];
+
+// Los cuatro del carril 2: procesos, no tecnologías.
+const alcanceSoluciones = [
+  "Cotización",
+  "Conciliación",
+  "Cobranza",
+  "Reportes de operación",
+];
+
+// Los tres tiempos del trabajo. Responden a «¿lo implementan en la empresa y
+// qué? no entiendo»: se enseña la secuencia en vez de describirla. El tercero
+// dice "ahí es donde se cae la mayoría", que amarra con la fila de Sistematizar
+// del mapa de §02 y con el 30% de Gartner — la misma idea tres veces en la
+// página, a propósito.
+const comoEmpieza = [
+  {
+    titulo: "Diagnóstico de tu caso.",
+    detalle: "Vemos el proceso real, no una plantilla.",
+  },
+  {
+    titulo: "Lo construimos.",
+    detalle: "Sobre tus números y tus reglas, no sobre supuestos.",
+  },
+  {
+    titulo: "Queda corriendo.",
+    detalle: "Y alguien lo mantiene después — ahí es donde se cae la mayoría.",
+  },
+];
+
+// Regla 4 de CLAUDE.md: los números se atribuyen, nunca se suman. Estos dos son
+// de los dos testimonios, con el nombre de empresa que Jorge confirmó el 24 ago
+// 2026 (ver src/data/medios.ts).
+const pruebaSoluciones = [
+  {
+    dato: "3–4 h → 20 min",
+    fuente: "cotizador · Morgan Centro de Alta Especialidad",
+  },
+  {
+    dato: "5–6 días → minutos",
+    fuente: "despiece y cotización · Extrusión de Aleaciones",
+  },
+];
 ---
 
 <div class:list={["bifurcacion", { "bifurcacion--prominent": prominent }]}>
+  {kicker && <p class="kicker">{kicker}</p>}
   <h2>{heading}</h2>
   {lead && <p class="bifurcacion__lead">{lead}</p>}
 
-  <div class="bifurcacion__cards">
-    <a href="/finanzas" class="bifurcacion__card reveal">
-      <span class="bifurcacion__label">¿Quieres aprenderlo?</span>
-      <span class="bifurcacion__title">Ilhas Finanzas</span>
-      <span class="bifurcacion__desc"
-        >El método, enseñado — empezando por tus números.</span
-      >
-      <span class="bifurcacion__link">Conocer Ilhas Finanzas →</span>
-    </a>
+  {
+    prominent ? (
+      <div class="bifurcacion__cards">
+        {/* ---- Carril 1 · el método, genérico ---------------------------- */}
+        <div class="bifurcacion__card reveal">
+          <span class="bifurcacion__label">Lo aprendes tú</span>
+          <span class="bifurcacion__title">Aprende el método</span>
+          <p class="bifurcacion__resultado">
+            Llegas con una idea de dónde estás perdiendo tiempo y dinero. Sales
+            con tu propio equipo de agentes trabajando en tu área.
+          </p>
 
-    <a href="/soluciones" class="bifurcacion__card reveal">
-      <span class="bifurcacion__label"
-        >¿Quieres que lo implementemos en tu empresa?</span
-      >
-      <span class="bifurcacion__title">Soluciones</span>
-      <span class="bifurcacion__desc"
-        >El método, aplicado directo en tu empresa.</span
-      >
-      <span class="bifurcacion__link">Conocer Soluciones →</span>
-    </a>
-  </div>
+          {/* El mapa de la empresa en chico. Los rótulos salen de
+              src/data/mapa.ts, el mismo archivo que pinta el mapa completo de
+              /metodo: es la misma idea a otra escala, no otro componente. El
+              home NO lleva el mapa completo — trece fichas aquí matan la
+              tarjeta y duplican lo que ya viven /metodo y /soluciones. */}
+          <ul class="capas-mini">
+            {CAPAS.map((capa) => (
+              <li class={`capas-mini--${capa.id}`}>
+                <div>
+                  <b>{capa.nombre}</b> <span>· {capa.resumen}</span>
+                </div>
+              </li>
+            ))}
+          </ul>
+
+          {/* El remate amarra todo: justifica que Finanzas sea la primera isla
+              como DECISIÓN DE MÉTODO, no como "es lo único que tenemos". Es la
+              diferencia entre sonar chico y sonar deliberado. */}
+          <p class="capas-mini__remate">
+            Los cinco pasos son los mismos en las tres.{" "}
+            <b>Hoy la puerta abierta está en el cimiento</b> — porque si abajo
+            está flojo, automatizar arriba solo amplifica el desorden.
+          </p>
+
+          <div class="abierto">
+            <span class="abierto__tag">Abierto hoy</span>
+            <span class="abierto__isla">
+              Ilhas Finanzas
+              <small>Finanzas para negocios — la primera isla.</small>
+            </span>
+            <p class="abierto__para">
+              Para analista, contador, controller, consultor, auditor, tesorero
+              o FP&amp;A.
+            </p>
+            <ul class="bifurcacion__chips">
+              {alcanceFinanzas.map((chip) => (
+                <li>{chip}</li>
+              ))}
+            </ul>
+            {/* El respaldo del papá va DENTRO del recuadro, no a nivel
+                tarjeta: es la prueba de Finanzas, no del método genérico. */}
+            <p class="abierto__prueba">
+              <b>40 años</b> de criterio financiero y <b>+2,000</b> empresas
+              asesoradas en LATAM — Jorge Sierra (papá).
+            </p>
+          </div>
+
+          <div class="bifurcacion__acciones">
+            <a class="btn btn-primary" href="/finanzas">
+              Conocer Ilhas Finanzas
+            </a>
+            <a class="bifurcacion__enlace" href="/metodo">
+              Conocer el método →
+            </a>
+          </div>
+        </div>
+
+        {/* ---- Carril 2 · el trabajo, no la tecnología ------------------- */}
+        <div class="bifurcacion__card bifurcacion__card--hacemos reveal">
+          <span class="bifurcacion__label">Lo hacemos nosotros</span>
+          <span class="bifurcacion__title">Soluciones</span>
+          <p class="bifurcacion__resultado">
+            Escogemos un proceso que hoy se hace a mano y lo dejamos corriendo
+            solo.
+          </p>
+          <p class="bifurcacion__detalle">
+            Lo levantamos, lo construimos y lo dejamos funcionando — con quien
+            lo mantenga después. Empieza con un diagnóstico de tu caso, no con
+            un paquete.
+          </p>
+
+          <div class="proceso">
+            <span class="proceso__tag">Cómo empieza</span>
+            <ol>
+              {comoEmpieza.map((paso) => (
+                <li>
+                  <span>
+                    <b>{paso.titulo}</b> {paso.detalle}
+                  </span>
+                </li>
+              ))}
+            </ol>
+          </div>
+
+          <ul class="bifurcacion__chips bifurcacion__chips--procesos">
+            {alcanceSoluciones.map((chip) => (
+              <li>{chip}</li>
+            ))}
+          </ul>
+
+          <div class="bifurcacion__prueba">
+            {pruebaSoluciones.map((p) => (
+              <div>
+                <b>{p.dato}</b>
+                <span>{p.fuente}</span>
+              </div>
+            ))}
+          </div>
+
+          <div class="bifurcacion__acciones">
+            <a class="btn btn-primary" href="/soluciones">
+              Conocer Soluciones
+            </a>
+          </div>
+        </div>
+      </div>
+    ) : (
+      <div class="bifurcacion__cards">
+        <a href="/finanzas" class="bifurcacion__card reveal">
+          <span class="bifurcacion__label">¿Quieres aprenderlo?</span>
+          <span class="bifurcacion__title">Ilhas Finanzas</span>
+          <span class="bifurcacion__desc">
+            El método, enseñado — empezando por tus números.
+          </span>
+          <span class="bifurcacion__link">Conocer Ilhas Finanzas →</span>
+        </a>
+
+        <a href="/soluciones" class="bifurcacion__card reveal">
+          <span class="bifurcacion__label">
+            ¿Quieres que lo implementemos en tu empresa?
+          </span>
+          <span class="bifurcacion__title">Soluciones</span>
+          <span class="bifurcacion__desc">
+            El método, aplicado directo en tu empresa.
+          </span>
+          <span class="bifurcacion__link">Conocer Soluciones →</span>
+        </a>
+      </div>
+    )
+  }
 </div>
 
 <style>
@@ -64,6 +275,7 @@ const { heading, lead, prominent = false } = Astro.props;
     gap: 1.5rem;
     margin-top: 2.5rem;
     text-align: left;
+    align-items: stretch;
   }
 
   .bifurcacion__card {
@@ -80,7 +292,9 @@ const { heading, lead, prominent = false } = Astro.props;
     transition: box-shadow 0.2s ease, transform 0.2s ease;
   }
 
-  .bifurcacion__card:hover {
+  /* Solo la versión compacta es una tarjeta-enlace. La prominente lleva dos
+     puertas adentro, así que no se levanta entera al pasar el ratón. */
+  a.bifurcacion__card:hover {
     box-shadow: var(--ilhas-shadow-hover);
     transform: translateY(-2px);
     color: inherit;
@@ -120,8 +334,10 @@ const { heading, lead, prominent = false } = Astro.props;
     }
   }
 
-  /* Tratamiento prominente: tarjetas más grandes, con acento de marca
-     arriba. Reservado para el bloque de bifurcación del home. */
+  /* ======================================================================
+     Tratamiento prominente: tarjetas más grandes, con acento de marca
+     arriba. Reservado para el bloque de bifurcación del home.
+     ====================================================================== */
   .bifurcacion--prominent h2 {
     font-size: var(--ilhas-fs-h2);
     max-width: 28ch;
@@ -136,6 +352,7 @@ const { heading, lead, prominent = false } = Astro.props;
     position: relative;
     padding: 2.5rem;
     overflow: hidden;
+    gap: 0;
   }
 
   .bifurcacion--prominent .bifurcacion__card::before {
@@ -147,6 +364,299 @@ const { heading, lead, prominent = false } = Astro.props;
   }
 
   .bifurcacion--prominent .bifurcacion__title {
+    margin-top: 0.4rem;
     font-size: 1.75rem;
+    letter-spacing: var(--ilhas-tracking-display);
+    line-height: 1.1;
+  }
+
+  /* Lo que te llevas, en display. Es la primera cosa concreta de la tarjeta:
+     va en la tipografía de titular para que gane al párrafo de abajo. */
+  .bifurcacion__resultado {
+    margin-top: 1rem;
+    font-family: var(--ilhas-font-display);
+    font-weight: 600;
+    font-size: 1.0625rem;
+    line-height: 1.35;
+    color: var(--ilhas-dark);
+    letter-spacing: var(--ilhas-tracking-display);
+  }
+
+  .bifurcacion__detalle {
+    margin-top: 0.75rem;
+    font-size: 1rem;
+    color: var(--ilhas-text);
+  }
+
+  /* --- el mapa de la empresa, en chico ---------------------------------- */
+  .capas-mini {
+    margin: 1.25rem 0 0;
+    padding: 0;
+    display: grid;
+    gap: 0.4rem;
+  }
+
+  .capas-mini li {
+    list-style: none;
+    display: flex;
+    gap: 0.75rem;
+    align-items: stretch;
+    font-size: 0.9375rem;
+  }
+
+  /* La misma barra de peso creciente del mapa grande: .28 → .55 → 1. */
+  .capas-mini li::before {
+    content: "";
+    flex: 0 0 3px;
+    min-height: 1.4rem;
+    border-radius: 2px;
+    background: var(--ilhas-primary);
+  }
+
+  .capas-mini--externa::before {
+    opacity: 0.28;
+  }
+
+  .capas-mini--motor::before {
+    opacity: 0.55;
+  }
+
+  .capas-mini li > div {
+    min-width: 0;
+  }
+
+  .capas-mini li b {
+    font-weight: 600;
+    color: var(--ilhas-dark);
+  }
+
+  .capas-mini li span {
+    color: var(--ilhas-text);
+    font-size: 0.8125rem;
+  }
+
+  .capas-mini__remate {
+    margin-top: 1.1rem;
+    font-size: 0.9375rem;
+    color: var(--ilhas-text);
+  }
+
+  .capas-mini__remate b {
+    color: var(--ilhas-dark);
+  }
+
+  /* --- el recuadro "Abierto hoy" ----------------------------------------
+     La pieza que resuelve la contradicción: arriba la promesa es universal,
+     aquí abajo —separada y con su propia superficie— la puerta que existe
+     hoy. Los chips de finanzas dejan de contradecir la promesa genérica y
+     pasan a ser la prueba de que la puerta es real. */
+  .abierto,
+  .proceso {
+    margin-top: 1.5rem;
+    padding: 1.25rem;
+    border-radius: 0.875rem;
+    background: rgba(122, 60, 255, 0.05);
+    border: 1px solid rgba(122, 60, 255, 0.14);
+  }
+
+  .abierto__tag,
+  .proceso__tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ilhas-primary);
+  }
+
+  .abierto__tag::before,
+  .proceso__tag::before {
+    content: "";
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--ilhas-primary);
+  }
+
+  .abierto__isla {
+    display: block;
+    margin-top: 0.45rem;
+    font-family: var(--ilhas-font-display);
+    font-weight: 600;
+    font-size: 1.125rem;
+    color: var(--ilhas-dark);
+    letter-spacing: var(--ilhas-tracking-display);
+  }
+
+  .abierto__isla small {
+    display: block;
+    margin-top: 0.2rem;
+    font-family: var(--ilhas-font-body);
+    font-weight: 400;
+    font-size: 0.875rem;
+    color: var(--ilhas-text);
+    letter-spacing: 0;
+  }
+
+  .abierto__para {
+    margin: 0.6rem 0 0;
+    font-size: 0.875rem;
+    color: var(--ilhas-text);
+  }
+
+  .bifurcacion__chips {
+    margin: 0.9rem 0 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+
+  .bifurcacion__chips li {
+    font-size: 0.8125rem;
+    padding: 0.3rem 0.7rem;
+    border-radius: var(--ilhas-radius-pill);
+    background: var(--ilhas-white);
+    border: 1px solid rgba(122, 60, 255, 0.18);
+    color: var(--ilhas-primary);
+    font-weight: 500;
+  }
+
+  .bifurcacion__chips--procesos {
+    margin-top: 1.25rem;
+  }
+
+  .bifurcacion__chips--procesos li {
+    background: rgba(122, 60, 255, 0.07);
+    border-color: transparent;
+  }
+
+  /* La prueba del papá en UNA línea dentro del recuadro: dos bloques de stat
+     ahí adentro quedaban apretados y estiraban la tarjeta 120 px de más. */
+  .abierto__prueba {
+    margin: 1rem 0 0;
+    padding-top: 0.9rem;
+    border-top: 1px solid rgba(122, 60, 255, 0.14);
+    font-size: 0.8125rem;
+    color: var(--ilhas-text);
+  }
+
+  .abierto__prueba b {
+    font-family: var(--ilhas-font-display);
+    font-weight: 600;
+    color: var(--ilhas-dark);
+    letter-spacing: var(--ilhas-tracking-display);
+  }
+
+  /* --- el recuadro "Cómo empieza" --------------------------------------- */
+  .proceso ol {
+    margin: 0.75rem 0 0;
+    padding: 0;
+    list-style: none;
+    display: grid;
+    gap: 0.55rem;
+    counter-reset: paso;
+  }
+
+  .proceso li {
+    display: grid;
+    grid-template-columns: 1.4rem minmax(0, 1fr);
+    gap: 0.6rem;
+    align-items: baseline;
+    font-size: 0.9375rem;
+    color: var(--ilhas-text);
+    counter-increment: paso;
+  }
+
+  .proceso li::before {
+    content: counter(paso);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.4rem;
+    height: 1.4rem;
+    border-radius: 50%;
+    background: var(--ilhas-white);
+    border: 1px solid rgba(122, 60, 255, 0.25);
+    font-family: var(--ilhas-font-display);
+    font-weight: 600;
+    font-size: 0.6875rem;
+    color: var(--ilhas-primary);
+    align-self: center;
+  }
+
+  .proceso li b {
+    font-weight: 600;
+    color: var(--ilhas-dark);
+  }
+
+  /* --- la prueba del carril 2 ------------------------------------------- */
+  .bifurcacion__prueba {
+    margin-top: 1.5rem;
+    display: flex;
+    gap: 1.25rem;
+    flex-wrap: wrap;
+  }
+
+  .bifurcacion__prueba div {
+    border-left: 2px solid var(--ilhas-gray);
+    padding-left: 0.75rem;
+  }
+
+  .bifurcacion__prueba b {
+    display: block;
+    font-family: var(--ilhas-font-display);
+    font-weight: 600;
+    font-size: 1.125rem;
+    color: var(--ilhas-dark);
+    letter-spacing: var(--ilhas-tracking-display);
+    line-height: 1.1;
+    white-space: nowrap;
+  }
+
+  .bifurcacion__prueba span {
+    display: block;
+    margin-top: 0.2rem;
+    font-size: 0.75rem;
+    color: var(--ilhas-text);
+    max-width: 22ch;
+  }
+
+  /* `margin-top: auto` empuja los botones al fondo: las dos tarjetas se
+     estiran a la misma altura y sus CTAs quedan alineados aunque el contenido
+     de una sea más largo. */
+  .bifurcacion__acciones {
+    margin-top: auto;
+    padding-top: 1.75rem;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem 1.25rem;
+  }
+
+  .bifurcacion__enlace {
+    font-weight: 600;
+    font-size: var(--ilhas-fs-small);
+    color: var(--ilhas-primary);
+    text-decoration: none;
+  }
+
+  .bifurcacion__enlace:hover {
+    text-decoration: underline;
+  }
+
+  /* La prominente rompe a una columna más tarde que la compacta: sus tarjetas
+     traen recuadros adentro y a 700 px ya van muy apretadas. */
+  @media (max-width: 760px) {
+    .bifurcacion--prominent .bifurcacion__cards {
+      grid-template-columns: 1fr;
+    }
+
+    .bifurcacion--prominent .bifurcacion__card {
+      padding: 1.75rem;
+    }
   }
 </style>

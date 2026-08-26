@@ -1,0 +1,326 @@
+---
+/**
+ * El mapa de la empresa: trece áreas en tres capas.
+ *
+ * Referencia visual: `medios/mapa-empresa-referencia.html`. Las tres decisiones
+ * de diseño de abajo NO son estética — si se cambian, el diagrama deja de
+ * argumentar y se vuelve una lista con marcos:
+ *
+ *   1. Es UN objeto con tres estratos, no tres tarjetas. `border-radius` solo
+ *      en las esquinas exteriores (vía `overflow: hidden`) y bordes internos a
+ *      hueso. Tres cajas separadas se leen como categorías; un bloque
+ *      estratificado se lee como estructura.
+ *   2. La barra izquierda gana peso hacia abajo (.28 → .55 → 1). Es el
+ *      gradiente de carga. Nadie lo lee conscientemente y todos lo sienten.
+ *   3. El cimiento es oscuro y con más aire vertical. El argumento «el
+ *      fundamento sostiene» no se escribe: se dibuja. No le quites el fondo
+ *      oscuro para que combine.
+ *
+ * El encabezado (kicker + H2 + lead) lo pone la página, porque cambia en cada
+ * una. El componente es solo el diagrama.
+ */
+import { CAPAS } from "../data/mapa";
+
+interface Props {
+  /**
+   * "limpio"   — nada resaltado. La universalidad es el argumento (/metodo).
+   * "prueba"   — punto morado donde Ilhas ya construyó (/soluciones).
+   * "cimiento" — las dos capas de arriba se apagan (/finanzas).
+   */
+  variante?: "limpio" | "prueba" | "cimiento";
+}
+
+const { variante = "limpio" } = Astro.props;
+const conPrueba = variante === "prueba";
+---
+
+<div class:list={["mapa-empresa", `mapa-empresa--${variante}`, "reveal"]}>
+  {
+    CAPAS.map((capa) => (
+      <div class:list={["capa", `capa--${capa.id}`]}>
+        <div class="capa__rotulo">
+          <span class="capa__nombre">{capa.nombre}</span>
+          <span class="capa__que">{capa.que}</span>
+        </div>
+        <ul class="capa__fichas">
+          {capa.areas.map((area) =>
+            conPrueba && area.prueba ? (
+              <li class="ficha ficha--prueba">
+                <span>{area.nombre}</span>
+                <small>{area.prueba}</small>
+              </li>
+            ) : (
+              <li class="ficha">{area.nombre}</li>
+            )
+          )}
+        </ul>
+      </div>
+    ))
+  }
+</div>
+
+{
+  conPrueba && (
+    <p class="mapa-empresa__leyenda">
+      Las áreas marcadas son donde Ilhas ya construyó y dejó corriendo un
+      sistema.
+    </p>
+  )
+}
+
+<style>
+  /* Decisión 1: un objeto con tres estratos. El `overflow: hidden` es lo que
+     recorta las esquinas de la primera y la última capa contra el radio del
+     contenedor. Si lo quitas, vuelven a leerse tres cajas. */
+  .mapa-empresa {
+    margin-top: 2.5rem;
+    border: 1px solid var(--ilhas-gray);
+    border-radius: var(--ilhas-radius-card);
+    overflow: hidden;
+    box-shadow: var(--ilhas-shadow-soft);
+    background: var(--ilhas-white);
+  }
+
+  .capa {
+    position: relative;
+    display: grid;
+    gap: 1rem;
+    padding: 1.6rem 1.75rem 1.6rem 2.25rem;
+    border-bottom: 1px solid var(--ilhas-gray);
+  }
+
+  .capa:last-child {
+    border-bottom: none;
+  }
+
+  /* Decisión 2: el gradiente de carga. */
+  .capa::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: var(--ilhas-primary);
+  }
+
+  .capa--externa::before {
+    opacity: 0.28;
+  }
+
+  .capa--motor::before {
+    opacity: 0.55;
+  }
+
+  .capa--base::before {
+    opacity: 1;
+  }
+
+  .capa__nombre {
+    display: block;
+    font-family: var(--ilhas-font-display);
+    font-weight: 600;
+    font-size: 1.0625rem;
+    color: var(--ilhas-dark);
+    letter-spacing: var(--ilhas-tracking-display);
+    line-height: 1.2;
+  }
+
+  /* La referencia usaba #71717f aquí. Ese gris no existe en tokens.css y sobre
+     las superficies teñidas de violeta mide 4.41:1 — texto chico por debajo de
+     AA. tokens.css es explícito: "para texto pequeño usa --ilhas-text o
+     --ilhas-dark sólidos". La jerarquía la hacen el tamaño y el peso. */
+  .capa__que {
+    display: block;
+    margin-top: 0.25rem;
+    font-size: 0.8125rem;
+    color: var(--ilhas-text);
+  }
+
+  .capa__fichas {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    align-content: center;
+  }
+
+  .ficha {
+    padding: 0.5rem 1rem;
+    border-radius: var(--ilhas-radius-pill);
+    font-size: 0.9375rem;
+    font-weight: 500;
+    color: var(--ilhas-dark);
+    background: var(--ilhas-white);
+    border: 1px solid var(--ilhas-gray);
+    white-space: nowrap;
+  }
+
+  .capa--motor {
+    background: var(--ilhas-light);
+  }
+
+  /* Decisión 3: el cimiento pisa más. Más oscuro y con más aire vertical. */
+  .capa--base {
+    background: var(--ilhas-dark);
+    padding-block: 2rem;
+    border-bottom: none;
+  }
+
+  .capa--base .capa__nombre {
+    color: var(--ilhas-white);
+  }
+
+  .capa--base .capa__que {
+    /* 7.4:1 sobre tinta. */
+    color: rgba(248, 250, 255, 0.62);
+  }
+
+  .capa--base .ficha {
+    background: rgba(248, 250, 255, 0.08);
+    border-color: rgba(248, 250, 255, 0.18);
+    color: var(--ilhas-white);
+  }
+
+  /* --- variante "prueba" · /soluciones ----------------------------------- */
+  .ficha--prueba {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.1rem;
+    white-space: normal;
+    border-color: rgba(122, 60, 255, 0.45);
+    background: rgba(122, 60, 255, 0.06);
+  }
+
+  .ficha--prueba > span {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+  }
+
+  .ficha--prueba > span::before {
+    content: "";
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--ilhas-primary);
+    flex: 0 0 auto;
+  }
+
+  .ficha--prueba small {
+    font-size: 0.75rem;
+    font-weight: 400;
+    color: var(--ilhas-text);
+    padding-left: 1.15rem;
+  }
+
+  .capa--base .ficha--prueba {
+    background: rgba(122, 60, 255, 0.22);
+    border-color: rgba(161, 75, 255, 0.55);
+  }
+
+  .capa--base .ficha--prueba small {
+    /* 8.2:1 sobre tinta + violeta al 22%. */
+    color: rgba(248, 250, 255, 0.7);
+  }
+
+  /* Sin la leyenda, los puntos morados no significan nada. */
+  .mapa-empresa__leyenda {
+    margin-top: 1rem;
+    font-size: 0.8125rem;
+    color: var(--ilhas-text);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .mapa-empresa__leyenda::before {
+    content: "";
+    flex: 0 0 auto;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--ilhas-primary);
+  }
+
+  /* --- variante "cimiento" · /finanzas ------------------------------------
+     Las dos capas de arriba se apagan, pero NO se ocultan: el argumento
+     necesita verlas sosteniéndose sobre la que sí importa.
+
+     La referencia lo hacía con `opacity: .42` sobre la capa entera. Medido con
+     Lighthouse en /finanzas, eso tira TODO el texto de esas dos capas a
+     2.2–2.8:1 — falla AA de verdad, no es un falso positivo, y el checklist de
+     esta iteración pide medirlo. Subirle la opacidad hasta que pase exige .75,
+     donde ya no se ve apagado y el argumento se pierde igual.
+
+     Así que el apagado se hace donde no hay texto: las capas de arriba pierden
+     su superficie y el relleno de sus fichas, y sus barras bajan a .12 y .22.
+     Se quedan planas y calladas —que es lo que se buscaba— con el texto en
+     --ilhas-text a contraste completo. El cimiento conserva pastillas,
+     superficie oscura y halo: sigue siendo el único que pisa. */
+  .mapa-empresa--cimiento .capa--externa,
+  .mapa-empresa--cimiento .capa--motor {
+    background: transparent;
+  }
+
+  .mapa-empresa--cimiento .capa--externa::before {
+    opacity: 0.12;
+  }
+
+  .mapa-empresa--cimiento .capa--motor::before {
+    opacity: 0.22;
+  }
+
+  .mapa-empresa--cimiento .capa--externa .capa__nombre,
+  .mapa-empresa--cimiento .capa--motor .capa__nombre {
+    color: var(--ilhas-text);
+  }
+
+  .mapa-empresa--cimiento .capa--externa .ficha,
+  .mapa-empresa--cimiento .capa--motor .ficha {
+    background: transparent;
+    border-color: transparent;
+    color: var(--ilhas-text);
+    font-weight: 400;
+    padding-inline: 0;
+    margin-right: 0.75rem;
+  }
+
+  .mapa-empresa--cimiento .capa--base {
+    box-shadow: 0 -14px 40px rgba(122, 60, 255, 0.18);
+  }
+
+  @media (min-width: 900px) {
+    .capa {
+      grid-template-columns: minmax(0, 15rem) minmax(0, 1fr);
+      gap: 2rem;
+      align-items: center;
+    }
+  }
+
+  /* En angosto las fichas envuelven en vez de encogerse: cinco fichas apiladas
+     de una en una convierten el cimiento en una torre. Bajarles el tipo antes
+     de romper la línea es lo que evita que crezca de más. */
+  @media (max-width: 899px) {
+    .capa {
+      padding: 1.35rem 1.25rem 1.35rem 1.6rem;
+    }
+
+    .capa--base {
+      padding-block: 1.7rem;
+    }
+
+    .ficha {
+      white-space: normal;
+      font-size: 0.875rem;
+      padding: 0.4rem 0.8rem;
+    }
+
+    .ficha--prueba small {
+      padding-left: 1.05rem;
+    }
+  }
+</style>
