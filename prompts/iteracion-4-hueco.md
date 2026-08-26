@@ -134,6 +134,58 @@ discreto que ya trae la referencia (subrayado gris fino, morado solo en hover).
 **No las hagas ver como CTA:** compiten con las ligas de conversión que están
 30 px abajo.
 
+### Que se vea que las cinco letras SON el método
+
+**Referencia: `medios/acronimo-referencia.html`.** Se implementa la cuarta
+opción del archivo, **`A + C`**.
+
+Al comerse §03 el home perdió el único lugar donde el acrónimo se deletreaba
+(*"Cinco pasos: I·L·H·A·S"*). Sin eso, el visitante ve cinco círculos morados
+con letras sueltas y nunca conecta que arman el nombre de la casa. Son dos
+piezas:
+
+**A · La espina.** Una línea vertical detrás de los cinco badges, para que el
+ojo los lea hacia abajo como una palabra y no como cinco marcas sueltas. No
+dice nada — agrupa. Es el mismo lenguaje del spine de
+`medios/timeline-preview.html`. **Solo a partir de 900 px**: en móvil las filas
+se apilan y la línea quedaría interrumpida por el texto de la falla.
+
+**Encabezado de la columna derecha:** `El método Ilhas · paso por paso`.
+
+**C · El remate.** Después de la quinta fila, antes de
+`Conoce el método completo →`. El lector ya vio pasar las cinco letras; la
+línea nada más cierra la puerta. Andamio:
+
+> Cinco pasos. Cinco letras: **I·L·H·A·S**.
+> El método es el barco; las islas son a dónde lo apuntas.
+
+La segunda línea sale de `docs/01-arquitectura.md` línea 11 — es el encuadre
+propio del sitio, no una invención. **Jorge ajusta el copy.**
+
+⚠️ **Las letras van en `--ilhas-primary` sólido, NO en `--ilhas-gradient`.**
+`tokens.css` lo prohíbe explícito: *«No uses cian ni violeta claro del gradiente
+como color de texto funcional sobre blanco»*. En gradiente, la `I` cae en la
+zona cian y no pasa AA.
+
+### El layout de cada fila cambió
+
+Con el copy nuevo de I y L (más largo, por el cambio del método) el badge, el
+nombre y la descripción **ya no caben en una línea**. Las filas 1 y 2 se partían
+y las 3-5 no — inconsistente y feo.
+
+`.paso` pasa a grid de dos filas, para las cinco por igual:
+
+```css
+.paso{display:grid;grid-template-columns:1.75rem minmax(0,1fr);
+  gap:.3rem .75rem;align-items:center}
+.paso__letra{grid-row:1;grid-column:1}
+.paso__nombre{grid-column:2}
+.paso__linea{grid-column:2}
+```
+
+Badge + nombre arriba, descripción abajo alineada bajo el nombre. **No lo
+"arregles" volviendo a flex:** con este copy se vuelve a partir.
+
 ### La cita — bloqueante
 
 `atribucion` de `soluciones-testimonio-oncologia` en `src/data/medios.ts` dice
@@ -197,14 +249,19 @@ Y sobre `dist/`, **no sobre `src/`**:
 5. `grep -c "pasos-corto" dist/index.html` → **0**. §03 ya no existe en el home.
 6. Que "Levantamiento" y su nueva línea salgan igual en `dist/index.html` y en
    `dist/metodo/index.html`. Si difieren, se rompió la congruencia.
+7. `grep -o "I·L·H·A·S" dist/index.html` → tiene que aparecer. Es el remate; sin
+   él, nadie sabe que las cinco letras son el nombre de la casa.
 
 ### Capturas
 
 Sirve `dist/` y captura `/` y `/metodo` en **1440 × 900** y **390 × 844**.
 Comprueba una por una:
 
-- [ ] Las cinco filas del mapa caen en **una sola línea** cada una en desktop.
-      Si alguna se parte, ensancha la columna derecha — no acortes el copy.
+- [ ] Las cinco filas usan el MISMO layout de dos líneas (badge + nombre
+      arriba, descripción abajo). Ninguna distinta a las otras.
+- [ ] La espina se ve en desktop, conecta los cinco badges de punta a punta, y
+      **no aparece** en 390 px.
+- [ ] Las letras del remate están en morado sólido, no en gradiente.
 - [ ] Los encabezados de columna (*Lo que reportan que falló* / *El paso que lo
       cubre*) se ven en desktop y se ocultan en móvil.
 - [ ] En 390 px cada fila lee falla → paso, en ese orden, sin cruzarse.
@@ -224,6 +281,8 @@ Comprueba una por una:
 - No inventar URL para MIT.
 - No meter el mapa en `/metodo`.
 - No tocar los pasos H y A. Solo I, L y S.
+- No poner las letras del acrónimo en el gradiente de marca sobre fondo blanco.
+- No dibujar la espina en móvil.
 - No publicar la cita sin el nombre exacto de la empresa confirmado.
 - No borrar `Stat.astro` ni `pasos-corto` de `base.css` sin comprobar antes que
   ninguna otra página los usa (`/nosotros` usa `Stat`).

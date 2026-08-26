@@ -1,0 +1,269 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8">
+<title>Ilhas · La bifurcación, rehecha</title>
+<!--
+  ==========================================================================
+  §04 LA BIFURCACIÓN · propuesta del 25 ago 2026
+  ==========================================================================
+  Diagnóstico de Jorge, correcto: las dos tarjetas describen CÓMO SE ENTREGA
+  («el método, enseñado» / «aplicado en tu empresa»), no QUÉ TE LLEVAS. Nadie
+  compra logística. Y no se conectan con lo de arriba.
+
+  Tres cambios, no uno:
+   1. El encabezado hace de puente con §02 — «ya sabes qué tiene que pasar».
+   2. Cada tarjeta abre con el RESULTADO, no con la entrega.
+   3. Cada carril trae su propio respaldo atribuido, que es lo que Jorge pidió.
+
+  Tres fondos para elegir. El copy es andamio: lo escribe Jorge.
+  Las cifras salen de finanzas.astro (los maestros) y de los dos testimonios.
+
+  Rutas relativas a `medios/`. Cero JavaScript.
+-->
+<style>
+@font-face{font-family:"Space Grotesk";font-weight:600;font-display:swap;
+  src:url("../public/assets/fonts/space-grotesk-600.woff2") format("woff2")}
+@font-face{font-family:"Inter";font-weight:400;font-display:swap;
+  src:url("../public/assets/fonts/inter-400.woff2") format("woff2")}
+@font-face{font-family:"Inter";font-weight:500;font-display:swap;
+  src:url("../public/assets/fonts/inter-500.woff2") format("woff2")}
+@font-face{font-family:"Inter";font-weight:600;font-display:swap;
+  src:url("../public/assets/fonts/inter-600.woff2") format("woff2")}
+:root{
+  --ilhas-primary:#7A3CFF; --ilhas-primary-dark:#622ECC;
+  --ilhas-dark:#0E0E0F; --ilhas-text:#3C3C44; --ilhas-light:#F8FAFF;
+  --ilhas-gray:#E8ECF2; --ilhas-white:#FFF;
+  --ilhas-grad-start:#55E8FF; --ilhas-grad-end:#A14BFF;
+  --ilhas-gradient-h:linear-gradient(to right,var(--ilhas-grad-start) 0%,var(--ilhas-primary) 50%,var(--ilhas-grad-end) 100%);
+  --ilhas-font-display:"Space Grotesk",system-ui,sans-serif;
+  --ilhas-font-body:"Inter",system-ui,-apple-system,sans-serif;
+  --ilhas-tracking-display:-.02em;
+  --ilhas-fs-h2:clamp(1.875rem,4vw,2.25rem); --ilhas-fs-small:.875rem;
+  --ilhas-radius-card:1.25rem; --ilhas-container:1140px;
+  --ilhas-gutter:clamp(1.25rem,4vw,3rem);
+  --ilhas-shadow-soft:0 18px 45px rgba(15,23,42,.06);
+  --ilhas-shadow-hover:0 0 40px rgba(122,60,255,.28);
+}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;font-family:var(--ilhas-font-body);font-size:1.125rem;
+  color:var(--ilhas-text);background:var(--ilhas-white);line-height:1.6}
+h2{font-family:var(--ilhas-font-display);font-weight:600;color:var(--ilhas-dark);
+  line-height:1.05;letter-spacing:var(--ilhas-tracking-display);
+  font-size:var(--ilhas-fs-h2);margin:0}
+.container{width:100%;max-width:var(--ilhas-container);margin-inline:auto;
+  padding-inline:var(--ilhas-gutter)}
+.section-y{padding-block:clamp(4rem,9vw,7.5rem)}
+.etiqueta-demo{background:var(--ilhas-dark);color:#fff;font-weight:600;font-size:13px;
+  letter-spacing:.08em;text-transform:uppercase;padding:10px clamp(1.25rem,4vw,3rem)}
+.etiqueta-demo i{font-style:normal;color:#9b9bab;text-transform:none;letter-spacing:0}
+
+/* --- fondos de sección ------------------------------------------------- */
+.f-light{background:var(--ilhas-light)}
+.f-dark{background:var(--ilhas-dark)}
+/* Lavado de gradiente: la marca aparece sin volverse fondo. tokens.css dice
+   que el gradiente es momento de marca, nunca superficie completa — por eso
+   va al 7% y solo en la esquina, no de pared a pared. */
+.f-lavado{background:
+  radial-gradient(120% 90% at 88% 0%, rgba(122,60,255,.13) 0%, rgba(122,60,255,0) 62%),
+  radial-gradient(90% 70% at 0% 100%, rgba(85,232,255,.10) 0%, rgba(85,232,255,0) 60%),
+  var(--ilhas-light)}
+
+/* --- el bloque ---------------------------------------------------------- */
+.bif{text-align:center}
+.bif .kicker{font-family:var(--ilhas-font-body);font-weight:500;
+  font-size:var(--ilhas-fs-small);letter-spacing:.06em;text-transform:uppercase;
+  color:var(--ilhas-primary);margin:0 0 1rem}
+.bif h2{max-width:26ch;margin-inline:auto}
+.bif__lead{max-width:52ch;margin:1.1rem auto 0;color:var(--ilhas-text)}
+.f-dark .bif h2{color:var(--ilhas-white)}
+.f-dark .bif__lead{color:rgba(248,250,255,.78)}
+.f-dark .bif .kicker{color:var(--ilhas-grad-start)}
+
+.bif__cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1.5rem;
+  margin-top:2.75rem;text-align:left}
+.card{position:relative;display:flex;flex-direction:column;overflow:hidden;
+  padding:2.5rem;background:var(--ilhas-white);border:1px solid var(--ilhas-gray);
+  border-radius:var(--ilhas-radius-card);box-shadow:var(--ilhas-shadow-soft);
+  text-decoration:none;color:inherit;transition:box-shadow .2s ease,transform .2s ease}
+.card:hover{box-shadow:var(--ilhas-shadow-hover);transform:translateY(-2px)}
+.card::before{content:"";position:absolute;inset:0 0 auto 0;height:4px;
+  background:var(--ilhas-gradient-h)}
+.f-dark .card{border-color:transparent}
+
+.card__label{font-weight:500;font-size:var(--ilhas-fs-small);color:var(--ilhas-primary)}
+.card__title{margin-top:.4rem;font-family:var(--ilhas-font-display);font-weight:600;
+  font-size:1.75rem;color:var(--ilhas-dark);letter-spacing:var(--ilhas-tracking-display);
+  line-height:1.1}
+/* EL RESULTADO — lo que hoy no está. Va en display y grande a propósito:
+   es la razón de hacer clic, no un pie de tarjeta. */
+.card__resultado{margin-top:1rem;font-family:var(--ilhas-font-display);font-weight:600;
+  font-size:1.0625rem;line-height:1.35;color:var(--ilhas-dark);
+  letter-spacing:var(--ilhas-tracking-display)}
+.card__detalle{margin-top:.75rem;font-size:1rem;color:var(--ilhas-text)}
+/* LO CONCRETO — qué es exactamente, en la lengua del visitante. */
+.card__lista{margin:1.25rem 0 0;padding:0;list-style:none;display:flex;flex-wrap:wrap;
+  gap:.4rem}
+.card__lista li{font-size:.8125rem;padding:.3rem .7rem;border-radius:999px;
+  background:rgba(122,60,255,.08);color:var(--ilhas-primary);font-weight:500}
+/* EL RESPALDO — cada carril con su propia prueba, atribuida. */
+.card__prueba{margin-top:auto;padding-top:1.5rem;display:flex;gap:1.5rem;flex-wrap:wrap}
+.card__prueba div{border-left:2px solid var(--ilhas-gray);padding-left:.75rem}
+.card__prueba b{display:block;font-family:var(--ilhas-font-display);font-weight:600;
+  font-size:1.125rem;color:var(--ilhas-dark);letter-spacing:var(--ilhas-tracking-display);
+  line-height:1.1;white-space:nowrap}
+.card__prueba span{display:block;margin-top:.2rem;font-size:.75rem;color:#71717f;
+  max-width:20ch}
+.card__link{margin-top:1.5rem;font-weight:600;font-size:var(--ilhas-fs-small);
+  color:var(--ilhas-primary)}
+
+@media (max-width:760px){.bif__cards{grid-template-columns:1fr}}
+</style></head><body>
+<div class="etiqueta-demo">A · Fondo claro — <i>--ilhas-light. El más discreto: blanco (§02) → gris claro → oscuro (§05)</i></div>
+<div id="d1"><section class="section-y f-light">
+  <div class="container">
+    <div class="bif">
+      <p class="kicker">La bifurcación</p>
+      <h2>Ya sabes qué tiene que pasar. Falta decidir quién lo hace.</h2>
+      <p class="bif__lead">El mismo método en los dos carriles. Lo único que
+        cambia son las manos.</p>
+
+      <div class="bif__cards">
+        <a class="card" href="/finanzas">
+          <span class="card__label">Lo haces tú</span>
+          <span class="card__title">Ilhas Finanzas</span>
+          <span class="card__resultado">Llegas con tu Excel. Sales con tu propio
+            equipo de agentes trabajando sobre tus números.</span>
+          <span class="card__detalle">Te enseñamos a aplicar los cinco pasos a tus
+            propias finanzas, hasta que corran sin ti.</span>
+          <ul class="card__lista">
+            <li>Estados financieros</li><li>Flujo de efectivo</li>
+            <li>Modelos y proyecciones</li><li>Reportes que se actualizan solos</li>
+          </ul>
+          <span class="card__prueba">
+            <div><b>40 años</b><span>de criterio financiero — Jorge Sierra (papá)</span></div>
+            <div><b>+2,000</b><span>empresas asesoradas en LATAM</span></div>
+          </span>
+          <span class="card__link">Conocer Ilhas Finanzas →</span>
+        </a>
+
+        <a class="card" href="/soluciones">
+          <span class="card__label">Lo hacemos nosotros</span>
+          <span class="card__title">Soluciones</span>
+          <span class="card__resultado">Escogemos un proceso que hoy se hace a mano
+            y lo dejamos corriendo solo.</span>
+          <span class="card__detalle">No somos una agencia de «implementación de
+            IA»: es criterio de producto aplicado a tu operación. Empieza con un
+            diagnóstico de tu caso, no con un paquete.</span>
+          <ul class="card__lista">
+            <li>Cotización</li><li>Conciliación</li>
+            <li>Cobranza</li><li>Reportes de operación</li>
+          </ul>
+          <span class="card__prueba">
+            <div><b>3–4 h → 20 min</b><span>cotizador · Morgan Centro de Alta Especialidad</span></div>
+            <div><b>5–6 días → minutos</b><span>despiece y cotización · Extrusión de Aleaciones</span></div>
+          </span>
+          <span class="card__link">Conocer Soluciones →</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section></div>
+<div class="etiqueta-demo">B · Fondo oscuro — <i>el bloque más importante se lleva el contraste más fuerte del sitio</i></div>
+<div id="d2"><section class="section-y f-dark">
+  <div class="container">
+    <div class="bif">
+      <p class="kicker">La bifurcación</p>
+      <h2>Ya sabes qué tiene que pasar. Falta decidir quién lo hace.</h2>
+      <p class="bif__lead">El mismo método en los dos carriles. Lo único que
+        cambia son las manos.</p>
+
+      <div class="bif__cards">
+        <a class="card" href="/finanzas">
+          <span class="card__label">Lo haces tú</span>
+          <span class="card__title">Ilhas Finanzas</span>
+          <span class="card__resultado">Llegas con tu Excel. Sales con tu propio
+            equipo de agentes trabajando sobre tus números.</span>
+          <span class="card__detalle">Te enseñamos a aplicar los cinco pasos a tus
+            propias finanzas, hasta que corran sin ti.</span>
+          <ul class="card__lista">
+            <li>Estados financieros</li><li>Flujo de efectivo</li>
+            <li>Modelos y proyecciones</li><li>Reportes que se actualizan solos</li>
+          </ul>
+          <span class="card__prueba">
+            <div><b>40 años</b><span>de criterio financiero — Jorge Sierra (papá)</span></div>
+            <div><b>+2,000</b><span>empresas asesoradas en LATAM</span></div>
+          </span>
+          <span class="card__link">Conocer Ilhas Finanzas →</span>
+        </a>
+
+        <a class="card" href="/soluciones">
+          <span class="card__label">Lo hacemos nosotros</span>
+          <span class="card__title">Soluciones</span>
+          <span class="card__resultado">Escogemos un proceso que hoy se hace a mano
+            y lo dejamos corriendo solo.</span>
+          <span class="card__detalle">No somos una agencia de «implementación de
+            IA»: es criterio de producto aplicado a tu operación. Empieza con un
+            diagnóstico de tu caso, no con un paquete.</span>
+          <ul class="card__lista">
+            <li>Cotización</li><li>Conciliación</li>
+            <li>Cobranza</li><li>Reportes de operación</li>
+          </ul>
+          <span class="card__prueba">
+            <div><b>3–4 h → 20 min</b><span>cotizador · Morgan Centro de Alta Especialidad</span></div>
+            <div><b>5–6 días → minutos</b><span>despiece y cotización · Extrusión de Aleaciones</span></div>
+          </span>
+          <span class="card__link">Conocer Soluciones →</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section></div>
+<div class="etiqueta-demo">C · Lavado de marca — <i>claro con el gradiente al 13% en las esquinas — momento de marca sin volverse pared</i></div>
+<div id="d3"><section class="section-y f-lavado">
+  <div class="container">
+    <div class="bif">
+      <p class="kicker">La bifurcación</p>
+      <h2>Ya sabes qué tiene que pasar. Falta decidir quién lo hace.</h2>
+      <p class="bif__lead">El mismo método en los dos carriles. Lo único que
+        cambia son las manos.</p>
+
+      <div class="bif__cards">
+        <a class="card" href="/finanzas">
+          <span class="card__label">Lo haces tú</span>
+          <span class="card__title">Ilhas Finanzas</span>
+          <span class="card__resultado">Llegas con tu Excel. Sales con tu propio
+            equipo de agentes trabajando sobre tus números.</span>
+          <span class="card__detalle">Te enseñamos a aplicar los cinco pasos a tus
+            propias finanzas, hasta que corran sin ti.</span>
+          <ul class="card__lista">
+            <li>Estados financieros</li><li>Flujo de efectivo</li>
+            <li>Modelos y proyecciones</li><li>Reportes que se actualizan solos</li>
+          </ul>
+          <span class="card__prueba">
+            <div><b>40 años</b><span>de criterio financiero — Jorge Sierra (papá)</span></div>
+            <div><b>+2,000</b><span>empresas asesoradas en LATAM</span></div>
+          </span>
+          <span class="card__link">Conocer Ilhas Finanzas →</span>
+        </a>
+
+        <a class="card" href="/soluciones">
+          <span class="card__label">Lo hacemos nosotros</span>
+          <span class="card__title">Soluciones</span>
+          <span class="card__resultado">Escogemos un proceso que hoy se hace a mano
+            y lo dejamos corriendo solo.</span>
+          <span class="card__detalle">No somos una agencia de «implementación de
+            IA»: es criterio de producto aplicado a tu operación. Empieza con un
+            diagnóstico de tu caso, no con un paquete.</span>
+          <ul class="card__lista">
+            <li>Cotización</li><li>Conciliación</li>
+            <li>Cobranza</li><li>Reportes de operación</li>
+          </ul>
+          <span class="card__prueba">
+            <div><b>3–4 h → 20 min</b><span>cotizador · Morgan Centro de Alta Especialidad</span></div>
+            <div><b>5–6 días → minutos</b><span>despiece y cotización · Extrusión de Aleaciones</span></div>
+          </span>
+          <span class="card__link">Conocer Soluciones →</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section></div>
+</body></html>

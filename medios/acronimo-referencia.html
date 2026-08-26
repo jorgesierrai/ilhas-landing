@@ -1,0 +1,307 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8">
+<title>Ilhas · Cómo denotar I·L·H·A·S en el mapa de §02</title>
+<!--
+  ==========================================================================
+  CÓMO SE DENOTA QUE LAS CINCO LETRAS SON EL MÉTODO · 25 ago 2026
+  ==========================================================================
+  Pregunta de Jorge: en el mapa de §02 se ven cinco badges morados con letras,
+  y nada le dice al visitante que arman I·L·H·A·S — que es el nombre de la casa.
+  Es un hueco que abrió la fusión: al comerse §03 se perdió el único lugar del
+  home donde el acrónimo se deletreaba ("Cinco pasos: I·L·H·A·S").
+
+  Cuatro tratamientos. El copy del remate es andamio — lo escribe Jorge.
+  La idea de fondo ("el barco es el método, las islas son las áreas") sale de
+  docs/01-arquitectura.md línea 11, no la inventé aquí.
+
+  Rutas relativas a `medios/`. Cero JavaScript.
+-->
+<style>
+@font-face{font-family:"Space Grotesk";font-weight:600;font-display:swap;
+  src:url("../public/assets/fonts/space-grotesk-600.woff2") format("woff2")}
+@font-face{font-family:"Inter";font-weight:400;font-display:swap;
+  src:url("../public/assets/fonts/inter-400.woff2") format("woff2")}
+@font-face{font-family:"Inter";font-weight:500;font-display:swap;
+  src:url("../public/assets/fonts/inter-500.woff2") format("woff2")}
+@font-face{font-family:"Inter";font-weight:600;font-display:swap;
+  src:url("../public/assets/fonts/inter-600.woff2") format("woff2")}
+:root{
+  --ilhas-primary:#7A3CFF; --ilhas-dark:#0E0E0F; --ilhas-text:#3C3C44;
+  --ilhas-light:#F8FAFF; --ilhas-gray:#E8ECF2; --ilhas-white:#FFF;
+  --ilhas-grad-start:#55E8FF; --ilhas-grad-mid:#8E5BFF; --ilhas-grad-end:#A14BFF;
+  --ilhas-gradient:linear-gradient(to top right,var(--ilhas-grad-start) 0%,var(--ilhas-grad-mid) 50%,var(--ilhas-grad-end) 100%);
+  --ilhas-font-display:"Space Grotesk",system-ui,sans-serif;
+  --ilhas-font-body:"Inter",system-ui,-apple-system,sans-serif;
+  --ilhas-tracking-display:-.02em; --ilhas-fs-h3:1.25rem;
+  --ilhas-container:1140px; --ilhas-gutter:clamp(1.25rem,4vw,3rem);
+}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;font-family:var(--ilhas-font-body);font-size:1.125rem;
+  color:var(--ilhas-text);background:var(--ilhas-white);line-height:1.6}
+.container{width:100%;max-width:var(--ilhas-container);margin-inline:auto;
+  padding-inline:var(--ilhas-gutter);padding-block:3.5rem}
+.etiqueta-demo{background:var(--ilhas-dark);color:#fff;font-weight:600;font-size:13px;
+  letter-spacing:.08em;text-transform:uppercase;padding:10px clamp(1.25rem,4vw,3rem)}
+.etiqueta-demo i{font-style:normal;color:#9b9bab;text-transform:none;letter-spacing:0}
+
+.mapa{border-top:1px solid var(--ilhas-gray)}
+.mapa__encabezados{display:none}
+.mapa__fila{display:grid;gap:.75rem;padding-block:1.5rem;border-bottom:1px solid var(--ilhas-gray)}
+.falla{font-size:1rem;color:var(--ilhas-text)}
+.falla cite{display:block;margin-top:.35rem;font-style:normal;font-size:.8125rem;
+  letter-spacing:.04em;text-transform:uppercase;color:#8a8a95}
+.paso{display:grid;grid-template-columns:1.75rem minmax(0,1fr);
+  gap:.3rem .75rem;align-items:center}
+.paso__nombre{grid-column:2}
+.paso__linea{grid-column:2}
+.paso__letra{display:inline-flex;align-items:center;justify-content:center;
+  grid-row:1;grid-column:1;width:1.75rem;height:1.75rem;border-radius:50%;background:var(--ilhas-primary);
+  color:var(--ilhas-white);font-family:var(--ilhas-font-display);font-weight:600;
+  font-size:.8125rem}
+.paso__nombre{font-family:var(--ilhas-font-display);font-weight:600;font-size:var(--ilhas-fs-h3);
+  color:var(--ilhas-dark);letter-spacing:var(--ilhas-tracking-display)}
+.paso__linea{font-size:1rem;color:var(--ilhas-text)}
+.mapa__link{margin-top:1.75rem;font-size:1rem}
+.mapa__link a{color:var(--ilhas-primary);font-weight:600;text-decoration:none}
+
+/* ===== A · LA ESPINA =====================================================
+   Una línea vertical detrás de los cinco badges. No dice nada: agrupa.
+   El ojo lee I-L-H-A-S hacia abajo como una palabra, no como cinco marcas
+   sueltas. Es el mismo lenguaje del spine de medios/timeline-preview.html. */
+.mapa--espina .paso{position:relative}
+.mapa--espina .paso::before{content:"";position:absolute;left:calc(.875rem - 1px);
+  top:-1.5rem;bottom:-1.5rem;width:2px;background:var(--ilhas-primary);opacity:.20;z-index:0}
+.mapa--espina .mapa__fila:first-of-type .paso::before{top:50%}
+.mapa--espina .mapa__fila:last-of-type .paso::before{bottom:50%}
+.mapa--espina .paso__letra{position:relative;z-index:1}
+
+/* ===== B · EL ACRÓSTICO ARRIBA ===========================================
+   La palabra completa se declara antes de las filas, y cada fila recoge
+   una letra. Es lo más explícito de los tres. */
+.acrostico{display:none}
+.acrostico b{display:block;font-family:var(--ilhas-font-display);font-weight:600;
+  font-size:1.35rem;line-height:1;letter-spacing:.14em;color:var(--ilhas-primary)}
+.acrostico span{display:block;margin-top:.45rem;font-size:.75rem;letter-spacing:.08em;
+  text-transform:uppercase;color:#8a8a95}
+
+/* ===== C · EL REMATE ABAJO ===============================================
+   Después de la quinta fila, cuando el lector ya vio pasar las cinco letras.
+   Casi llega solo — la línea nada más cierra la puerta. */
+.remate{margin-top:1.75rem;padding-top:1.5rem;border-top:1px solid var(--ilhas-gray);
+  font-family:var(--ilhas-font-display);font-weight:600;
+  font-size:clamp(1.05rem,1.9vw,1.35rem);line-height:1.25;
+  letter-spacing:var(--ilhas-tracking-display);color:var(--ilhas-dark);max-width:34ch}
+.remate em{font-style:normal;letter-spacing:.10em;color:var(--ilhas-primary)}
+.mapa .remate + .mapa__link{margin-top:1.25rem}
+
+@media (min-width:900px){
+  .mapa__encabezados{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.4fr);
+    gap:2rem;padding-bottom:.9rem;align-items:end}
+  .mapa__encabezados > span{font-size:.75rem;letter-spacing:.08em;text-transform:uppercase;
+    color:#8a8a95}
+  .mapa__fila{grid-template-columns:minmax(0,1fr) minmax(0,1.4fr);gap:2rem;align-items:center}
+  .acrostico{display:block}
+}
+</style></head><body>
+<div class="etiqueta-demo">A · La espina — <i>los cinco badges unidos por una línea — se leen como una palabra</i></div>
+<div class="container" id="d1">
+<div class="mapa mapa--espina">
+  <div class="mapa__encabezados" aria-hidden="true">
+    <span>Lo que reportan que falló</span>
+    <span>El método Ilhas · paso por paso</span>
+  </div>
+  <div class="mapa__fila">
+    <div class="falla">No había línea base: nadie sabía qué medir antes de empezar.<cite>MIT · The GenAI Divide, 2025</cite></div>
+    <div class="paso">
+      <span class="paso__letra">I</span>
+      <span class="paso__nombre">Identificar</span>
+      <span class="paso__linea">Cómo se mueve el dinero, dónde se fuga y desde qué número mides.</span>
+    </div>
+  </div>
+  <div class="mapa__fila">
+    <div class="falla">Datos sin preparar: solo el 24% los tiene limpios, centralizados y en tiempo real.<cite>Cisco AI Readiness Index 2025</cite></div>
+    <div class="paso">
+      <span class="paso__letra">L</span>
+      <span class="paso__nombre">Levantamiento</span>
+      <span class="paso__linea">Tus datos en un solo lugar, y el estándar de los mejores.</span>
+    </div>
+  </div>
+  <div class="mapa__fila">
+    <div class="falla">Valor de negocio poco claro: el proyecto nunca se amarró a la operación.<cite>Gartner</cite></div>
+    <div class="paso">
+      <span class="paso__letra">H</span>
+      <span class="paso__nombre">Hilar</span>
+      <span class="paso__linea">Costos, precios y márgenes en un solo criterio.</span>
+    </div>
+  </div>
+  <div class="mapa__fila">
+    <div class="falla">Los costos se dispararon por encima del retorno esperado.<cite>Gartner</cite></div>
+    <div class="paso">
+      <span class="paso__letra">A</span>
+      <span class="paso__nombre">Accionar</span>
+      <span class="paso__linea">Decides con números, no con intuición.</span>
+    </div>
+  </div>
+  <div class="mapa__fila">
+    <div class="falla">Abandono después del piloto: 30% no llega a producción.<cite>Gartner · pronóstico 2024</cite></div>
+    <div class="paso">
+      <span class="paso__letra">S</span>
+      <span class="paso__nombre">Sistematizar</span>
+      <span class="paso__linea">La IA como tu equipo, con alertas y mantenimiento.</span>
+    </div>
+  </div>
+  <p class="mapa__link"><a href="/metodo">Conoce el método completo →</a></p>
+</div>
+</div>
+<div class="etiqueta-demo">B · El acróstico arriba — <i>la palabra se declara antes, y cada fila recoge su letra</i></div>
+<div class="container" id="d2">
+<div class="mapa ">
+  <div class="mapa__encabezados" aria-hidden="true">
+    <span>Lo que reportan que falló</span>
+    <div class="acrostico"><b>I·L·H·A·S</b><span>El paso que lo cubre</span></div>
+  </div>
+  <div class="mapa__fila">
+    <div class="falla">No había línea base: nadie sabía qué medir antes de empezar.<cite>MIT · The GenAI Divide, 2025</cite></div>
+    <div class="paso">
+      <span class="paso__letra">I</span>
+      <span class="paso__nombre">Identificar</span>
+      <span class="paso__linea">Cómo se mueve el dinero, dónde se fuga y desde qué número mides.</span>
+    </div>
+  </div>
+  <div class="mapa__fila">
+    <div class="falla">Datos sin preparar: solo el 24% los tiene limpios, centralizados y en tiempo real.<cite>Cisco AI Readiness Index 2025</cite></div>
+    <div class="paso">
+      <span class="paso__letra">L</span>
+      <span class="paso__nombre">Levantamiento</span>
+      <span class="paso__linea">Tus datos en un solo lugar, y el estándar de los mejores.</span>
+    </div>
+  </div>
+  <div class="mapa__fila">
+    <div class="falla">Valor de negocio poco claro: el proyecto nunca se amarró a la operación.<cite>Gartner</cite></div>
+    <div class="paso">
+      <span class="paso__letra">H</span>
+      <span class="paso__nombre">Hilar</span>
+      <span class="paso__linea">Costos, precios y márgenes en un solo criterio.</span>
+    </div>
+  </div>
+  <div class="mapa__fila">
+    <div class="falla">Los costos se dispararon por encima del retorno esperado.<cite>Gartner</cite></div>
+    <div class="paso">
+      <span class="paso__letra">A</span>
+      <span class="paso__nombre">Accionar</span>
+      <span class="paso__linea">Decides con números, no con intuición.</span>
+    </div>
+  </div>
+  <div class="mapa__fila">
+    <div class="falla">Abandono después del piloto: 30% no llega a producción.<cite>Gartner · pronóstico 2024</cite></div>
+    <div class="paso">
+      <span class="paso__letra">S</span>
+      <span class="paso__nombre">Sistematizar</span>
+      <span class="paso__linea">La IA como tu equipo, con alertas y mantenimiento.</span>
+    </div>
+  </div>
+  <p class="mapa__link"><a href="/metodo">Conoce el método completo →</a></p>
+</div>
+</div>
+<div class="etiqueta-demo">C · El remate abajo — <i>las filas se quedan igual; la línea final cierra la puerta</i></div>
+<div class="container" id="d3">
+<div class="mapa ">
+  <div class="mapa__encabezados" aria-hidden="true">
+    <span>Lo que reportan que falló</span>
+    <span>El paso que lo cubre</span>
+  </div>
+  <div class="mapa__fila">
+    <div class="falla">No había línea base: nadie sabía qué medir antes de empezar.<cite>MIT · The GenAI Divide, 2025</cite></div>
+    <div class="paso">
+      <span class="paso__letra">I</span>
+      <span class="paso__nombre">Identificar</span>
+      <span class="paso__linea">Cómo se mueve el dinero, dónde se fuga y desde qué número mides.</span>
+    </div>
+  </div>
+  <div class="mapa__fila">
+    <div class="falla">Datos sin preparar: solo el 24% los tiene limpios, centralizados y en tiempo real.<cite>Cisco AI Readiness Index 2025</cite></div>
+    <div class="paso">
+      <span class="paso__letra">L</span>
+      <span class="paso__nombre">Levantamiento</span>
+      <span class="paso__linea">Tus datos en un solo lugar, y el estándar de los mejores.</span>
+    </div>
+  </div>
+  <div class="mapa__fila">
+    <div class="falla">Valor de negocio poco claro: el proyecto nunca se amarró a la operación.<cite>Gartner</cite></div>
+    <div class="paso">
+      <span class="paso__letra">H</span>
+      <span class="paso__nombre">Hilar</span>
+      <span class="paso__linea">Costos, precios y márgenes en un solo criterio.</span>
+    </div>
+  </div>
+  <div class="mapa__fila">
+    <div class="falla">Los costos se dispararon por encima del retorno esperado.<cite>Gartner</cite></div>
+    <div class="paso">
+      <span class="paso__letra">A</span>
+      <span class="paso__nombre">Accionar</span>
+      <span class="paso__linea">Decides con números, no con intuición.</span>
+    </div>
+  </div>
+  <div class="mapa__fila">
+    <div class="falla">Abandono después del piloto: 30% no llega a producción.<cite>Gartner · pronóstico 2024</cite></div>
+    <div class="paso">
+      <span class="paso__letra">S</span>
+      <span class="paso__nombre">Sistematizar</span>
+      <span class="paso__linea">La IA como tu equipo, con alertas y mantenimiento.</span>
+    </div>
+  </div>
+  <p class="remate">Cinco pasos. Cinco letras: <em>I·L·H·A·S</em>.<br>El método es el barco; las islas son a dónde lo apuntas.</p>
+  <p class="mapa__link"><a href="/metodo">Conoce el método completo →</a></p>
+</div>
+</div>
+<div class="etiqueta-demo">A + C · la recomendación — <i>la espina agrupa mientras lee, el remate nombra al final</i></div>
+<div class="container" id="d4">
+<div class="mapa mapa--espina">
+  <div class="mapa__encabezados" aria-hidden="true">
+    <span>Lo que reportan que falló</span>
+    <span>El método Ilhas · paso por paso</span>
+  </div>
+  <div class="mapa__fila">
+    <div class="falla">No había línea base: nadie sabía qué medir antes de empezar.<cite>MIT · The GenAI Divide, 2025</cite></div>
+    <div class="paso">
+      <span class="paso__letra">I</span>
+      <span class="paso__nombre">Identificar</span>
+      <span class="paso__linea">Cómo se mueve el dinero, dónde se fuga y desde qué número mides.</span>
+    </div>
+  </div>
+  <div class="mapa__fila">
+    <div class="falla">Datos sin preparar: solo el 24% los tiene limpios, centralizados y en tiempo real.<cite>Cisco AI Readiness Index 2025</cite></div>
+    <div class="paso">
+      <span class="paso__letra">L</span>
+      <span class="paso__nombre">Levantamiento</span>
+      <span class="paso__linea">Tus datos en un solo lugar, y el estándar de los mejores.</span>
+    </div>
+  </div>
+  <div class="mapa__fila">
+    <div class="falla">Valor de negocio poco claro: el proyecto nunca se amarró a la operación.<cite>Gartner</cite></div>
+    <div class="paso">
+      <span class="paso__letra">H</span>
+      <span class="paso__nombre">Hilar</span>
+      <span class="paso__linea">Costos, precios y márgenes en un solo criterio.</span>
+    </div>
+  </div>
+  <div class="mapa__fila">
+    <div class="falla">Los costos se dispararon por encima del retorno esperado.<cite>Gartner</cite></div>
+    <div class="paso">
+      <span class="paso__letra">A</span>
+      <span class="paso__nombre">Accionar</span>
+      <span class="paso__linea">Decides con números, no con intuición.</span>
+    </div>
+  </div>
+  <div class="mapa__fila">
+    <div class="falla">Abandono después del piloto: 30% no llega a producción.<cite>Gartner · pronóstico 2024</cite></div>
+    <div class="paso">
+      <span class="paso__letra">S</span>
+      <span class="paso__nombre">Sistematizar</span>
+      <span class="paso__linea">La IA como tu equipo, con alertas y mantenimiento.</span>
+    </div>
+  </div>
+  <p class="remate">Cinco pasos. Cinco letras: <em>I·L·H·A·S</em>.<br>El método es el barco; las islas son a dónde lo apuntas.</p>
+  <p class="mapa__link"><a href="/metodo">Conoce el método completo →</a></p>
+</div>
+</div>
+</body></html>
