@@ -55,9 +55,10 @@ Estos son los choques concretos. No hay que deliberarlos: ya están resueltos.
 | **Audiencia** | Mezcla "dueños de negocio y emprendedores" con profesionales de finanzas | Profesionales de finanzas, contabilidad y análisis: analista, contador, controller, consultor, auditor, tesorero, FP&A. Los dueños de negocio son audiencia de **expansión**, no el núcleo | NTPVS |
 | **Precio del programa** | $497 USD (en el `index.html` viejo) | **$697 USD** | NTPVS |
 | **CTA principal** | "Aplicar a la primera cohorte" | **"Reservar mi lugar en el webinar"** → `eventos.ilhas.ai`. El embudo entra por el webinar, no por una aplicación directa | Arquitectura |
-| **Qué es Ilhas** | "Un bootcamp premium de finanzas con IA" | Ilhas es el **método**; el bootcamp de finanzas es la primera isla | Arquitectura |
+| **Qué es Ilhas** | "Un bootcamp premium de finanzas con IA" | Ilhas es el **método**; el programa de finanzas es la primera isla | Arquitectura |
 | **Tagline del home** | "Domina las finanzas de tu negocio con tecnología y AI" | Eso es el tagline de **`/finanzas`**, no del home. El home habla del método, no de finanzas | Arquitectura |
-| **Bootcamp vs webinar** | Aparecen como cosas separadas | Son **un solo embudo**: el webinar es donde se comparte la entrada al programa | NTPVS |
+| **Programa vs webinar** | Aparecen como cosas separadas | Son **un solo embudo**: el webinar es donde se comparte la entrada al programa | NTPVS |
+| **La palabra "bootcamp"** | Toda la guía de marca y el NTPVS lo llaman bootcamp | **No es un bootcamp.** Es acceso a una comunidad — Skool u Hotmart, sin decidir. La palabra "bootcamp" no se escribe en el sitio ni en copy nuevo | Jorge, 25 ago 2026 |
 | **"AI" vs "IA"** | Ambas formas conviven | **"IA"** en todo el sitio. Sin excepciones | Este documento |
 | **Color, tipografía, logo, layout** | — | — | **Marca** (sin discusión) |
 
@@ -67,6 +68,8 @@ No inventes estos. Si el trabajo los necesita, para y pregunta:
 
 - **Casos y logos de clientes reales** para `/soluciones`. La tabla de linaje de productos sí está y sí se usa.
 - **Dónde vive el hosting hoy y quién controla el DNS de ilhas.ai.**
+- **La plataforma de entrega del programa** — Skool u Hotmart. Jorge no ha decidido (25 ago 2026). Hasta entonces, el sitio no nombra ninguna.
+- **Si "6 semanas" sigue siendo cierto.** Hoy está publicado en `/finanzas` §Quién lo enseña. Si la duración cambia con la plataforma, ese renglón cambia con ella.
 
 ## Fuentes upstream (fuera de este repo)
 
