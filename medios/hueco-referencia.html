@@ -1,0 +1,432 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8">
+<title>Ilhas · §02 El hueco — referencia visual</title>
+<!--
+  ============================================================================
+  REFERENCIA DE §02 "EL HUECO" · propuesta del 25 ago 2026
+  ============================================================================
+
+  Ábrela con doble clic: las rutas de fuentes son relativas a `medios/`.
+  Tokens copiados tal cual de `src/styles/tokens.css`. Cero JavaScript.
+
+  ⚠️ EL COPY DE ESTE ARCHIVO ES ANDAMIO. Lo escribe Jorge.
+     Lo único que NO es andamio son las cifras y las fuentes: esas están
+     verificadas y van literales o no van.
+
+  LA DECISIÓN DE FONDO: esta sección se COME a la §03 actual (los 5 pasos).
+  Es la salida (a) que ya pedía AUDITORIA-VISUAL.md — «el hueco es el setup
+  del método, no una sección aparte». Sin fusionar, el visitante ve I·L·H·A·S
+  dos veces seguidas y la segunda no aporta nada.
+-->
+<style>
+@font-face{font-family:"Space Grotesk";font-weight:600;font-display:swap;
+  src:url("../public/assets/fonts/space-grotesk-600.woff2") format("woff2")}
+@font-face{font-family:"Inter";font-weight:400;font-display:swap;
+  src:url("../public/assets/fonts/inter-400.woff2") format("woff2")}
+@font-face{font-family:"Inter";font-weight:500;font-display:swap;
+  src:url("../public/assets/fonts/inter-500.woff2") format("woff2")}
+@font-face{font-family:"Inter";font-weight:600;font-display:swap;
+  src:url("../public/assets/fonts/inter-600.woff2") format("woff2")}
+
+:root{
+  --ilhas-primary:#7A3CFF; --ilhas-primary-dark:#622ECC;
+  --ilhas-dark:#0E0E0F; --ilhas-text:#3C3C44; --ilhas-light:#F8FAFF;
+  --ilhas-gray:#E8ECF2; --ilhas-white:#FFFFFF;
+  --ilhas-grad-end:#A14BFF;
+  --ilhas-font-display:"Space Grotesk",system-ui,sans-serif;
+  --ilhas-font-body:"Inter",system-ui,-apple-system,sans-serif;
+  --ilhas-tracking-display:-.02em;
+  --ilhas-fs-h2:clamp(1.875rem,4vw,2.25rem);
+  --ilhas-fs-h3:1.25rem;
+  --ilhas-fs-body:1.125rem;
+  --ilhas-fs-small:.875rem;
+  --ilhas-fs-stat:clamp(1.875rem,4vw,3rem);
+  --ilhas-lh-display:1.05;
+  --ilhas-measure:68ch;
+  --ilhas-radius-card:1.25rem;
+  --ilhas-radius-pill:999px;
+  --ilhas-container:1140px;
+  --ilhas-gutter:clamp(1.25rem,4vw,3rem);
+  --ilhas-shadow-soft:0 18px 45px rgba(15,23,42,.06);
+}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;font-family:var(--ilhas-font-body);font-size:var(--ilhas-fs-body);
+  color:var(--ilhas-text);background:var(--ilhas-light);line-height:1.6}
+h2,h3{font-family:var(--ilhas-font-display);font-weight:600;color:var(--ilhas-dark);
+  line-height:var(--ilhas-lh-display);letter-spacing:var(--ilhas-tracking-display);margin:0}
+h2{font-size:var(--ilhas-fs-h2);max-width:22ch}
+h3{font-size:var(--ilhas-fs-h3)}
+p{max-width:var(--ilhas-measure);margin:0}
+a{color:var(--ilhas-primary)}
+
+.container{width:100%;max-width:var(--ilhas-container);margin-inline:auto;
+  padding-inline:var(--ilhas-gutter)}
+.bg-white{background:var(--ilhas-white)}
+.section-y{padding-block:clamp(4rem,9vw,7.5rem)}
+.kicker{font-family:var(--ilhas-font-body);font-weight:500;font-size:var(--ilhas-fs-small);
+  letter-spacing:.06em;text-transform:uppercase;color:var(--ilhas-primary);margin:0 0 1.5rem}
+.etiqueta-demo{background:var(--ilhas-dark);color:#fff;font-weight:600;font-size:13px;
+  letter-spacing:.08em;text-transform:uppercase;padding:10px clamp(1.25rem,4vw,3rem)}
+
+/* ---------------------------------------------------------------------------
+   1 · LAS DOS CIFRAS. Van arriba y van grandes: es la carnita.
+       Deliberadamente NO llevan el tratamiento de los KPI del hero (regla
+       izquierda + unidad morada). Aquellos son logros nuestros; estos son
+       el problema de la industria. Mismo peso tipográfico, tono distinto.
+--------------------------------------------------------------------------- */
+.cifras{display:grid;gap:2rem;margin-top:2.5rem;padding-top:2rem;
+  border-top:1px solid var(--ilhas-gray)}
+.cifra b{display:block;font-family:var(--ilhas-font-display);font-weight:600;
+  font-size:var(--ilhas-fs-stat);line-height:1;color:var(--ilhas-dark);
+  letter-spacing:var(--ilhas-tracking-display)}
+.cifra p{margin-top:.6rem;font-size:1rem;max-width:38ch}
+.cifra cite{display:block;margin-top:.6rem;font-style:normal;
+  font-size:var(--ilhas-fs-small);color:#71717f}
+.cifra cite b{display:inline;font-family:var(--ilhas-font-body);font-weight:600;
+  font-size:inherit;color:var(--ilhas-text);letter-spacing:0}
+
+/* 2 · LA CAUSA. Un solo párrafo. Es el puente entre la cifra y el método. */
+.causa{margin-top:2.5rem;font-size:var(--ilhas-fs-body);max-width:60ch}
+.causa strong{color:var(--ilhas-dark);font-weight:600}
+
+/* ---------------------------------------------------------------------------
+   3 · EL MAPA — la pieza que hace todo el trabajo.
+       Izquierda lo que reportan que falló, derecha la letra que lo cubre.
+       Nadie declara que Ilhas es la excepción: el lector lo concluye.
+--------------------------------------------------------------------------- */
+.mapa{margin-top:3.5rem;border-top:1px solid var(--ilhas-gray)}
+.mapa__encabezados{display:none}
+.mapa__fila{display:grid;gap:.75rem;padding-block:1.5rem;
+  border-bottom:1px solid var(--ilhas-gray)}
+.falla{font-size:1rem;color:var(--ilhas-text)}
+.falla cite{display:block;margin-top:.35rem;font-style:normal;font-size:.8125rem;
+  letter-spacing:.04em;text-transform:uppercase;color:#8a8a95}
+/* La fuente es liga cuando existe URL canónica. Sin subrayado permanente:
+   se subraya al hover, para que no compita con las ligas de conversión. */
+cite a{color:inherit;text-decoration:none;border-bottom:1px solid rgba(138,138,149,.45)}
+cite a:hover{color:var(--ilhas-primary);border-bottom-color:var(--ilhas-primary)}
+.paso{display:flex;align-items:baseline;flex-wrap:wrap;gap:.5rem .75rem}
+.paso__letra{display:inline-flex;align-items:center;justify-content:center;
+  flex:0 0 auto;width:1.75rem;height:1.75rem;border-radius:50%;
+  background:var(--ilhas-primary);color:var(--ilhas-white);
+  font-family:var(--ilhas-font-display);font-weight:600;font-size:.8125rem;
+  align-self:center}
+.paso__nombre{font-family:var(--ilhas-font-display);font-weight:600;
+  font-size:var(--ilhas-fs-h3);color:var(--ilhas-dark);
+  letter-spacing:var(--ilhas-tracking-display)}
+.paso__linea{font-size:1rem;color:var(--ilhas-text)}
+
+.mapa__link{margin-top:1.75rem;font-size:1rem}
+.mapa__link a{font-weight:600;text-decoration:none}
+.mapa__link a:hover{text-decoration:underline}
+
+/* ---------------------------------------------------------------------------
+   4 · LA PRUEBA. Cita en TEXTO, no el video: en el home son ocho segundos.
+       El video completo vive en /soluciones, que es a donde manda la liga.
+--------------------------------------------------------------------------- */
+.prueba{margin-top:3.5rem;background:var(--ilhas-light);
+  border:1px solid var(--ilhas-gray);border-radius:var(--ilhas-radius-card);
+  box-shadow:var(--ilhas-shadow-soft);padding:clamp(1.5rem,4vw,2.5rem)}
+.prueba blockquote{margin:0;font-family:var(--ilhas-font-display);font-weight:600;
+  font-size:clamp(1.25rem,2.4vw,1.75rem);line-height:1.2;color:var(--ilhas-dark);
+  letter-spacing:var(--ilhas-tracking-display);max-width:26ch}
+.prueba blockquote em{font-style:normal;color:var(--ilhas-primary)}
+.prueba figcaption{margin-top:1.25rem;font-size:var(--ilhas-fs-small);color:var(--ilhas-text)}
+.prueba figcaption b{display:block;font-weight:600;color:var(--ilhas-dark);font-size:1rem}
+.prueba__link{margin-top:1.5rem;font-size:1rem}
+.prueba__link a{font-weight:600;text-decoration:none}
+.prueba__link a:hover{text-decoration:underline}
+
+@media (min-width:900px){
+  .cifras{grid-template-columns:repeat(3,minmax(0,1fr));gap:2.5rem}
+  .mapa__encabezados{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.4fr);
+    gap:2rem;padding-bottom:.9rem}
+  .mapa__encabezados span{font-size:.75rem;letter-spacing:.08em;text-transform:uppercase;
+    color:#8a8a95}
+  .mapa__fila{grid-template-columns:minmax(0,1fr) minmax(0,1.4fr);gap:2rem;
+    align-items:center}
+  .prueba{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);
+    gap:2.5rem;align-items:center}
+  .prueba__pie{align-self:center}
+  .prueba__link{margin-top:1rem}
+}
+</style></head><body>
+
+<div class="etiqueta-demo">Opción 1 · Completa — §02 se come a §03 · alto medido: 1,856 px</div>
+
+<section class="section-y bg-white" id="completa">
+  <div class="container">
+
+    <p class="kicker">El hueco</p>
+    <h2>El 95% de los proyectos de IA no muestra retorno medible. Y no es la tecnología.</h2>
+
+    <!-- 1 · Las cifras, con fuente. Verificadas: van literales o no van.
+         El 95% NO se repite aquí: ya lo dice el H2. Repetir el mismo número
+         dos veces en 200 px lo debilita. Estas dos son las que lo sostienen.
+         La primera trae la fuente del 95% del titular. -->
+    <div class="cifras">
+      <div class="cifra">
+        <b>300</b>
+        <p>proyectos de IA empresarial analizados. El 95% no mostró retorno
+           financiero medible en seis meses.</p>
+        <cite><b>MIT</b> · <i>The GenAI Divide: State of AI in Business</i>, 2025</cite>
+      </div>
+      <div class="cifra">
+        <b>30%</b>
+        <p>de los proyectos de IA generativa se abandonaría después del piloto,
+           antes de llegar a producción.</p>
+        <cite><b>Gartner</b> · <a href="https://www.gartner.com/en/newsroom/press-releases/2024-07-29-gartner-predicts-30-percent-of-generative-ai-projects-will-be-abandoned-after-proof-of-concept-by-end-of-2025" target="_blank" rel="noopener">pronóstico publicado en 2024</a></cite>
+      </div>
+      <div class="cifra">
+        <b>24%</b>
+        <p>tiene datos limpios, centralizados e integrados en tiempo real
+           para agentes de IA. Ahí empieza el problema.</p>
+        <cite><b>Cisco</b> · <a href="https://www.cisco.com/c/m/en_us/solutions/ai/readiness-index.html" target="_blank" rel="noopener">AI Readiness Index 2025</a></cite>
+      </div>
+    </div>
+
+    <!-- 2 · La causa. Un párrafo. -->
+    <p class="causa">No fallaron los modelos: falló lo de antes. Sin línea base no
+      hay con qué comparar, y sin comparación no hay retorno que demostrar — aunque
+      el proyecto haya funcionado. <strong>La IA amplifica lo que le metes.</strong>
+      Si el fundamento está flojo, amplifica eso.</p>
+
+    <!-- 3 · El mapa: lo que reportan que falló → la letra que lo cubre. -->
+    <div class="mapa">
+      <div class="mapa__encabezados" aria-hidden="true">
+        <span>Lo que reportan que falló</span>
+        <span>El paso que lo cubre</span>
+      </div>
+
+      <div class="mapa__fila">
+        <div class="falla">No había línea base: nadie sabía qué medir antes de empezar.
+          <cite>MIT, 2025</cite></div>
+        <div class="paso">
+          <span class="paso__letra">I</span>
+          <span class="paso__nombre">Identificar</span>
+          <span class="paso__linea">Cómo se mueve el dinero y dónde se fuga.</span>
+        </div>
+      </div>
+
+      <div class="mapa__fila">
+        <div class="falla">Datos sin preparar: solo el 24% los tiene limpios, centralizados y en tiempo real.
+          <cite><a href="https://www.cisco.com/c/m/en_us/solutions/ai/readiness-index.html" target="_blank" rel="noopener">Cisco AI Readiness Index 2025</a></cite></div>
+        <div class="paso">
+          <span class="paso__letra">L</span>
+          <span class="paso__nombre">Levantamiento</span>
+          <span class="paso__linea">Traes el estándar de los mejores.</span>
+        </div>
+      </div>
+
+      <div class="mapa__fila">
+        <div class="falla">Valor de negocio poco claro: el proyecto nunca se amarró a la operación.
+          <cite><a href="https://www.gartner.com/en/newsroom/press-releases/2024-07-29-gartner-predicts-30-percent-of-generative-ai-projects-will-be-abandoned-after-proof-of-concept-by-end-of-2025" target="_blank" rel="noopener">Gartner</a></cite></div>
+        <div class="paso">
+          <span class="paso__letra">H</span>
+          <span class="paso__nombre">Hilar</span>
+          <span class="paso__linea">Costos, precios y márgenes en un solo criterio.</span>
+        </div>
+      </div>
+
+      <div class="mapa__fila">
+        <div class="falla">Los costos se dispararon por encima del retorno esperado.
+          <cite><a href="https://www.gartner.com/en/newsroom/press-releases/2024-07-29-gartner-predicts-30-percent-of-generative-ai-projects-will-be-abandoned-after-proof-of-concept-by-end-of-2025" target="_blank" rel="noopener">Gartner</a></cite></div>
+        <div class="paso">
+          <span class="paso__letra">A</span>
+          <span class="paso__nombre">Accionar</span>
+          <span class="paso__linea">Decides con números, no con intuición.</span>
+        </div>
+      </div>
+
+      <div class="mapa__fila">
+        <div class="falla">Abandono después del piloto: nadie lo mantuvo vivo.
+          <cite><a href="https://www.gartner.com/en/newsroom/press-releases/2024-07-29-gartner-predicts-30-percent-of-generative-ai-projects-will-be-abandoned-after-proof-of-concept-by-end-of-2025" target="_blank" rel="noopener">Gartner</a></cite></div>
+        <div class="paso">
+          <span class="paso__letra">S</span>
+          <span class="paso__nombre">Sistematizar</span>
+          <span class="paso__linea">La IA como tu equipo, con alertas y mantenimiento.</span>
+        </div>
+      </div>
+
+      <p class="mapa__link"><a href="/metodo">Conoce el método completo →</a></p>
+    </div>
+
+    <!-- 4 · La prueba. Cita en texto; el video vive en /soluciones. -->
+    <figure class="prueba">
+      <blockquote>«Algo que hacíamos en tres, cuatro horas —o hasta un día
+        entero— ahora toma <em>veinte minutos</em>.»</blockquote>
+      <div class="prueba__pie">
+        <figcaption>
+          <b>Irlanda Morgan</b>
+          Directora de operaciones · Morgan Centro de Alta Especialidad
+        </figcaption>
+        <p class="prueba__link"><a href="/soluciones">Ver los casos completos →</a></p>
+      </div>
+    </figure>
+
+  </div>
+</section>
+
+
+<div class="etiqueta-demo">Opción 2 · Corta — el mapa se va a /metodo · alto medido: 1,105 px</div>
+
+<!--
+  MISMO ARGUMENTO, SIN EL MAPA.
+  El mapa (falla → letra) es la pieza más fuerte, pero también la más cara:
+  son ~800 px. En el home empuja la bifurcación —el bloque que más importa—
+  de 1,279 px a 2,598 px, y el propio CSS del home dice que debe llegar
+  cerca del pliegue.
+
+  En esta opción el mapa vive en /metodo, que es la página del método y la
+  que de todos modos hay que rehacer. El home se queda con el argumento
+  completo: cifra, causa, prueba. Y §03 sigue enseñando los cinco pasos
+  justo debajo, así que el visitante igual llega al método — sin verlo dos
+  veces.
+-->
+<section class="section-y bg-white" id="corta">
+  <div class="container">
+
+    <p class="kicker">El hueco</p>
+    <h2>El 95% de los proyectos de IA no muestra retorno medible. Y no es la tecnología.</h2>
+
+    <div class="cifras">
+      <div class="cifra">
+        <b>300</b>
+        <p>proyectos de IA empresarial analizados. El 95% no mostró retorno
+           financiero medible en seis meses.</p>
+        <cite><b>MIT</b> · <i>The GenAI Divide: State of AI in Business</i>, 2025</cite>
+      </div>
+      <div class="cifra">
+        <b>30%</b>
+        <p>de los proyectos de IA generativa se abandonaría después del piloto,
+           antes de llegar a producción.</p>
+        <cite><b>Gartner</b> · <a href="https://www.gartner.com/en/newsroom/press-releases/2024-07-29-gartner-predicts-30-percent-of-generative-ai-projects-will-be-abandoned-after-proof-of-concept-by-end-of-2025" target="_blank" rel="noopener">pronóstico publicado en 2024</a></cite>
+      </div>
+      <div class="cifra">
+        <b>24%</b>
+        <p>tiene datos limpios, centralizados e integrados en tiempo real
+           para agentes de IA. Ahí empieza el problema.</p>
+        <cite><b>Cisco</b> · <a href="https://www.cisco.com/c/m/en_us/solutions/ai/readiness-index.html" target="_blank" rel="noopener">AI Readiness Index 2025</a></cite>
+      </div>
+    </div>
+
+    <p class="causa">No fallaron los modelos: falló lo de antes. Sin línea base no
+      hay con qué comparar, y sin comparación no hay retorno que demostrar — aunque
+      el proyecto haya funcionado. <strong>La IA amplifica lo que le metes.</strong>
+      Si el fundamento está flojo, amplifica eso.</p>
+
+    <figure class="prueba">
+      <blockquote>«Algo que hacíamos en tres, cuatro horas —o hasta un día
+        entero— ahora toma <em>veinte minutos</em>.»</blockquote>
+      <div class="prueba__pie">
+        <figcaption>
+          <b>Irlanda Morgan</b>
+          Directora de operaciones · Morgan Centro de Alta Especialidad
+        </figcaption>
+        <p class="prueba__link"><a href="/soluciones">Ver los casos completos →</a></p>
+      </div>
+    </figure>
+
+  </div>
+</section>
+
+
+<div class="etiqueta-demo">Opción 3 · Completa sin banda de cifras — cada fila trae su propia fuente</div>
+
+<!--
+  LA OBSERVACIÓN QUE LA HACE POSIBLE: en la opción 1, la banda de cifras y el
+  mapa dicen lo mismo dos veces. El 24% de Cisco sale en la banda Y en la fila
+  de Levantamiento. El abandono de Gartner sale en la banda Y en la fila de
+  Sistematizar. La banda cuesta ~330 px y solo aporta el 300 de MIT, que cabe
+  en el párrafo de causa.
+
+  Quitarla no pierde ni una cifra ni una fuente: cada fila del mapa ya trae la
+  suya. Es la versión con más argumento por pixel de las tres.
+-->
+<section class="section-y bg-white" id="sinbanda">
+  <div class="container">
+
+    <p class="kicker">El hueco</p>
+    <h2>El 95% de los proyectos de IA no muestra retorno medible. Y no es la tecnología.</h2>
+
+    <p class="causa" style="margin-top:1.75rem">MIT analizó <strong>300 proyectos de
+      IA empresarial</strong>: el 95% no mostró retorno financiero medible en seis
+      meses. No fallaron los modelos — falló lo de antes. Sin línea base no hay con
+      qué comparar, y sin comparación no hay retorno que demostrar, aunque el proyecto
+      haya funcionado. <strong>La IA amplifica lo que le metes.</strong> Si el
+      fundamento está flojo, amplifica eso.</p>
+
+    <div class="mapa">
+      <div class="mapa__encabezados" aria-hidden="true">
+        <span>Lo que reportan que falló</span>
+        <span>El paso que lo cubre</span>
+      </div>
+
+      <div class="mapa__fila">
+        <div class="falla">No había línea base: nadie sabía qué medir antes de empezar.
+          <cite>MIT · The GenAI Divide, 2025</cite></div>
+        <div class="paso">
+          <span class="paso__letra">I</span>
+          <span class="paso__nombre">Identificar</span>
+          <span class="paso__linea">Cómo se mueve el dinero y dónde se fuga.</span>
+        </div>
+      </div>
+
+      <div class="mapa__fila">
+        <div class="falla">Datos sin preparar: solo el 24% los tiene limpios, centralizados y en tiempo real.
+          <cite><a href="https://www.cisco.com/c/m/en_us/solutions/ai/readiness-index.html" target="_blank" rel="noopener">Cisco AI Readiness Index 2025</a></cite></div>
+        <div class="paso">
+          <span class="paso__letra">L</span>
+          <span class="paso__nombre">Levantamiento</span>
+          <span class="paso__linea">Traes el estándar de los mejores.</span>
+        </div>
+      </div>
+
+      <div class="mapa__fila">
+        <div class="falla">Valor de negocio poco claro: el proyecto nunca se amarró a la operación.
+          <cite><a href="https://www.gartner.com/en/newsroom/press-releases/2024-07-29-gartner-predicts-30-percent-of-generative-ai-projects-will-be-abandoned-after-proof-of-concept-by-end-of-2025" target="_blank" rel="noopener">Gartner</a></cite></div>
+        <div class="paso">
+          <span class="paso__letra">H</span>
+          <span class="paso__nombre">Hilar</span>
+          <span class="paso__linea">Costos, precios y márgenes en un solo criterio.</span>
+        </div>
+      </div>
+
+      <div class="mapa__fila">
+        <div class="falla">Los costos se dispararon por encima del retorno esperado.
+          <cite><a href="https://www.gartner.com/en/newsroom/press-releases/2024-07-29-gartner-predicts-30-percent-of-generative-ai-projects-will-be-abandoned-after-proof-of-concept-by-end-of-2025" target="_blank" rel="noopener">Gartner</a></cite></div>
+        <div class="paso">
+          <span class="paso__letra">A</span>
+          <span class="paso__nombre">Accionar</span>
+          <span class="paso__linea">Decides con números, no con intuición.</span>
+        </div>
+      </div>
+
+      <div class="mapa__fila">
+        <div class="falla">Abandono después del piloto: 30% no llega a producción.
+          <cite><a href="https://www.gartner.com/en/newsroom/press-releases/2024-07-29-gartner-predicts-30-percent-of-generative-ai-projects-will-be-abandoned-after-proof-of-concept-by-end-of-2025" target="_blank" rel="noopener">Gartner · pronóstico 2024</a></cite></div>
+        <div class="paso">
+          <span class="paso__letra">S</span>
+          <span class="paso__nombre">Sistematizar</span>
+          <span class="paso__linea">La IA como tu equipo, con alertas y mantenimiento.</span>
+        </div>
+      </div>
+
+      <p class="mapa__link"><a href="/metodo">Conoce el método completo →</a></p>
+    </div>
+
+    <figure class="prueba">
+      <blockquote>«Algo que hacíamos en tres, cuatro horas —o hasta un día
+        entero— ahora toma <em>veinte minutos</em>.»</blockquote>
+      <div class="prueba__pie">
+        <figcaption>
+          <b>Irlanda Morgan</b>
+          Directora de operaciones · Morgan Centro de Alta Especialidad
+        </figcaption>
+        <p class="prueba__link"><a href="/soluciones">Ver los casos completos →</a></p>
+      </div>
+    </figure>
+
+  </div>
+</section>
+
+</body></html>

@@ -418,39 +418,42 @@ export const MEDIOS: SlotMedio[] = [
   {
     id: "home-mercado-01",
     tipo: "captura",
-    pagina: "compartido",
-    seccion: "home §02 El hueco · /finanzas §03 Es para ti si",
+    pagina: "finanzas",
+    seccion: "/finanzas §03 Es para ti si",
     prioridad: 3,
     objecion: "«¿De verdad lo necesito?» · «¿No es moda?»",
     alt: "Vacante de Data Scientist con inteligencia artificial entre las habilidades requeridas",
     caption: "Lo que hoy se le pide a un Data Scientist",
     pesoMaxKB: 400,
     notas:
-      "Recorta a la lista de skills, no a la vacante completa. Tapa el nombre de la empresa salvo que sea pública y relevante.",
+      
+      "Recorta a la lista de skills, no a la vacante completa. Tapa el nombre de la empresa salvo que sea pública y relevante. PENDIENTE DE JORGE: hoy los puestos son Data Scientist, Product Manager y Diseñador, y ninguno es el comprador de Ilhas. Los que reconoce la audiencia son Controller, Gerente de Finanzas y Director de Operaciones. No recaptures las viejas sin que Jorge decida.",
   },
   {
     id: "home-mercado-02",
     tipo: "captura",
-    pagina: "compartido",
-    seccion: "home §02 El hueco · /finanzas §03 Es para ti si",
+    pagina: "finanzas",
+    seccion: "/finanzas §03 Es para ti si",
     prioridad: 3,
     objecion: "«¿De verdad lo necesito?» · «¿No es moda?»",
     alt: "Vacante de Product Manager con inteligencia artificial entre las habilidades requeridas",
     caption: "Lo que hoy se le pide a un Product Manager",
     pesoMaxKB: 400,
-    notas: "Recorta a la lista de skills. Tapa el nombre de la empresa.",
+    notas: 
+      "Recorta a la lista de skills, no a la vacante completa. Tapa el nombre de la empresa salvo que sea pública y relevante. PENDIENTE DE JORGE: hoy los puestos son Data Scientist, Product Manager y Diseñador, y ninguno es el comprador de Ilhas. Los que reconoce la audiencia son Controller, Gerente de Finanzas y Director de Operaciones. No recaptures las viejas sin que Jorge decida.",
   },
   {
     id: "home-mercado-03",
     tipo: "captura",
-    pagina: "compartido",
-    seccion: "home §02 El hueco · /finanzas §03 Es para ti si",
+    pagina: "finanzas",
+    seccion: "/finanzas §03 Es para ti si",
     prioridad: 3,
     objecion: "«¿De verdad lo necesito?» · «¿No es moda?»",
     alt: "Vacante de Diseñador con inteligencia artificial entre las habilidades requeridas",
     caption: "Lo que hoy se le pide a un Diseñador",
     pesoMaxKB: 400,
-    notas: "Recorta a la lista de skills. Tapa el nombre de la empresa.",
+    notas: 
+      "Recorta a la lista de skills, no a la vacante completa. Tapa el nombre de la empresa salvo que sea pública y relevante. PENDIENTE DE JORGE: hoy los puestos son Data Scientist, Product Manager y Diseñador, y ninguno es el comprador de Ilhas. Los que reconoce la audiencia son Controller, Gerente de Finanzas y Director de Operaciones. No recaptures las viejas sin que Jorge decida.",
   },
 
   // --- Edificación papá-hijo (J)
