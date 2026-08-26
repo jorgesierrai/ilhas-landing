@@ -32,6 +32,13 @@ Este bloque establece el problema que Ilhas resuelve. Va temprano porque es lo q
 I·L·H·A·S en una línea cada uno. Nada más. Link a `/metodo`.
 *Identificar · Levantamiento · Hilar · Accionar · Sistematizar.*
 
+> **Actualizado el 25 ago 2026.** El trabajo con datos estaba repartido implícito
+> entre I, L y H, y nombrado en ninguno. Decisión de Jorge: **la línea base es de
+> I, los datos son de L.** «Levantamiento» en español de México ya se lee como
+> *levantamiento de información*, así que la palabra ya hacía ese trabajo; ahora
+> carga las dos cosas. **S** suma el mantenimiento, porque el modo de falla que
+> reportan MIT y Gartner es el abandono después del piloto.
+
 **04 · La bifurcación — el bloque más importante del sitio**
 Dos tarjetas grandes, iguales en peso visual:
 - **¿Quieres aprenderlo?** → Ilhas Finanzas → `/finanzas`
@@ -72,11 +79,11 @@ Biblia de Producto §0 (tesis), §2 (linaje), §9 (finanzas primero, universal d
 
    | Paso | El oficio de producto | En tu trabajo |
    |---|---|---|
-   | **I — Identificar** | Discovery — instrumentar y hallar el dolor antes de construir | Cómo se mueve el dinero y dónde se fuga |
-   | **L — Levantamiento** | Continuous Discovery — benchmark, cómo lo hacen los mejores | Sales de tu taller y traes ese estándar |
+   | **I — Identificar** | Discovery — instrumentar y hallar el dolor antes de construir | Cómo se mueve el dinero, dónde se fuga, y desde qué número vas a medir |
+   | **L — Levantamiento** | Continuous Discovery — levantar la información y el estándar | Dejas tus datos limpios y en un solo lugar, y traes el estándar de los mejores |
    | **H — Hilar** | Opportunity Solution Tree — enhebrar piezas en un resultado | Costos, precios y márgenes en un solo criterio |
    | **A — Accionar** | Assumption testing + POC — decidir con datos | Decides con números: precio, contratar, invertir |
-   | **S — Sistematizar** | Delivery + automation — el motor que corre solo | La IA como tu equipo, con reportes y alertas automáticos |
+   | **S — Sistematizar** | Delivery + automation — el motor que corre solo | La IA como tu equipo, con alertas y mantenimiento |
 
 5. **Hilar = Opportunity Solution Tree — el paso joya.** "Hilar" es enhebrar piezas sueltas en una sola línea, y eso es exactamente el trabajo de un OST: tomar oportunidades regadas y anclarlas a un solo resultado. Mismo verbo, mismo trabajo. Nadie en el espacio de "finanzas con IA" está contando esto.
 6. **Los cinco principios** — fundamento antes que automatización · la IA es infraestructura, no un feature · workflows sobre roles · outcomes sobre outputs · builder mindset.

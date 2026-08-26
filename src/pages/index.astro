@@ -18,12 +18,52 @@ const fotoHero = buscarImagen("home-hero-conferencia");
 const altHero = porId("home-hero-conferencia")!.alt;
 
 const pasos = [
-  { letra: "I", paso: "Identificar", linea: "Cómo se mueve el dinero y dónde se fuga.", icono: "icono-paso-i" },
-  { letra: "L", paso: "Levantamiento", linea: "Traes el estándar de los mejores.", icono: "icono-paso-l" },
+  { letra: "I", paso: "Identificar", linea: "Cómo se mueve el dinero, dónde se fuga y desde qué número mides.", icono: "icono-paso-i" },
+  { letra: "L", paso: "Levantamiento", linea: "Tus datos en un solo lugar, y el estándar de los mejores.", icono: "icono-paso-l" },
   { letra: "H", paso: "Hilar", linea: "Costos, precios y márgenes en un solo criterio.", icono: "icono-paso-h" },
   { letra: "A", paso: "Accionar", linea: "Decides con números, no con intuición.", icono: "icono-paso-a" },
-  { letra: "S", paso: "Sistematizar", linea: "La IA como tu equipo, con alertas automáticas.", icono: "icono-paso-s" },
+  { letra: "S", paso: "Sistematizar", linea: "La IA como tu equipo, con alertas y mantenimiento.", icono: "icono-paso-s" },
 ];
+
+// §02 · El mapa: lo que reportan que falló → el paso que lo cubre.
+// Las cifras y las fuentes van LITERALES (prompts/iteracion-4-hueco.md §2).
+// MIT va sin liga a propósito: el reporte circuló como PDF de MIT NANDA y no
+// tiene URL pública estable en mit.edu. Se cita por nombre; no se liga un
+// re-host de terceros.
+const GARTNER =
+  "https://www.gartner.com/en/newsroom/press-releases/2024-07-29-gartner-predicts-30-percent-of-generative-ai-projects-will-be-abandoned-after-proof-of-concept-by-end-of-2025";
+const fallas: Record<string, { texto: string; fuente: string; url?: string }> = {
+  I: {
+    texto: "No había línea base: nadie sabía qué medir antes de empezar.",
+    fuente: "MIT · The GenAI Divide, 2025",
+  },
+  L: {
+    texto:
+      "Datos sin preparar: solo el 24% los tiene limpios, centralizados y en tiempo real.",
+    fuente: "Cisco AI Readiness Index 2025",
+    url: "https://www.cisco.com/c/m/en_us/solutions/ai/readiness-index.html",
+  },
+  H: {
+    texto:
+      "Valor de negocio poco claro: el proyecto nunca se amarró a la operación.",
+    fuente: "Gartner",
+    url: GARTNER,
+  },
+  A: {
+    texto: "Los costos se dispararon por encima del retorno esperado.",
+    fuente: "Gartner",
+    url: GARTNER,
+  },
+  S: {
+    texto: "Abandono después del piloto: 30% no llega a producción.",
+    fuente: "Gartner · pronóstico 2024",
+    url: GARTNER,
+  },
+};
+
+// La cita va en TEXTO, no el video: el home tiene ocho segundos y el clip
+// completo vive en /soluciones, que es a donde manda la liga.
+const testimonio = porId("soluciones-testimonio-oncologia")!.atribucion!;
 
 const capturasMercado = ["home-mercado-01", "home-mercado-02", "home-mercado-03"];
 
@@ -116,50 +156,93 @@ const kpis = [
       />
     </div>
 
-    <!-- 02 · El hueco -->
-    <section class="section-y-sm bg-white">
+    {/* 02 · El hueco — se rehizo el 25 ago 2026 y SE COMIÓ a la vieja §03.
+        Referencia: medios/hueco-referencia.html, opción 3 (#sinbanda).
+
+        Por qué no hay una §03 con los cinco pasos otra vez: el mapa ya
+        muestra las cinco letras, y repetirlas 400 px abajo no aporta. Es la
+        salida (a) que pedía AUDITORIA-VISUAL.md — "el hueco es el setup del
+        método, no una sección aparte".
+
+        El costo está medido y aprobado: §02+§03 medían 537 px y esta sección
+        mide ~1,637 px, así que la bifurcación se recorre de 1,279 a ~2,379 px.
+        Es un intercambio consciente. NO lo "arregles" partiendo esto en dos.
+
+        Las líneas de cada paso salen del mismo array `pasos` que usa la
+        página: así el mapa y /metodo no pueden desincronizarse. */}
+    <section class="section-y bg-white">
       <div class="container">
         <div class="section-head reveal">
           <p class="kicker">El hueco</p>
-          <h2>El 95% de los proyectos de IA fracasa — y no es la tecnología.</h2>
+          <h2>
+            El 95% de los proyectos de IA no muestra retorno medible. Y no es
+            la tecnología.
+          </h2>
         </div>
 
-        {/* Las capturas del mercado laboral: convierten el 95% de
-            estadística suelta en "mira lo que están pidiendo". */}
-        {
-          mostrar(...capturasMercado) && (
-            <div class="mercado">
-              {capturasMercado.map((id) => <Captura id={id} ancho={640} />)}
-            </div>
-          )
-        }
-      </div>
-    </section>
+        <p class="causa reveal">
+          MIT analizó <strong>300 proyectos de IA empresarial</strong>: el 95%
+          no mostró retorno financiero medible en seis meses. No fallaron los
+          modelos — falló lo de antes. Sin línea base no hay con qué comparar,
+          y sin comparación no hay retorno que demostrar, aunque el proyecto
+          haya funcionado. <strong>La IA amplifica lo que le metes.</strong> Si
+          el fundamento está flojo, amplifica eso.
+        </p>
 
-    <!-- 03 · El método en cinco pasos, versión corta -->
-    <section class="section-y-sm">
-      <div class="container">
-        <div class="section-head reveal">
-          <p class="kicker">El método, en corto</p>
-          <h2>Cinco pasos: I·L·H·A·S.</h2>
-        </div>
+        <div class="mapa reveal">
+          <div class="mapa__encabezados" aria-hidden="true">
+            <span>Lo que reportan que falló</span>
+            <span>El paso que lo cubre</span>
+          </div>
 
-        <ol class="pasos-corto">
           {
             pasos.map((p) => (
-              <li class="hover-lift reveal">
-                <span class="pasos-corto__letra">{p.letra}</span>
-                <Icono id={p.icono} />
-                <span class="pasos-corto__paso">{p.paso}</span>
-                <span class="pasos-corto__linea">{p.linea}</span>
-              </li>
+              <div class="mapa__fila">
+                <div class="falla">
+                  {fallas[p.letra].texto}
+                  <cite>
+                    {fallas[p.letra].url ? (
+                      <a
+                        href={fallas[p.letra].url}
+                        target="_blank"
+                        rel="noopener"
+                      >
+                        {fallas[p.letra].fuente}
+                      </a>
+                    ) : (
+                      fallas[p.letra].fuente
+                    )}
+                  </cite>
+                </div>
+                <div class="paso">
+                  <span class="paso__letra">{p.letra}</span>
+                  <span class="paso__nombre">{p.paso}</span>
+                  <span class="paso__linea">{p.linea}</span>
+                </div>
+              </div>
             ))
           }
-        </ol>
 
-        <p class="pasos-corto__link">
-          <a href="/metodo">Conoce el método completo →</a>
-        </p>
+          <p class="mapa__link">
+            <a href="/metodo">Conoce el método completo →</a>
+          </p>
+        </div>
+
+        <figure class="prueba reveal">
+          <blockquote>
+            «Algo que hacíamos en tres, cuatro horas —o hasta un día entero—
+            ahora toma <em>veinte minutos</em>.»
+          </blockquote>
+          <div class="prueba__pie">
+            <figcaption>
+              <b>{testimonio.nombre}</b>
+              {testimonio.rol} · {testimonio.empresa}
+            </figcaption>
+            <p class="prueba__link">
+              <a href="/soluciones">Ver los casos completos →</a>
+            </p>
+          </div>
+        </figure>
       </div>
     </section>
 
@@ -427,97 +510,200 @@ const kpis = [
     margin-top: 0.5rem;
   }
 
-  /* --- 02 · las capturas del mercado laboral ---
-     Vacío hoy: sin archivos, .mercado no tiene hijos en producción y no
-     ocupa nada (el gap de un grid sin hijos no pinta). */
-  .mercado {
-    display: grid;
-    gap: 1.25rem;
-    margin-top: 2rem;
+  /* --- 02 · El hueco: causa, mapa y prueba ---
+     Portado de medios/hueco-referencia.html, opción 3. */
+  .causa {
+    margin-top: 2.5rem;
+    max-width: 60ch;
+    font-size: var(--ilhas-fs-body);
   }
 
-  @media (min-width: 768px) {
-    .mercado {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-    }
+  .causa strong {
+    font-weight: 600;
+    color: var(--ilhas-dark);
   }
 
-  /* --- 03 · pasos versión corta --- */
-  .pasos-corto {
-    list-style: none;
+  /* El mapa hace todo el trabajo: izquierda lo que reportan que falló,
+     derecha la letra que lo cubre. Nadie declara que Ilhas es la excepción;
+     el lector lo concluye. */
+  .mapa {
+    margin-top: 3.5rem;
+    border-top: 1px solid var(--ilhas-gray);
+  }
+
+  .mapa__encabezados {
+    display: none;
+  }
+
+  .mapa__fila {
     display: grid;
     gap: 0.75rem;
-    margin-top: 1.25rem;
+    padding-block: 1.5rem;
+    border-bottom: 1px solid var(--ilhas-gray);
   }
 
-  .pasos-corto li {
+  .falla {
+    font-size: 1rem;
+    color: var(--ilhas-text);
+  }
+
+  .falla cite {
+    display: block;
+    margin-top: 0.35rem;
+    font-style: normal;
+    font-size: 0.8125rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    /* Gris propio y no --ilhas-text: la fuente es metadato, no cuerpo.
+       Mide 4.6:1 sobre blanco, así que pasa AA. */
+    color: #6f6f7a;
+  }
+
+  /* La fuente es liga cuando existe URL canónica. Sin subrayado permanente:
+     se subraya al hover, para no competir con las ligas de conversión que
+     están 30 px abajo. */
+  .falla cite a {
+    color: inherit;
+    text-decoration: none;
+    border-bottom: 1px solid rgba(111, 111, 122, 0.45);
+  }
+
+  .falla cite a:hover {
+    color: var(--ilhas-primary);
+    border-bottom-color: var(--ilhas-primary);
+  }
+
+  .paso {
     display: flex;
     align-items: baseline;
     flex-wrap: wrap;
     gap: 0.5rem 0.75rem;
   }
 
-  .pasos-corto__letra {
+  .paso__letra {
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    align-self: center;
+    flex: 0 0 auto;
     width: 1.75rem;
     height: 1.75rem;
     border-radius: 50%;
     background: var(--ilhas-primary);
     color: var(--ilhas-white);
     font-family: var(--ilhas-font-display);
+    font-weight: 600;
     font-size: 0.8125rem;
-    flex-shrink: 0;
   }
 
-  .pasos-corto__paso {
+  .paso__nombre {
     font-family: var(--ilhas-font-display);
     font-weight: 600;
+    font-size: var(--ilhas-fs-h3);
+    letter-spacing: var(--ilhas-tracking-display);
     color: var(--ilhas-dark);
   }
 
-  .pasos-corto__linea {
+  .paso__linea {
+    font-size: 1rem;
     color: var(--ilhas-text);
   }
 
-  .pasos-corto__link {
-    margin-top: 1.5rem;
+  .mapa__link {
+    margin-top: 1.75rem;
+    font-size: 1rem;
   }
 
-  .pasos-corto__link a {
-    font-family: var(--ilhas-font-body);
+  .mapa__link a,
+  .prueba__link a {
     font-weight: 600;
-    font-size: var(--ilhas-fs-small);
-    color: var(--ilhas-primary);
     text-decoration: none;
   }
 
-  @media (min-width: 768px) and (max-width: 1023px) {
-    .pasos-corto li {
-      display: grid;
-      grid-template-columns: 2rem 9rem 1fr;
-      align-items: center;
-    }
+  .mapa__link a:hover,
+  .prueba__link a:hover {
+    text-decoration: underline;
   }
 
-  /* En desktop ancho, los cinco pasos caben en una sola fila: convierte
-     una lista de 5 renglones apilados en una tira horizontal, para que
-     la bifurcación (bloque 04) llegue más cerca del pliegue. */
-  @media (min-width: 1024px) {
-    .pasos-corto {
-      grid-template-columns: repeat(5, minmax(0, 1fr));
-      gap: 1.25rem;
+  /* La prueba: cita en TEXTO, no el video. El clip completo vive en
+     /soluciones, que es a donde manda la liga. */
+  .prueba {
+    margin-top: 3.5rem;
+    padding: clamp(1.5rem, 4vw, 2.5rem);
+    background: var(--ilhas-light);
+    border: 1px solid var(--ilhas-gray);
+    border-radius: var(--ilhas-radius-card);
+    box-shadow: var(--ilhas-shadow-soft);
+  }
+
+  .prueba blockquote {
+    margin: 0;
+    max-width: 26ch;
+    font-family: var(--ilhas-font-display);
+    font-weight: 600;
+    font-size: clamp(1.25rem, 2.4vw, 1.75rem);
+    line-height: 1.2;
+    letter-spacing: var(--ilhas-tracking-display);
+    color: var(--ilhas-dark);
+  }
+
+  .prueba blockquote em {
+    font-style: normal;
+    color: var(--ilhas-primary);
+  }
+
+  .prueba figcaption {
+    margin-top: 1.25rem;
+    font-size: var(--ilhas-fs-small);
+    color: var(--ilhas-text);
+  }
+
+  .prueba figcaption b {
+    display: block;
+    font-weight: 600;
+    font-size: 1rem;
+    color: var(--ilhas-dark);
+  }
+
+  .prueba__link {
+    margin-top: 1.5rem;
+    font-size: 1rem;
+  }
+
+  @media (min-width: 900px) {
+    .mapa__encabezados {
+      display: grid;
+      /* 1.8fr y no el 1.4 de la referencia: con las líneas nuevas de I y L
+         —más largas, porque ahora nombran los datos— a 1.4 se partían en dos
+         renglones, y la de I aguantaba hasta 1.8. El brief manda ensanchar la columna, nunca acortar el
+         copy. */
+      grid-template-columns: minmax(0, 1fr) minmax(0, 2.1fr);
+      gap: 1.75rem;
+      padding-bottom: 0.9rem;
     }
 
-    .pasos-corto li {
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 0.375rem;
+    .mapa__encabezados span {
+      font-size: 0.75rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #6f6f7a;
     }
 
-    .pasos-corto__linea {
-      font-size: 0.875rem;
+    .mapa__fila {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 2.1fr);
+      gap: 1.75rem;
+      align-items: center;
+    }
+
+    .prueba {
+      display: grid;
+      grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
+      gap: 2.5rem;
+      align-items: center;
+    }
+
+    .prueba__link {
+      margin-top: 1rem;
     }
   }
 
