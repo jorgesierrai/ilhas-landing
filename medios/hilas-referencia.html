@@ -1,0 +1,192 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8">
+<title>Ilhas · La banda Ilhas → Hilas</title>
+<!--
+  ==========================================================================
+  LA BANDA «ILHAS → HILAS» · 27 ago 2026
+  ==========================================================================
+  Va pegada debajo del hero del home. El hero NO se toca.
+  La banda de autoridad (la de «Hablando de IA en público desde 2017») se
+  BAJA a justo antes de §02 — ahí funciona mejor, porque §02 abre con el 95%
+  que fracasa y llegar a ese reclamo venido de «llevamos desde 2017» le da
+  autoridad.
+
+  POR QUÉ FUNCIONA:
+  «Ilhas» y «Hilas» quedan pegados en la misma línea. Son las mismas cinco
+  letras con la H movida al frente, y el verbo que sale es el paso H del
+  método — el que Jorge llama el más importante. Nadie tiene que explicarlo:
+  se ve.
+
+  ⚠️ NUNCA aparece «Ilhas Ventas» ni «Ilhas Soporte». Lo que rota es el ÁREA
+  («tus ventas»), no el producto. Regla 3 de CLAUDE.md: no se anuncian islas
+  futuras. Un área es una capacidad del método hoy; un producto es una promesa.
+
+  CERO JAVASCRIPT. La rotación es @keyframes puro: los cinco ítems están
+  apilados en la misma posición y se turnan la opacidad. Con
+  prefers-reduced-motion se congela en el primero.
+
+  Rutas relativas a `medios/`.
+-->
+<style>
+@font-face{font-family:"Space Grotesk";font-weight:600;font-display:swap;
+  src:url("../public/assets/fonts/space-grotesk-600.woff2") format("woff2")}
+@font-face{font-family:"Inter";font-weight:400;font-display:swap;
+  src:url("../public/assets/fonts/inter-400.woff2") format("woff2")}
+@font-face{font-family:"Inter";font-weight:500;font-display:swap;
+  src:url("../public/assets/fonts/inter-500.woff2") format("woff2")}
+
+:root{
+  --ilhas-primary:#7A3CFF; --ilhas-dark:#0E0E0F; --ilhas-text:#3C3C44;
+  --ilhas-light:#F8FAFF; --ilhas-gray:#E8ECF2; --ilhas-white:#FFF;
+  --ilhas-grad-start:#55E8FF; --ilhas-grad-end:#A14BFF;
+  --ilhas-gradient-h:linear-gradient(to right,var(--ilhas-grad-start) 0%,var(--ilhas-primary) 50%,var(--ilhas-grad-end) 100%);
+  --ilhas-font-display:"Space Grotesk",system-ui,sans-serif;
+  --ilhas-font-body:"Inter",system-ui,-apple-system,sans-serif;
+  --ilhas-tracking-display:-.02em;
+  --ilhas-container:1140px; --ilhas-gutter:clamp(1.25rem,4vw,3rem);
+}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;font-family:var(--ilhas-font-body);color:var(--ilhas-text);
+  background:var(--ilhas-light);line-height:1.6}
+.container{width:100%;max-width:var(--ilhas-container);margin-inline:auto;
+  padding-inline:var(--ilhas-gutter)}
+.etiqueta-demo{background:var(--ilhas-dark);color:#fff;font-weight:600;font-size:13px;
+  letter-spacing:.08em;text-transform:uppercase;padding:10px clamp(1.25rem,4vw,3rem)}
+.etiqueta-demo i{font-style:normal;color:#9b9bab;text-transform:none;letter-spacing:0}
+.falso-hero{background:var(--ilhas-dark);height:120px;display:flex;align-items:center}
+.falso-hero p{margin:0;color:rgba(255,255,255,.35);font-size:.8125rem;
+  letter-spacing:.08em;text-transform:uppercase}
+
+/* ==========================================================================
+   LA BANDA
+   ========================================================================== */
+/* La banda es superficie BLANCA contra el --ilhas-light de la página: se lee
+   como un objeto, no como espacio en blanco con texto encima.
+   Y el filete de gradiente va ARRIBA, justo en la frontera con el hero oscuro:
+   la tinta del hero termina apoyada en una línea de marca. Es el mismo recurso
+   que ya usan las tarjetas de la bifurcación — no es un adorno nuevo, es el
+   marcador de «aquí hay un momento de marca» que el sitio ya tiene.
+   tokens.css lo licencia: el gradiente va en el isotipo, el hero, el CTA de
+   cierre… y esta banda ES el nombre de la casa volviéndose su propio verbo. */
+.hilas{position:relative;background:var(--ilhas-white);
+  border-bottom:1px solid var(--ilhas-gray)}
+.hilas::before{content:"";position:absolute;inset:0 0 auto 0;height:3px;
+  background:var(--ilhas-gradient-h)}
+.hilas__inner{display:grid;gap:1rem;padding-block:2rem;align-items:center}
+
+/* La marca con su isotipo: es el único lugar del home donde el nombre se
+   escribe suelto, así que va acompañado como firma, no como texto. */
+.hilas__marca{display:inline-flex;align-items:center;gap:.6rem}
+.hilas__marca img{width:1.75rem;height:1.75rem;flex:0 0 auto}
+
+/* La marca, fija. Es la mitad que no se mueve: por eso se puede comparar. */
+.hilas__marca span{font-family:var(--ilhas-font-display);font-weight:600;
+  font-size:clamp(1.5rem,3vw,1.875rem);line-height:1;color:var(--ilhas-dark);
+  letter-spacing:var(--ilhas-tracking-display)}
+
+/* El carrusel. Altura fija porque los ítems van absolutos y apilados;
+   si no, la banda brincaría de alto en cada cambio. */
+.hilas__rot{position:relative;min-height:4.25rem}
+.hilas__rot ul{margin:0;padding:0;list-style:none}
+.hilas__rot li{position:absolute;inset:0;opacity:0;
+  animation:hilas-ciclo 25s infinite}
+.hilas__rot li:nth-child(1){animation-delay:0s}
+.hilas__rot li:nth-child(2){animation-delay:5s}
+.hilas__rot li:nth-child(3){animation-delay:10s}
+.hilas__rot li:nth-child(4){animation-delay:15s}
+.hilas__rot li:nth-child(5){animation-delay:20s}
+
+@keyframes hilas-ciclo{
+  0%   {opacity:0;transform:translateY(8px)}
+  1.6% {opacity:1;transform:none}
+  18%  {opacity:1;transform:none}
+  20%  {opacity:0;transform:translateY(-8px)}
+  100% {opacity:0;transform:translateY(8px)}
+}
+
+.hilas__linea{display:block;font-family:var(--ilhas-font-display);font-weight:600;
+  font-size:clamp(1.25rem,2.6vw,1.75rem);line-height:1.15;color:var(--ilhas-dark);
+  letter-spacing:var(--ilhas-tracking-display)}
+/* «Hilas» en morado contra «Ilhas» en tinta: el ojo agarra las mismas cinco
+   letras en dos colores y el juego se resuelve solo, sin explicarlo. */
+.hilas__linea b{font-weight:inherit;color:var(--ilhas-primary)}
+.hilas__resultado{display:block;margin-top:.4rem;font-size:1rem;
+  color:var(--ilhas-text);max-width:52ch}
+
+/* Sin animación: se congela en la primera y las otras cuatro se ocultan.
+   Siguen en el DOM — un lector de pantalla las lee todas, que es lo correcto. */
+@media (prefers-reduced-motion:reduce){
+  .hilas__rot li{animation:none;opacity:0}
+  .hilas__rot li:first-child{opacity:1;position:relative}
+}
+
+@media (min-width:760px){
+  .hilas__inner{grid-template-columns:auto 1px minmax(0,1fr);gap:1.75rem;
+    padding-block:1.75rem}
+  .hilas__regla{background:var(--ilhas-gray);align-self:stretch}
+  .hilas__rot{min-height:3.75rem}
+}
+@media (max-width:759px){
+  .hilas__regla{display:none}
+  .hilas__rot{min-height:5.5rem}
+}
+
+/* --- solo para esta demo: la versión congelada al lado ------------------- */
+.demo-congelada .hilas__rot li{animation:none;opacity:0}
+.demo-congelada .hilas__rot li:first-child{opacity:1;position:relative}
+</style></head><body>
+
+<div class="etiqueta-demo">La banda, en movimiento — <i>25 s de ciclo, 5 s por línea. Cero JavaScript.</i></div>
+
+<div class="falso-hero"><div class="container"><p>↑ aquí termina el hero — no se toca</p></div></div>
+
+<section class="hilas">
+  <div class="container hilas__inner">
+    <span class="hilas__marca"><img src="../public/assets/logo/logo-mark.svg" alt="" width="28" height="28"><span>Ilhas</span></span>
+    <span class="hilas__regla" aria-hidden="true"></span>
+    <div class="hilas__rot">
+      <ul>
+        <li>
+          <span class="hilas__linea"><b>Hilas</b> tus finanzas.</span>
+          <span class="hilas__resultado">Dejas de armar el número y empiezas a decidir con él.</span>
+        </li>
+        <li>
+          <span class="hilas__linea"><b>Hilas</b> tus ventas.</span>
+          <span class="hilas__resultado">La cotización sale en veinte minutos, no en cuatro horas.</span>
+        </li>
+        <li>
+          <span class="hilas__linea"><b>Hilas</b> tu cobranza.</span>
+          <span class="hilas__resultado">Sabes por qué falló cada cargo, no nada más que falló.</span>
+        </li>
+        <li>
+          <span class="hilas__linea"><b>Hilas</b> tu contabilidad.</span>
+          <span class="hilas__resultado">El cierre deja de costar dos o tres días de captura.</span>
+        </li>
+        <li>
+          <span class="hilas__linea"><b>Hilas</b> tu soporte.</span>
+          <span class="hilas__resultado">Cada ticket llega con contexto, no en blanco.</span>
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<div style="height:40px"></div>
+
+<div class="etiqueta-demo">Congelada — <i>lo que ve alguien con «reducir movimiento» activado</i></div>
+<section class="hilas demo-congelada">
+  <div class="container hilas__inner">
+    <span class="hilas__marca"><img src="../public/assets/logo/logo-mark.svg" alt="" width="28" height="28"><span>Ilhas</span></span>
+    <span class="hilas__regla" aria-hidden="true"></span>
+    <div class="hilas__rot">
+      <ul>
+        <li>
+          <span class="hilas__linea"><b>Hilas</b> tus finanzas.</span>
+          <span class="hilas__resultado">Dejas de armar el número y empiezas a decidir con él.</span>
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<div style="height:60px"></div>
+</body></html>

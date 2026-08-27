@@ -1,0 +1,238 @@
+---
+/**
+ * La banda «Ilhas → Hilas». Va pegada debajo del hero del home, a sangre.
+ *
+ * Referencia visual: `medios/hilas-referencia.html`.
+ *
+ * QUÉ ES. El nombre de la casa volviéndose su propio verbo: I·L·H·A·S con la H
+ * movida al frente da H·I·L·A·S, y «hilar» es el paso H del método — el que
+ * Jorge llama el más importante. Las mismas cinco letras.
+ *
+ * Aquí NO se explica: solo se ve. La explicación vive en `/metodo` §09, que es
+ * a donde cae quien vio esto y le picó la curiosidad.
+ *
+ * ⚠️ ROTA EL ÁREA, NUNCA EL PRODUCTO. Se escribe «Hilas tus ventas». Jamás
+ * «Ilhas Ventas», «Ilhas Soporte» ni nada parecido: eso sería anunciar una isla
+ * que no existe y rompe la regla 3 de CLAUDE.md. Un área es una capacidad del
+ * método hoy; un producto sería una promesa.
+ *
+ * ⚠️ Dos líneas traen cifras REALES y no se tocan: «veinte minutos, no cuatro
+ * horas» es el testimonio de Morgan, y «dos o tres días de captura» es Stampay
+ * (medios/BRIEF-historial.md). Las otras tres van sin cifra a propósito.
+ *
+ * CERO JAVASCRIPT: la rotación es `@keyframes` puro. Los cinco <li> viven
+ * siempre en el DOM —un lector de pantalla los lee todos y Google los indexa
+ * todos—; lo único que se turna es la opacidad.
+ */
+const lineas = [
+  { area: "tus finanzas", resultado: "Dejas de armar el número y empiezas a decidir con él." },
+  { area: "tus ventas", resultado: "La cotización sale en veinte minutos, no en cuatro horas." },
+  { area: "tu cobranza", resultado: "Sabes por qué falló cada cargo, no nada más que falló." },
+  { area: "tu contabilidad", resultado: "El cierre deja de costar dos o tres días de captura." },
+  { area: "tu soporte", resultado: "Cada ticket llega con contexto, no en blanco." },
+];
+---
+
+<section class="hilas" aria-label="Ilhas, hilas">
+  <div class="container hilas__inner">
+    <span class="hilas__marca">
+      {/* Isotipo como <img> desde public/, el mismo patrón que el nav y el
+          footer: logo.svg pesa 19 KB porque trae la fuente en base64 y un <img>
+          no hereda las fuentes de la página. El isotipo solo pesa 517 B. */}
+      <img src="/assets/logo/logo-mark.svg" alt="" width="28" height="28" />
+      <span>Ilhas</span>
+    </span>
+    <span class="hilas__regla" aria-hidden="true"></span>
+    <div class="hilas__rot">
+      <ul>
+        {
+          lineas.map((l) => (
+            <li>
+              <span class="hilas__linea">
+                <b>Hilas</b> {l.area}.
+              </span>
+              <span class="hilas__resultado">{l.resultado}</span>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* Superficie BLANCA contra el --ilhas-light de la página: con --ilhas-light
+     se leía como espacio vacío con texto encima; en blanco se lee como objeto.
+
+     El filete de gradiente va ARRIBA, en la frontera con el hero oscuro: la
+     tinta del hero termina apoyada en una línea de marca. Es el mismo recurso
+     que ya usan las tarjetas de la bifurcación, no un adorno nuevo — y
+     tokens.css lo licencia aquí porque esta banda ES la marca. */
+  /* El margen de arriba: la banda ya NO arranca pegada al hero —encima tiene la
+     tira de trayectoria— y sin aire las dos se leían como una sola cosa
+     partida. El filete de gradiente se queda: dejó de ser la costura contra la
+     tinta del hero, pero sigue siendo el marcador de "aquí hay un momento de
+     marca" que abre el objeto. */
+  .hilas {
+    position: relative;
+    margin-top: clamp(1.75rem, 3.5vw, 2.75rem);
+    background: var(--ilhas-white);
+    border-top: 1px solid var(--ilhas-gray);
+    border-bottom: 1px solid var(--ilhas-gray);
+  }
+
+  .hilas::before {
+    content: "";
+    position: absolute;
+    inset: 0 0 auto 0;
+    height: 3px;
+    background: var(--ilhas-gradient-h);
+  }
+
+  .hilas__inner {
+    display: grid;
+    gap: 1rem;
+    padding-block: 2rem;
+    align-items: center;
+  }
+
+  /* Único lugar del home donde el nombre se escribe suelto: va firmado con el
+     isotipo, no como texto pelón. */
+  .hilas__marca {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+
+  .hilas__marca img {
+    width: 1.75rem;
+    height: 1.75rem;
+    flex: 0 0 auto;
+  }
+
+  /* La mitad que NO se mueve. Por eso se puede comparar contra la que sí. */
+  .hilas__marca span {
+    font-family: var(--ilhas-font-display);
+    font-weight: 600;
+    font-size: clamp(1.5rem, 3vw, 1.875rem);
+    line-height: 1;
+    color: var(--ilhas-dark);
+    letter-spacing: var(--ilhas-tracking-display);
+  }
+
+  .hilas__rot {
+    min-height: 4.25rem;
+  }
+
+  /* Los cinco ítems apilados en la MISMA celda de rejilla, no en absoluto.
+     Apilar con `position: absolute` sacaba a los cinco del flujo, así que el
+     contenedor medía 0 y había que sostenerlo con altura fija — y a lo ancho
+     no había forma de que se midiera solo, lo que obligaba a darle todo el
+     espacio sobrante y dejaba la banda pegada a la izquierda.
+
+     Con `grid-area: 1 / 1` siguen apilados pero SÍ cuentan para el tamaño: el
+     contenedor toma el alto y el ancho del ítem más grande, igual en todo el
+     ciclo. Así no brinca —el problema original— y además puede centrarse.
+     El `min-height` se queda como piso, no como sostén. */
+  .hilas__rot ul {
+    display: grid;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .hilas__rot li {
+    grid-area: 1 / 1;
+    opacity: 0;
+    /* 15 s de ciclo = 3 s por línea (Jorge, 27 ago 2026: los 5 s de la
+       referencia se sentían lentos). Los porcentajes de @keyframes NO cambian:
+       cada ítem ocupa un quinto del ciclo en los dos casos, así que la misma
+       curva se reproduce 1.67× más rápido. La entrada queda en 0.24 s, que es
+       lo que hace que se sienta un cambio y no un desvanecido. */
+    animation: hilas-ciclo 15s infinite;
+  }
+
+  .hilas__rot li:nth-child(1) { animation-delay: 0s; }
+  .hilas__rot li:nth-child(2) { animation-delay: 3s; }
+  .hilas__rot li:nth-child(3) { animation-delay: 6s; }
+  .hilas__rot li:nth-child(4) { animation-delay: 9s; }
+  .hilas__rot li:nth-child(5) { animation-delay: 12s; }
+
+  @keyframes hilas-ciclo {
+    0% { opacity: 0; transform: translateY(8px); }
+    1.6% { opacity: 1; transform: none; }
+    18% { opacity: 1; transform: none; }
+    20% { opacity: 0; transform: translateY(-8px); }
+    100% { opacity: 0; transform: translateY(8px); }
+  }
+
+  .hilas__linea {
+    display: block;
+    font-family: var(--ilhas-font-display);
+    font-weight: 600;
+    font-size: clamp(1.25rem, 2.6vw, 1.75rem);
+    line-height: 1.15;
+    color: var(--ilhas-dark);
+    letter-spacing: var(--ilhas-tracking-display);
+  }
+
+  /* «Hilas» en morado contra «Ilhas» en tinta: el ojo agarra las mismas cinco
+     letras en dos colores y resuelve el juego solo, sin que nadie lo explique. */
+  .hilas__linea b {
+    font-weight: inherit;
+    color: var(--ilhas-primary);
+  }
+
+  .hilas__resultado {
+    display: block;
+    margin-top: 0.4rem;
+    font-size: 1rem;
+    color: var(--ilhas-text);
+    max-width: 52ch;
+  }
+
+  /* Congelada en la primera. Las otras cuatro siguen en el DOM —un lector de
+     pantalla las lee todas, que es lo correcto—, solo dejan de pintarse. */
+  @media (prefers-reduced-motion: reduce) {
+    .hilas__rot li {
+      animation: none;
+      opacity: 0;
+    }
+
+    .hilas__rot li:first-child {
+      opacity: 1;
+    }
+  }
+
+  @media (min-width: 760px) {
+    /* Las tres columnas se miden por su contenido y el grupo se centra. Antes
+       la tercera era `minmax(0, 1fr)` y se comía todo el ancho sobrante: la
+       banda quedaba clavada a la izquierda con medio contenedor vacío a la
+       derecha. Se puede hacer porque el rotador ya se mide solo (ver arriba). */
+    .hilas__inner {
+      grid-template-columns: auto 1px auto;
+      justify-content: center;
+      gap: 1.75rem;
+      padding-block: 1.75rem;
+    }
+
+    .hilas__regla {
+      background: var(--ilhas-gray);
+      align-self: stretch;
+    }
+
+    .hilas__rot {
+      min-height: 3.75rem;
+    }
+  }
+
+  @media (max-width: 759px) {
+    .hilas__regla {
+      display: none;
+    }
+
+    .hilas__rot {
+      min-height: 5.5rem;
+    }
+  }
+</style>

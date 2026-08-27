@@ -1,0 +1,251 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8">
+<title>Ilhas · /metodo §07 — el visor</title>
+<!--
+  ==========================================================================
+  §07 «CÓMO SE USA EN LA PRÁCTICA» · el visor · 27 ago 2026
+  ==========================================================================
+  Izquierda: los cuatro pasos. Derecha: la captura del paso seleccionado.
+
+  CERO JAVASCRIPT. El selector son cuatro <input type="radio"> ocultos a la
+  vista pero NO al teclado (opacity:0 + 1px, nunca display:none), con
+  <label for> en la lista y `:checked ~` para prender la vista. Es el patrón
+  nativo de pestañas sin JS: el lector de pantalla lo anuncia como grupo de
+  opciones, que es exactamente lo que es, y las flechas del teclado ya
+  navegan entre ellas sin que nadie escriba código.
+
+  Las cuatro capturas tienen proporciones muy distintas (1.37, 2.00, 4.81 y
+  0.95). Por eso el panel reserva una altura fija y cada marco se centra
+  dentro: el marco abraza su imagen, y lo que sobra es el fondo de la
+  sección, no una caja vacía. Así no brinca al cambiar y ninguna se deforma.
+-->
+<style>
+:root{
+  --ilhas-primary:#7A3CFF; --ilhas-dark:#0E0E0F; --ilhas-text:#3C3C44;
+  --ilhas-light:#F8FAFF; --ilhas-gray:#E8ECF2; --ilhas-white:#FFF;
+  --ilhas-radius-card:14px;
+  --ilhas-font-display:"Space Grotesk",system-ui,sans-serif;
+  --ilhas-font-body:"Inter",system-ui,-apple-system,sans-serif;
+  --ilhas-fs-small:.875rem;
+  --ilhas-container:1140px; --ilhas-gutter:clamp(1.25rem,4vw,3rem);
+}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;font-family:var(--ilhas-font-body);color:var(--ilhas-text);
+  background:var(--ilhas-light);line-height:1.6}
+.container{width:100%;max-width:var(--ilhas-container);margin-inline:auto;
+  padding-inline:var(--ilhas-gutter)}
+.section-y{padding-block:clamp(3rem,7vw,5.5rem)}
+.kicker{font-weight:500;font-size:var(--ilhas-fs-small);letter-spacing:.06em;
+  text-transform:uppercase;color:var(--ilhas-primary);margin:0}
+h2{font-family:var(--ilhas-font-display);font-weight:600;
+  font-size:clamp(1.75rem,3.2vw,2.4rem);line-height:1.15;letter-spacing:-.02em;
+  color:var(--ilhas-dark);margin:.75rem 0 0;max-width:22ch}
+.lead{margin-top:1.25rem;font-size:1.0625rem;max-width:62ch}
+.marco{overflow:hidden;border:1px solid var(--ilhas-gray);
+  border-radius:var(--ilhas-radius-card);background:var(--ilhas-white)}
+.marco--terminal{background:var(--ilhas-dark);border-color:var(--ilhas-dark)}
+.marco__barra{display:flex;align-items:center;gap:.375rem;
+  padding:.625rem .875rem;border-bottom:1px solid var(--ilhas-gray)}
+.marco--terminal .marco__barra{border-bottom-color:rgba(248,250,255,.12)}
+.marco__barra span{width:.625rem;height:.625rem;border-radius:50%;
+  background:var(--ilhas-gray)}
+.marco--terminal .marco__barra span{background:rgba(248,250,255,.24)}
+
+/* ==========================================================================
+   EL VISOR
+   ========================================================================== */
+.visor{margin-top:2.5rem}
+
+/* Los radios: fuera de la vista, dentro del teclado. */
+.visor__radio{position:absolute;width:1px;height:1px;margin:-1px;padding:0;
+  border:0;clip-path:inset(50%);overflow:hidden;white-space:nowrap}
+
+.visor__grid{display:grid;gap:1.5rem}
+
+/* --- la lista de pasos ---------------------------------------------------
+   Los cuatro llevan borde desde el reposo: sin él se leen como párrafos y
+   nadie adivina que se les da clic. Con él se leen como fichas de un
+   selector — y la activa es la única que se llena de blanco y levanta. */
+.visor__lista{list-style:none;margin:0;padding:0}
+.visor__lista li + li{margin-top:.5rem}
+
+.visor__paso{display:block;position:relative;cursor:pointer;
+  padding:.8rem 2rem .8rem 1.35rem;border-radius:10px;
+  background:transparent;border:1px solid rgba(14,14,15,.07);
+  transition:background .2s ease,border-color .2s ease,box-shadow .2s ease}
+/* La barra del carril: gris casi invisible en reposo, morada en el activo.
+   Es la misma pieza, no dos — por eso la transición se ve continua. */
+.visor__paso::before{content:"";position:absolute;left:0;top:.75rem;
+  bottom:.75rem;width:3px;border-radius:3px;background:transparent;
+  transition:background .2s ease}
+
+.visor__num{display:block;font-family:var(--ilhas-font-display);font-weight:600;
+  font-size:.75rem;letter-spacing:.1em;color:#8e8e9b;
+  transition:color .2s ease}
+.visor__nombre{display:block;margin-top:.15rem;font-weight:500;
+  font-size:1.0625rem;line-height:1.35;color:var(--ilhas-text);
+  transition:color .2s ease}
+
+.visor__paso:hover{background:var(--ilhas-white);border-color:var(--ilhas-gray)}
+
+/* La punta de la ficha activa apunta a la imagen. Es la pieza que explica
+   la sección sin una sola palabra de instrucciones. Solo en escritorio:
+   en móvil la imagen está arriba y la punta no apuntaría a nada. */
+.visor__punta{display:none}
+@media (min-width:900px){
+  .visor__punta{display:block;position:absolute;right:-1px;top:50%;
+    width:0;height:0;transform:translate(100%,-50%);
+    border-block:7px solid transparent;
+    border-left:8px solid transparent;
+    transition:border-left-color .2s ease}
+}
+
+/* --- el panel ------------------------------------------------------------
+   Altura reservada: sin ella la sección brinca de alto al cambiar de vista,
+   porque las cuatro capturas miden distinto. Las cuatro vistas comparten la
+   misma celda de grid (grid-area:1/1) y se turnan la opacidad. */
+.visor__panel{display:grid;align-items:center;justify-items:center;
+  min-height:22rem}
+.visor__vista{grid-area:1/1;margin:0;width:100%;
+  display:flex;align-items:center;justify-content:center;
+  opacity:0;visibility:hidden;transform:translateY(6px);
+  transition:opacity .28s ease,transform .28s ease}
+.visor__vista .marco{max-width:100%}
+.visor__vista img{display:block;width:auto;height:auto;
+  max-width:100%;max-height:20rem}
+
+/* --- el interruptor, todo con `:checked ~` ------------------------------- */
+#v1:checked ~ .visor__grid .visor__panel .visor__vista:nth-child(1),
+#v2:checked ~ .visor__grid .visor__panel .visor__vista:nth-child(2),
+#v3:checked ~ .visor__grid .visor__panel .visor__vista:nth-child(3),
+#v4:checked ~ .visor__grid .visor__panel .visor__vista:nth-child(4){
+  opacity:1;visibility:visible;transform:none}
+
+#v1:checked ~ .visor__grid label[for=v1],
+#v2:checked ~ .visor__grid label[for=v2],
+#v3:checked ~ .visor__grid label[for=v3],
+#v4:checked ~ .visor__grid label[for=v4]{
+  background:var(--ilhas-white);border-color:var(--ilhas-gray);
+  box-shadow:0 1px 2px rgba(14,14,15,.04),0 10px 28px rgba(14,14,15,.06)}
+
+#v1:checked ~ .visor__grid label[for=v1] .visor__punta,
+#v2:checked ~ .visor__grid label[for=v2] .visor__punta,
+#v3:checked ~ .visor__grid label[for=v3] .visor__punta,
+#v4:checked ~ .visor__grid label[for=v4] .visor__punta{
+  border-left-color:var(--ilhas-gray)}
+
+#v1:checked ~ .visor__grid label[for=v1]::before,
+#v2:checked ~ .visor__grid label[for=v2]::before,
+#v3:checked ~ .visor__grid label[for=v3]::before,
+#v4:checked ~ .visor__grid label[for=v4]::before{
+  background:var(--ilhas-primary)}
+
+#v1:checked ~ .visor__grid label[for=v1] .visor__num,
+#v2:checked ~ .visor__grid label[for=v2] .visor__num,
+#v3:checked ~ .visor__grid label[for=v3] .visor__num,
+#v4:checked ~ .visor__grid label[for=v4] .visor__num{
+  color:var(--ilhas-primary)}
+
+#v1:checked ~ .visor__grid label[for=v1] .visor__nombre,
+#v2:checked ~ .visor__grid label[for=v2] .visor__nombre,
+#v3:checked ~ .visor__grid label[for=v3] .visor__nombre,
+#v4:checked ~ .visor__grid label[for=v4] .visor__nombre{
+  color:var(--ilhas-dark);font-weight:600}
+
+/* Foco de teclado: el input no se ve, así que el anillo lo pinta su label. */
+#v1:focus-visible ~ .visor__grid label[for=v1],
+#v2:focus-visible ~ .visor__grid label[for=v2],
+#v3:focus-visible ~ .visor__grid label[for=v3],
+#v4:focus-visible ~ .visor__grid label[for=v4]{
+  outline:2px solid var(--ilhas-primary);outline-offset:2px}
+
+@media (prefers-reduced-motion:reduce){
+  .visor__vista,.visor__paso,.visor__paso::before,
+  .visor__num,.visor__nombre{transition:none}
+}
+
+@media (min-width:900px){
+  .visor__grid{grid-template-columns:minmax(0,17.5rem) minmax(0,1fr);
+    gap:2.5rem;align-items:start}
+  .visor__panel{min-height:26rem}
+  .visor__vista img{max-height:24rem}
+}
+@media (max-width:899px){
+  /* En móvil el panel va primero: la imagen es la prueba, la lista es el
+     índice. Y el orden del DOM no cambia — solo el visual. */
+  .visor__panel{order:-1;min-height:17rem}
+  .visor__vista img{max-height:16.5rem}
+  .visor__lista::before{display:none}
+  .visor__paso{padding-left:1.1rem}
+}
+</style></head><body>
+
+<section class="section-y" id="s07">
+  <div class="container">
+    <div>
+      <p class="kicker">Cómo se usa en la práctica</p>
+      <h2>No son prompts. Es reingeniería del trabajo.</h2>
+      <p class="lead">
+        El organigrama —personas asignadas a tareas— ya no es el mapa. El mapa
+        es el proceso: qué entra, qué sale y qué de eso genera dinero.
+        Rediseñas eso, y la IA ejecuta la parte que ya decidiste tú.
+      </p>
+    </div>
+
+    <div class="visor">
+      <input class="visor__radio" type="radio" name="visor" id="v1" checked>
+      <input class="visor__radio" type="radio" name="visor" id="v2">
+      <input class="visor__radio" type="radio" name="visor" id="v3">
+      <input class="visor__radio" type="radio" name="visor" id="v4">
+
+      <div class="visor__grid">
+        <ul class="visor__lista">
+          <li><label class="visor__paso" for="v1"><span class="visor__punta" aria-hidden="true"></span>
+            <span class="visor__num">01</span>
+            <span class="visor__nombre">La estructura: agentes, skills y comandos</span>
+          </label></li>
+          <li><label class="visor__paso" for="v2"><span class="visor__punta" aria-hidden="true"></span>
+            <span class="visor__num">02</span>
+            <span class="visor__nombre">El flujo completo, de entrada a salida</span>
+          </label></li>
+          <li><label class="visor__paso" for="v3"><span class="visor__punta" aria-hidden="true"></span>
+            <span class="visor__num">03</span>
+            <span class="visor__nombre">La herramienta corriendo</span>
+          </label></li>
+          <li><label class="visor__paso" for="v4"><span class="visor__punta" aria-hidden="true"></span>
+            <span class="visor__num">04</span>
+            <span class="visor__nombre">El resultado que salió solo</span>
+          </label></li>
+        </ul>
+
+        <div class="visor__panel">
+          <figure class="visor__vista">
+            <div class="marco">
+              <div class="marco__barra" aria-hidden="true"><span></span><span></span><span></span></div>
+              <img src="../src/assets/media/capturas/metodo-prompts-01.png" alt="Estructura de carpetas de Claude con agentes, skills y comandos">
+            </div>
+          </figure>
+          <figure class="visor__vista">
+            <div class="marco">
+              <div class="marco__barra" aria-hidden="true"><span></span><span></span><span></span></div>
+              <img src="../src/assets/media/capturas/metodo-prompts-02.png" alt="Flujo de trabajo completo de un agente, de entrada a salida">
+            </div>
+          </figure>
+          <figure class="visor__vista">
+            <div class="marco marco--terminal">
+              <div class="marco__barra" aria-hidden="true"><span></span><span></span><span></span></div>
+              <img src="../src/assets/media/capturas/metodo-prompts-03.png" alt="Terminal con una herramienta del agente ejecutándose">
+            </div>
+          </figure>
+          <figure class="visor__vista">
+            <div class="marco">
+              <div class="marco__barra" aria-hidden="true"><span></span><span></span><span></span></div>
+              <img src="../src/assets/media/capturas/metodo-prompts-04.png" alt="Reporte generado automáticamente por el sistema de agentes">
+            </div>
+          </figure>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</body></html>

@@ -2,6 +2,7 @@
 import { Image } from "astro:assets";
 import Base from "../layouts/Base.astro";
 import Bifurcacion from "../components/Bifurcacion.astro";
+import BandaHilas from "../components/BandaHilas.astro";
 import BandaAutoridad from "../components/medios/BandaAutoridad.astro";
 import TarjetaCaso from "../components/medios/TarjetaCaso.astro";
 import Stat from "../components/medios/Stat.astro";
@@ -136,10 +137,15 @@ const kpis = [
       {fotoHero && <p class="hero__credito">Talent Land · abril 2018</p>}
     </section>
 
+
     {/* Banda de autoridad — medios/BRIEF-historial.md §3. Tira delgada, no
         una sección, y SIN los tres videos: el home tiene ocho segundos, y
         meterle la prueba completa lo mata y hace que no se vea ninguno. La
-        banda vende en dos segundos y manda a /nosotros a quien la quiera. */}
+        banda vende en dos segundos y manda a /nosotros a quien la quiera.
+
+        Va pegada al hero, arriba de la banda Hilas. La iteración 7 probó el
+        orden inverso y Jorge lo revirtió el 27 ago 2026: la trayectoria se
+        queda donde estaba y el juego del nombre entra después. */}
     <div class="container banda-autoridad">
       <BandaAutoridad
         titulo="Hablando de IA en público desde 2017."
@@ -151,6 +157,10 @@ const kpis = [
         href="/nosotros"
       />
     </div>
+
+    {/* La banda Ilhas → Hilas. El hero NO se toca.
+        Aquí solo se ve el juego; se explica en /metodo §09. */}
+    <BandaHilas />
 
     {/* 02 · El hueco — se rehizo el 25 ago 2026 y SE COMIÓ a la vieja §03.
         Referencia: medios/hueco-referencia.html, opción 3 (#sinbanda).
@@ -179,9 +189,8 @@ const kpis = [
         <p class="causa reveal">
           MIT analizó <strong>300 proyectos de IA empresarial</strong>: el 95%
           no mostró retorno financiero medible en seis meses. No fallaron los
-          modelos — falló lo de antes. Sin línea base no hay con qué comparar,
-          y sin comparación no hay retorno que demostrar, aunque el proyecto
-          haya funcionado. <strong>La IA amplifica lo que le metes.</strong> Si
+          modelos, falló lo de antes. Si no mediste cómo estaba el proceso al
+          arrancar, no tienes contra qué comparar el resultado. <strong>La IA amplifica lo que le metes.</strong> Si
           el fundamento está flojo, amplifica eso.
         </p>
 
@@ -226,7 +235,7 @@ const kpis = [
               la línea nada más cierra la puerta. La segunda frase sale de
               docs/01-arquitectura.md, no es invención. */}
           <p class="remate">
-            Cinco pasos. Cinco letras: <em>I·L·H·A·S</em>.<br />
+            Cinco pasos, cinco letras: <em>I·L·H·A·S</em>.<br />
             El método es el barco; las islas son a dónde lo apuntas.
           </p>
 
@@ -278,7 +287,7 @@ const kpis = [
       <div class="container">
         <div class="section-head reveal">
           <p class="kicker">De dónde sale el método</p>
-          <h2>No es teoría. Es lo que ya construimos.</h2>
+          <h2>Esto ya está corriendo.</h2>
         </div>
 
         <ul class="linaje">
@@ -523,6 +532,8 @@ const kpis = [
   }
 
   /* --- Banda de autoridad --- */
+  /* Corto: arriba tiene el hero, no otra tira. El aire que separa esta tira de
+     la banda Hilas lo pone la banda, con su propio margen. */
   .banda-autoridad {
     margin-top: 0.5rem;
   }

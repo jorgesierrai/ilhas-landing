@@ -62,7 +62,7 @@ Los números de credibilidad son de la **trayectoria del equipo**, no resultados
 | Dato | Qué es realmente | Cómo presentarlo |
 |---|---|---|
 | **+40 años de experiencia** | Trayectoria del padre en finanzas | "40 años de experiencia financiera del equipo" |
-| **+2,000 empresas asesoradas** | Carrera del padre | "Trayectoria del equipo: +2,000 empresas asesoradas en LATAM" |
+| **+200 empresas asesoradas** | Carrera del padre | "Trayectoria del equipo: +200 empresas asesoradas en LATAM" |
 | **+1B MXN procesados al mes** | Productos fintech liderados por Jorge | "Productos que ha liderado Jorge procesan +1B MXN al mes" |
 | **12 años** | Carrera de Jorge en tech/producto | "12 años construyendo productos digitales" |
 

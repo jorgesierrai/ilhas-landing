@@ -40,7 +40,7 @@
 
 ### Integridad de datos (crítico)
 Estos números son trayectoria del **equipo**, no resultados del bootcamp. Atribúyelos así:
-- +40 años / +2,000 empresas → trayectoria del equipo (papá).
+- +40 años / +200 empresas → trayectoria del equipo (papá).
 - +1B MXN/mes → productos fintech que ha liderado Jorge.
 - 12 años → carrera de Jorge en tech.
 Nunca los presentes como resultados de alumnos.
