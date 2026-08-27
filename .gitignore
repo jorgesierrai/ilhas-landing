@@ -153,3 +153,13 @@ public/assets/ilhas-iconografia/
 # Material crudo de video: nunca se commitea (GitHub bloquea >100 MB por archivo)
 _material-crudo/
 *.mov
+
+# El clip de edificación (papá e hijo) NO se publica todavía: es material de
+# campaña y Jorge no lo quiere quemar hasta que estén captando gente para el
+# webinar (27 ago 2026). Los archivos viven en la máquina para poder verlos en
+# local, pero no entran a git — una ranura sin archivo no pinta nada en
+# producción, así que con esto basta para que el video no salga.
+# Cuando arranque la campaña: borra estas tres líneas y commitea los archivos.
+public/assets/video/finanzas-edificacion.mp4
+public/assets/video/finanzas-edificacion.jpg
+public/assets/video/finanzas-edificacion.es.vtt

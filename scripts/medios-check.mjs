@@ -191,8 +191,14 @@ for (const prioridad of [1, 2, 3]) {
     if (estado === "problema") problemas++;
 
     const linea = `  ${ICONO[estado]}  ${slot.id.padEnd(34)}`;
-    if (estado === "falta") console.log(`${linea}FALTA`);
-    else console.log(`${linea}${detalle}`);
+    // Una ranura dada de baja no "falta": nadie tiene que producirla. Decirle
+    // FALTA a algo que ya se decidió no usar manda a grabar material que no va
+    // a salir en ninguna página.
+    if (estado === "falta" && slot.sinUsar) {
+      console.log(`${linea}dada de baja — no la produzcas`);
+    } else if (estado === "falta") {
+      console.log(`${linea}FALTA`);
+    } else console.log(`${linea}${detalle}`);
   }
 }
 

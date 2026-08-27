@@ -46,7 +46,7 @@ Esta parte de `05-voz-y-copy.md` no solo sigue vigente, es **más** importante a
 | Dato | Qué es realmente | Cómo se escribe |
 |---|---|---|
 | +40 años | Trayectoria del papá | "40 años asesorando empresas en LATAM" |
-| +2,000 empresas | Carrera del papá | "+2,000 empresas asesoradas" |
+| +200 empresas | Carrera del papá | "+200 empresas asesoradas" |
 | +1B MXN/mes | Productos fintech que Jorge ha liderado | "Productos que ha liderado procesan +1B MXN al mes" |
 | 12 años | Carrera de Jorge en tech | "12 años construyendo productos digitales" |
 

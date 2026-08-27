@@ -92,7 +92,10 @@ Del podcast que ya grabaste. **Tres cortes de 60-90 s, no el episodio.** Sugeren
 📁 `public/assets/video/` · **8-15 s** · `.webm` **máx 800 KB** + `.mp4` **máx 1.5 MB** + `.jpg` póster
 Sin audio, sin subtítulos. Son los "GIFs".
 
-- [ ] `home-hero-loop` — un agente corriendo: terminal + dashboard actualizándose
+- [x] ~~`home-hero-loop`~~ — **dada de baja el 25 ago 2026.** El hero del home lo
+  ocupa la foto de Talent Land (`home-hero-conferencia`). La ranura se conserva en
+  el manifiesto con `sinUsar: true` por si el loop vuelve en otra sección, pero
+  **no la produzcas**.
 - [ ] `soluciones-hero-loop` — el producto en movimiento
 - [ ] `finanzas-hero-loop` — un análisis financiero ejecutándose
 - [ ] `metodo-agentes-loop` — varios agentes trabajando en paralelo → `/metodo` §08

@@ -61,8 +61,22 @@ const etiqueta = titulo ?? slot.alt;
           aria-label={etiqueta}
         >
           <source src={mp4} type="video/mp4" />
+          {/*
+            `default` autoenciende los subtítulos, que es lo correcto en un
+            sitio en español con clips de voz. La excepción son los archivos
+            que YA traen los subtítulos quemados en la imagen: ahí el
+            navegador pinta su capa encima de la que está en el pixel y se
+            leen dobles. La bandera vive en el manifiesto porque es una
+            propiedad del archivo, no de la página.
+          */}
           {vtt && (
-            <track kind="captions" src={vtt} srclang="es" label="Español" default />
+            <track
+              kind="captions"
+              src={vtt}
+              srclang="es"
+              label="Español"
+              default={!slot.subtitulosQuemados}
+            />
           )}
         </video>
       </div>

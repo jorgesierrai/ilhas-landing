@@ -57,6 +57,19 @@ export interface SlotMedio {
    * Ponlo solo con la razón escrita en `notas`.
    */
   sinUsar?: boolean;
+  /**
+   * `true` cuando el video trae los subtítulos **quemados en la imagen**.
+   *
+   * El `.es.vtt` se queda igual —hace falta para accesibilidad y para que el
+   * texto sea indexable—, pero el `<track>` deja de llevar `default`: si se
+   * autoenciende, el navegador pinta su capa encima de la que ya está en el
+   * pixel y se leen dobles. El visitante puede prenderlo desde los controles.
+   *
+   * Es una propiedad del ARCHIVO, no de la página, y por eso vive aquí y no
+   * dentro de VideoClip.astro: si mañana llega otro clip con subtítulos
+   * quemados, se le pone la bandera y ya.
+   */
+  subtitulosQuemados?: boolean;
 }
 
 /**
@@ -425,8 +438,9 @@ export const MEDIOS: SlotMedio[] = [
     alt: "Jorge Sierra papá y Jorge Sierra hijo hablando de su trabajo en conjunto",
     duracion: "60-90 s",
     pesoMaxKB: 12288,
+    subtitulosQuemados: true,
     notas:
-      "IDENTIDAD, NO OFERTA: que no mencione temario, precio ni bonos. El VSL no va en el sitio (regla 1 de CLAUDE.md).",
+      "IDENTIDAD, NO OFERTA: que no mencione temario, precio ni bonos. El VSL no va en el sitio (regla 1 de CLAUDE.md). El archivo trae los subtítulos quemados en la imagen, así que su <track> NO se autoenciende: se veían dobles. El .es.vtt se queda por accesibilidad e indexado.",
   },
 
   // --- Íconos de las ocho capacidades (F) · /finanzas §02
