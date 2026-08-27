@@ -68,9 +68,16 @@ const lineas = [
      tinta del hero termina apoyada en una línea de marca. Es el mismo recurso
      que ya usan las tarjetas de la bifurcación, no un adorno nuevo — y
      tokens.css lo licencia aquí porque esta banda ES la marca. */
+  /* El margen de arriba: la banda ya NO arranca pegada al hero —encima tiene la
+     tira de trayectoria— y sin aire las dos se leían como una sola cosa
+     partida. El filete de gradiente se queda: dejó de ser la costura contra la
+     tinta del hero, pero sigue siendo el marcador de "aquí hay un momento de
+     marca" que abre el objeto. */
   .hilas {
     position: relative;
+    margin-top: clamp(1.75rem, 3.5vw, 2.75rem);
     background: var(--ilhas-white);
+    border-top: 1px solid var(--ilhas-gray);
     border-bottom: 1px solid var(--ilhas-gray);
   }
 
@@ -130,14 +137,19 @@ const lineas = [
     position: absolute;
     inset: 0;
     opacity: 0;
-    animation: hilas-ciclo 25s infinite;
+    /* 15 s de ciclo = 3 s por línea (Jorge, 27 ago 2026: los 5 s de la
+       referencia se sentían lentos). Los porcentajes de @keyframes NO cambian:
+       cada ítem ocupa un quinto del ciclo en los dos casos, así que la misma
+       curva se reproduce 1.67× más rápido. La entrada queda en 0.24 s, que es
+       lo que hace que se sienta un cambio y no un desvanecido. */
+    animation: hilas-ciclo 15s infinite;
   }
 
   .hilas__rot li:nth-child(1) { animation-delay: 0s; }
-  .hilas__rot li:nth-child(2) { animation-delay: 5s; }
-  .hilas__rot li:nth-child(3) { animation-delay: 10s; }
-  .hilas__rot li:nth-child(4) { animation-delay: 15s; }
-  .hilas__rot li:nth-child(5) { animation-delay: 20s; }
+  .hilas__rot li:nth-child(2) { animation-delay: 3s; }
+  .hilas__rot li:nth-child(3) { animation-delay: 6s; }
+  .hilas__rot li:nth-child(4) { animation-delay: 9s; }
+  .hilas__rot li:nth-child(5) { animation-delay: 12s; }
 
   @keyframes hilas-ciclo {
     0% { opacity: 0; transform: translateY(8px); }
