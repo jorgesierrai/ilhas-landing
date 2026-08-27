@@ -6,6 +6,7 @@ import Captura from "../components/medios/Captura.astro";
 import Loop from "../components/medios/Loop.astro";
 import VideoClip from "../components/medios/VideoClip.astro";
 import { mostrar } from "../lib/medios";
+import { porId } from "../data/medios";
 
 // §07 "No son prompts": las cuatro capturas del sistema de agentes. Es la
 // única prueba de la afirmación que da título a la sección — el bloque más
@@ -569,13 +570,71 @@ const principioFinal = {
           </p>
         </div>
 
-        {/* Las cuatro capturas del sistema de agentes. La afirmación
-            literal de la sección es "esto no son prompts": estas capturas
-            son la única forma de probarlo. */}
+        {/* Las cuatro capturas del sistema de agentes, en un visor: a la
+            izquierda los cuatro pasos, a la derecha la captura del que está
+            seleccionado. La afirmación literal de la sección es "esto no son
+            prompts", y estas capturas son la única forma de probarlo — pero
+            apiladas nadie bajaba a verlas.
+
+            CERO JAVASCRIPT. El selector son cuatro <input type="radio"> con el
+            mismo `name`, cuatro <label for> y `:checked ~` para prender la
+            vista. Los inputs van ANTES del grid y como hermanos suyos: sin eso
+            el combinador `~` no alcanza ni la lista ni el panel.
+
+            Los radios se ocultan con clip-path, NUNCA con display:none ni
+            visibility:hidden — con esos salen del orden de tabulación y el
+            visor deja de funcionar con teclado.
+
+            Sin role="tablist" ni aria-selected a propósito: eso pide manejo de
+            foco con JS y aquí mentiría. Con radios de verdad, el lector de
+            pantalla ya lo anuncia como grupo de opciones —que es lo que es— y
+            las flechas ya navegan entre ellas.
+
+            Si falta una captura, Captura.astro pinta su Ranura y el visor
+            sigue de pie: se ve el hueco con su ficha, no un panel vacío. */}
         {
           mostrar(...capturasPrompts.map((c) => c.id)) && (
-            <div class="prompts">
-              {capturasPrompts.map((c) => <Captura id={c.id} marco={c.marco} ancho={560} />)}
+            <div class="visor">
+              {capturasPrompts.map((c, i) => (
+                <input
+                  class="visor__radio"
+                  type="radio"
+                  name="visor"
+                  id={`v${i + 1}`}
+                  checked={i === 0}
+                />
+              ))}
+
+              <div class="visor__grid">
+                <ul class="visor__lista">
+                  {capturasPrompts.map((c, i) => (
+                    <li>
+                      <label class="visor__paso" for={`v${i + 1}`}>
+                        <span class="visor__punta" aria-hidden="true" />
+                        <span class="visor__num">
+                          {String(i + 1).padStart(2, "0")}
+                        </span>
+                        <span class="visor__nombre">{porId(c.id)!.caption}</span>
+                      </label>
+                    </li>
+                  ))}
+                </ul>
+
+                <div class="visor__panel">
+                  {capturasPrompts.map((c) => (
+                    <div class="visor__vista">
+                      {/* El pie se apaga: la lista de la izquierda ya nombra lo
+                          que estás viendo. */}
+                      <Captura
+                        id={c.id}
+                        marco={c.marco}
+                        ancho={900}
+                        mostrarPie={false}
+                      />
+                    </div>
+                  ))}
+                </div>
+              </div>
             </div>
           )
         }
@@ -687,31 +746,267 @@ const principioFinal = {
     max-width: 48rem;
   }
 
-  /* Rejilla de 2 × 2 en escritorio, una columna en angosto (iteración 7 §4).
-     Apiladas a ancho completo costaban ~700 px cada una y la sección llegaba a
-     3,115 px — la más alta de todo el sitio. En rejilla se leen como lo que
-     son: UN set, no cuatro cosas distintas.
+  /* ======================================================================
+     §07 · EL VISOR
 
-     ⚠️ Esto revierte una decisión anterior que decía "una por fila, no 2x2,
-     porque a ~505 px el código de la primera captura se vuelve ruido gris".
-     Ese riesgo es real y hay que verificarlo en cada corrida: el titular de la
-     sección afirma "no son prompts" y estas capturas son la única prueba. Si
-     la captura de código deja de leerse, el arreglo NO es volver a una columna
-     —eso devuelve los 3,115 px— sino recortarla más cerca del contenido.
+     Referencia: medios/practica-referencia.html, copiada. Reemplaza la rejilla
+     2×2 de la iteración 7 y, antes de ella, las cuatro capturas apiladas a
+     ancho completo que hacían de esta la sección más alta del sitio.
 
-     El tope de ancho sigue por debajo del contenedor: una captura a 1140 px
-     con una fuente de 1300 px se sirve por debajo de retina. */
-  .prompts {
-    display: grid;
-    gap: 1.75rem;
+     `.marco` y `.marco--terminal` NO se duplican aquí: viven en base.css y los
+     pinta Captura.astro. Lo que se toca de la captura es solo su tamaño, y va
+     con :global() porque el componente tiene su propio scope.
+     ====================================================================== */
+  .visor {
     margin-top: 2.5rem;
-    max-width: 900px;
   }
 
-  @media (min-width: 860px) {
-    .prompts {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
+  /* Fuera de la vista, DENTRO del teclado. clip-path y no display:none:
+     con display:none o visibility:hidden el input sale del orden de
+     tabulación y el visor se vuelve inoperable con teclado. */
+  .visor__radio {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    border: 0;
+    clip-path: inset(50%);
+    overflow: hidden;
+    white-space: nowrap;
+  }
+
+  .visor__grid {
+    display: grid;
+    gap: 1.5rem;
+  }
+
+  /* Los cuatro llevan borde desde el reposo: sin él se leen como párrafos y
+     nadie adivina que se les da clic. Con él se leen como fichas de un
+     selector, y la activa es la única que se llena de blanco y levanta. */
+  .visor__lista {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .visor__lista li + li {
+    margin-top: 0.5rem;
+  }
+
+  .visor__paso {
+    display: block;
+    position: relative;
+    cursor: pointer;
+    padding: 0.8rem 2rem 0.8rem 1.35rem;
+    border-radius: 10px;
+    background: transparent;
+    border: 1px solid rgba(14, 14, 15, 0.07);
+    transition: background 0.2s ease, border-color 0.2s ease,
+      box-shadow 0.2s ease;
+  }
+
+  /* La barra del carril: transparente en reposo, morada en el activo. Es la
+     misma pieza, no dos — por eso la transición se ve continua. */
+  .visor__paso::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.75rem;
+    bottom: 0.75rem;
+    width: 3px;
+    border-radius: 3px;
+    background: transparent;
+    transition: background 0.2s ease;
+  }
+
+  .visor__num {
+    display: block;
+    font-family: var(--ilhas-font-display);
+    font-weight: 600;
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    /* --ilhas-text, no un gris claro. La referencia usaba #8e8e9b, que sobre
+       --ilhas-light mide 3.10:1 y es texto de 12 px: falla AA. Bajarlo a
+       #75757f tampoco alcanza (4.36:1), y tokens.css prohíbe inventar grises
+       —"para texto pequeño usa --ilhas-text o --ilhas-dark sólidos"—. La
+       jerarquía contra el nombre ya la hacen el tamaño, el tracking y el peso,
+       y al activarse el número se pone violeta. */
+    color: var(--ilhas-text);
+    transition: color 0.2s ease;
+  }
+
+  .visor__nombre {
+    display: block;
+    margin-top: 0.15rem;
+    font-weight: 500;
+    font-size: 1.0625rem;
+    line-height: 1.35;
+    color: var(--ilhas-text);
+    transition: color 0.2s ease;
+  }
+
+  .visor__paso:hover {
+    background: var(--ilhas-white);
+    border-color: var(--ilhas-gray);
+  }
+
+  /* La punta de la ficha activa apunta a la imagen: explica la sección sin una
+     sola palabra de instrucciones. Solo en escritorio — en móvil la imagen va
+     arriba y no apuntaría a nada. */
+  .visor__punta {
+    display: none;
+  }
+
+  /* Altura reservada: sin ella la sección brinca al cambiar de vista, porque
+     las cuatro capturas tienen proporciones muy distintas (1.37, 2.00, 4.81 y
+     0.95). Las cuatro vistas comparten la misma celda y el marco abraza su
+     imagen: lo que sobra es el fondo de la sección, no una caja vacía. */
+  .visor__panel {
+    display: grid;
+    align-items: center;
+    justify-items: center;
+    min-height: 22rem;
+  }
+
+  .visor__vista {
+    grid-area: 1 / 1;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(6px);
+    transition: opacity 0.28s ease, transform 0.28s ease;
+  }
+
+  .visor__vista :global(.captura),
+  .visor__vista :global(.marco) {
+    max-width: 100%;
+  }
+
+  /* `width: auto` en vez del `width: 100%` que trae Captura.astro: aquí el
+     marco tiene que abrazar la imagen, no estirarse a la columna. */
+  .visor__vista :global(.captura__img) {
+    width: auto;
+    height: auto;
+    max-width: 100%;
+    max-height: 20rem;
+  }
+
+  /* --- el interruptor, todo con `:checked ~` ---------------------------- */
+  #v1:checked ~ .visor__grid .visor__panel .visor__vista:nth-child(1),
+  #v2:checked ~ .visor__grid .visor__panel .visor__vista:nth-child(2),
+  #v3:checked ~ .visor__grid .visor__panel .visor__vista:nth-child(3),
+  #v4:checked ~ .visor__grid .visor__panel .visor__vista:nth-child(4) {
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+  }
+
+  #v1:checked ~ .visor__grid label[for="v1"],
+  #v2:checked ~ .visor__grid label[for="v2"],
+  #v3:checked ~ .visor__grid label[for="v3"],
+  #v4:checked ~ .visor__grid label[for="v4"] {
+    background: var(--ilhas-white);
+    border-color: var(--ilhas-gray);
+    box-shadow: 0 1px 2px rgba(14, 14, 15, 0.04),
+      0 10px 28px rgba(14, 14, 15, 0.06);
+  }
+
+  #v1:checked ~ .visor__grid label[for="v1"] .visor__punta,
+  #v2:checked ~ .visor__grid label[for="v2"] .visor__punta,
+  #v3:checked ~ .visor__grid label[for="v3"] .visor__punta,
+  #v4:checked ~ .visor__grid label[for="v4"] .visor__punta {
+    border-left-color: var(--ilhas-gray);
+  }
+
+  #v1:checked ~ .visor__grid label[for="v1"]::before,
+  #v2:checked ~ .visor__grid label[for="v2"]::before,
+  #v3:checked ~ .visor__grid label[for="v3"]::before,
+  #v4:checked ~ .visor__grid label[for="v4"]::before {
+    background: var(--ilhas-primary);
+  }
+
+  #v1:checked ~ .visor__grid label[for="v1"] .visor__num,
+  #v2:checked ~ .visor__grid label[for="v2"] .visor__num,
+  #v3:checked ~ .visor__grid label[for="v3"] .visor__num,
+  #v4:checked ~ .visor__grid label[for="v4"] .visor__num {
+    color: var(--ilhas-primary);
+  }
+
+  #v1:checked ~ .visor__grid label[for="v1"] .visor__nombre,
+  #v2:checked ~ .visor__grid label[for="v2"] .visor__nombre,
+  #v3:checked ~ .visor__grid label[for="v3"] .visor__nombre,
+  #v4:checked ~ .visor__grid label[for="v4"] .visor__nombre {
+    color: var(--ilhas-dark);
+    font-weight: 600;
+  }
+
+  /* El input no se ve, así que el anillo de foco lo pinta su label. */
+  #v1:focus-visible ~ .visor__grid label[for="v1"],
+  #v2:focus-visible ~ .visor__grid label[for="v2"],
+  #v3:focus-visible ~ .visor__grid label[for="v3"],
+  #v4:focus-visible ~ .visor__grid label[for="v4"] {
+    outline: 2px solid var(--ilhas-primary);
+    outline-offset: 2px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .visor__vista,
+    .visor__paso,
+    .visor__paso::before,
+    .visor__num,
+    .visor__nombre {
+      transition: none;
+    }
+  }
+
+  @media (min-width: 900px) {
+    .visor__grid {
+      grid-template-columns: minmax(0, 17.5rem) minmax(0, 1fr);
+      gap: 2.5rem;
       align-items: start;
+    }
+
+    .visor__panel {
+      min-height: 26rem;
+    }
+
+    .visor__vista :global(.captura__img) {
+      max-height: 24rem;
+    }
+
+    .visor__punta {
+      display: block;
+      position: absolute;
+      right: -1px;
+      top: 50%;
+      width: 0;
+      height: 0;
+      transform: translate(100%, -50%);
+      border-block: 7px solid transparent;
+      border-left: 8px solid transparent;
+      transition: border-left-color 0.2s ease;
+    }
+  }
+
+  /* En móvil el panel va primero: la imagen es la prueba, la lista es su
+     índice. El orden del DOM no cambia — solo el visual, con `order` — así el
+     teclado y el lector de pantalla siguen leyendo lista → panel. */
+  @media (max-width: 899px) {
+    .visor__panel {
+      order: -1;
+      min-height: 17rem;
+    }
+
+    .visor__vista :global(.captura__img) {
+      max-height: 16.5rem;
+    }
+
+    .visor__paso {
+      padding-left: 1.1rem;
     }
   }
 
