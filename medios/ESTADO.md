@@ -29,16 +29,19 @@
 | **Iteración 5 — bifurcación y mapa de la empresa** | ✅ Hecha (`../prompts/iteracion-5-bifurcacion-mapa.md`) |
 | **Material de prioridad 2 y 3** | ⬜ Pendiente — sigue `CHECKLIST.md` |
 
-`npm run medios` → **17 de 39 listas · 0 con problema**
+`npm run medios` → **17 de 34 listas · 0 con problema**
 
 ### Qué cambió desde la Iteración 1
 
 - **Prioridad 1 está completa**: las seis capturas de producto, las cuatro del
   sistema de agentes, la foto del hero (`home-hero-conferencia`) y el clip de
   radio de 2018.
-- **De 41 ranuras a 39.** Se fueron `home-mercado-01/02/03` (las vacantes: los
-  puestos que mostraban no son el comprador de Ilhas — decisión de Jorge, 27 ago
-  2026) y entraron `home-hero-conferencia` y `nosotros-conferencia-clip`.
+- **De 41 ranuras a 34.** Salieron `home-mercado-01/02/03` (las vacantes: los
+  puestos que mostraban no son el comprador de Ilhas) y los cinco
+  `icono-paso-*` (servían a la vieja §03 del home, que la iteración 4 absorbió
+  en el mapa; el mapa identifica cada paso con el badge de su letra). Las dos
+  decisiones son de Jorge, 27 ago 2026. Entraron `home-hero-conferencia` y
+  `nosotros-conferencia-clip`.
 - **Dos ranuras están llenas pero deliberadamente sin usar**, marcadas con
   `sinUsar: true` para que el verificador no las señale: `metodo-timeline` (era
   furniture de video horizontal; la reemplazó la línea vertical de `/nosotros`)
@@ -53,7 +56,7 @@
 |---|---|
 | `nosotros-historia-01/02/03` | No hay material. Es la sección "La historia" de `/nosotros` (prioridad 2) |
 | Caption de `nosotros-conferencia` | Los briefs del 24 ago se contradicen: nov 2017 sin evento, o Talent Land. Va sin caption hasta que Jorge decida |
-| Los 13 íconos y los 5 loops | Prioridad 3. El sitio se ve bien sin ellos: una ranura vacía no pinta nada |
+| Los 8 íconos de capacidades y los 5 loops | Prioridad 3. El sitio se ve bien sin ellos: una ranura vacía no pinta nada |
 
 ---
 

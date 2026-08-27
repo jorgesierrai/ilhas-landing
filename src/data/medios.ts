@@ -429,30 +429,6 @@ export const MEDIOS: SlotMedio[] = [
       "IDENTIDAD, NO OFERTA: que no mencione temario, precio ni bonos. El VSL no va en el sitio (regla 1 de CLAUDE.md).",
   },
 
-  // --- Íconos de los cinco pasos (F) · home §03
-  ...(
-    [
-      ["i", "Identificar"],
-      ["l", "Levantamiento"],
-      ["h", "Hilar"],
-      ["a", "Accionar"],
-      ["s", "Sistematizar"],
-    ] as const
-  ).map(
-    ([letra, paso]): SlotMedio => ({
-      id: `icono-paso-${letra}`,
-      tipo: "icono",
-      pagina: "home",
-      seccion: "§03 Los cinco pasos",
-      prioridad: 3,
-      objecion: "(no mata objeción — es sistema visual)",
-      // Decorativo: el nombre del paso ya va como texto al lado.
-      alt: "",
-      pesoMaxKB: 8,
-      notas: `Paso ${letra.toUpperCase()} · ${paso}. SVG monocromo, stroke="currentColor", lienzo 24×24, sin fill fijo.`,
-    }),
-  ),
-
   // --- Íconos de las ocho capacidades (F) · /finanzas §02
   ...(
     [

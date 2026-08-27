@@ -64,14 +64,18 @@ Este bloque *es* el conector. Todo lo demás del home existe para darle permiso 
 Los productos que Jorge ya construyó, presentados como evidencia de que el método salió de algún lado real: Stampay, Nomcont, el Data Concierge de Cometa, Nomada, Paystand, Factumizer. Una línea cada uno: qué dolor resuelve.
 Fuente: la Biblia de Producto, §2.
 
-**06 · Quiénes somos, corto — ⚠️ NO CONSTRUIDO**
-Dos tarjetas, foto y una línea cada uno. Link a `/nosotros`. **Separados, no como dúo.** Ver `/nosotros`.
+**06 · ~~Quiénes somos, corto~~ — NO VA. Decisión de Jorge, 27 ago 2026.**
 
-> **Hueco abierto, verificado el 27 ago 2026:** cero coincidencias en
-> `dist/index.html`. El home va de la prueba (§05) al cierre (§07) sin que
-> aparezca nadie. El material existe —las dos fotos en `src/assets/equipo/` y
-> `TarjetaPersona.astro`, que ya usan `/nosotros` y `/finanzas`—, así que se
-> puede construir sin inventar nada. Falta la decisión de Jorge.
+> El home **no lleva tarjetas de equipo**. La autoridad ya está resuelta arriba y
+> tres veces: el riel de cifras del hero (+1,000 MDP al mes · 6+ startups · 2016
+> desarrollando IA), la foto de Jorge en Talent Land detrás del titular, y la
+> banda de "hablando de IA en público desde 2017", que además liga a
+> `/nosotros`. Repetir las caras a 4,800 px de scroll no agrega prueba: agrega
+> largo. Quien quiera cara y trayectoria entra a `/nosotros`, que es la página
+> cuyo trabajo es exactamente ese.
+>
+> **No lo reabras** sin una razón nueva. Si el bloque vuelve, vuelve porque el
+> hero dejó de cargar la autoridad, no porque este documento lo pedía antes.
 
 **07 · Cierre**
 Repetición de la bifurcación o un CTA único a `/metodo` si no compró ninguno de los dos carriles. Sin popup, sin exit modal.

@@ -120,11 +120,13 @@ Sin audio, sin subtítulos. Son los "GIFs".
 
 > ⚠️ **El VSL no va aquí ni en ninguna parte del sitio.** Regla 1 de `CLAUDE.md`. Este clip es identidad, no oferta: que no mencione temario, precio ni bonos.
 
-## Íconos — 13 archivos
+## Íconos — 8 archivos
 📁 `src/assets/iconos/` · **SVG, monocromo, `stroke="currentColor"`, 24×24 de lienzo, sin `fill` fijo**
 
-Los cinco pasos → `/` §03:
-- [ ] `icono-paso-i.svg` · [ ] `icono-paso-l.svg` · [ ] `icono-paso-h.svg` · [ ] `icono-paso-a.svg` · [ ] `icono-paso-s.svg`
+> **Los cinco `icono-paso-*` se cancelaron el 27 ago 2026** (decisión de Jorge).
+> Servían a la vieja §03 del home, que la iteración 4 absorbió en el mapa —y el
+> mapa identifica cada paso con el badge de su letra, que es lo que arma
+> I·L·H·A·S. Las cinco ranuras salieron del manifiesto: no los produzcas.
 
 Las ocho capacidades → `/finanzas` §02:
 - [ ] `icono-cap-estados.svg` · [ ] `icono-cap-flujo.svg` · [ ] `icono-cap-modelos.svg` · [ ] `icono-cap-presupuesto.svg`

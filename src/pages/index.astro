@@ -15,17 +15,12 @@ import { PRODUCTOS } from "../data/productos";
 const fotoHero = buscarImagen("home-hero-conferencia");
 const altHero = porId("home-hero-conferencia")!.alt;
 
-// El campo `icono` HOY NO SE PINTA. Servía a la vieja §03, que la iteración 4
-// absorbió en el mapa; el mapa identifica cada paso con el badge de su letra,
-// que es lo que arma I·L·H·A·S. Las cinco ranuras `icono-paso-*` siguen en el
-// manifiesto pero no tienen consumidor: si se decide que no vuelven, se borran
-// de los dos lados a la vez. Decisión pendiente de Jorge.
 const pasos = [
-  { letra: "I", paso: "Identificar", linea: "Cómo se mueve el dinero, dónde se fuga y desde qué número mides.", icono: "icono-paso-i" },
-  { letra: "L", paso: "Levantamiento", linea: "Tus datos en un solo lugar, y el estándar de los mejores.", icono: "icono-paso-l" },
-  { letra: "H", paso: "Hilar", linea: "Costos, precios y márgenes en un solo criterio.", icono: "icono-paso-h" },
-  { letra: "A", paso: "Accionar", linea: "Decides con números, no con intuición.", icono: "icono-paso-a" },
-  { letra: "S", paso: "Sistematizar", linea: "La IA como tu equipo, con alertas y mantenimiento.", icono: "icono-paso-s" },
+  { letra: "I", paso: "Identificar", linea: "Cómo se mueve el dinero, dónde se fuga y desde qué número mides." },
+  { letra: "L", paso: "Levantamiento", linea: "Tus datos en un solo lugar, y el estándar de los mejores." },
+  { letra: "H", paso: "Hilar", linea: "Costos, precios y márgenes en un solo criterio." },
+  { letra: "A", paso: "Accionar", linea: "Decides con números, no con intuición." },
+  { letra: "S", paso: "Sistematizar", linea: "La IA como tu equipo, con alertas y mantenimiento." },
 ];
 
 // §02 · El mapa: lo que reportan que falló → el paso que lo cubre.

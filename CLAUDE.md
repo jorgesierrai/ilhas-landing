@@ -52,7 +52,7 @@ Un **hub de marca con cinco páginas**, no un scroll de ventas:
   - `src/data/historial.ts` + `Historial.astro` — la línea de tiempo de `/nosotros`.
   - `.bg-lavado` en `src/styles/base.css` — la tercera superficie clara, para cuando dos secciones del mismo fondo se pegarían.
 - El `index.html` de la raíz es el sitio viejo (landing de bootcamp, sin rutas). **No lo borres**: Jorge lo conserva para revisar qué rescatar. Le queda un `[Nombre de tu papá]`, que ya no importa porque esa página no se publica.
-- **Sistema de medios: montado, prioridad 1 completa.** El sitio declara **39 ranuras** con nombre; dejas caer un archivo con el nombre exacto y aparece solo, sin tocar código. Una ranura vacía no pinta nada en producción. Hoy: **17 de 39 listas, 0 con problema**.
+- **Sistema de medios: montado, prioridad 1 completa.** El sitio declara **34 ranuras** con nombre; dejas caer un archivo con el nombre exacto y aparece solo, sin tocar código. Una ranura vacía no pinta nada en producción. Hoy: **17 de 34 listas, 0 con problema**.
   - **Si vas a trabajar en medios, lee `medios/ESTADO.md` primero.**
   - `npm run medios` te dice qué falta, qué pesa de más y qué no tiene atribución.
 
@@ -60,8 +60,7 @@ Un **hub de marca con cinco páginas**, no un scroll de ventas:
 
 | Tema | Qué falta |
 |---|---|
-| **Home §06 · quiénes somos** | El home no tiene cara. El material existe (`src/assets/equipo/`, `TarjetaPersona.astro`); falta la decisión de construirlo |
-| **`/finanzas` §07 · servicios del papá** | Falta el copy y **a dónde apunta el botón de agenda**. Hoy no hay ninguna URL de agenda en el repositorio |
+| **`/finanzas` §07 · servicios del papá** | **Confirmado que va** (Jorge, 27 ago 2026). Faltan dos insumos suyos: el **copy de los servicios** y **a dónde apunta el botón de agenda** — hoy no hay ninguna URL de agenda en el repositorio, el único destino externo es `eventos.ilhas.ai` |
 | **`/nosotros` § La historia** | Tres clips (`nosotros-historia-01/02/03`) sin material |
 | **Caption de `nosotros-conferencia`** | Dos briefs del 24 ago se contradicen: conferencia de nov 2017 sin evento, o Talent Land. Va sin caption hasta que se resuelva |
 | **Párrafo de intro de la línea de tiempo** | Marcado como `TODO copy` en `src/pages/nosotros.astro`. Lo escribe Jorge |
