@@ -96,6 +96,14 @@ const pasos = [
       "Tener un mapeo de: proceso → paso del proceso → dato → métrica que quieres mejorar, optimizar o a la que le quieres subir el valor. Ahí entiendes los dolores y las oportunidades de mejora.",
       "Con eso sabes cómo lo puedes mejorar y cómo va a cambiar la métrica. Y defines un objetivo: hacia dónde quieres mover ese KPI, de forma que te lleve a un resultado medible en tu proceso — y que además esté conectado a mejorar el margen, los costos o los precios.",
     ],
+    // §05 dejó de ser sección suelta el 27 ago 2026 y su contenido vive aquí,
+    // que es donde el visitante está leyendo el paso. Se llama "el paso más
+    // importante", no "el paso joya".
+    joya: {
+      titulo: "El paso más importante.",
+      texto:
+        "Hilar es enhebrar piezas sueltas en una sola línea. En construir software y tecnología eso tiene nombre —Opportunity Solution Tree: tomar oportunidades dispersas y anclarlas a un solo resultado. Mismo verbo, mismo trabajo. Aplicado a tus números, es lo que convierte costos, precios y márgenes sueltos en un solo criterio de decisión.",
+    },
     oficio: "Opportunity Solution Tree — enhebrar piezas sueltas en un solo resultado",
   },
   {
@@ -136,30 +144,55 @@ const pasos = [
   },
 ];
 
+/**
+ * §06 · Los cinco principios.
+ *
+ * Los textos son de Jorge y no se tocan. Lo que cambió el 27 ago 2026 es la
+ * FORMA, y sale del propio contenido: cuatro de los cinco son **oposiciones**.
+ * Presentarlos como A contra B —con el lado que gana en tinta y el que pierde
+ * apagado— hace que se escaneen en dos segundos y que el argumento se vea sin
+ * leerlo.
+ *
+ * ⚠️ NADA de iconitos: son ideas abstractas y los íconos para abstracciones
+ * acaban siempre en engranes y focos genéricos. Abaratan, no elevan — y serían
+ * cinco ranuras nuevas en un manifiesto que ya tiene ocho pendientes.
+ *
+ * El quinto NO es oposición: es la consecuencia de los otros cuatro, así que va
+ * aparte y con otro peso.
+ */
 const principios = [
   {
-    titulo: "Fundamento antes que automatización",
+    gana: "Fundamento",
+    nexo: "antes que",
+    pierde: "automatización",
     texto: "Primero el criterio. Automatizas después, no antes.",
   },
   {
-    titulo: "La IA es infraestructura, no un feature",
+    gana: "Infraestructura",
+    nexo: "no",
+    pierde: "un feature",
     texto:
-      "No es un plus que agregas al final: es la base sobre la que construyes.",
+      "La IA no es un plus que agregas al final: es la base sobre la que construyes.",
   },
   {
-    titulo: "Workflows sobre roles",
+    gana: "Workflows",
+    nexo: "sobre",
+    pierde: "roles",
     texto:
       "No organizas personas haciendo tareas. Organizas el proceso completo, de principio a fin.",
   },
   {
-    titulo: "Outcomes sobre outputs",
+    gana: "Outcomes",
+    nexo: "sobre",
+    pierde: "outputs",
     texto: "No mides cuánto produces. Mides qué cambia con lo que produces.",
   },
-  {
-    titulo: "Builder mindset",
-    texto: "Construyes el sistema. No pides que alguien más te lo construya.",
-  },
 ];
+
+const principioFinal = {
+  titulo: "Builder mindset",
+  texto: "Construyes el sistema. No pides que alguien más te lo construya.",
+};
 ---
 
 <Base
@@ -404,6 +437,14 @@ const principios = [
                     </div>
                   )}
 
+                  {p.joya && (
+                    <div class="paso-det__joya">
+                      <p>
+                        <b>{p.joya.titulo}</b> {p.joya.texto}
+                      </p>
+                    </div>
+                  )}
+
                   {p.decisiones && (
                     <ul class="decisiones">
                       {p.decisiones.map((d) => (
@@ -433,6 +474,23 @@ const principios = [
           Y con eso vuelves a empezar en <strong>Identificar</strong>. No es una
           lista de cinco pasos: es un ciclo que se mantiene.
         </p>
+
+        {/* Lo que era §08 "A dónde llegas". Se disolvió aquí el 27 ago 2026:
+            es el cierre del método, no una sección aparte.
+
+            Y ya NO dice "sales con tu propio equipo de agentes". Jorge: no
+            necesariamente son agentes — puede ser una automatización
+            determinista, un bot, una app, o solo alertas y correos. Decir
+            "agentes" promete una forma específica, y encima la de moda. El
+            arreglo sale del propio paso S: el NIVEL lo decides tú. */}
+        <div class="llegada">
+          <p class="kicker">A dónde llegas</p>
+          <p class="llegada__frase">
+            Llegas con una idea de dónde estás perdiendo tiempo y dinero. Sales
+            con el sistema armado — y con el criterio para decidir de qué tamaño
+            tenía que ser.
+          </p>
+        </div>
 
         {/* El diagrama del proceso completo, debajo de la tabla que
             describe los mismos cinco pasos. */}
@@ -464,30 +522,6 @@ const principios = [
       </div>
     </section>
 
-    <!-- 05 · Hilar = Opportunity Solution Tree -->
-    <section class="section-y">
-      <div class="container prose reveal">
-        <p class="kicker">El paso joya</p>
-        <h2>Hilar: el paso que nadie en &ldquo;finanzas con IA&rdquo; te cuenta.</h2>
-        <p>
-          Hilar es enhebrar piezas sueltas en una sola línea. En construcción
-          de producto eso tiene nombre — Opportunity Solution Tree: tomar
-          oportunidades dispersas y anclarlas a un solo resultado. Mismo
-          verbo, mismo trabajo. Aplicado a tus números, es lo que convierte
-          costos, precios y márgenes sueltos en un solo criterio de decisión.
-        </p>
-
-        {/* La prueba va DESPUÉS de la afirmación (regla 3 de curaduría). */}
-        {
-          mostrar("metodo-hilar-clip") && (
-            <div class="metodo-clip">
-              <VideoClip id="metodo-hilar-clip" />
-            </div>
-          )
-        }
-      </div>
-    </section>
-
     <!-- 06 · Los cinco principios -->
     <section class="section-y bg-white">
       <div class="container">
@@ -498,17 +532,24 @@ const principios = [
 
         <ol class="principios">
           {
-            principios.map((p, i) => (
-              <li class="principios__item hover-lift reveal">
-                <span class="principios__num">{i + 1}</span>
-                <div>
-                  <p class="principios__titulo">{p.titulo}</p>
-                  <p class="principios__texto">{p.texto}</p>
-                </div>
+            principios.map((p) => (
+              <li class="principios__item reveal">
+                <p class="principios__par">
+                  <b>{p.gana}</b>
+                  <i>{p.nexo}</i>
+                  <s>{p.pierde}</s>
+                </p>
+                <p class="principios__texto">{p.texto}</p>
               </li>
             ))
           }
         </ol>
+
+        {/* El quinto no es una oposición: es la consecuencia de los otros
+            cuatro. Por eso cierra el bloque en vez de formar fila con ellos. */}
+        <p class="principios__remate reveal">
+          <b>{principioFinal.titulo}.</b> {principioFinal.texto}
+        </p>
       </div>
     </section>
 
@@ -518,12 +559,13 @@ const principios = [
         <div class="prose reveal">
           <p class="kicker">Cómo se usa en la práctica</p>
           <h2>No son prompts. Es reingeniería del trabajo.</h2>
-          <p>
-            Esto no es una colección de prompts que copias y pegas. El
-            organigrama clásico — personas asignadas a tareas — ya no es el
-            mapa correcto. El mapa correcto es el proceso: qué entra, qué sale,
-            y qué de eso genera dinero. Rediseñas eso, y la IA ejecuta la parte
-            que ya decidiste tú.
+          {/* Una sola idea, dicha una sola vez: el mapa correcto es el
+              proceso, no el organigrama. Antes tomaba un párrafo largo que la
+              decía tres veces. */}
+          <p class="lead">
+            El organigrama —personas asignadas a tareas— ya no es el mapa. El
+            mapa es el proceso: qué entra, qué sale y qué de eso genera dinero.
+            Rediseñas eso, y la IA ejecuta la parte que ya decidiste tú.
           </p>
         </div>
 
@@ -533,35 +575,7 @@ const principios = [
         {
           mostrar(...capturasPrompts.map((c) => c.id)) && (
             <div class="prompts">
-              {capturasPrompts.map((c) => <Captura id={c.id} marco={c.marco} ancho={900} />)}
-            </div>
-          )
-        }
-      </div>
-    </section>
-
-    <!-- 08 · BYOS → BYOA -->
-    <section class="section-y bg-white">
-      <div class="container">
-        <div class="prose reveal">
-          <p class="kicker">A dónde llegas</p>
-          <h2>
-            Llegas con tu hoja de cálculo. Sales con tu propio equipo de
-            agentes.
-          </h2>
-          <p>
-            Empiezas resolviendo con lo que ya tienes: un Excel, un Sheets, tu
-            criterio. Terminas con algo distinto — un ecosistema de agentes de
-            IA que trabaja para ti, diseñado por ti. No llegas a tu empresa a
-            pedir herramientas. Llegas con el sistema ya armado.
-          </p>
-        </div>
-
-        {/* "Varios agentes en paralelo" es abstracto hasta que se ve. */}
-        {
-          mostrar("metodo-agentes-loop") && (
-            <div class="metodo-loop">
-              <Loop id="metodo-agentes-loop" />
+              {capturasPrompts.map((c) => <Captura id={c.id} marco={c.marco} ancho={560} />)}
             </div>
           )
         }
@@ -572,12 +586,24 @@ const principios = [
     <section class="section-y">
       <div class="container prose reveal">
         <p class="kicker">Por qué se llama Ilhas</p>
-        <h2>El método es el barco. Finanzas es la primera isla.</h2>
+        {/* Se cayó "Finanzas es la primera isla": el método es genérico y así
+            quedó la bifurcación, y esta sección no puede volver a atar el
+            nombre a una sola isla. Lo que entra en su lugar es la explicación
+            que la banda del home NO da — ésta es la sección que le da sentido,
+            y a la que cae quien vio la banda y le picó la curiosidad. */}
+        <h2>El método es el barco. Las islas son a dónde lo apuntas.</h2>
         <p>
-          Ilhas significa islas, en portugués. El método —I·L·H·A·S— es el
-          barco: te lleva. Finanzas es la primera isla a la que apunta. El
-          método funciona en cualquier área donde haya números y decisiones
-          que tomar. Empezamos por finanzas.
+          <strong>Ilhas</strong> son islas, en portugués — a dónde apuntas el
+          método. El método funciona en cualquier área donde haya números y
+          decisiones que tomar.
+        </p>
+        <p class="hilas-remate">
+          Y si mueves la <em>H</em> de lugar, las mismas cinco letras dicen{" "}
+          <strong>Hilas</strong>: hilas tus procesos, hilas tus números, hilas
+          tu criterio en una sola línea.
+        </p>
+        <p>
+          El nombre y el paso más importante están hechos de las mismas letras.
         </p>
       </div>
     </section>
@@ -661,17 +687,32 @@ const principios = [
     max-width: 48rem;
   }
 
-  /* Una por fila, no 2x2. A dos columnas cada captura caía en ~505 px y el
-     código de la primera se volvía ruido gris — que es exactamente lo que
-     esta sección NO puede permitirse: su titular afirma "no son prompts" y
-     estas capturas son la única prueba. A 900 px el esquema se lee.
-     El tope de ancho es menor que el del contenedor a propósito: una captura
-     a 1140 px con una fuente de 1300 px se sirve por debajo de retina. */
+  /* Rejilla de 2 × 2 en escritorio, una columna en angosto (iteración 7 §4).
+     Apiladas a ancho completo costaban ~700 px cada una y la sección llegaba a
+     3,115 px — la más alta de todo el sitio. En rejilla se leen como lo que
+     son: UN set, no cuatro cosas distintas.
+
+     ⚠️ Esto revierte una decisión anterior que decía "una por fila, no 2x2,
+     porque a ~505 px el código de la primera captura se vuelve ruido gris".
+     Ese riesgo es real y hay que verificarlo en cada corrida: el titular de la
+     sección afirma "no son prompts" y estas capturas son la única prueba. Si
+     la captura de código deja de leerse, el arreglo NO es volver a una columna
+     —eso devuelve los 3,115 px— sino recortarla más cerca del contenido.
+
+     El tope de ancho sigue por debajo del contenedor: una captura a 1140 px
+     con una fuente de 1300 px se sirve por debajo de retina. */
   .prompts {
     display: grid;
-    gap: 2.5rem;
+    gap: 1.75rem;
     margin-top: 2.5rem;
     max-width: 900px;
+  }
+
+  @media (min-width: 860px) {
+    .prompts {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      align-items: start;
+    }
   }
 
   /* ======================================================================
@@ -1083,46 +1124,137 @@ const principios = [
     margin-top: 2rem;
   }
 
+  /* Oposiciones, no tarjetas numeradas. El lado que gana en tinta y el que
+     pierde apagado y tachado: se escanea en dos segundos y el argumento se ve
+     sin leerlo. Sin iconitos — ver la nota del array `principios`. */
   .principios__item {
-    display: flex;
-    gap: 1.25rem;
-    align-items: flex-start;
-    padding: 1rem;
+    padding: 1.15rem 1.25rem;
     border-radius: var(--ilhas-radius-card);
-    border: 1px solid transparent;
-    transition: border-color 0.2s ease, box-shadow 0.2s ease;
-  }
-
-  .principios__item:hover {
+    border: 1px solid var(--ilhas-gray);
     background: var(--ilhas-light);
-    border-color: var(--ilhas-gray);
-    box-shadow: var(--ilhas-shadow-soft);
   }
 
-  .principios__num {
-    flex-shrink: 0;
+  .principios__par {
     display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 2.5rem;
-    height: 2.5rem;
-    border-radius: 50%;
-    background: var(--ilhas-primary-10);
-    color: var(--ilhas-primary);
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.4rem 0.5rem;
     font-family: var(--ilhas-font-display);
-    font-weight: 600;
+    letter-spacing: var(--ilhas-tracking-display);
+    line-height: 1.15;
   }
 
-  .principios__titulo {
-    font-family: var(--ilhas-font-display);
+  .principios__par b {
     font-weight: 600;
-    font-size: 1.125rem;
+    font-size: 1.25rem;
     color: var(--ilhas-dark);
   }
 
-  .principios__texto {
-    margin-top: 0.25rem;
+  .principios__par i {
+    font-style: normal;
+    font-family: var(--ilhas-font-body);
+    font-weight: 500;
+    font-size: 0.8125rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ilhas-primary);
+  }
+
+  /* Tachado sutil: marca al perdedor sin volverlo ilegible. Va en
+     --ilhas-text, no en un gris al 60% — tokens.css lo prohíbe para texto. */
+  .principios__par s {
+    font-weight: 600;
+    font-size: 1.25rem;
     color: var(--ilhas-text);
+    text-decoration-line: line-through;
+    text-decoration-color: rgba(60, 60, 68, 0.4);
+    text-decoration-thickness: 1px;
+  }
+
+  .principios__texto {
+    margin-top: 0.45rem;
+    font-size: 0.9375rem;
+    color: var(--ilhas-text);
+  }
+
+  /* El quinto no forma fila con los otros cuatro: es su consecuencia. */
+  .principios__remate {
+    margin-top: 1.5rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--ilhas-gray);
+    max-width: 60ch;
+    font-size: 1.0625rem;
+    color: var(--ilhas-text);
+  }
+
+  .principios__remate b {
+    font-family: var(--ilhas-font-display);
+    font-weight: 600;
+    color: var(--ilhas-dark);
+    letter-spacing: var(--ilhas-tracking-display);
+  }
+
+  /* §04 · "El paso más importante", dentro del bloque de Hilar. Era la §05
+     suelta hasta el 27 ago 2026. */
+  .paso-det__joya {
+    margin-top: 1.25rem;
+    padding: 1rem 1.15rem;
+    border-radius: 0.875rem;
+    background: rgba(122, 60, 255, 0.14);
+    border: 1px solid rgba(161, 75, 255, 0.35);
+  }
+
+  .paso-det__joya p {
+    margin: 0;
+    font-size: 0.9375rem;
+  }
+
+  .paso-det__joya b {
+    font-family: var(--ilhas-font-display);
+    font-weight: 600;
+    color: var(--ilhas-white);
+    letter-spacing: var(--ilhas-tracking-display);
+  }
+
+  /* §04 · el cierre del método. Era la §08 suelta. */
+  .llegada {
+    margin-top: 2.5rem;
+    padding-top: 1.75rem;
+    border-top: 1px solid rgba(248, 250, 255, 0.12);
+    max-width: 900px;
+  }
+
+  .llegada__frase {
+    margin-top: 0.6rem;
+    max-width: 52ch;
+    font-family: var(--ilhas-font-display);
+    font-weight: 600;
+    font-size: clamp(1.125rem, 2vw, 1.375rem);
+    line-height: 1.3;
+    letter-spacing: var(--ilhas-tracking-display);
+    color: var(--ilhas-white);
+  }
+
+  /* §09 · el remate que le da sentido a la banda del home. */
+  .hilas-remate {
+    margin-top: 1.25rem;
+    padding-left: 1rem;
+    border-left: 3px solid var(--ilhas-primary);
+    font-family: var(--ilhas-font-display);
+    font-weight: 600;
+    font-size: clamp(1.125rem, 2vw, 1.375rem);
+    line-height: 1.3;
+    letter-spacing: var(--ilhas-tracking-display);
+    color: var(--ilhas-dark);
+  }
+
+  .hilas-remate strong {
+    color: var(--ilhas-primary);
+  }
+
+  .hilas-remate em {
+    font-style: italic;
+    color: var(--ilhas-primary);
   }
 
   @media (min-width: 768px) {

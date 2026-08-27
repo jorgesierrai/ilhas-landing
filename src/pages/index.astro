@@ -2,6 +2,7 @@
 import { Image } from "astro:assets";
 import Base from "../layouts/Base.astro";
 import Bifurcacion from "../components/Bifurcacion.astro";
+import BandaHilas from "../components/BandaHilas.astro";
 import BandaAutoridad from "../components/medios/BandaAutoridad.astro";
 import TarjetaCaso from "../components/medios/TarjetaCaso.astro";
 import Stat from "../components/medios/Stat.astro";
@@ -136,10 +137,20 @@ const kpis = [
       {fotoHero && <p class="hero__credito">Talent Land · abril 2018</p>}
     </section>
 
+    {/* La banda Ilhas → Hilas, pegada al hero. El hero NO se toca.
+        Aquí solo se ve el juego; se explica en /metodo §09. */}
+    <BandaHilas />
+
     {/* Banda de autoridad — medios/BRIEF-historial.md §3. Tira delgada, no
         una sección, y SIN los tres videos: el home tiene ocho segundos, y
         meterle la prueba completa lo mata y hace que no se vea ninguno. La
-        banda vende en dos segundos y manda a /nosotros a quien la quiera. */}
+        banda vende en dos segundos y manda a /nosotros a quien la quiera.
+
+        BAJÓ hasta aquí el 27 ago 2026: estaba pegada al hero, y dos tiras
+        delgadas seguidas —ésta y la de Hilas— competían y no ganaba ninguna.
+        Además funciona mejor abajo: §02 abre con el 95% que fracasa, y llegar
+        a ese reclamo venido de "llevamos hablando de esto desde 2017" le da
+        autoridad al dato. */}
     <div class="container banda-autoridad">
       <BandaAutoridad
         titulo="Hablando de IA en público desde 2017."
@@ -523,8 +534,14 @@ const kpis = [
   }
 
   /* --- Banda de autoridad --- */
+  /* Aire real contra la banda Ilhas→Hilas de arriba. Con el 0.5rem que tenía
+     —cuando lo de arriba era el hero— las dos tiras quedaban a 8 px y se leían
+     como una sola cosa partida: justo el "dos tiras delgadas pegadas compiten y
+     ninguna gana" que esta iteración quería evitar. Con este margen la tira se
+     despega de la banda y se lee como lo que es: la entrada de §02, que abre
+     con el 95% que fracasa. */
   .banda-autoridad {
-    margin-top: 0.5rem;
+    margin-top: clamp(2rem, 4vw, 3rem);
   }
 
   /* --- 02 · El hueco: causa, mapa y prueba ---
