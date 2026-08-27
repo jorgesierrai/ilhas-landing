@@ -8,7 +8,7 @@ import VideoClip from "../components/medios/VideoClip.astro";
 import { mostrar } from "../lib/medios";
 import { porId } from "../data/medios";
 
-// §07 "No son prompts": las cuatro capturas del sistema de agentes. Es la
+// §07 "Así se arma por dentro": las cuatro capturas del sistema de agentes. Es la
 // única prueba de la afirmación que da título a la sección — el bloque más
 // importante de todo el plan de medios.
 const capturasPrompts = [
@@ -75,9 +75,8 @@ const pasos = [
       "Después mapeas tus prioridades y las ordenas, para saber en qué orden vas a ir optimizando y a cuál le vas a subir el valor primero.",
     ],
     // La idea más filosa del paso, y hasta hoy no estaba dicha en el sitio.
+    // Va sola: el pie que la explicaba le quitaba filo.
     destacado: "¿Qué no debería existir en estos procesos?",
-    destacadoPie:
-      "Identificar no es solo encontrar qué mejorar — es encontrar qué sobra.",
     oficio: "Discovery — instrumentar y hallar el dolor antes de construir",
   },
   {
@@ -138,7 +137,7 @@ const pasos = [
         titulo: "Cómo vas a mantener esa solución",
         // Autorizado por Jorge; no venía en el dictado.
         texto:
-          "Lo que rompe la confianza en una solución con IA no es que se equivoque: es que nadie revisó. Un error detectado es mantenimiento; un error publicado es credibilidad perdida. La solución no termina cuando funciona — termina cuando alguien la está cuidando.",
+          "Lo que rompe la confianza en una solución con IA es que nadie la esté revisando. Un error que agarras a tiempo es mantenimiento; uno que ya salió te cuesta credibilidad. Por eso hay que decidir quién la cuida antes de darla por terminada.",
       },
     ],
     oficio: "Delivery + automatización — el motor que corre solo",
@@ -250,9 +249,9 @@ const principioFinal = {
         </h2>
         <p>
           Falla por falta de criterio. Métele basura a un modelo y no obtienes
-          basura: obtienes basura al cuadrado — la IA no corrige un mal
+          basura: obtienes basura al cuadrado. La IA no corrige un mal
           razonamiento, lo amplifica. Por eso el fundamento importa más ahora
-          que antes, no menos.
+          que antes.
         </p>
 
         {/* El H2 afirma "y no es la tecnología". Hasta hoy nada lo demostraba:
@@ -275,10 +274,10 @@ const principioFinal = {
         </ul>
 
         <p>
-          De las tres, la que todos comparten es la única que no puedes mejorar.
+          La capa que compartes con tu competencia es la única que no puedes
+          mover.{" "}
           <strong>
-            {" "}Las dos que sí deciden el resultado son las que nadie te va a
-            dar hecho.
+            Las otras dos las armas tú, y son las que deciden el resultado.
           </strong>{" "}
           Por eso el mismo modelo produce resultados abismalmente distintos
           según quién lo maneje.
@@ -311,8 +310,8 @@ const principioFinal = {
         </div>
 
         <p>
-          La otra mitad del problema es el proceso. Automatizar uno que está mal
-          no lo arregla —{" "}
+          La otra mitad del problema es el proceso. Automatizar un proceso que
+          está mal solo{" "}
           <strong>lo hace fallar más rápido y a mayor escala.</strong> Todos
           venden automatizar más. Nosotros empezamos por quitar.
         </p>
@@ -360,27 +359,19 @@ const principioFinal = {
     <section class="section-y">
       <div class="container prose reveal">
         <p class="kicker">El ángulo correcto</p>
-        <h2>No es una metáfora. Es de dónde salió el método.</h2>
+        <h2>¿Dónde nació el método?</h2>
 
-        {/* El texto es el de siempre —a Jorge le gusta— partido en las tres
-            ideas que ya traía apelmazadas, y con las palabras que cargan el
-            argumento en <strong>. Sin color nuevo y sin gradiente.
-            El puente con §02: allá se dice POR QUÉ falla, aquí DE DÓNDE salió
-            lo que no falla. */}
+        {/* El texto es el de siempre —a Jorge le gusta— partido en las ideas
+            que ya traía apelmazadas, y con las palabras que cargan el argumento
+            en <strong>. Sin color nuevo y sin gradiente. */}
         <p>
-          Arriba está por qué fallan los proyectos de IA. Esto es de dónde sale
-          lo que no falla.
+          Salió de <strong>construir software y tecnología</strong>. Doce años
+          haciéndolo, y los cinco pasos son los mismos que se usan ahí.
         </p>
         <p>
-          El Método Ilhas se parece al oficio de construir software y tecnología
-          porque <strong>nació ahí</strong> — no es una comparación, es el
-          origen.
-        </p>
-        <p>
-          No te estamos comparando con nadie: te estamos entregando{" "}
-          <strong>el mismo sistema</strong> que usa quien construye tecnología,
-          apuntado a tu trabajo. Sin volverte técnico. Sin esperar a que entre
-          un equipo de ingeniería.
+          Es <strong>el mismo sistema</strong> que usa quien construye
+          tecnología, apuntado a tu trabajo, sin que tengas que volverte técnico
+          ni esperar a que te den un equipo de ingeniería.
         </p>
 
         {/* Lo que faltaba: §03 prometía "sin volverte técnico" y no explicaba
@@ -389,11 +380,9 @@ const principioFinal = {
           Saber el <em>qué</em> no te obliga a aprender el <em>cómo</em>.
         </p>
         <p>
-          El agobio con la IA no es de capacidad, es de{" "}
-          <strong>filtro</strong>: hay demasiadas herramientas y demasiado
-          ruido. El método es el filtro — te dice qué resolver y en qué orden, y
-          el <em>cómo</em> técnico se escoge después, en el paso{" "}
-          <strong>Sistematizar</strong>.
+          Hay <strong>demasiada herramienta y demasiado ruido</strong>. El
+          método te dice qué resolver y en qué orden; el <em>cómo</em> técnico
+          se escoge después, en <strong>Sistematizar</strong>.
         </p>
       </div>
     </section>
@@ -405,9 +394,8 @@ const principioFinal = {
           <p class="kicker">El método, paso por paso</p>
           <h2>Cinco pasos. Un mapeo directo a tu trabajo.</h2>
           <p class="lead">
-            I·L·H·A·S no es un acrónimo bonito: cada letra es un paso real,
-            tomado del oficio de construir software y tecnología y apuntado a tus
-            números.
+            Cada letra es un paso real, tomado de construir software y
+            tecnología, apuntado a tus números.
           </p>
         </div>
 
@@ -434,7 +422,6 @@ const principioFinal = {
                   {p.destacado && (
                     <div class="paso-det__pregunta">
                       <p>{p.destacado}</p>
-                      <span>{p.destacadoPie}</span>
                     </div>
                   )}
 
@@ -472,8 +459,8 @@ const principioFinal = {
             y es lo que separa un método de una lista de cinco pasos. Va como
             remate, no como sexto bloque. */}
         <p class="ciclo">
-          Y con eso vuelves a empezar en <strong>Identificar</strong>. No es una
-          lista de cinco pasos: es un ciclo que se mantiene.
+          Y con eso vuelves a empezar en <strong>Identificar</strong>. Es un
+          ciclo, no una línea.
         </p>
 
         {/* Lo que era §08 "A dónde llegas". Se disolvió aquí el 27 ago 2026:
@@ -488,7 +475,7 @@ const principioFinal = {
           <p class="kicker">A dónde llegas</p>
           <p class="llegada__frase">
             Llegas con una idea de dónde estás perdiendo tiempo y dinero. Sales
-            con el sistema armado — y con el criterio para decidir de qué tamaño
+            con el sistema armado y con el criterio para decidir de qué tamaño
             tenía que ser.
           </p>
         </div>
@@ -514,8 +501,8 @@ const principioFinal = {
           <p class="kicker">Dónde entra el método</p>
           <h2>Toda empresa es lo mismo en tres capas.</h2>
           <p class="lead">
-            El método no cambia de área a área. Lo que cambia es a dónde lo
-            apuntas — y con qué capa te conviene empezar.
+            El método no cambia de área a área. Cambia a dónde lo apuntas y con
+            qué capa te conviene empezar.
           </p>
         </div>
 
@@ -554,12 +541,12 @@ const principioFinal = {
       </div>
     </section>
 
-    <!-- 07 · No son prompts -->
+    <!-- 07 · Así se arma por dentro -->
     <section class="section-y">
       <div class="container">
         <div class="prose reveal">
           <p class="kicker">Cómo se usa en la práctica</p>
-          <h2>No son prompts. Es reingeniería del trabajo.</h2>
+          <h2>Así se arma por dentro.</h2>
           {/* Una sola idea, dicha una sola vez: el mapa correcto es el
               proceso, no el organigrama. Antes tomaba un párrafo largo que la
               decía tres veces. */}
