@@ -42,7 +42,9 @@ Un **hub de marca con cinco páginas**, no un scroll de ventas:
 > lee una sesión nueva; si miente, la sesión construye sobre una foto vieja. Lo
 > mismo aplica a `medios/ESTADO.md`. Ver el checklist de abajo.
 
-- Rama de trabajo: **`bifurcacion-y-mapa`** (iteración 5), que sale de `hueco-y-data`.
+- Rama de trabajo: **`correcciones-y-limpieza`**, que sale de `main`.
+  La iteración 5 (`bifurcacion-y-mapa`) ya está **mergeada en `main`** (PR #14).
+  Esta rama trae las correcciones posteriores y la limpieza de documentación.
 - **El sitio nuevo en Astro está completo**: las cinco rutas existen en `src/pages/`, con la auditoría visual (`AUDITORIA-VISUAL.md`) ya aplicada.
 - **Iteraciones cerradas:** 1 (sistema de ranuras) · 2 (activar material) · 3 (hero del home) · 4 (el hueco y el mapa I·L·H·A·S de §02) · 5 (la bifurcación y `MapaEmpresa`). Los briefs viven en `prompts/iteracion-*.md`.
 - **Piezas nuevas que conviene conocer antes de tocar nada:**
