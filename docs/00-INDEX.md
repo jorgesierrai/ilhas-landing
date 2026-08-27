@@ -69,7 +69,7 @@ No inventes estos. Si el trabajo los necesita, para y pregunta:
 - **Casos y logos de clientes reales** para `/soluciones`. La tabla de linaje de productos sí está y sí se usa.
 - **Dónde vive el hosting hoy y quién controla el DNS de ilhas.ai.**
 - **La plataforma de entrega del programa** — Skool u Hotmart. Jorge no ha decidido (25 ago 2026). Hasta entonces, el sitio no nombra ninguna.
-- **Si "6 semanas" sigue siendo cierto.** Hoy está publicado en `/finanzas` §Quién lo enseña. Si la duración cambia con la plataforma, ese renglón cambia con ella.
+- ~~**Si "6 semanas" sigue siendo cierto.**~~ **Resuelto el 27 ago 2026: fuera.** Era herencia del formato bootcamp, que este mismo documento ya declaró muerto, y además dependía de una plataforma sin decidir. **El sitio no publica duración.** El formato lo explica el webinar, no este repositorio (regla 1 de `CLAUDE.md`).
 
 ## Fuentes upstream (fuera de este repo)
 

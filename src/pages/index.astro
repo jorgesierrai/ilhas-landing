@@ -3,8 +3,6 @@ import { Image } from "astro:assets";
 import Base from "../layouts/Base.astro";
 import Bifurcacion from "../components/Bifurcacion.astro";
 import BandaAutoridad from "../components/medios/BandaAutoridad.astro";
-import Captura from "../components/medios/Captura.astro";
-import Icono from "../components/medios/Icono.astro";
 import TarjetaCaso from "../components/medios/TarjetaCaso.astro";
 import Stat from "../components/medios/Stat.astro";
 import { buscarImagen, mostrar } from "../lib/medios";
@@ -17,6 +15,11 @@ import { PRODUCTOS } from "../data/productos";
 const fotoHero = buscarImagen("home-hero-conferencia");
 const altHero = porId("home-hero-conferencia")!.alt;
 
+// El campo `icono` HOY NO SE PINTA. Servía a la vieja §03, que la iteración 4
+// absorbió en el mapa; el mapa identifica cada paso con el badge de su letra,
+// que es lo que arma I·L·H·A·S. Las cinco ranuras `icono-paso-*` siguen en el
+// manifiesto pero no tienen consumidor: si se decide que no vuelven, se borran
+// de los dos lados a la vez. Decisión pendiente de Jorge.
 const pasos = [
   { letra: "I", paso: "Identificar", linea: "Cómo se mueve el dinero, dónde se fuga y desde qué número mides.", icono: "icono-paso-i" },
   { letra: "L", paso: "Levantamiento", linea: "Tus datos en un solo lugar, y el estándar de los mejores.", icono: "icono-paso-l" },
@@ -64,8 +67,6 @@ const fallas: Record<string, { texto: string; fuente: string; url?: string }> = 
 // La cita va en TEXTO, no el video: el home tiene ocho segundos y el clip
 // completo vive en /soluciones, que es a donde manda la liga.
 const testimonio = porId("soluciones-testimonio-oncologia")!.atribucion!;
-
-const capturasMercado = ["home-mercado-01", "home-mercado-02", "home-mercado-03"];
 
 // Métricas del hero. El copy es de Jorge y va literal (brief de la
 // iteración 3): número, unidad en violeta, y etiqueta en versalitas.

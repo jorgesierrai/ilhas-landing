@@ -2,7 +2,6 @@
 import { Image } from "astro:assets";
 import Base from "../layouts/Base.astro";
 import TarjetaPersona from "../components/TarjetaPersona.astro";
-import Captura from "../components/medios/Captura.astro";
 import Icono from "../components/medios/Icono.astro";
 import Loop from "../components/medios/Loop.astro";
 import VideoClip from "../components/medios/VideoClip.astro";
@@ -47,10 +46,6 @@ const puedes = [
   { texto: "Valuación, TIR y VAN", icono: "icono-cap-valuacion" },
   { texto: "Reportes que se actualizan solos", icono: "icono-cap-reportes" },
 ];
-
-// Las mismas capturas del mercado laboral que el home, como respaldo del
-// "es para ti" — un archivo, dos páginas.
-const capturasMercado = ["home-mercado-01", "home-mercado-02", "home-mercado-03"];
 
 const esParaTi = [
   "Eres analista, contador, controller, consultor, auditor, tesorero o FP&A — en una empresa o por tu cuenta.",
@@ -180,14 +175,12 @@ const faqs = [
           </div>
         </div>
 
-        {/* El respaldo del "es para ti": lo que el mercado pide hoy. */}
-        {
-          mostrar(...capturasMercado) && (
-            <div class="mercado">
-              {capturasMercado.map((id) => <Captura id={id} ancho={640} />)}
-            </div>
-          )
-        }
+        {/* Aquí vivían tres capturas de vacantes ("lo que el mercado pide
+            hoy"). Fuera por decisión de Jorge, 27 ago 2026: los puestos que
+            mostraban —Data Scientist, Product Manager, Diseñador— no son el
+            comprador de Ilhas, y recapturarlas con Controller o Gerente de
+            Finanzas era trabajo para sostener un argumento que el filtro de
+            arriba ya hace mejor. Las tres ranuras salieron del manifiesto. */}
       </div>
     </section>
 
@@ -213,9 +206,13 @@ const faqs = [
           }
         </div>
 
+        {/* Sin duración. "6 semanas" era herencia del formato bootcamp, que
+            docs/00-INDEX.md ya declaró muerto, y además la plataforma de
+            entrega sigue sin decidirse: publicar un número que puede cambiar
+            con ella es exactamente el tipo de promesa que este sitio no hace.
+            El webinar es quien habla de formato (regla 1 de CLAUDE.md). */}
         <p class="maestros__resumen">
-          40 años de fundamento financiero, más 12 años construyendo con
-          IA — el método que aprendes en 6 semanas.
+          40 años de fundamento financiero, más 12 años construyendo con IA.
         </p>
 
         {/* Identidad, no oferta: que no mencione temario, precio ni bonos. */}
@@ -351,19 +348,6 @@ const faqs = [
     .filtro {
       grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 3rem;
-    }
-  }
-
-  /* --- 03 · las capturas del mercado laboral (vacías hoy) --- */
-  .mercado {
-    display: grid;
-    gap: 1.25rem;
-    margin-top: 2.5rem;
-  }
-
-  @media (min-width: 768px) {
-    .mercado {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
     }
   }
 

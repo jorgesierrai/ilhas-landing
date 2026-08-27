@@ -229,22 +229,31 @@ const pruebaSoluciones = [
       </div>
     ) : (
       <div class="bifurcacion__cards">
+        {/* Mismo encuadre que la prominente del home: qué te llevas, no cómo
+            se entrega. Y el carril de aprender es el MÉTODO —genérico—, no
+            "Ilhas Finanzas": el producto es el método y Finanzas es la primera
+            isla. La versión compacta lo dice en un renglón en vez de abrirle
+            un recuadro, porque /metodo ya es la página más alta del sitio y
+            aquí este bloque cierra, no vende. */}
+        {/* Va a /finanzas, no a /metodo: la compacta solo se usa DENTRO de
+            /metodo, así que enlazar ahí sería mandarte a donde ya estás. La
+            promesa es genérica; la puerta que existe hoy es Finanzas. */}
         <a href="/finanzas" class="bifurcacion__card reveal">
-          <span class="bifurcacion__label">¿Quieres aprenderlo?</span>
-          <span class="bifurcacion__title">Ilhas Finanzas</span>
+          <span class="bifurcacion__label">Lo aprendes tú</span>
+          <span class="bifurcacion__title">Aprende el método</span>
           <span class="bifurcacion__desc">
-            El método, enseñado — empezando por tus números.
+            Sales con tu propio equipo de agentes trabajando en tu área. Hoy la
+            puerta abierta es Ilhas Finanzas.
           </span>
           <span class="bifurcacion__link">Conocer Ilhas Finanzas →</span>
         </a>
 
         <a href="/soluciones" class="bifurcacion__card reveal">
-          <span class="bifurcacion__label">
-            ¿Quieres que lo implementemos en tu empresa?
-          </span>
+          <span class="bifurcacion__label">Lo hacemos nosotros</span>
           <span class="bifurcacion__title">Soluciones</span>
           <span class="bifurcacion__desc">
-            El método, aplicado directo en tu empresa.
+            Escogemos un proceso que hoy se hace a mano y lo dejamos corriendo
+            solo.
           </span>
           <span class="bifurcacion__link">Conocer Soluciones →</span>
         </a>

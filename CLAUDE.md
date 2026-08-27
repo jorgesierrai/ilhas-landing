@@ -36,15 +36,37 @@ Un **hub de marca con cinco páginas**, no un scroll de ventas:
 
 ## Estado del repositorio
 
-*Actualizado: 25 ago 2026.*
+*Actualizado: 27 ago 2026.*
 
-- Rama de trabajo: **`hero-conferencia`**, que sale de `fix-comentarios-2-de-assets`.
-  El sistema de medios vive en la rama de assets y el trabajo del hero depende de él.
+> **Este bloque se actualiza en cada iteración, no al final.** Es lo primero que
+> lee una sesión nueva; si miente, la sesión construye sobre una foto vieja. Lo
+> mismo aplica a `medios/ESTADO.md`. Ver el checklist de abajo.
+
+- Rama de trabajo: **`bifurcacion-y-mapa`** (iteración 5), que sale de `hueco-y-data`.
 - **El sitio nuevo en Astro está completo**: las cinco rutas existen en `src/pages/`, con la auditoría visual (`AUDITORIA-VISUAL.md`) ya aplicada.
-- El `index.html` de la raíz es el sitio viejo (landing de bootcamp, sin rutas). **No lo borres**: Jorge lo conserva para revisar qué rescatar. Ya se le quitaron los testimoniales inventados, los logos "Empresa 1–8", los videos "Próximamente" y el contador de cupos. Le queda un `[Nombre de tu papá]`, que ya no importa porque esa página no se publica.
-- **Sistema de medios (video, capturas, íconos): montado, esperando material.** El sitio declara 42 *ranuras* con nombre; dejas caer un archivo con el nombre exacto y aparece solo, sin tocar código. Una ranura vacía no pinta nada en producción.
+- **Iteraciones cerradas:** 1 (sistema de ranuras) · 2 (activar material) · 3 (hero del home) · 4 (el hueco y el mapa I·L·H·A·S de §02) · 5 (la bifurcación y `MapaEmpresa`). Los briefs viven en `prompts/iteracion-*.md`.
+- **Piezas nuevas que conviene conocer antes de tocar nada:**
+  - `src/data/mapa.ts` + `src/components/MapaEmpresa.astro` — las trece áreas en tres capas. Un componente, tres variantes (`limpio` / `prueba` / `cimiento`) y una versión mini dentro de la bifurcación del home. **Los rótulos salen de un solo archivo**: no los dupliques.
+  - `src/components/Bifurcacion.astro` — dos versiones: la **prominente** (home §04, con el recuadro "Abierto hoy") y la **compacta** (`/metodo` §10). Las dos dicen *qué te llevas*, y el carril de aprender es **el método**, no "Ilhas Finanzas".
+  - `src/data/productos.ts` — las seis tarjetas de construcción, tituladas por lo que resuelven. Fuente única del home §05 y de `/soluciones` §03.
+  - `src/data/historial.ts` + `Historial.astro` — la línea de tiempo de `/nosotros`.
+  - `.bg-lavado` en `src/styles/base.css` — la tercera superficie clara, para cuando dos secciones del mismo fondo se pegarían.
+- El `index.html` de la raíz es el sitio viejo (landing de bootcamp, sin rutas). **No lo borres**: Jorge lo conserva para revisar qué rescatar. Le queda un `[Nombre de tu papá]`, que ya no importa porque esa página no se publica.
+- **Sistema de medios: montado, prioridad 1 completa.** El sitio declara **39 ranuras** con nombre; dejas caer un archivo con el nombre exacto y aparece solo, sin tocar código. Una ranura vacía no pinta nada en producción. Hoy: **17 de 39 listas, 0 con problema**.
   - **Si vas a trabajar en medios, lee `medios/ESTADO.md` primero.**
   - `npm run medios` te dice qué falta, qué pesa de más y qué no tiene atribución.
+
+### Lo que sigue abierto (no lo inventes: pregúntale a Jorge)
+
+| Tema | Qué falta |
+|---|---|
+| **Home §06 · quiénes somos** | El home no tiene cara. El material existe (`src/assets/equipo/`, `TarjetaPersona.astro`); falta la decisión de construirlo |
+| **`/finanzas` §07 · servicios del papá** | Falta el copy y **a dónde apunta el botón de agenda**. Hoy no hay ninguna URL de agenda en el repositorio |
+| **`/nosotros` § La historia** | Tres clips (`nosotros-historia-01/02/03`) sin material |
+| **Caption de `nosotros-conferencia`** | Dos briefs del 24 ago se contradicen: conferencia de nov 2017 sin evento, o Talent Land. Va sin caption hasta que se resuelva |
+| **Párrafo de intro de la línea de tiempo** | Marcado como `TODO copy` en `src/pages/nosotros.astro`. Lo escribe Jorge |
+| **`sitemap.xml`** | Decidido que va, pero **hasta el final**: se genera cuando las rutas y el contenido estén cerrados, como archivo estático en `public/` (sin instalar la integración) |
+| **Hosting y DNS · plataforma del programa** | Ver `docs/00-INDEX.md` § "Lo que NO está resuelto" |
 
 ## Convenciones de código
 
@@ -64,3 +86,5 @@ Un **hub de marca con cinco páginas**, no un scroll de ventas:
 - [ ] Si tocaste medios: ¿`npm run medios` sin ningún ⚠?
 - [ ] ¿Pasa el checklist de seguridad de `docs/06-stack-y-seguridad.md`?
 - [ ] ¿Se ve premium, claro y sin humo? ¿Podría vivir junto a Apple, Mindvalley o MasterClass?
+- [ ] **¿Actualizaste el "Estado del repositorio" de arriba?** Rama, iteración cerrada, piezas nuevas y lo que quedó abierto. Si tocaste medios, también `medios/ESTADO.md`. **No es opcional y no se deja para el final**: es lo primero que lee la siguiente sesión, y un estado viejo hace que construya sobre una foto que ya no existe. Ya pasó: llegó a estar cuatro iteraciones atrasado.
+- [ ] ¿Los `docs/` siguen describiendo el sitio que existe? Si moviste un bloque, `docs/02-paginas.md` cambia con él — y si un bloque que el doc promete **no** está construido, márcalo como hueco en vez de borrarlo.

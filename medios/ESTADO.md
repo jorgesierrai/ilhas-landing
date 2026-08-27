@@ -1,14 +1,19 @@
 # Estado del sistema de medios
 
-**Última actualización:** 22 ago 2026, al terminar la Iteración 1.
+**Última actualización:** 27 ago 2026, al cerrar la Iteración 5.
 
 > Este archivo es el **traspaso**. Si retomas el trabajo en otra sesión o en otra
 > máquina, léelo antes que nada: dice qué quedó hecho, qué decisiones se tomaron
 > y por qué, qué falta, y qué trampas técnicas ya costaron tiempo una vez.
 >
+> **Se actualiza al cerrar cada iteración, no al final del proyecto.** Llegó a
+> estar cuatro iteraciones atrasado y eso hace que la sesión siguiente trabaje
+> con una foto que ya no existe. Está en el checklist de `../CLAUDE.md`.
+>
 > Para *cómo opera* el sistema → `LEEME.md`.
 > Para *qué archivo producir* → `CHECKLIST.md`.
 > Para *qué activo va dónde y por qué* → `../PLAN-MEDIOS.md`.
+> Para *cómo exportar el video* → `LEEME-video.md`.
 
 ---
 
@@ -17,16 +22,42 @@
 | | |
 |---|---|
 | **Iteración 1 — los espacios** | ✅ Hecha (`../prompts/iteracion-1-espacios.md`) |
-| **Producir el material** | ⬜ Pendiente — es tu turno, sigue `CHECKLIST.md` |
-| **Iteración 2 — activar** | ⬜ Pendiente (`../prompts/iteracion-2-activar.md`), cuando prioridad 1 esté en verde |
+| **Producir el material de prioridad 1** | ✅ Hecho — las 13 ranuras en verde |
+| **Iteración 2 — activar** | ✅ Hecha (`../prompts/iteracion-2-activar.md`) |
+| **Iteración 3 — el hero del home** | ✅ Hecha (`../prompts/iteracion-3-hero.md`) |
+| **Iteración 4 — el hueco y el mapa I·L·H·A·S** | ✅ Hecha (`../prompts/iteracion-4-hueco.md`) |
+| **Iteración 5 — bifurcación y mapa de la empresa** | ✅ Hecha (`../prompts/iteracion-5-bifurcacion-mapa.md`) |
+| **Material de prioridad 2 y 3** | ⬜ Pendiente — sigue `CHECKLIST.md` |
 
-`npm run medios` → **1 de 41 listas · 0 con problema**
+`npm run medios` → **17 de 39 listas · 0 con problema**
 
-La única llena es `metodo-timeline`, porque su archivo fuente ya estaba en el repo.
+### Qué cambió desde la Iteración 1
+
+- **Prioridad 1 está completa**: las seis capturas de producto, las cuatro del
+  sistema de agentes, la foto del hero (`home-hero-conferencia`) y el clip de
+  radio de 2018.
+- **De 41 ranuras a 39.** Se fueron `home-mercado-01/02/03` (las vacantes: los
+  puestos que mostraban no son el comprador de Ilhas — decisión de Jorge, 27 ago
+  2026) y entraron `home-hero-conferencia` y `nosotros-conferencia-clip`.
+- **Dos ranuras están llenas pero deliberadamente sin usar**, marcadas con
+  `sinUsar: true` para que el verificador no las señale: `metodo-timeline` (era
+  furniture de video horizontal; la reemplazó la línea vertical de `/nosotros`)
+  y `home-hero-loop` (lo reemplazó la foto de Talent Land).
+- **Las dos atribuciones de testimonio están confirmadas** por Jorge el 24 ago:
+  Irlanda Morgan · Morgan Centro de Alta Especialidad, y Jesús Flores ·
+  Extrusión de Aleaciones. **Se publican.** Ver `CORTES-testimonios.md`.
+
+### Lo que falta y por qué
+
+| Ranura | Qué bloquea |
+|---|---|
+| `nosotros-historia-01/02/03` | No hay material. Es la sección "La historia" de `/nosotros` (prioridad 2) |
+| Caption de `nosotros-conferencia` | Los briefs del 24 ago se contradicen: nov 2017 sin evento, o Talent Land. Va sin caption hasta que Jorge decida |
+| Los 13 íconos y los 5 loops | Prioridad 3. El sitio se ve bien sin ellos: una ranura vacía no pinta nada |
 
 ---
 
-## Cómo se llega a 41 ranuras
+## Cómo se llega a las ranuras (el conteo original de 41)
 
 `CHECKLIST.md` tiene 36 casillas de material (más 5 de revisión de contenido, que no son ranuras). De esas 36:
 
@@ -41,7 +72,7 @@ La única llena es `metodo-timeline`, porque su archivo fuente ya estaba en el r
 
 | Pieza | Archivo |
 |---|---|
-| Manifiesto de las 41 ranuras | `src/data/medios.ts` |
+| Manifiesto de las ranuras | `src/data/medios.ts` |
 | Detector (¿existe el archivo?) | `src/lib/medios.ts` |
 | Componentes | `src/components/medios/` — `Ranura`, `Loop`, `VideoClip`, `Captura`, `TarjetaCaso`, `Testimonio`, `BandaAutoridad`, `Stat`, `Icono` |
 | Verificador | `scripts/medios-check.mjs` → `npm run medios` |
@@ -49,7 +80,7 @@ La única llena es `metodo-timeline`, porque su archivo fuente ya estaba en el r
 **Dos servidores, dos cosas distintas:**
 
 ```bash
-npm run dev       # los marcadores punteados de las 41 ranuras. Tiene "brinco"
+npm run dev       # los marcadores punteados de las ranuras vacías. Tiene "brinco"
                   # de estilos: es Vite inyectando el CSS por JS, no existe en producción
 npm run build && npm run preview    # el sitio real, sin marcadores y sin brinco
 ```

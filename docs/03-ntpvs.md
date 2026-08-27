@@ -45,6 +45,12 @@
 **Resultado:** convertir tus números en decisiones que mueven el negocio, con IA sobre un fundamento correcto, y volverte indispensable.
 **Sin:** ser programador, y sin arriesgar producir informes o automatizaciones bonitas que causen peor toma de decisiones.
 **En:** 6 semanas.
+
+> ⚠️ **La duración es referencia interna: NO se escribe en el sitio.** Decisión de
+> Jorge, 27 ago 2026 — es herencia del formato bootcamp y depende de una
+> plataforma de entrega sin decidir. Si necesitas hablar de formato, manda al
+> webinar. Las "6 semanas" de este documento y de los renglones de abajo sirven
+> para construir la oferta, no para publicarla.
 **Con:** el Método Ilhas — 40 años de criterio financiero + IA.
 
 **Identidad nueva:** el financiero que domina la IA — el que convierte números en decisiones y en el que todos confían.
