@@ -120,22 +120,29 @@ const lineas = [
     letter-spacing: var(--ilhas-tracking-display);
   }
 
-  /* Altura fija: los ítems van absolutos y apilados, y sin esto la banda
-     brincaría de alto en cada cambio. */
   .hilas__rot {
-    position: relative;
     min-height: 4.25rem;
   }
 
+  /* Los cinco ítems apilados en la MISMA celda de rejilla, no en absoluto.
+     Apilar con `position: absolute` sacaba a los cinco del flujo, así que el
+     contenedor medía 0 y había que sostenerlo con altura fija — y a lo ancho
+     no había forma de que se midiera solo, lo que obligaba a darle todo el
+     espacio sobrante y dejaba la banda pegada a la izquierda.
+
+     Con `grid-area: 1 / 1` siguen apilados pero SÍ cuentan para el tamaño: el
+     contenedor toma el alto y el ancho del ítem más grande, igual en todo el
+     ciclo. Así no brinca —el problema original— y además puede centrarse.
+     El `min-height` se queda como piso, no como sostén. */
   .hilas__rot ul {
+    display: grid;
     margin: 0;
     padding: 0;
     list-style: none;
   }
 
   .hilas__rot li {
-    position: absolute;
-    inset: 0;
+    grid-area: 1 / 1;
     opacity: 0;
     /* 15 s de ciclo = 3 s por línea (Jorge, 27 ago 2026: los 5 s de la
        referencia se sentían lentos). Los porcentajes de @keyframes NO cambian:
@@ -194,13 +201,17 @@ const lineas = [
 
     .hilas__rot li:first-child {
       opacity: 1;
-      position: relative;
     }
   }
 
   @media (min-width: 760px) {
+    /* Las tres columnas se miden por su contenido y el grupo se centra. Antes
+       la tercera era `minmax(0, 1fr)` y se comía todo el ancho sobrante: la
+       banda quedaba clavada a la izquierda con medio contenedor vacío a la
+       derecha. Se puede hacer porque el rotador ya se mide solo (ver arriba). */
     .hilas__inner {
-      grid-template-columns: auto 1px minmax(0, 1fr);
+      grid-template-columns: auto 1px auto;
+      justify-content: center;
       gap: 1.75rem;
       padding-block: 1.75rem;
     }
