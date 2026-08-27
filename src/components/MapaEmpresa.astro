@@ -279,14 +279,15 @@ const conPrueba = variante === "prueba";
     color: var(--ilhas-text);
   }
 
+  /* Siguen siendo fichas, solo calladas: conservan pastilla, borde y padding.
+     Quitárselos las convertía en texto corrido y el mapa dejaba de leerse como
+     el mismo diagrama de las otras dos variantes. */
   .mapa-empresa--cimiento .capa--externa .ficha,
   .mapa-empresa--cimiento .capa--motor .ficha {
-    background: transparent;
-    border-color: transparent;
+    background: rgba(255, 255, 255, 0.55);
+    border-color: rgba(122, 60, 255, 0.14);
     color: var(--ilhas-text);
     font-weight: 400;
-    padding-inline: 0;
-    margin-right: 0.75rem;
   }
 
   .mapa-empresa--cimiento .capa--base {

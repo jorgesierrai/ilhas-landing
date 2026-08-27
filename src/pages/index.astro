@@ -640,10 +640,11 @@ const kpis = [
     color: var(--ilhas-text);
   }
 
+  /* Sin border-top: medía 476 px contra los 1044 del mapa y se leía como una
+     raya suelta, no como un cierre. La separación la hace el aire, y la última
+     fila del mapa ya trae su propio border-bottom. */
   .remate {
     margin-top: 1.75rem;
-    padding-top: 1.5rem;
-    border-top: 1px solid var(--ilhas-gray);
     max-width: 34ch;
     font-family: var(--ilhas-font-display);
     font-weight: 600;
@@ -787,10 +788,23 @@ const kpis = [
     }
 
     /* Nace y muere en el centro del primer y del último badge, no en el borde
-       de la fila: si no, sobresale por arriba y por abajo. Medido: con .paso
-       estirado, el centro del badge queda a 1.5rem de su borde superior, en
-       las cinco filas por igual. */
-    .mapa--espina .mapa__fila:first-of-type .paso::before {
+       de la fila: si no, sobresale por arriba y por abajo.
+
+       OJO CON EL SELECTOR. Aquí NO sirve `.mapa__fila:first-of-type`:
+       `:first-of-type` mira el tipo de elemento, no la clase, y el primer
+       <div> hermano dentro de .mapa es `.mapa__encabezados`. La regla no casaba
+       con nada y el trazo de la primera fila se quedaba en `top: -1.5rem`,
+       asomando por encima del badge de la I. El hermano adyacente sí apunta a
+       la fila correcta. (`:last-of-type` de abajo sí funciona: lo que sigue a
+       la última fila son <p>, otro tipo, así que la última fila sí es el último
+       <div>.) */
+    .mapa--espina .mapa__encabezados + .mapa__fila .paso::before {
+      /* 1.5rem, no 50%. `.paso` es una rejilla de dos filas con
+         `align-content: center`, así que el badge vive en la fila 1 y su centro
+         NO está a la mitad de la caja: medido, queda a 24 px del borde superior
+         y el 50% cae en 39 px — el trazo arrancaba 15 px por debajo del badge.
+         1.5rem da delta 0 y hace simetría con el `calc(100% - 1.5rem)` de la
+         última fila, que ya medía exacto. */
       top: 1.5rem;
     }
 
