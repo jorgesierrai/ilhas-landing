@@ -17,36 +17,122 @@ const capturasPrompts = [
   { id: "metodo-prompts-04", marco: "navegador" as const },
 ];
 
+// §02 · Las tres capas de un resultado con IA. Es lo que sostiene el "y no es
+// la tecnología" del H2: de las tres, la única que compartes con tu competencia
+// es la que no puedes mejorar.
+const capasIA = [
+  {
+    nombre: "El modelo",
+    que: "El motor",
+    dueno: "De todos. Es el mismo para ti y para tu competencia",
+    tuya: false,
+  },
+  {
+    nombre: "El andamiaje",
+    que: "El flujo, las herramientas, los pasos que lo rodean",
+    dueno: "Tuyo",
+    tuya: true,
+  },
+  {
+    nombre: "El conductor",
+    que: "El contexto que le das, cómo lo corriges, cómo lo diriges",
+    dueno: "Tuyo",
+    tuya: true,
+  },
+];
+
+// Andrew Ng, The Batch (DeepLearning.AI), 20 mar 2024, sobre HumanEval.
+// Los porcentajes van literales y SIN redondear.
+const humanEval = [
+  { condicion: "GPT-3.5 solo", resultado: "48.1 %", destacada: false },
+  { condicion: "GPT-4 solo", resultado: "67.0 %", destacada: false },
+  {
+    condicion: "GPT-3.5 con un flujo de trabajo agéntico alrededor",
+    resultado: "hasta 95.1 %",
+    destacada: true,
+  },
+];
+
+/**
+ * §04 · Los cinco pasos.
+ *
+ * El contenido sale LITERAL de `docs/07-metodo-detalle.md`, que es la
+ * definición canónica dictada por Jorge. Si esto y ese documento difieren,
+ * manda el documento.
+ *
+ * La jerarquía está invertida respecto a lo que había antes: `trabajo` es el
+ * protagonista y `oficio` es secundario. "Producto" a secas no lo decodifica un
+ * contador ni un dueño de empresa, así que la etiqueta es "el oficio de
+ * construir software y tecnología", completa.
+ */
 const pasos = [
   {
     letra: "I",
     paso: "Identificar",
+    trabajo: [
+      "Encontrar el lugar: los procesos y workflows dentro de tu trabajo, quién los hace, y por qué se hacen así. Entender cómo se mueve el dinero, dónde se fuga y qué impacto tiene eso en tu negocio.",
+      "Después mapeas tus prioridades y las ordenas, para saber en qué orden vas a ir optimizando y a cuál le vas a subir el valor primero.",
+    ],
+    // La idea más filosa del paso, y hasta hoy no estaba dicha en el sitio.
+    destacado: "¿Qué no debería existir en estos procesos?",
+    destacadoPie:
+      "Identificar no es solo encontrar qué mejorar — es encontrar qué sobra.",
     oficio: "Discovery — instrumentar y hallar el dolor antes de construir",
-    trabajo: "Cómo se mueve el dinero, dónde se fuga, y desde qué número vas a medir",
   },
   {
     letra: "L",
     paso: "Levantamiento",
+    trabajo: [
+      "De los procesos que identificaste: entender tus datos. Qué datos tienes y dónde los tienes.",
+      "Luego limpiarlos y ponerlos en un solo lugar. Y ser específico en una cosa: cuál es el dato y la métrica que quieres mover, y por qué.",
+      "Para eso puedes traer referencias de cómo lo hacen los mejores —sus estándares— y entenderlos para aplicarlos tú.",
+    ],
     oficio: "Continuous Discovery — levantar la información y el estándar",
-    trabajo: "Dejas tus datos limpios y en un solo lugar, y traes el estándar de los mejores",
   },
   {
     letra: "H",
     paso: "Hilar",
-    oficio: "Opportunity Solution Tree — enhebrar piezas en un resultado",
-    trabajo: "Costos, precios y márgenes en un solo criterio",
+    trabajo: [
+      "Tener un mapeo de: proceso → paso del proceso → dato → métrica que quieres mejorar, optimizar o a la que le quieres subir el valor. Ahí entiendes los dolores y las oportunidades de mejora.",
+      "Con eso sabes cómo lo puedes mejorar y cómo va a cambiar la métrica. Y defines un objetivo: hacia dónde quieres mover ese KPI, de forma que te lleve a un resultado medible en tu proceso — y que además esté conectado a mejorar el margen, los costos o los precios.",
+    ],
+    oficio: "Opportunity Solution Tree — enhebrar piezas sueltas en un solo resultado",
   },
   {
     letra: "A",
     paso: "Accionar",
+    trabajo: [
+      "Estableces el plan de acción: qué solución, qué vas a hacer y qué vas a eliminar.",
+      "Y haces pruebas baratas —prototipos, automatizaciones chicas— que te digan si lo que estás haciendo efectivamente va a mover la aguja y la métrica que definiste. No te la juegas construyendo grande antes de saberlo.",
+      // Autorizado por Jorge; no venía en el dictado.
+      "Antes de construir a la medida, la prueba más barata a veces es usar algo que ya existe para entender el proceso de verdad. No siempre se compra — pero saltarse esa pregunta es cómo se acaba construyendo algo caro para un proceso que no se entendía.",
+    ],
     oficio: "Assumption testing + POC — decidir con datos",
-    trabajo: "Decides con números: precio, contratar, invertir",
   },
   {
     letra: "S",
     paso: "Sistematizar",
-    oficio: "Delivery + automation — el motor que corre solo",
-    trabajo: "La IA como tu equipo, con alertas y mantenimiento",
+    trabajo: [
+      "Ya sabes que funciona, está validado y platicado. Ahora sí: usar la IA como tu equipo, bajo un método, no suelta.",
+    ],
+    // Jorge marcó explícitamente cuál es "lo más importante" y cuál "lo
+    // segundo": son dos decisiones, no dos frases más.
+    decisiones: [
+      {
+        rango: "Lo más importante",
+        titulo: "Qué nivel de tecnología le aplicas",
+        texto:
+          "¿Basta con una automatización? ¿Un bot? ¿Un agente? ¿Skills? ¿Una aplicación completa? ¿O con alertas y correos ya la armaste? Escoger de más cuesta dinero; escoger de menos no resuelve.",
+      },
+      {
+        rango: "Lo segundo",
+        titulo: "Cómo vas a mantener esa solución",
+        // Autorizado por Jorge; no venía en el dictado.
+        texto:
+          "Lo que rompe la confianza en una solución con IA no es que se equivoque: es que nadie revisó. Un error detectado es mantenimiento; un error publicado es credibilidad perdida. La solución no termina cuando funciona — termina cuando alguien la está cuidando.",
+      },
+    ],
+    oficio: "Delivery + automatización — el motor que corre solo",
   },
 ];
 
@@ -78,21 +164,44 @@ const principios = [
 
 <Base
   title="El Método"
-  description="I·L·H·A·S: el sistema con el que Ilhas convierte criterio en decisiones, tomado del oficio de construir producto."
+  description="I·L·H·A·S: el sistema con el que Ilhas convierte criterio en decisiones, tomado del oficio de construir software y tecnología."
 >
   <article>
-    <!-- 01 · La tesis -->
+    {/* 01 · La tesis — reescrita el 27 ago 2026.
+        Antes decía "El método no nació en las finanzas". Se cayó: definirse
+        por lo que NO eres es débil, y "producto" a secas no lo decodifica un
+        contador ni un dueño de empresa. Ahora se define por lo que sí es.
+        Un solo gradiente en el titular (tokens.css). */}
     <section class="section-y">
       <div class="container prose metodo-hero reveal">
         <p class="kicker">El método</p>
         <h1>
-          El método no nació en las finanzas. Nació construyendo{" "}
-          <span class="text-gradient">producto</span>.
+          El método nació construyendo{" "}
+          <span class="text-gradient">tecnología</span>, a lo largo de más de 12
+          años.
         </h1>
         <p class="lead">
-          Es un sistema para pensar y decidir, destilado de años construyendo
-          producto — y apuntado a tus números. Finanzas es la puerta de
-          entrada. El método es lo que te llevas.
+          Esa tecnología ha tenido un impacto enorme en sus usuarios.
+        </p>
+        <p>
+          Lo que te enseñamos es el sistema para producir soluciones que te
+          ayuden a ti y a tus clientes a <strong>mover la aguja</strong> de lo
+          que quieran mover — con tus procesos y las herramientas que ya tienes
+          a la mano.
+        </p>
+
+        {/* Primera aparición de "mover la aguja" en todo el sitio, y hasta hoy
+            no estaba definida en ninguna parte (docs/07-metodo-detalle.md
+            § Vocabulario). <details> nativo: cero JS. Nada de title="", que ni
+            lo lee un lector de pantalla ni existe en táctil. */}
+        <details class="ayuda">
+          <summary>¿qué es mover la aguja?</summary>
+          <p>Cumplir el objetivo que te planteaste.</p>
+        </details>
+
+        <p>
+          El método te ayuda a saber <strong>cómo pensar</strong>, a mejorar tus
+          procesos y a crear más valor.
         </p>
       </div>
     </section>
@@ -111,6 +220,70 @@ const principios = [
           razonamiento, lo amplifica. Por eso el fundamento importa más ahora
           que antes, no menos.
         </p>
+
+        {/* El H2 afirma "y no es la tecnología". Hasta hoy nada lo demostraba:
+            el cuerpo repetía la afirmación en vez de sostenerla. Las tres capas
+            son lo que la sostiene, y el dato de Ng es lo que la prueba. */}
+        <h3 class="capas__titulo">
+          Un resultado con IA tiene tres capas, y solo una es el modelo.
+        </h3>
+
+        <ul class="capas">
+          {
+            capasIA.map((c) => (
+              <li class:list={["capa-ia", c.tuya && "capa-ia--tuya"]}>
+                <b>{c.nombre}</b>
+                <span>{c.que}</span>
+                <em>{c.dueno}</em>
+              </li>
+            ))
+          }
+        </ul>
+
+        <p>
+          De las tres, la que todos comparten es la única que no puedes mejorar.
+          <strong>
+            {" "}Las dos que sí deciden el resultado son las que nadie te va a
+            dar hecho.
+          </strong>{" "}
+          Por eso el mismo modelo produce resultados abismalmente distintos
+          según quién lo maneje.
+        </p>
+
+        {/* Dato verificado, va literal y sin redondear. Se cita a Andrew Ng,
+            que es de quien es, no a terceros que lo repiten. */}
+        <div class="ng">
+          <p class="ng__intro">
+            Andrew Ng lo midió en la prueba de programación HumanEval:
+          </p>
+          <ul class="ng__filas">
+            {
+              humanEval.map((f) => (
+                <li class:list={["ng__fila", f.destacada && "ng__fila--destacada"]}>
+                  <span>{f.condicion}</span>
+                  <b>{f.resultado}</b>
+                </li>
+              ))
+            }
+          </ul>
+          <p class="ng__remate">
+            Un modelo peor con mejor sistema le ganó a un modelo mejor sin
+            sistema. Y no por poco:{" "}
+            <strong>
+              la diferencia que hace el andamiaje es más grande que la
+              diferencia entre las dos generaciones de modelo.
+            </strong>
+          </p>
+        </div>
+
+        <p>
+          La otra mitad del problema es el proceso. Automatizar uno que está mal
+          no lo arregla —{" "}
+          <strong>lo hace fallar más rápido y a mayor escala.</strong> Todos
+          venden automatizar más. Nosotros empezamos por quitar.
+        </p>
+
+        <p class="pregunta">¿Qué no debería existir en estos procesos?</p>
 
         {/* Las tres fuentes, literales y verificadas
             (prompts/iteracion-4-hueco.md §2). El MAPA no se duplica aquí: §04
@@ -136,6 +309,15 @@ const principios = [
               Gartner · pronóstico 2024
             </a>
           </cite>
+          <cite>
+            <a
+              href="https://www.deeplearning.ai/the-batch/how-agents-can-improve-llm-performance"
+              target="_blank"
+              rel="noopener"
+            >
+              Andrew Ng · The Batch, 20 mar 2024
+            </a>
+          </cite>
         </p>
       </div>
     </section>
@@ -145,12 +327,39 @@ const principios = [
       <div class="container prose reveal">
         <p class="kicker">El ángulo correcto</p>
         <h2>No es una metáfora. Es de dónde salió el método.</h2>
+
+        {/* El texto es el de siempre —a Jorge le gusta— partido en las tres
+            ideas que ya traía apelmazadas, y con las palabras que cargan el
+            argumento en <strong>. Sin color nuevo y sin gradiente.
+            El puente con §02: allá se dice POR QUÉ falla, aquí DE DÓNDE salió
+            lo que no falla. */}
         <p>
-          El Método Ilhas se parece al oficio de construir producto porque
-          nació ahí — no es una comparación, es el origen. No te estamos
-          comparando con nadie: te estamos entregando el mismo sistema que
-          usa quien diseña producto, apuntado a tu trabajo. Sin volverte
-          técnico. Sin esperar a que entre un equipo de ingeniería.
+          Arriba está por qué fallan los proyectos de IA. Esto es de dónde sale
+          lo que no falla.
+        </p>
+        <p>
+          El Método Ilhas se parece al oficio de construir software y tecnología
+          porque <strong>nació ahí</strong> — no es una comparación, es el
+          origen.
+        </p>
+        <p>
+          No te estamos comparando con nadie: te estamos entregando{" "}
+          <strong>el mismo sistema</strong> que usa quien construye tecnología,
+          apuntado a tu trabajo. Sin volverte técnico. Sin esperar a que entre
+          un equipo de ingeniería.
+        </p>
+
+        {/* Lo que faltaba: §03 prometía "sin volverte técnico" y no explicaba
+            por qué eso es posible. Esto lo convierte de promesa a explicación. */}
+        <p class="remate-angulo">
+          Saber el <em>qué</em> no te obliga a aprender el <em>cómo</em>.
+        </p>
+        <p>
+          El agobio con la IA no es de capacidad, es de{" "}
+          <strong>filtro</strong>: hay demasiadas herramientas y demasiado
+          ruido. El método es el filtro — te dice qué resolver y en qué orden, y
+          el <em>cómo</em> técnico se escoge después, en el paso{" "}
+          <strong>Sistematizar</strong>.
         </p>
       </div>
     </section>
@@ -163,35 +372,67 @@ const principios = [
           <h2>Cinco pasos. Un mapeo directo a tu trabajo.</h2>
           <p class="lead">
             I·L·H·A·S no es un acrónimo bonito: cada letra es un paso real,
-            tomado del oficio de construir producto y apuntado a tus números.
+            tomado del oficio de construir software y tecnología y apuntado a tus
+            números.
           </p>
         </div>
 
-        <div class="table-scroll metodo-tabla">
-          <table>
-            <thead>
-              <tr>
-                <th scope="col">Paso</th>
-                <th scope="col">El oficio de producto</th>
-                <th scope="col">En tu trabajo</th>
-              </tr>
-            </thead>
-            <tbody>
-              {
-                pasos.map((p) => (
-                  <tr>
-                    <th scope="row">
-                      <span class="metodo-tabla__letra">{p.letra}</span>
-                      {p.paso}
-                    </th>
-                    <td>{p.oficio}</td>
-                    <td>{p.trabajo}</td>
-                  </tr>
-                ))
-              }
-            </tbody>
-          </table>
-        </div>
+        {/* Deja de ser tabla. Con el detalle largo de docs/07, cinco celdas de
+            ~80 palabras eran ilegibles: la tabla forzaba a leer en horizontal
+            algo que se piensa en vertical. Cinco bloques apilados, con "En tu
+            trabajo" de protagonista y el oficio de pie de página.
+            El badge es el mismo tratamiento que el mapa de §02 del home. */}
+        <ol class="pasos">
+          {
+            pasos.map((p) => (
+              <li class="paso-det">
+                <div class="paso-det__cabeza">
+                  <span class="paso-det__letra" aria-hidden="true">
+                    {p.letra}
+                  </span>
+                  <h3>{p.paso}</h3>
+                </div>
+
+                <div class="paso-det__cuerpo">
+                  <p class="paso-det__rotulo">En tu trabajo</p>
+                  {p.trabajo.map((parrafo) => <p>{parrafo}</p>)}
+
+                  {p.destacado && (
+                    <div class="paso-det__pregunta">
+                      <p>{p.destacado}</p>
+                      <span>{p.destacadoPie}</span>
+                    </div>
+                  )}
+
+                  {p.decisiones && (
+                    <ul class="decisiones">
+                      {p.decisiones.map((d) => (
+                        <li>
+                          <span class="decisiones__rango">{d.rango}</span>
+                          <b>{d.titulo}</b>
+                          <p>{d.texto}</p>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+
+                  <p class="paso-det__oficio">
+                    <span>El oficio de construir software y tecnología</span>
+                    {p.oficio}
+                  </p>
+                </div>
+              </li>
+            ))
+          }
+        </ol>
+
+        {/* Que la S regresa a la I no estaba dicho en ninguna parte del sitio,
+            y es lo que separa un método de una lista de cinco pasos. Va como
+            remate, no como sexto bloque. */}
+        <p class="ciclo">
+          Y con eso vuelves a empezar en <strong>Identificar</strong>. No es una
+          lista de cinco pasos: es un ciclo que se mantiene.
+        </p>
 
         {/* El diagrama del proceso completo, debajo de la tabla que
             describe los mismos cinco pasos. */}
@@ -433,70 +674,406 @@ const principios = [
     max-width: 900px;
   }
 
-  .metodo-tabla table {
-    background: var(--ilhas-white);
-    border-radius: var(--ilhas-radius-card);
-    overflow: hidden;
-  }
+  /* ======================================================================
+     §01 · La ayuda de "mover la aguja"
 
-  .metodo-tabla th,
-  .metodo-tabla td {
-    padding: 1rem 1.25rem;
-    text-align: left;
+     <details> nativo, cero JS. El summary se lee como texto del cuerpo con una
+     flecha discreta, no como botón: es una nota al margen, no una acción. Al
+     abrirse añade una línea, no un bloque — el brief pide que el salto sea
+     corto.
+     ====================================================================== */
+  .ayuda {
+    max-width: none;
+    margin-top: 0.35rem;
     font-size: 0.9375rem;
-    border-bottom: 1px solid var(--ilhas-gray);
-    vertical-align: top;
   }
 
-  .metodo-tabla thead th {
-    font-family: var(--ilhas-font-body);
-    font-weight: 600;
-    font-size: var(--ilhas-fs-small);
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
+  .ayuda summary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    width: fit-content;
+    cursor: pointer;
+    list-style: none;
+    color: var(--ilhas-primary);
+    text-decoration: underline;
+    text-decoration-color: rgba(122, 60, 255, 0.35);
+    text-underline-offset: 3px;
+  }
+
+  /* Safari sigue pintando su triángulo propio con ::-webkit-details-marker
+     aunque `list-style: none` esté puesto. */
+  .ayuda summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .ayuda summary::before {
+    content: "";
+    width: 0;
+    height: 0;
+    border-left: 5px solid currentColor;
+    border-top: 4px solid transparent;
+    border-bottom: 4px solid transparent;
+    transition: transform 0.15s ease;
+  }
+
+  .ayuda[open] summary::before {
+    transform: rotate(90deg);
+  }
+
+  .ayuda summary:hover {
+    text-decoration-color: currentColor;
+  }
+
+  .ayuda > p {
+    margin-top: 0.4rem;
+    padding-left: 0.9rem;
+    border-left: 2px solid var(--ilhas-gray);
     color: var(--ilhas-text);
-    background: var(--ilhas-light);
   }
 
-  .metodo-tabla tbody th {
+  /* ======================================================================
+     §02 · Las tres capas y el dato de Ng
+     ====================================================================== */
+  .capas__titulo {
+    margin-top: 2rem;
+    max-width: 30ch;
     font-family: var(--ilhas-font-display);
     font-weight: 600;
+    font-size: 1.25rem;
+    line-height: 1.25;
+    letter-spacing: var(--ilhas-tracking-display);
+    color: var(--ilhas-dark);
+  }
+
+  .capas {
+    list-style: none;
+    margin: 1.25rem 0 0;
+    padding: 0;
+    max-width: none;
+    border: 1px solid var(--ilhas-gray);
+    border-radius: var(--ilhas-radius-card);
+    overflow: hidden;
+    background: var(--ilhas-white);
+  }
+
+  .capa-ia {
+    display: grid;
+    gap: 0.15rem 1.5rem;
+    padding: 1rem 1.25rem;
+    border-bottom: 1px solid var(--ilhas-gray);
+  }
+
+  .capa-ia:last-child {
+    border-bottom: none;
+  }
+
+  .capa-ia b {
+    font-family: var(--ilhas-font-display);
+    font-weight: 600;
+    font-size: 1.0625rem;
+    color: var(--ilhas-dark);
+    letter-spacing: var(--ilhas-tracking-display);
+  }
+
+  .capa-ia span {
+    font-size: 0.9375rem;
+    color: var(--ilhas-text);
+  }
+
+  /* La marca de propiedad es lo que hace el argumento: las dos que son tuyas
+     se ven distintas de la que es de todos. */
+  .capa-ia em {
+    font-style: normal;
+    font-size: 0.8125rem;
+    color: var(--ilhas-text);
+  }
+
+  .capa-ia--tuya {
+    background: rgba(122, 60, 255, 0.045);
+  }
+
+  .capa-ia--tuya em {
+    font-weight: 600;
+    color: var(--ilhas-primary);
+  }
+
+  .ng {
+    margin-top: 2rem;
+    padding: 1.5rem;
+    border-radius: var(--ilhas-radius-card);
+    background: var(--ilhas-light);
+    border: 1px solid var(--ilhas-gray);
+  }
+
+  .ng__intro {
+    margin: 0;
+    font-size: 0.9375rem;
+    color: var(--ilhas-text);
+  }
+
+  .ng__filas {
+    list-style: none;
+    margin: 1rem 0 0;
+    padding: 0;
+    display: grid;
+    gap: 0.5rem;
+  }
+
+  .ng__fila {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.25rem 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--ilhas-gray);
+    font-size: 0.9375rem;
+    color: var(--ilhas-text);
+  }
+
+  .ng__fila b {
+    font-family: var(--ilhas-font-display);
+    font-weight: 600;
+    font-size: 1.125rem;
     color: var(--ilhas-dark);
     white-space: nowrap;
   }
 
-  .metodo-tabla tbody td {
-    color: var(--ilhas-text);
+  .ng__fila--destacada b {
+    color: var(--ilhas-primary);
   }
 
-  .metodo-tabla tbody tr {
-    transition: background-color 0.2s ease;
+  .ng__fila--destacada {
+    border-bottom-color: transparent;
   }
 
-  .metodo-tabla tbody tr:hover {
-    background: var(--ilhas-light);
+  .ng__remate {
+    margin: 1rem 0 0;
+    font-size: 0.9375rem;
   }
 
-  .metodo-tabla tbody tr:last-child th,
-  .metodo-tabla tbody tr:last-child td {
-    border-bottom: none;
+  /* La pregunta del paso I, que es el contraste entero de la sección: todos
+     venden automatizar más, aquí se empieza por quitar. */
+  .pregunta {
+    margin-top: 1.5rem;
+    padding-left: 1rem;
+    border-left: 3px solid var(--ilhas-primary);
+    font-family: var(--ilhas-font-display);
+    font-weight: 600;
+    font-size: clamp(1.125rem, 2vw, 1.375rem);
+    line-height: 1.25;
+    letter-spacing: var(--ilhas-tracking-display);
+    color: var(--ilhas-dark);
   }
 
-  .metodo-tabla__letra {
+  /* ======================================================================
+     §03 · el remate del ángulo
+     ====================================================================== */
+  .remate-angulo {
+    margin-top: 1.75rem;
+    font-family: var(--ilhas-font-display);
+    font-weight: 600;
+    font-size: clamp(1.125rem, 2vw, 1.375rem);
+    line-height: 1.25;
+    letter-spacing: var(--ilhas-tracking-display);
+    color: var(--ilhas-dark);
+  }
+
+  .remate-angulo em {
+    font-style: italic;
+    color: var(--ilhas-primary);
+  }
+
+  /* ======================================================================
+     §04 · Los cinco pasos, en bloques
+
+     Sobre .bg-dark. El rótulo "En tu trabajo" va antes y más fuerte que el
+     oficio, que queda de pie de página: es la inversión de jerarquía que pide
+     docs/07-metodo-detalle.md.
+     ====================================================================== */
+  .pasos {
+    list-style: none;
+    margin: 2.5rem 0 0;
+    padding: 0;
+    display: grid;
+    gap: 1.25rem;
+    max-width: 900px;
+  }
+
+  .paso-det {
+    padding: 1.75rem;
+    border-radius: var(--ilhas-radius-card);
+    background: rgba(248, 250, 255, 0.04);
+    border: 1px solid rgba(248, 250, 255, 0.1);
+  }
+
+  .paso-det__cabeza {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  /* Mismo tratamiento que el badge del mapa de §02 del home: círculo sólido en
+     --ilhas-primary, letra blanca, Space Grotesk. Sólido y no el gradiente
+     porque en un círculo de 32 px la letra puede caer sobre la zona cian y
+     romper AA. */
+  .paso-det__letra {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 1.75rem;
-    height: 1.75rem;
-    margin-right: 0.5rem;
+    flex: 0 0 auto;
+    width: 2rem;
+    height: 2rem;
     border-radius: 50%;
-    /* Sólido, no el gradiente: en un círculo de 28px no hay forma de
-       garantizar que el texto blanco no caiga sobre la zona cian —
-       la más clara — lo que rompe el contraste AA. Sólido es el uso
-       documentado para íconos en tokens.css. */
     background: var(--ilhas-primary);
     color: var(--ilhas-white);
-    font-size: 0.8125rem;
+    font-family: var(--ilhas-font-display);
+    font-weight: 600;
+    font-size: 0.9375rem;
+  }
+
+  .paso-det__cabeza h3 {
+    margin: 0;
+    font-size: 1.375rem;
+    letter-spacing: var(--ilhas-tracking-display);
+  }
+
+  .paso-det__cuerpo {
+    margin-top: 1rem;
+  }
+
+  .paso-det__rotulo {
+    margin: 0 0 0.5rem;
+    font-family: var(--ilhas-font-body);
+    font-weight: 600;
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    /* 7.6:1 sobre tinta. */
+    color: rgba(248, 250, 255, 0.68);
+  }
+
+  .paso-det__cuerpo > p + p {
+    margin-top: 0.75rem;
+  }
+
+  .paso-det__pregunta {
+    margin-top: 1.25rem;
+    padding-left: 1rem;
+    border-left: 3px solid var(--ilhas-primary);
+  }
+
+  .paso-det__pregunta p {
+    margin: 0;
+    font-family: var(--ilhas-font-display);
+    font-weight: 600;
+    font-size: 1.125rem;
+    line-height: 1.3;
+    letter-spacing: var(--ilhas-tracking-display);
+    color: var(--ilhas-white);
+  }
+
+  .paso-det__pregunta span {
+    display: block;
+    margin-top: 0.35rem;
+    font-size: 0.9375rem;
+    color: rgba(248, 250, 255, 0.75);
+  }
+
+  /* Las dos decisiones de Sistematizar: Jorge marcó cuál es la más importante
+     y cuál la segunda, así que se numeran y se ven como decisiones, no como dos
+     frases más del párrafo. */
+  .decisiones {
+    list-style: none;
+    margin: 1.25rem 0 0;
+    padding: 0;
+    display: grid;
+    gap: 1rem;
+    counter-reset: decision;
+  }
+
+  .decisiones li {
+    counter-increment: decision;
+    padding: 1rem 1.15rem;
+    border-radius: 0.875rem;
+    background: rgba(122, 60, 255, 0.14);
+    border: 1px solid rgba(161, 75, 255, 0.35);
+  }
+
+  .decisiones__rango {
+    display: block;
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: rgba(248, 250, 255, 0.72);
+  }
+
+  .decisiones li b {
+    display: block;
+    margin-top: 0.25rem;
+    font-family: var(--ilhas-font-display);
+    font-weight: 600;
+    font-size: 1.0625rem;
+    letter-spacing: var(--ilhas-tracking-display);
+    color: var(--ilhas-white);
+  }
+
+  .decisiones li p {
+    margin: 0.4rem 0 0;
+    font-size: 0.9375rem;
+  }
+
+  /* El origen, de pie de página: da credibilidad, no vende. */
+  .paso-det__oficio {
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(248, 250, 255, 0.12);
+    font-size: 0.875rem;
+    color: rgba(248, 250, 255, 0.62);
+  }
+
+  .paso-det__oficio span {
+    display: block;
+    margin-bottom: 0.2rem;
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    /* .55 y no .45: a 11 px este rótulo medía 4.36:1 sobre la tarjeta y no
+       pasaba AA. Con .55 mide 5.88:1 y sigue leyéndose como pie de página. */
+    color: rgba(248, 250, 255, 0.55);
+  }
+
+  .ciclo {
+    margin-top: 2rem;
+    max-width: 46ch;
+    font-family: var(--ilhas-font-display);
+    font-weight: 600;
+    font-size: clamp(1.05rem, 1.9vw, 1.3rem);
+    line-height: 1.3;
+    letter-spacing: var(--ilhas-tracking-display);
+    color: var(--ilhas-white);
+  }
+
+  /* --ilhas-grad-end, no --ilhas-primary: el clamp de .ciclo baja hasta 16.8 px
+     en pantallas angostas, así que NO califica como "texto grande" y necesita
+     4.5:1. El primary sólido sobre tinta mide 3.60:1 y ahí falla; el violeta
+     del gradiente mide 4.56:1. Es un token de marca, no un color inventado. */
+  .ciclo strong {
+    color: var(--ilhas-grad-end);
+  }
+
+  @media (min-width: 720px) {
+    .capa-ia {
+      grid-template-columns: minmax(0, 12rem) minmax(0, 1fr) minmax(0, 14rem);
+      align-items: baseline;
+    }
+
+    .capa-ia em {
+      text-align: right;
+    }
   }
 
   .principios {
