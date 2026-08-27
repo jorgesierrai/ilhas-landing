@@ -45,10 +45,10 @@ const isCurrent = (href: string) =>
       <span class="site-header__wordmark">ilhas</span>
     </a>
 
-    <!-- Escritorio: nav normal, siempre visible, oculta por media query en
-         móvil. Vive fuera de <details> a propósito — pisar con CSS el
-         estado "cerrado" nativo de <details> (sin el atributo open) no es
-         confiable entre navegadores; más simple no pelearse con eso. -->
+    {/* Escritorio: nav normal, siempre visible, oculta por media query en
+        móvil. Vive fuera de <details> a propósito — pisar con CSS el estado
+        "cerrado" nativo de <details> (sin el atributo open) no es confiable
+        entre navegadores; más simple no pelearse con eso. */}
     <nav class="site-header__nav site-header__nav--desktop" aria-label="Principal">
       <ul class="site-header__links">
         {
@@ -66,8 +66,8 @@ const isCurrent = (href: string) =>
       </ul>
     </nav>
 
-    <!-- Móvil: el mismo menú, pero dentro de <details> nativo (cero JS).
-         Oculto por completo en escritorio vía media query. -->
+    {/* Móvil: el mismo menú, pero dentro de <details> nativo (cero JS).
+        Oculto por completo en escritorio vía media query. */}
     <details class="site-header__toggle">
       <summary class="site-header__burger" aria-label="Abrir menú">
         <span></span>
