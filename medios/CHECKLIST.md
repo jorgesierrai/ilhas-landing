@@ -97,7 +97,10 @@ Sin audio, sin subtítulos. Son los "GIFs".
   el manifiesto con `sinUsar: true` por si el loop vuelve en otra sección, pero
   **no la produzcas**.
 - [ ] `soluciones-hero-loop` — el producto en movimiento
-- [ ] `finanzas-hero-loop` — un análisis financiero ejecutándose
+- [x] ~~`finanzas-hero-loop`~~ — **cancelado el 28 ago 2026.** Era un reloj
+  decorativo en el hero de `/finanzas` y no probaba nada. Lo reemplazó
+  `finanzas-plantilla.png`, la maqueta de la plantilla maestra, que Jorge ya
+  entregó. **No lo produzcas.**
 - [ ] `metodo-agentes-loop` — varios agentes trabajando en paralelo → `/metodo` §08
 
 > El loop **nunca** le gana al titular. Si tu ojo se va al video antes que al texto, está mal puesto.

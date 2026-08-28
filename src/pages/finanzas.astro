@@ -3,10 +3,9 @@ import { Image } from "astro:assets";
 import Base from "../layouts/Base.astro";
 import TarjetaPersona from "../components/TarjetaPersona.astro";
 import Icono from "../components/medios/Icono.astro";
-import Loop from "../components/medios/Loop.astro";
 import VideoClip from "../components/medios/VideoClip.astro";
 import { mostrar } from "../lib/medios";
-import relojIcon from "../assets/icons/reloj.png";
+import plantillaImg from "../assets/media/capturas/finanzas-plantilla.png";
 import fotoPapa from "../assets/equipo/jorge-papa.png";
 import fotoHijo from "../assets/equipo/jorge-hijo.png";
 import MapaEmpresa from "../components/MapaEmpresa.astro";
@@ -93,30 +92,47 @@ const faqs = [
 >
   <article>
     <!-- 01 · El dolor, en sus palabras -->
-    <section class="section-y-sm">
-      <div class="container hero-split">
+    {/* `overflow: hidden` en .hero-fin NO es opcional: la laptop se sale del
+        contenedor a propósito y sin él la página entera scrollea de lado. */}
+    <section class="section-y-sm hero-fin">
+      <div class="container hero-fin__inner">
         <div class="reveal">
+          {/* Las dos mitades van en el MISMO h1: es una sola frase. La pregunta
+              en voz baja y el golpe en grande — con las dos del mismo tamaño el
+              titular se va a cuatro renglones y "¿no?" queda huérfano en el
+              suyo. */}
           <h1>
-            Sé de finanzas. Pero sientes que te estás{" "}
+            <span class="hero-fin__pregunta">Sabes de finanzas, ¿no?</span>
+            Pero sientes que te estás{" "}
             <span class="text-gradient">quedando atrás</span>.
           </h1>
           <p class="lead">
             Trabajas muchísimas horas en lo mismo de siempre —reportes,
-            cierres, conciliaciones— y nunca se acaba. Ya probaste ChatGPT y
-            te salió genérico.
+            cierres, conciliaciones— y nunca se acaba. Ya probaste ChatGPT y te
+            salió genérico: lo que cualquier persona te hubiera dicho o hecho.
           </p>
+          {/* En su propio párrafo, no al final del anterior: es la línea más
+              filosa de la página y metida en un párrafo largo se pierde. */}
+          <p class="hero-fin__filo">Y ni siquiera sabes si está bien o mal.</p>
           <a
             href={webinarUrl}
-            class="btn btn-primary hero-split__cta"
+            class="btn btn-primary"
             rel="noopener noreferrer"
           >
             Reservar mi lugar en el webinar
           </a>
         </div>
-        <div class="hero-split__visual" aria-hidden="true">
-          <Loop id="finanzas-hero-loop" ratio="1 / 1">
-            <Image src={relojIcon} alt="" width="280" height="280" />
-          </Loop>
+        {/* La plantilla maestra es la promesa de la página hecha imagen, así
+            que necesita tamaño para leerse. El reloj flotante que estaba aquí
+            era decoración: no probaba nada. Es el LCP, por eso `eager`. */}
+        <div class="hero-fin__visual" aria-hidden="true">
+          <Image
+            src={plantillaImg}
+            alt=""
+            width={1600}
+            height={952}
+            loading="eager"
+          />
         </div>
       </div>
     </section>
@@ -160,15 +176,26 @@ const faqs = [
     <!-- 03 · Para quién es · para quién no -->
     <section class="section-y-sm">
       <div class="container">
+        {/* Dos puertas, no dos listas. Antes las dos columnas se veían
+            idénticas —mismo bullet morado, mismo peso, sin superficie— y un
+            filtro que no distingue la puerta que se abre de la que se cierra
+            no filtra nada. La de sí es tarjeta sólida; la de no, borde
+            punteado: dice "no está cerrada, simplemente no es la tuya". */}
         <div class="filtro">
-          <div class="filtro__col">
-            <h3>Es para ti si…</h3>
+          <div class="filtro__col filtro__col--si">
+            <div class="filtro__cabeza">
+              <span class="marca marca--si" aria-hidden="true" />
+              <h3>Es para ti si…</h3>
+            </div>
             <ul>
               {esParaTi.map((item) => <li>{item}</li>)}
             </ul>
           </div>
-          <div class="filtro__col">
-            <h3>No es para ti si…</h3>
+          <div class="filtro__col filtro__col--no">
+            <div class="filtro__cabeza">
+              <span class="marca marca--no" aria-hidden="true" />
+              <h3>No es para ti si…</h3>
+            </div>
             <ul>
               {noEsParaTi.map((item) => <li>{item}</li>)}
             </ul>
@@ -186,43 +213,62 @@ const faqs = [
 
     <!-- 04 · Quién lo enseña — la única página donde el 40+12 va junto -->
     <section class="section-y-sm bg-white">
+      {/* Todo el contenido va en un bloque centrado. Antes `.maestros` tenía
+          max-width sin `margin-inline: auto`, así que las dos tarjetas se
+          pegaban a la izquierda de un contenedor de 1140 px y sobraban 538 px
+          vacíos a la derecha. */}
       <div class="container">
-        <div class="prose reveal">
-          <p class="kicker">Quién lo enseña</p>
-          <h2>De padre e hijo a tu consejo financiero-tecnológico.</h2>
-        </div>
+        <div class="maestros-bloque">
+          <div class="prose reveal">
+            <p class="kicker">Quién lo enseña</p>
+            <h2>De padre e hijo a tu consejo financiero-tecnológico.</h2>
+          </div>
 
-        <div class="maestros">
+          <div class="maestros">
+            {
+              maestros.map((m) => (
+                <TarjetaPersona
+                  nombre={m.nombre}
+                  rol={m.rol}
+                  trayectoria={m.trayectoria}
+                  atribuciones={m.atribuciones}
+                  foto={m.foto}
+                />
+              ))
+            }
+          </div>
+
+          {/* El mismo texto que traía el párrafo suelto, pero hecho puente:
+              "40 años" cae bajo el papá, "12 años" bajo el hijo y el + en el
+              canal de en medio. La suma se ve antes de leerse, que es
+              exactamente lo que dice el H2.
+
+              Sin duración. "6 semanas" era herencia del formato bootcamp, que
+              docs/00-INDEX.md ya declaró muerto, y la plataforma de entrega
+              sigue sin decidirse. El webinar es quien habla de formato
+              (regla 1 de CLAUDE.md). */}
+          <div class="suma">
+            <div class="suma__parte">
+              <b>40 años</b><span>de fundamento financiero</span>
+            </div>
+            <div class="suma__mas" aria-hidden="true">+</div>
+            <div class="suma__parte">
+              <b>12 años</b><span>construyendo con IA</span>
+            </div>
+          </div>
+
+          {/* Identidad, no oferta: que no mencione temario, precio ni bonos.
+              SIN pie de foto — si hace falta una línea ahí, la escribe Jorge. */}
           {
-            maestros.map((m) => (
-              <TarjetaPersona
-                nombre={m.nombre}
-                rol={m.rol}
-                trayectoria={m.trayectoria}
-                atribuciones={m.atribuciones}
-                foto={m.foto}
-              />
-            ))
+            mostrar("finanzas-edificacion") && (
+              <div class="clip">
+                <div class="clip__marco">
+                  <VideoClip id="finanzas-edificacion" />
+                </div>
+              </div>
+            )
           }
         </div>
-
-        {/* Sin duración. "6 semanas" era herencia del formato bootcamp, que
-            docs/00-INDEX.md ya declaró muerto, y además la plataforma de
-            entrega sigue sin decidirse: publicar un número que puede cambiar
-            con ella es exactamente el tipo de promesa que este sitio no hace.
-            El webinar es quien habla de formato (regla 1 de CLAUDE.md). */}
-        <p class="maestros__resumen">
-          40 años de fundamento financiero, más 12 años construyendo con IA.
-        </p>
-
-        {/* Identidad, no oferta: que no mencione temario, precio ni bonos. */}
-        {
-          mostrar("finanzas-edificacion") && (
-            <div class="maestros__clip">
-              <VideoClip id="finanzas-edificacion" />
-            </div>
-          )
-        }
       </div>
     </section>
 
@@ -264,14 +310,79 @@ const faqs = [
 </Base>
 
 <style>
-  /* --- 01 · hero: página interior, H1 menor que el del home --- */
-  .hero-split h1 {
-    max-width: 16ch;
-    font-size: clamp(2rem, 3.5vw, 2.75rem);
+  /* --- 01 · hero -----------------------------------------------------------
+     No usa `.hero-split`: su columna visual de 18 rem dejaría la laptop
+     ilegible. Rejilla propia, con la visual un poco más ancha que el texto.
+
+     `overflow: hidden` NO es opcional: la imagen se sale del contenedor por la
+     derecha a propósito —el mismo recurso del hero del home, donde la foto
+     sangra desde ese lado— y sin recorte la página entera scrollea de lado. */
+  .hero-fin {
+    position: relative;
+    overflow: hidden;
   }
 
-  .hero-split__cta {
+  .hero-fin__inner {
+    display: grid;
+    gap: 2rem;
+    align-items: center;
+  }
+
+  .hero-fin h1 {
+    max-width: 19ch;
+    font-size: clamp(2rem, 3.5vw, 2.75rem);
+    line-height: 1.12;
+  }
+
+  /* El gancho, en voz baja. Va dentro del mismo <h1> porque es una sola
+     frase; lo que cambia es el peso, no la estructura. */
+  .hero-fin__pregunta {
+    display: block;
+    font-size: 0.6em;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    color: var(--ilhas-text);
+    margin-bottom: 0.5rem;
+  }
+
+  .hero-fin__filo {
+    margin-top: 0.9rem;
+    font-size: 1.0625rem;
+    font-weight: 500;
+    color: var(--ilhas-dark);
+    max-width: 34ch;
+  }
+
+  .hero-fin .btn {
     margin-top: 1.75rem;
+  }
+
+  .hero-fin__visual img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  @media (min-width: 1000px) {
+    .hero-fin__inner {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1.08fr);
+      gap: 2.5rem;
+    }
+
+    .hero-fin__visual {
+      margin-right: calc(var(--ilhas-gutter) * -1);
+    }
+
+    .hero-fin__visual img {
+      width: 122%;
+      max-width: none;
+    }
+  }
+
+  @media (max-width: 999px) {
+    .hero-fin__visual {
+      margin-inline: calc(var(--ilhas-gutter) * -0.5);
+    }
   }
 
   /* --- 02 · esto es lo que vas a poder hacer --- */
@@ -307,82 +418,233 @@ const faqs = [
     }
   }
 
-  /* --- 03 · para quién es / no es --- */
+  /* --- 03 · para quién es / no es ------------------------------------------
+     Los grises de abajo son auxiliares que tokens.css no tiene. Están elegidos
+     contra el --ilhas-light del fondo: no los cambies de valor. */
   .filtro {
-    /* Sin max-width propio: .filtro vive directo dentro de .container (no
-       de .prose), así que un max-width + margin-inline:auto aquí lo
-       encogía a la medida de lectura de un párrafo y lo dejaba flotando
-       descentrado a la izquierda del contenedor real de 1140px. */
     display: grid;
-    gap: 1.5rem;
+    gap: 1rem;
   }
 
-  .filtro__col h3 {
-    margin-bottom: 1rem;
+  .filtro__col {
+    padding: 1.5rem 1.5rem 1.65rem;
+    border-radius: var(--ilhas-radius-card);
+  }
+
+  .filtro__col--si {
+    background: var(--ilhas-white);
+    border: 1px solid rgba(122, 60, 255, 0.22);
+    box-shadow: 0 1px 2px rgba(14, 14, 15, 0.03),
+      0 12px 32px rgba(122, 60, 255, 0.07);
+  }
+
+  /* Punteado: dice "esta puerta no está cerrada, simplemente no es la tuya"
+     sin ponerse feo ni agresivo. */
+  .filtro__col--no {
+    background: transparent;
+    border: 1px dashed #d5d8e0;
+  }
+
+  .filtro__cabeza {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin-bottom: 1.1rem;
+  }
+
+  .filtro__cabeza h3 {
+    font-size: 1.0625rem;
+  }
+
+  .filtro__col--no .filtro__cabeza h3 {
+    color: #6e6e7a;
+  }
+
+  /* Las marcas van dibujadas en CSS, no con glifos: un ✓ de fuente cambia de
+     forma según el sistema y aquí tiene que verse idéntico siempre. */
+  .marca {
+    flex: 0 0 auto;
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    position: relative;
+  }
+
+  .marca--si {
+    background: var(--ilhas-primary);
+  }
+
+  .marca--si::before {
+    content: "";
+    width: 0.44rem;
+    height: 0.72rem;
+    border: solid #fff;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg) translate(-1px, -2px);
+  }
+
+  .marca--no {
+    background: #e4e6ed;
+  }
+
+  .marca--no::before {
+    content: "";
+    width: 0.6rem;
+    height: 2px;
+    border-radius: 1px;
+    background: #8a8a97;
   }
 
   .filtro__col ul {
     list-style: none;
+    margin: 0;
+    padding: 0;
     display: grid;
-    gap: 0.75rem;
+    gap: 0.85rem;
   }
 
   .filtro__col li {
-    padding-left: 1.25rem;
     position: relative;
-    color: var(--ilhas-text);
+    padding-left: 1.5rem;
+    font-size: 0.9375rem;
+    line-height: 1.55;
   }
 
   .filtro__col li::before {
     content: "";
     position: absolute;
     left: 0;
-    top: 0.55em;
-    width: 0.4rem;
-    height: 0.4rem;
+    top: 0.62em;
+    width: 0.5rem;
+    height: 0.5rem;
     border-radius: 50%;
+  }
+
+  .filtro__col--si li {
+    color: var(--ilhas-text);
+  }
+
+  .filtro__col--si li::before {
     background: var(--ilhas-primary);
+  }
+
+  /* Un tono más claro: es información, no una oferta.
+
+     #71717C y no el #75757F de la referencia. Medido: el original da 4.36:1
+     sobre --ilhas-light y es texto de 15 px, así que no llega a AA — Lighthouse
+     tumbaba la página a 95 por esto. Éste da 4.62:1 y sigue siendo más claro
+     que el #6E6E7A del encabezado, que es la jerarquía que la referencia
+     quería. */
+  .filtro__col--no li {
+    color: #71717c;
+  }
+
+  .filtro__col--no li::before {
+    background: #afafbb;
+    left: 1px;
+    top: 0.72em;
+    width: 0.62rem;
+    height: 1.5px;
+    border-radius: 1px;
   }
 
   @media (min-width: 768px) {
     .filtro {
       grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 3rem;
+      gap: 1.25rem;
     }
   }
 
-  /* --- 04 · quién lo enseña --- */
-  .maestros {
-    display: grid;
-    gap: 1.5rem;
-    margin-top: 1.75rem;
-    /* Tope de ancho: sin esto, el grid llena el contenedor de 1140px y
-       la foto de cada tarjeta (TarjetaPersona) crece a ~550px de ancho,
-       obligando a hacer scroll para verla completa. */
-    max-width: 44rem;
+  /* --- 04 · quién lo enseña ----------------------------------------------- */
+  .maestros-bloque {
+    max-width: 52rem;
+    margin-inline: auto;
   }
 
-  .maestros__resumen {
-    margin-top: 1.75rem;
-    padding: 1.25rem 1.5rem;
+  .maestros-bloque .prose {
+    text-align: center;
+  }
+
+  .maestros-bloque .kicker,
+  .maestros-bloque h2 {
+    margin-inline: auto;
+  }
+
+  /* 24ch y no 20: con 20 el guion parte "financiero-tecnológico" a la mitad y
+     queda "financiero- / tecnológico". */
+  .maestros-bloque h2 {
+    max-width: 24ch;
+  }
+
+  .maestros {
+    display: grid;
+    gap: 1.25rem;
+    margin-top: 2rem;
+  }
+
+  /* El puente entre las dos personas: "40 años" cae bajo el papá, "12 años"
+     bajo el hijo y el + en el canal de en medio. */
+  .suma {
+    margin-top: 1.25rem;
+    display: grid;
+    gap: 0.75rem;
+    padding: 1.35rem 1.5rem;
+    border-radius: var(--ilhas-radius-card);
     background: var(--ilhas-primary-10);
-    border-left: 3px solid var(--ilhas-primary);
-    border-radius: 0 var(--ilhas-radius-card) var(--ilhas-radius-card) 0;
-    font-family: var(--ilhas-font-body);
-    font-weight: 500;
-    color: var(--ilhas-dark);
-    max-width: var(--ilhas-measure);
+    text-align: center;
+  }
+
+  .suma__parte b {
+    display: block;
+    font-family: var(--ilhas-font-display);
+    font-weight: 600;
+    font-size: 1.75rem;
+    line-height: 1;
+    color: var(--ilhas-primary);
+  }
+
+  .suma__parte span {
+    display: block;
+    margin-top: 0.35rem;
+    font-size: 0.9375rem;
+    color: var(--ilhas-text);
+  }
+
+  .suma__mas {
+    display: grid;
+    place-items: center;
+    font-family: var(--ilhas-font-display);
+    font-weight: 600;
+    font-size: 1.25rem;
+    color: rgba(122, 60, 255, 0.45);
+  }
+
+  .clip {
+    max-width: 52rem;
+    margin: 2.25rem auto 0;
+  }
+
+  .clip__marco {
+    border-radius: var(--ilhas-radius-card);
+    overflow: hidden;
+    border: 1px solid var(--ilhas-gray);
+    background: var(--ilhas-dark);
+    box-shadow: 0 2px 4px rgba(14, 14, 15, 0.04),
+      0 20px 48px rgba(14, 14, 15, 0.1);
   }
 
   @media (min-width: 640px) {
     .maestros {
       grid-template-columns: repeat(2, minmax(0, 1fr));
     }
-  }
 
-  .maestros__clip {
-    margin-top: 2rem;
-    max-width: 48rem;
+    .suma {
+      grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+      align-items: center;
+      gap: 1.5rem;
+    }
   }
 
   /* --- 05 · CTA único --- */
