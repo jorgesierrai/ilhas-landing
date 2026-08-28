@@ -1,0 +1,177 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8">
+<title>Ilhas · /metodo §02 — el experimento, en prosa vs. en figura</title>
+<style>
+:root{
+  --ilhas-primary:#7A3CFF; --ilhas-dark:#0E0E0F; --ilhas-text:#3C3C44;
+  --ilhas-light:#F8FAFF; --ilhas-gray:#E8ECF2; --ilhas-white:#FFF;
+  --ilhas-radius-card:14px;
+  --ilhas-font-display:"Space Grotesk",system-ui,sans-serif;
+  --ilhas-font-body:"Inter",system-ui,-apple-system,sans-serif;
+  --ilhas-container:1140px; --ilhas-gutter:clamp(1.25rem,4vw,3rem);
+  /* La barra de comparación: pizarra fría, deliberadamente recesiva.
+     No cumple el piso de croma del validador —lee como gris— y eso es a
+     propósito: no es una categoría que compita, es el punto de referencia.
+     La identidad nunca va sola en el color: cada barra trae su rótulo. */
+  --comparacion:#8C8AA8;
+}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;font-family:var(--ilhas-font-body);color:var(--ilhas-text);
+  background:var(--ilhas-white);line-height:1.6}
+.container{width:100%;max-width:var(--ilhas-container);margin-inline:auto;
+  padding-inline:var(--ilhas-gutter)}
+.prose{max-width:none}
+.prose p{max-width:62ch}
+.etiqueta{background:var(--ilhas-dark);color:#fff;font-weight:600;font-size:13px;
+  letter-spacing:.06em;padding:10px clamp(1.25rem,4vw,3rem)}
+.etiqueta i{font-style:normal;color:#9b9bab;letter-spacing:0;font-weight:400}
+.medida{font-family:ui-monospace,Menlo,monospace;font-size:12px;color:#7a7a86;
+  padding:6px clamp(1.25rem,4vw,3rem)}
+
+/* ===================== el contenedor, igual en las dos ==================== */
+.ng{margin-top:2rem;padding:1.5rem;border-radius:var(--ilhas-radius-card);
+  background:var(--ilhas-light);border:1px solid var(--ilhas-gray)}
+.ng__intro,.ng__que,.ng__flujo,.ng__cierre{margin:0;font-size:.9375rem;
+  color:var(--ilhas-text)}
+.ng__que{margin-top:.65rem}
+.ng__flujo{margin-top:1rem}
+.ng__cierre{margin-top:.65rem}
+.ng__remate{margin:1rem 0 0;font-size:.9375rem;color:var(--ilhas-text)}
+
+/* ===================== A · la tabla de hoy =============================== */
+.ng__filas{list-style:none;margin:1rem 0 0;padding:0;display:grid;gap:.5rem}
+.ng__fila{display:flex;flex-wrap:wrap;align-items:baseline;
+  justify-content:space-between;gap:.25rem 1rem;padding-bottom:.5rem;
+  border-bottom:1px solid var(--ilhas-gray)}
+.ng__fila b{font-family:var(--ilhas-font-display);font-size:1.0625rem}
+.ng__fila--destacada b{color:var(--ilhas-primary)}
+
+/* ===================== B · la figura ===================================== */
+/* Tres barras horizontales. El trabajo del dato es comparar magnitudes con
+   una identidad compartida entre dos de las tres, así que barras + color por
+   modelo. Se agrupa por modelo, no por resultado: así las dos de GPT-3.5
+   quedan pegadas y la llave de "el mismo modelo" abarca solo esas dos. */
+.fig{margin-top:1.1rem}
+.fig__barras{list-style:none;margin:0;padding:0;display:grid;gap:.9rem}
+
+.barra{display:grid;grid-template-columns:minmax(0,1fr) auto;
+  gap:.15rem .75rem;align-items:baseline}
+.barra__rotulo{grid-column:1;font-size:.875rem;line-height:1.35;
+  color:var(--ilhas-text)}
+.barra__rotulo b{font-weight:600;color:var(--ilhas-dark)}
+.barra__cifra{grid-column:2;grid-row:1;font-family:var(--ilhas-font-display);
+  font-weight:600;font-size:1.0625rem;color:var(--ilhas-text);
+  font-variant-numeric:tabular-nums;white-space:nowrap}
+.barra__via{grid-column:1/-1;grid-row:2;height:10px;border-radius:5px;
+  background:rgba(14,14,15,.06)}
+.barra__marca{display:block;height:100%;border-radius:5px;
+  background:var(--comparacion)}
+
+/* Mismo modelo, mismo color. Lo que cambia entre las dos es el largo — que
+   es justo el argumento. */
+.barra--nuestro .barra__marca{background:var(--ilhas-primary)}
+.barra--nuestro .barra__cifra{color:var(--ilhas-primary)}
+
+/* La llave que agrupa las dos de GPT-3.5. Va a la izquierda, fuera del flujo,
+   y solo aparece cuando hay espacio: en móvil el color y los rótulos ya lo
+   dicen sin ella. */
+.fig__llave{display:none}
+@media (min-width:720px){
+  .fig{display:grid;grid-template-columns:auto minmax(0,1fr);gap:1rem}
+  .fig__llave{display:block;position:relative;width:1.25rem;
+    margin-block:.15rem 0}
+  .fig__llave::before{content:"";position:absolute;inset:.55rem auto auto 0;
+    width:9px;height:calc(50% + .1rem);
+    border:1.5px solid rgba(122,60,255,.4);border-right:0;
+    border-radius:5px 0 0 5px}
+  .fig__llave span{position:absolute;top:calc(25% + .3rem);left:.7rem;
+    transform:translateY(-50%) rotate(180deg);writing-mode:vertical-rl;
+    font-size:.6875rem;letter-spacing:.04em;color:var(--ilhas-primary);
+    white-space:nowrap}
+}
+</style></head><body>
+
+<!-- ====================================================================== -->
+<div class="etiqueta">A · La versión en prosa — <i>lo que trae la iteración 11 hoy</i></div>
+<div class="container prose"><div class="ng" id="opcion-a">
+  <p class="ng__intro"><strong>Te dejamos el resultado de un experimento.</strong></p>
+  <p class="ng__que">
+    OpenAI armó un examen para calificar modelos: <strong>164 ejercicios de
+    programación</strong>, cada uno con la instrucción de qué debía hacer el
+    programa. No se califica a ojo: corren el programa y ven si de verdad hace
+    lo que se pidió. El porcentaje es cuántos de los 164 salieron bien
+    <strong>al primer intento</strong>, sin ayuda y sin segundo tiro.
+  </p>
+  <ul class="ng__filas">
+    <li class="ng__fila"><span>GPT-3.5 solo</span><b>48.1 %</b></li>
+    <li class="ng__fila"><span>GPT-4 solo</span><b>67.0 %</b></li>
+    <li class="ng__fila ng__fila--destacada"><span>GPT-3.5 revisando y corrigiendo su propio trabajo</span><b>hasta 95.1 %</b></li>
+  </ul>
+  <p class="ng__flujo">
+    Fíjate en el primer renglón y en el tercero: <strong>es el mismo
+    modelo</strong>. Lo único que cambia es que en el tercero, en vez de
+    entregar lo primero que escribió, lo dejaron leerlo, probarlo, encontrar
+    sus errores y corregirlos antes de entregar. Como cuando tú relees un
+    reporte antes de mandarlo. A eso Andrew Ng le llama un <em>flujo de
+    trabajo agéntico</em>.
+  </p>
+  <p class="ng__remate">
+    <strong>Ese repaso movió hasta 47 puntos. Cambiar de GPT-3.5 a GPT-4 movió
+    18.9.</strong> Dos veces y media más.
+  </p>
+  <p class="ng__cierre">
+    Se midió en programación porque ahí la calificación no se discute: el
+    programa corre o no corre. Lo que mide es cuánto rinde una misma
+    herramienta según el proceso que le pongas alrededor.
+    <strong>Esperar al siguiente modelo te mueve menos que armar el proceso
+    alrededor del que ya tienes.</strong>
+  </p>
+</div></div>
+<div class="medida" id="m-a"></div>
+
+<!-- ====================================================================== -->
+<div class="etiqueta">B · La figura — <i>las barras hacen el argumento; el texto solo lo remata</i></div>
+<div class="container prose"><div class="ng" id="opcion-b">
+  <p class="ng__intro"><strong>Te dejamos el resultado de un experimento.</strong></p>
+  <p class="ng__que">
+    OpenAI armó un examen para calificar modelos de IA: <strong>164 ejercicios
+    de programación</strong>. No se califica a ojo — corren el programa y ven
+    si hace lo que se pidió. Esto es cuántos salieron bien
+    <strong>al primer intento</strong>.
+  </p>
+
+  <div class="fig">
+    <div class="fig__llave" aria-hidden="true"><span>el mismo modelo</span></div>
+    <ul class="fig__barras">
+      <li class="barra barra--nuestro">
+        <span class="barra__rotulo"><b>GPT-3.5</b> tal cual</span>
+        <span class="barra__cifra">48.1 %</span>
+        <span class="barra__via"><span class="barra__marca" style="width:48.1%"></span></span>
+      </li>
+      <li class="barra barra--nuestro">
+        <span class="barra__rotulo"><b>GPT-3.5</b> revisando y corrigiendo su propio trabajo</span>
+        <span class="barra__cifra">hasta 95.1 %</span>
+        <span class="barra__via"><span class="barra__marca" style="width:95.1%"></span></span>
+      </li>
+      <li class="barra">
+        <span class="barra__rotulo"><b>GPT-4</b> tal cual — el modelo de la siguiente generación</span>
+        <span class="barra__cifra">67.0 %</span>
+        <span class="barra__via"><span class="barra__marca" style="width:67%"></span></span>
+      </li>
+    </ul>
+  </div>
+
+  <p class="ng__remate">
+    Las dos primeras son <strong>el mismo modelo</strong>. Lo único que cambia
+    es que a la segunda la dejaron leer lo que escribió, probarlo y corregirlo
+    antes de entregar — como cuando tú relees un reporte antes de mandarlo.
+    <strong>Ese repaso movió 47 puntos; comprar el modelo nuevo movió 18.9.</strong>
+  </p>
+  <p class="ng__cierre">
+    Esperar al siguiente modelo te mueve menos que armar el proceso alrededor
+    del que ya tienes.
+  </p>
+</div></div>
+<div class="medida" id="m-b"></div>
+
+<div style="height:60px"></div>
+</body></html>
