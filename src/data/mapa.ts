@@ -11,19 +11,40 @@
  *
  * Fuente: `prompts/iteracion-5-bifurcacion-mapa.md` §2. El contenido es de
  * Jorge y va literal.
+ *
+ * **Chips revisados el 27 ago 2026** (`prompts/iteracion-10-productos.md`).
+ * Cometa dejó de ser una herramienta de consultas financieras: es de
+ * comunicación con clientes, así que su chip se movió de Finanzas corporativas
+ * a Cobranza, donde ahora conviven dos builds. Paystand subió a Finanzas
+ * corporativas.
+ *
+ * **Administración quedó SIN prueba, y está bien.** Paystand era la única que
+ * la cubría y se movió; no hay otro build ahí. Una ficha vacía dice la verdad
+ * — inventarle una prueba con tal de no dejar hueco sería justo lo contrario
+ * de para qué existe la variante "prueba".
  */
 
 export interface AreaMapa {
   id: string;
   nombre: string;
   /**
-   * Sólo si Ilhas ya construyó ahí. Se muestra en la variante "prueba".
+   * Los builds de Ilhas en esa área. Se muestran en la variante "prueba".
    *
    * Es el crédito, no la descripción del área: "cotizador · Morgan" dice qué
-   * se construyó y para quién. Cobranza va deliberadamente SIN nombre de
-   * producto ni de cliente — ver la nota de abajo.
+   * se construyó y para quién. Un área puede tener más de uno —Cobranza tiene
+   * dos— y eso es señal, no ruido: significa que Ilhas construyó ahí más de
+   * una vez.
+   *
+   * Todos van en el formato «qué · para quién». Antes había tres sueltos
+   * ("Cometa", "Stampay", "Paystand") que no decían qué se construyó, y con
+   * dos chips apilados en Cobranza un "Cometa" solo se leería como si fuera el
+   * cliente de la cobranza automática, que es falso.
+   *
+   * Cuando el cliente va bajo NDA se nombra solo la clase de problema
+   * ("cobranza automática"), que es experiencia de Jorge y no información del
+   * cliente. Es el mismo criterio de src/data/medios.ts y productos.ts.
    */
-  prueba?: string;
+  pruebas?: string[];
 }
 
 export interface CapaMapa {
@@ -51,13 +72,17 @@ export const CAPAS: CapaMapa[] = [
     resumen: "marketing, ventas, cobranza",
     areas: [
       { id: "marketing", nombre: "Marketing" },
-      { id: "ventas", nombre: "Ventas y cierre", prueba: "cotizador · Morgan" },
+      { id: "ventas", nombre: "Ventas y cierre", pruebas: ["cotizador · Morgan"] },
       { id: "posventa", nombre: "Posventa y soporte" },
-      // Sin nombre de producto ni de cliente: va bajo NDA. Se describe por la
-      // clase de problema, que es experiencia de Jorge y no información del
-      // cliente — el mismo criterio que en src/data/medios.ts y en
-      // src/data/productos.ts. No la nombres.
-      { id: "cobranza", nombre: "Cobranza", prueba: "cobranza automática" },
+      {
+        id: "cobranza",
+        nombre: "Cobranza",
+        // Dos builds. El PRIMERO va bajo NDA: sin nombre de producto ni de
+        // cliente, se describe por la clase de problema, que es experiencia de
+        // Jorge y no información del cliente — el mismo criterio que en
+        // src/data/medios.ts y en src/data/productos.ts. No lo nombres.
+        pruebas: ["cobranza automática", "avisos a clientes · Cometa"],
+      },
     ],
   },
   {
@@ -71,7 +96,7 @@ export const CAPAS: CapaMapa[] = [
       {
         id: "produccion",
         nombre: "Producción y manufactura",
-        prueba: "despiece · Extrusión de Aleaciones",
+        pruebas: ["despiece · Extrusión de Aleaciones"],
       },
       { id: "entrega", nombre: "Ejecución y entrega" },
     ],
@@ -82,10 +107,20 @@ export const CAPAS: CapaMapa[] = [
     que: "Lo que sostiene a las otras dos",
     resumen: "finanzas, contabilidad, administración",
     areas: [
-      { id: "finanzas", nombre: "Finanzas corporativas", prueba: "Cometa" },
-      { id: "contabilidad", nombre: "Contabilidad e impuestos", prueba: "Stampay" },
-      { id: "administracion", nombre: "Administración", prueba: "Paystand" },
-      { id: "talento", nombre: "Talento humano", prueba: "Nomada" },
+      {
+        id: "finanzas",
+        nombre: "Finanzas corporativas",
+        pruebas: ["cuentas por cobrar y por pagar · Paystand"],
+      },
+      {
+        id: "contabilidad",
+        nombre: "Contabilidad e impuestos",
+        pruebas: ["conciliación bancaria · Stampay"],
+      },
+      // SIN prueba a propósito: Paystand se movió a Finanzas corporativas y no
+      // hay otro build que cubra esta área. Vacía es correcto.
+      { id: "administracion", nombre: "Administración" },
+      { id: "talento", nombre: "Talento humano", pruebas: ["nómina y timbrado · Nomada"] },
       { id: "tecnologia", nombre: "Tecnología" },
     ],
   },

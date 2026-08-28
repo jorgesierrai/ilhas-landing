@@ -61,7 +61,7 @@ Este bloque *es* el conector. Todo lo demás del home existe para darle permiso 
 > La sección va con **lavado de marca** (`.bg-lavado`), no en blanco ni en oscuro: `.bg-white + .bg-white` colapsa contra §02 y `.bg-dark + .bg-dark` la fundiría con §05.
 
 **05 · Prueba — el linaje**
-Los productos que Jorge ya construyó, presentados como evidencia de que el método salió de algún lado real: Stampay, Nomcont, el Data Concierge de Cometa, Nomada, Paystand, Factumizer. Una línea cada uno: qué dolor resuelve.
+Los productos que Jorge ya construyó, presentados como evidencia de que el método salió de algún lado real: Stampay, Nomcont, la herramienta de avisos de Cometa, Nomada, Paystand, Factumizer. Una línea cada uno: qué dolor resuelve.
 Fuente: la Biblia de Producto, §2.
 
 **06 · ~~Quiénes somos, corto~~ — NO VA. Decisión de Jorge, 27 ago 2026.**
@@ -207,9 +207,9 @@ Temario, precio, bonos, garantía, cupos, contador regresivo, la oferta. **Todo 
    |---|---|
    | Conciliación bancaria automática | Stampay · 2022 |
    | Cobranza automática con reglas | 2026 |
-   | Consultas en lenguaje natural sobre la base financiera | Cometa · 2025 |
-   | HRIS y nómina desde cero | Nomada · 2018 |
-   | AR/AP en pagos B2B | Paystand · 2020 |
+   | Herramienta de comunicación para avisos específicos | Cometa · 2025 |
+   | Cálculo de nómina, pago y conciliación contable | Nomada · 2018 |
+   | Cuentas por cobrar y por pagar | Paystand · 2020 |
    | Clasificación de pagos internacionales con agentes | 2026 |
 
    > **Actualizado el 27 ago 2026.** La tabla que vivía aquí listaba **Nomcont** y

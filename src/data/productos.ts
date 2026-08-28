@@ -51,23 +51,29 @@ export const PRODUCTOS: Producto[] = [
     capturaId: "producto-cobranza",
   },
   {
-    titulo: "Consultas en lenguaje natural sobre la base financiera",
-    detalle: "«¿Cuánto entró hoy?» → respuesta al instante",
+    titulo: "Herramienta de comunicación para avisos específicos",
+    detalle:
+      "Por notificación push y WhatsApp. Crea borradores de mensajes y tú decides por qué medio mandarlos a tus clientes y qué tipo de respuesta tendrían",
     marca: "Cometa · 2025",
     capturaId: "producto-cometa",
-    // 1320x2868, la más vertical de las seis. El recorte 16/10 salta la
-    // barra de estado del teléfono y cae en el bloque de pagos, que es la
-    // parte que se lee como producto.
-    recorte: "50% 26%",
+    // TODO recorte · Jorge va a subir una imagen nueva CON EL MISMO NOMBRE de
+    // archivo. El `recorte: "50% 26%"` que vivía aquí estaba calculado para la
+    // captura vieja (1320x2868, un teléfono vertical) y para el contenido
+    // viejo, así que se fue con ella. Cuando llegue la nueva: si no es más o
+    // menos 16:10, hay que volver a medir un `recorte`. Mientras tanto ancla
+    // arriba, que es el valor por defecto de TarjetaCaso.
   },
   {
-    titulo: "HRIS y nómina desde cero",
+    titulo: "Cálculo de nómina, pago y conciliación contable",
+    detalle:
+      "Calcula la nómina de bases de cientos o miles de empleados al mismo tiempo, timbra y concilia los pagos contablemente",
     marca: "Nomada · 2018",
     capturaId: "producto-nomada",
   },
   {
-    titulo: "AR/AP en pagos B2B",
-    detalle: "Smart Lockbox y Spend Card: dos productos de cero a uno",
+    titulo: "Cuentas por cobrar y por pagar",
+    detalle:
+      "Automatización de pagos con cheque y tarjeta corporativa para administración de gastos corporativos",
     marca: "Paystand · 2020",
     capturaId: "producto-paystand",
   },

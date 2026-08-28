@@ -44,10 +44,14 @@ const conPrueba = variante === "prueba";
         </div>
         <ul class="capa__fichas">
           {capa.areas.map((area) =>
-            conPrueba && area.prueba ? (
+            conPrueba && area.pruebas?.length ? (
               <li class="ficha ficha--prueba">
                 <span>{area.nombre}</span>
-                <small>{area.prueba}</small>
+                {/* Un área puede tener más de un build. .ficha--prueba ya es
+                    flex-direction: column, así que apilan solas. */}
+                {area.pruebas.map((prueba) => (
+                  <small>{prueba}</small>
+                ))}
               </li>
             ) : (
               <li class="ficha">{area.nombre}</li>
@@ -189,7 +193,10 @@ const conPrueba = variante === "prueba";
     display: inline-flex;
     flex-direction: column;
     align-items: flex-start;
-    gap: 0.1rem;
+    /* .2rem y no .1rem: con dos pruebas apiladas (Cobranza) las dos líneas
+       quedaban a 2 px y se leían como un párrafo partido en vez de como dos
+       créditos distintos. Medido antes de subirlo. */
+    gap: 0.2rem;
     white-space: normal;
     border-color: rgba(122, 60, 255, 0.45);
     background: rgba(122, 60, 255, 0.06);

@@ -85,14 +85,17 @@ export const HISTORIAL: Hito[] = [
   {
     anio: "2018",
     carril: "construccion",
-    titulo: "HRIS y nómina desde cero",
+    titulo: "Cálculo de nómina, pago y conciliación contable",
+    detalle:
+      "Calcula nóminas de cientos o miles de empleados, timbra y concilia los pagos contablemente.",
     marca: "Nomada",
   },
   {
     anio: "2020",
     carril: "construccion",
-    titulo: "AR/AP en pagos B2B",
-    detalle: "Smart Lockbox y Spend Card: dos productos de cero a uno.",
+    titulo: "Cuentas por cobrar y por pagar",
+    detalle:
+      "Automatización de pagos con cheque y tarjeta corporativa para gastos corporativos.",
     marca: "Paystand",
   },
   {
@@ -111,8 +114,9 @@ export const HISTORIAL: Hito[] = [
   {
     anio: "2025",
     carril: "construccion",
-    titulo: "Consultas en lenguaje natural sobre la base financiera",
-    detalle: "«¿Cuánto entró hoy?» → respuesta al instante.",
+    titulo: "Herramienta de comunicación para avisos específicos",
+    detalle:
+      "Push y WhatsApp: borradores de mensajes, y tú decides el medio y la respuesta que esperas.",
     marca: "Cometa",
   },
   {
