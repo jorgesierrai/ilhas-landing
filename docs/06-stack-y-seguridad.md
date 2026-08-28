@@ -37,7 +37,6 @@ src/
   styles/base.css
 public/
   assets/logo/
-  _headers                    # cabeceras de seguridad
   robots.txt
   security.txt
 ```
@@ -52,7 +51,37 @@ Solo los pesos que se usan. Nada de cargar la familia completa.
 
 ## Seguridad
 
-### Cabeceras (archivo `public/_headers`, para Netlify o Cloudflare Pages)
+### Cabeceras (archivo `vercel.json`, en la raíz)
+
+> ⚠️ **Corregido el 27 ago 2026, y es importante.** Esto decía *"archivo
+> `public/_headers`, para Netlify o Cloudflare Pages"*. **El sitio está en
+> Vercel**, y Vercel **ignora `_headers` por completo**: lo sirve como un
+> archivo estático más y nadie lo lee.
+>
+> Consecuencia medida contra `www.ilhas.ai`: **ninguna de estas cabeceras
+> estaba llegando a producción.** Ni la CSP, ni `X-Frame-Options`, ni
+> `Referrer-Policy`, ni `X-Content-Type-Options`, ni `Permissions-Policy`, ni
+> `Cross-Origin-Opener-Policy`. El sitio llevaba así desde el primer
+> despliegue. Lo único que sí llegaba era `Strict-Transport-Security`, y
+> porque lo pone Vercel por su cuenta.
+>
+> Ahora viven en **`vercel.json`**, que es el formato que Vercel sí lee.
+> `public/_headers` se borró: dos fuentes que se desincronizan son peores que
+> una. Si algún día se migra a Netlify o a Cloudflare Pages, se traduce de
+> vuelta — pero se traduce, no se mantienen las dos.
+
+**`style-src` lleva `'unsafe-inline'`, y no es un descuido.** El sitio emite 18
+atributos `style="--recorte: …"` / `style="--clip-ratio: …"` desde
+`TarjetaCaso`, `VideoClip`, `Loop` e `Icono`: son variables CSS que llevan el
+encuadre de cada captura y la proporción de cada video. Con `style-src 'self'` a
+secas el navegador los bloquea y se rompen los recortes del linaje y las cajas
+de video. `style-src-attr 'unsafe-inline'` sería más fino, pero los navegadores
+que no lo soportan caen de vuelta a `style-src` y bloquean igual.
+
+El riesgo real es bajo: el sitio es estático, no acepta una sola entrada de
+usuario, y `script-src` sigue **sin** `'unsafe-inline'`, que es donde
+`unsafe-inline` sí duele.
+
 
 ```
 /*
