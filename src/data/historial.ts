@@ -26,7 +26,15 @@ export interface Hito {
   carril: Carril;
   titulo: string;
   detalle?: string;
-  /** La marca bajo la que ocurrió, cuando se puede nombrar. */
+  /**
+   * La marca bajo la que ocurrió.
+   *
+   * **Vacío en todos los hitos desde el 28 ago 2026** (decisión de Jorge): la
+   * línea cuenta qué se construyó y cuándo, y el nombre de la empresa no
+   * cambia esa historia. El campo se conserva —y `Historial.astro` lo sigue
+   * pintando si viene— por si algún día hay un hito que sí se pueda o se
+   * quiera acreditar.
+   */
   marca?: string;
   /**
    * Ranura de `src/data/medios.ts` con el video o la foto que prueba el hito.
@@ -52,13 +60,11 @@ export const HISTORIAL: Hito[] = [
     carril: "fundamento",
     titulo: "Investigación y desarrollo de algoritmos",
     detalle: "Organización de recursos y estimaciones.",
-    marca: "Coophi",
   },
   {
     anio: "2017",
     carril: "fundamento",
     titulo: "Procesamiento de lenguaje natural",
-    marca: "Coophi",
   },
   {
     anio: "nov 2017",
@@ -88,7 +94,6 @@ export const HISTORIAL: Hito[] = [
     titulo: "Cálculo de nómina, pago y conciliación contable",
     detalle:
       "Calcula nóminas de cientos o miles de empleados, timbra y concilia los pagos contablemente.",
-    marca: "Nomada",
   },
   {
     anio: "2020",
@@ -96,7 +101,6 @@ export const HISTORIAL: Hito[] = [
     titulo: "Cuentas por cobrar y por pagar",
     detalle:
       "Automatización de pagos con cheque y tarjeta corporativa para gastos corporativos.",
-    marca: "Paystand",
   },
   {
     anio: "2022",
@@ -104,7 +108,6 @@ export const HISTORIAL: Hito[] = [
     titulo: "Conciliación bancaria automática",
     detalle:
       "SAT/CFDI contra movimientos. Eliminó dos a tres días de trabajo manual por cierre.",
-    marca: "Stampay",
   },
   {
     anio: "2023",
@@ -117,7 +120,6 @@ export const HISTORIAL: Hito[] = [
     titulo: "Herramienta de comunicación para avisos específicos",
     detalle:
       "Push y WhatsApp: borradores de mensajes, y tú decides el medio y la respuesta que esperas.",
-    marca: "Cometa",
   },
   {
     anio: "2026",

@@ -22,7 +22,12 @@ export interface Producto {
   titulo: string;
   /** Qué hizo, en concreto. Opcional: no todos lo necesitan. */
   detalle?: string;
-  /** Línea secundaria: marca y año. Solo el año cuando hay NDA. */
+  /**
+   * Línea secundaria: el año. **Sin nombre de empresa** (decisión de Jorge,
+   * 28 ago 2026): decía "Stampay · 2022", "Cometa · 2025". La tarjeta prueba
+   * qué se construyó y cuándo; de quién era el proyecto no cambia esa prueba.
+   * Las seis quedan parejas — dos ya iban solo con el año.
+   */
   marca: string;
   /** Ranura de la captura, en src/data/medios.ts. */
   capturaId: string;
@@ -40,7 +45,7 @@ export const PRODUCTOS: Producto[] = [
     titulo: "Conciliación bancaria automática",
     detalle:
       "SAT/CFDI contra movimientos. Eliminó dos a tres días de trabajo manual por cierre",
-    marca: "Stampay · 2022",
+    marca: "2022",
     capturaId: "producto-stampay",
   },
   {
@@ -54,7 +59,7 @@ export const PRODUCTOS: Producto[] = [
     titulo: "Herramienta de comunicación para avisos específicos",
     detalle:
       "Por notificación push y WhatsApp. Crea borradores de mensajes y tú decides por qué medio mandarlos a tus clientes y qué tipo de respuesta tendrían",
-    marca: "Cometa · 2025",
+    marca: "2025",
     capturaId: "producto-cometa",
     // TODO recorte · Jorge va a subir una imagen nueva CON EL MISMO NOMBRE de
     // archivo. El `recorte: "50% 26%"` que vivía aquí estaba calculado para la
@@ -67,14 +72,14 @@ export const PRODUCTOS: Producto[] = [
     titulo: "Cálculo de nómina, pago y conciliación contable",
     detalle:
       "Calcula la nómina de bases de cientos o miles de empleados al mismo tiempo, timbra y concilia los pagos contablemente",
-    marca: "Nomada · 2018",
+    marca: "2018",
     capturaId: "producto-nomada",
   },
   {
     titulo: "Cuentas por cobrar y por pagar",
     detalle:
       "Automatización de pagos con cheque y tarjeta corporativa para administración de gastos corporativos",
-    marca: "Paystand · 2020",
+    marca: "2020",
     capturaId: "producto-paystand",
   },
   {
