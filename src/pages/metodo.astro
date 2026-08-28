@@ -24,7 +24,7 @@ const capturasPrompts = [
 const capasIA = [
   {
     nombre: "El modelo",
-    que: "El motor",
+    que: "El motor (GPT-3.5, GPT-4, Gemini, Sonnet, Opus…)",
     dueno: "De todos. Es el mismo para ti y para tu competencia",
     tuya: false,
   },
@@ -42,15 +42,38 @@ const capasIA = [
   },
 ];
 
-// Andrew Ng, The Batch (DeepLearning.AI), 20 mar 2024, sobre HumanEval.
-// Los porcentajes van literales y SIN redondear.
+// HumanEval, la prueba de OpenAI: 164 ejercicios de programación, y la métrica
+// es pass@1 —la PRIMERA respuesta pasa todas las pruebas—. Andrew Ng los
+// publicó y comparó en The Batch (DeepLearning.AI, 20 mar 2024). Publicó, no
+// midió: la cita formal vive en la línea de fuentes del final de §02.
+//
+// Los porcentajes van literales y SIN redondear, y el "hasta" de 95.1 tampoco
+// se toca: es como lo publicó Ng y quitarlo infla el dato.
+//
+// Van AGRUPADOS POR MODELO, no por resultado: así las dos de GPT-3.5 quedan
+// pegadas y se ve de un vistazo que el salto de 48.1 a 95.1 pasó sin cambiar de
+// modelo. Ese es el argumento entero de la sección.
 const humanEval = [
-  { condicion: "GPT-3.5 solo", resultado: "48.1 %", destacada: false },
-  { condicion: "GPT-4 solo", resultado: "67.0 %", destacada: false },
   {
-    condicion: "GPT-3.5 con un flujo de trabajo agéntico alrededor",
+    modelo: "GPT-3.5",
+    condicion: "tal cual",
+    resultado: "48.1 %",
+    ancho: 48.1,
+    nuestro: true,
+  },
+  {
+    modelo: "GPT-3.5",
+    condicion: "revisando y corrigiendo su propio trabajo",
     resultado: "hasta 95.1 %",
-    destacada: true,
+    ancho: 95.1,
+    nuestro: true,
+  },
+  {
+    modelo: "GPT-4",
+    condicion: "tal cual — el modelo de la siguiente generación",
+    resultado: "67.0 %",
+    ancho: 67.0,
+    nuestro: false,
   },
 ];
 
@@ -256,10 +279,10 @@ const principioFinal = {
 
         {/* El H2 afirma "y no es la tecnología". Hasta hoy nada lo demostraba:
             el cuerpo repetía la afirmación en vez de sostenerla. Las tres capas
-            son lo que la sostiene, y el dato de Ng es lo que la prueba. */}
-        <h3 class="capas__titulo">
-          Un resultado con IA tiene tres capas, y solo una es el modelo.
-        </h3>
+            son lo que la sostiene, y la figura del experimento es lo que la
+            prueba. El titular ya no dice "y solo una es el modelo": esa mitad
+            la dice la tabla sola, en la fila del modelo. */}
+        <h3 class="capas__titulo">Un resultado con IA tiene tres capas.</h3>
 
         <ul class="capas">
           {
@@ -285,27 +308,60 @@ const principioFinal = {
 
         {/* Dato verificado, va literal y sin redondear. Se cita a Andrew Ng,
             que es de quien es, no a terceros que lo repiten. */}
+        {/* El experimento como FIGURA, no como tabla de porcentajes sueltos.
+            Referencia: medios/experimento-referencia.html, opción B.
+
+            La tabla soltaba tres cifras y esperaba que el lector confiara —y
+            nunca decía qué se midió ni cuál era la trampa: que dos de los tres
+            renglones son EL MISMO MODELO. Explicarlo en prosa deja el bloque en
+            801 px de móvil; dibujarlo lo deja en 571. La relación entre tres
+            números se dibuja.
+
+            Cero JavaScript: son tres <span> con un `width` en porcentaje. */}
         <div class="ng">
           <p class="ng__intro">
-            Andrew Ng lo midió en la prueba de programación HumanEval:
+            <strong>Te dejamos el resultado de un experimento.</strong>
           </p>
-          <ul class="ng__filas">
-            {
-              humanEval.map((f) => (
-                <li class:list={["ng__fila", f.destacada && "ng__fila--destacada"]}>
-                  <span>{f.condicion}</span>
-                  <b>{f.resultado}</b>
-                </li>
-              ))
-            }
-          </ul>
+          <p class="ng__que">
+            OpenAI armó un examen para calificar modelos de IA:{" "}
+            <strong>164 ejercicios de programación</strong>. No se califica a
+            ojo — corren el programa y ven si hace lo que se pidió. Esto es
+            cuántos salieron bien <strong>al primer intento</strong>.
+          </p>
+
+          <div class="fig">
+            <div class="fig__llave" aria-hidden="true">
+              <span>el mismo modelo</span>
+            </div>
+            <ul class="fig__barras">
+              {
+                humanEval.map((f) => (
+                  <li class:list={["barra", f.nuestro && "barra--nuestro"]}>
+                    <span class="barra__rotulo">
+                      <b>{f.modelo}</b> {f.condicion}
+                    </span>
+                    <span class="barra__cifra">{f.resultado}</span>
+                    <span class="barra__via">
+                      <span class="barra__marca" style={`width:${f.ancho}%`} />
+                    </span>
+                  </li>
+                ))
+              }
+            </ul>
+          </div>
+
           <p class="ng__remate">
-            Un modelo peor con mejor sistema le ganó a un modelo mejor sin
-            sistema. Y no por poco:{" "}
+            Las dos primeras son <strong>el mismo modelo</strong>. Lo único que
+            cambia es que a la segunda la dejaron leer lo que escribió, probarlo
+            y corregirlo antes de entregar — como cuando tú relees un reporte
+            antes de mandarlo.{" "}
             <strong>
-              la diferencia que hace el andamiaje es más grande que la
-              diferencia entre las dos generaciones de modelo.
+              Ese repaso movió 47 puntos; comprar el modelo nuevo movió 18.9.
             </strong>
+          </p>
+          <p class="ng__cierre">
+            Esperar al siguiente modelo te mueve menos que armar el proceso
+            alrededor del que ya tienes.
           </p>
         </div>
 
@@ -313,7 +369,8 @@ const principioFinal = {
           La otra mitad del problema es el proceso. Automatizar un proceso que
           está mal solo{" "}
           <strong>lo hace fallar más rápido y a mayor escala.</strong> Todos
-          venden automatizar más. Nosotros empezamos por quitar.
+          venden automatizar más. Nosotros empezamos por{" "}
+          <strong>quitar</strong>.
         </p>
 
         <p class="pregunta">¿Qué no debería existir en estos procesos?</p>
@@ -1129,51 +1186,155 @@ const principioFinal = {
     border: 1px solid var(--ilhas-gray);
   }
 
-  .ng__intro {
+  .ng__intro,
+  .ng__que,
+  .ng__remate,
+  .ng__cierre {
     margin: 0;
     font-size: 0.9375rem;
     color: var(--ilhas-text);
   }
 
-  .ng__filas {
-    list-style: none;
-    margin: 1rem 0 0;
-    padding: 0;
-    display: grid;
-    gap: 0.5rem;
-  }
-
-  .ng__fila {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: baseline;
-    justify-content: space-between;
-    gap: 0.25rem 1rem;
-    padding-bottom: 0.5rem;
-    border-bottom: 1px solid var(--ilhas-gray);
-    font-size: 0.9375rem;
-    color: var(--ilhas-text);
-  }
-
-  .ng__fila b {
-    font-family: var(--ilhas-font-display);
-    font-weight: 600;
-    font-size: 1.125rem;
-    color: var(--ilhas-dark);
-    white-space: nowrap;
-  }
-
-  .ng__fila--destacada b {
-    color: var(--ilhas-primary);
-  }
-
-  .ng__fila--destacada {
-    border-bottom-color: transparent;
+  .ng__que {
+    margin-top: 0.65rem;
   }
 
   .ng__remate {
-    margin: 1rem 0 0;
-    font-size: 0.9375rem;
+    margin-top: 1rem;
+  }
+
+  .ng__cierre {
+    margin-top: 0.65rem;
+  }
+
+  /* --- la figura ---------------------------------------------------------
+     Tres barras horizontales. El trabajo del dato es comparar magnitudes con
+     una identidad compartida entre dos de las tres, así que: barras, y color
+     por modelo. Cero JavaScript — el largo es un `width` en porcentaje.
+
+     Sin ejes, sin cuadrícula, sin leyenda: cada barra ya trae su modelo y su
+     cifra escritos, y una leyenda repetiría lo que está a un centímetro. */
+  .fig {
+    margin-top: 1.1rem;
+  }
+
+  .fig__barras {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 0.9rem;
+  }
+
+  .barra {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 0.15rem 0.75rem;
+    align-items: baseline;
+  }
+
+  .barra__rotulo {
+    grid-column: 1;
+    font-size: 0.875rem;
+    line-height: 1.35;
+    color: var(--ilhas-text);
+  }
+
+  .barra__rotulo b {
+    font-weight: 600;
+    color: var(--ilhas-dark);
+  }
+
+  .barra__cifra {
+    grid-column: 2;
+    grid-row: 1;
+    font-family: var(--ilhas-font-display);
+    font-weight: 600;
+    font-size: 1.0625rem;
+    color: var(--ilhas-text);
+    /* Cifras tabulares: los tres números quedan alineados por su punto. */
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
+
+  .barra__via {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    height: 10px;
+    border-radius: 5px;
+    background: rgba(14, 14, 15, 0.06);
+  }
+
+  /* Pizarra fría, deliberadamente recesiva: no compite con el morado. NO
+     cumple el piso de croma a propósito —lee como gris— porque no es una
+     categoría que pelee por atención, es el punto de referencia. Y la
+     identidad nunca va sola en el color: cada barra trae su modelo escrito.
+
+     #8481A0 y no el #8C8AA8 de la referencia. Medido: contra la vía, el
+     original da 2.81:1 y no llega al piso de 3:1 que WCAG 1.4.11 pide para un
+     elemento gráfico que porta información — y aquí el largo de la barra ES el
+     dato, así que dónde termina tiene que verse. Este da 3.15:1 con el mismo
+     croma (31) y apenas ocho puntos de luminosidad menos: sigue leyéndose como
+     gris frío. */
+  .barra__marca {
+    display: block;
+    height: 100%;
+    border-radius: 5px;
+    background: #8481a0;
+  }
+
+  /* Mismo modelo, mismo color. Lo que cambia entre las dos es el LARGO, que es
+     justo el argumento. */
+  .barra--nuestro .barra__marca {
+    background: var(--ilhas-primary);
+  }
+
+  .barra--nuestro .barra__cifra {
+    color: var(--ilhas-primary);
+  }
+
+  /* La llave que agrupa las dos de GPT-3.5. Solo en escritorio: en móvil el
+     color y los rótulos ya lo dicen, y una llave vertical de 20 px estorba. */
+  .fig__llave {
+    display: none;
+  }
+
+  @media (min-width: 720px) {
+    .fig {
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr);
+      gap: 1rem;
+    }
+
+    .fig__llave {
+      display: block;
+      position: relative;
+      width: 1.25rem;
+      margin-block: 0.15rem 0;
+    }
+
+    .fig__llave::before {
+      content: "";
+      position: absolute;
+      inset: 0.55rem auto auto 0;
+      width: 9px;
+      height: calc(50% + 0.1rem);
+      border: 1.5px solid rgba(122, 60, 255, 0.4);
+      border-right: 0;
+      border-radius: 5px 0 0 5px;
+    }
+
+    .fig__llave span {
+      position: absolute;
+      top: calc(25% + 0.3rem);
+      left: 0.7rem;
+      transform: translateY(-50%) rotate(180deg);
+      writing-mode: vertical-rl;
+      font-size: 0.6875rem;
+      letter-spacing: 0.04em;
+      color: var(--ilhas-primary);
+      white-space: nowrap;
+    }
   }
 
   /* La pregunta del paso I, que es el contraste entero de la sección: todos
