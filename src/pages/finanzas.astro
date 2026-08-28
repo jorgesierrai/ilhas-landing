@@ -6,6 +6,7 @@ import Icono from "../components/medios/Icono.astro";
 import VideoClip from "../components/medios/VideoClip.astro";
 import { mostrar } from "../lib/medios";
 import plantillaImg from "../assets/media/capturas/finanzas-plantilla.png";
+import { ENLACES } from "../data/personas";
 import fotoPapa from "../assets/equipo/jorge-papa.png";
 import fotoHijo from "../assets/equipo/jorge-hijo.png";
 import MapaEmpresa from "../components/MapaEmpresa.astro";
@@ -21,6 +22,7 @@ const maestros = [
       { dato: "+200 empresas", contexto: "asesoradas en LATAM" },
     ],
     foto: fotoPapa,
+    redes: ENLACES.papa,
   },
   {
     nombre: "Jorge Sierra (hijo)",
@@ -32,6 +34,7 @@ const maestros = [
       { dato: "+1,000 MDP/mes", contexto: "procesados por productos que ha liderado" },
     ],
     foto: fotoHijo,
+    redes: ENLACES.hijo,
   },
 ];
 
@@ -233,6 +236,7 @@ const faqs = [
                   trayectoria={m.trayectoria}
                   atribuciones={m.atribuciones}
                   foto={m.foto}
+                  redes={m.redes}
                 />
               ))
             }

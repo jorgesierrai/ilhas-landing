@@ -5,6 +5,8 @@
 // números se pasan ya atribuidos (nunca sumados entre personas).
 import { Image } from "astro:assets";
 import type { ImageMetadata } from "astro";
+import type { Enlace } from "../data/personas";
+import IconoSocial from "./IconoSocial.astro";
 
 interface Atribucion {
   dato: string;
@@ -31,6 +33,15 @@ interface Props {
    * lazy medía 4.1 s.
    */
   prioritaria?: boolean;
+  /**
+   * Enlaces públicos de la persona. Vienen de `src/data/personas.ts`, nunca
+   * escritos a mano en la página: las mismas dos personas salen en /finanzas y
+   * en /nosotros, y duplicar URLs es cómo se desincronizan.
+   *
+   * Opcional: sin ellos la tarjeta se ve exactamente igual que antes, sin
+   * separador colgando.
+   */
+  redes?: Enlace[];
 }
 
 const {
@@ -41,6 +52,7 @@ const {
   foto,
   fotoAlt,
   prioritaria = false,
+  redes,
 } = Astro.props;
 const inicial = nombre.trim().charAt(0).toUpperCase();
 ---
@@ -76,6 +88,27 @@ const inicial = nombre.trim().charAt(0).toUpperCase();
         ))
       }
     </ul>
+
+    {/* Al final de la tarjeta, después de la trayectoria: son el destino, no
+        la presentación. El aria-label es obligatorio — un <a> cuyo único
+        contenido es un <svg aria-hidden> no tiene nombre accesible y un lector
+        de pantalla lo anuncia como "enlace" a secas. */}
+    {
+      redes && redes.length > 0 && (
+        <div class="redes">
+          {redes.map((e) => (
+            <a
+              href={e.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={e.etiqueta}
+            >
+              <IconoSocial red={e.red} />
+            </a>
+          ))}
+        </div>
+      )
+    }
   </div>
 </article>
 
@@ -197,5 +230,48 @@ const inicial = nombre.trim().charAt(0).toUpperCase();
 
   .tarjeta-persona__contexto {
     color: var(--ilhas-text);
+  }
+
+  /* Círculos de 2.25 rem (36 px): cumplen el mínimo de área táctil sin
+     competir con el CTA de la página. En reposo van gris y borde; el color de
+     marca aparece solo al pasar el cursor o al llegar con teclado — cuatro
+     logos a todo color en una tarjeta se comen la atención del botón.
+
+     `flex-wrap`: cuatro círculos caben de sobra a 640 px, pero la tarjeta se
+     angosta más en pantallas chicas y no deben desbordar. */
+  .redes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--ilhas-gray);
+  }
+
+  .redes a {
+    display: grid;
+    place-items: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    border-radius: 50%;
+    color: #6e6e7a;
+    background: transparent;
+    border: 1px solid var(--ilhas-gray);
+    transition: color 0.18s ease, border-color 0.18s ease, background 0.18s ease;
+  }
+
+  .redes a:hover,
+  .redes a:focus-visible {
+    color: var(--ilhas-primary);
+    border-color: rgba(122, 60, 255, 0.35);
+    background: var(--ilhas-primary-10);
+  }
+
+  /* Aparte del :hover y con su propio anillo: sin esto, quien navega con
+     teclado ve el cambio de color pero no dónde está parado, y en un círculo
+     gris de 36 px eso no se distingue. */
+  .redes a:focus-visible {
+    outline: 2px solid var(--ilhas-primary);
+    outline-offset: 2px;
   }
 </style>

@@ -1,6 +1,7 @@
 ---
 import Base from "../layouts/Base.astro";
 import TarjetaPersona from "../components/TarjetaPersona.astro";
+import { ENLACES } from "../data/personas";
 import Captura from "../components/medios/Captura.astro";
 import VideoClip from "../components/medios/VideoClip.astro";
 import Stat from "../components/medios/Stat.astro";
@@ -18,6 +19,9 @@ const personas = [
   {
     nombre: "Jorge Sierra",
     rol: "Finanzas corporativas",
+    // Amarrado al ROL, no a la posición: aquí las dos se llaman "Jorge Sierra"
+    // a secas y solo el rol las distingue.
+    redes: ENLACES.papa,
     trayectoria:
       "40 años asesorando empresas en América Latina: diagnósticos financieros, valuaciones, modelos de inversión y reestructuras.",
     atribuciones: [
@@ -29,6 +33,7 @@ const personas = [
   {
     nombre: "Jorge Sierra",
     rol: "Producto y tecnología",
+    redes: ENLACES.hijo,
     trayectoria:
       "12 años construyendo productos digitales. Ha liderado productos fintech que hoy procesan más de 1,000 millones de pesos al mes.",
     atribuciones: [
@@ -83,6 +88,7 @@ const hayAutoridad = mostrar(
               trayectoria={p.trayectoria}
               atribuciones={p.atribuciones}
               foto={p.foto}
+              redes={p.redes}
               prioritaria
             />
           ))
