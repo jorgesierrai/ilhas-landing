@@ -34,7 +34,13 @@ const maestros = [
     atribuciones: [
       { dato: "12 años", contexto: "construyendo productos digitales" },
       { dato: "+1,000 MDP/mes", contexto: "procesados por productos que ha liderado" },
+      // Al final, no al principio: la lista no es cronológica sino de lo más
+      // general a lo más específico, y esto acota los dos renglones de arriba.
+      // No es claim suelta: la línea de /nosotros ya documenta 2016 con
+      // investigación de algoritmos y 2017 con PLN.
+      { dato: "Desde 2016", contexto: "construyendo IA, y con IA" },
     ],
+    distincion: DISTINCIONES.hijo,
     foto: fotoHijo,
     redes: ENLACES.hijo,
   },

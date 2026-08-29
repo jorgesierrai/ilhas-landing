@@ -81,14 +81,35 @@ export const ENLACES: Record<"papa" | "hijo", Enlace[]> = {
 export interface Distincion {
   /** El reconocimiento. Va en negritas. */
   texto: string;
-  /** Dónde y en qué. Va debajo, más chico. */
-  fuente: string;
+  /**
+   * Dónde y en qué. Va debajo, más chico.
+   *
+   * OPCIONAL: no toda distinción nombra una institución. Cuando falta, el
+   * componente NO pinta el <em> — si lo pintara vacío igual ocuparía su
+   * margin-top y dejaría un renglón fantasma.
+   */
+  fuente?: string;
+  /**
+   * Qué marca la acompaña. Una roseta es un reconocimiento —alguien te lo
+   * dio—; un birrete es un grado —tú lo estudiaste—. No son lo mismo y no
+   * comparten glifo.
+   */
+  icono: "roseta" | "birrete";
 }
 
 export const DISTINCIONES: Record<"papa" | "hijo", Distincion | undefined> = {
   papa: {
     texto: "Mejor evaluado por sus alumnos",
     fuente: "Finanzas · Tec de Monterrey",
+    icono: "roseta",
   },
-  hijo: undefined,
+  hijo: {
+    // "Estudió" va porque así lo escribió Jorge. NO lo quites para que suene
+    // más fuerte: si el grado no está titulado, quitarlo publica una
+    // credencial que no es. Solo Jorge puede cambiar esa palabra.
+    texto: "Estudió Maestría en Algoritmos de Optimización y Machine Learning",
+    // SIN `fuente`: Jorge no dijo en qué institución. No la inventes ni la
+    // deduzcas.
+    icono: "birrete",
+  },
 };
