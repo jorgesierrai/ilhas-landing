@@ -1,0 +1,261 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8">
+<title>Ilhas · el mapa con las trece áreas llenas</title>
+<style>
+:root{
+  --ilhas-primary:#7A3CFF; --ilhas-dark:#0E0E0F; --ilhas-text:#3C3C44;
+  --ilhas-light:#F8FAFF; --ilhas-gray:#E8ECF2; --ilhas-white:#FFF;
+  --ilhas-grad-end:#A14BFF;
+  --ilhas-primary-10:rgba(122,60,255,.08);
+  --ilhas-radius-card:14px;
+  --ilhas-font-display:"Space Grotesk",system-ui,sans-serif;
+  --ilhas-font-body:"Inter",system-ui,-apple-system,sans-serif;
+  --ilhas-container:1140px; --ilhas-gutter:clamp(1.25rem,4vw,3rem);
+}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;font-family:var(--ilhas-font-body);color:var(--ilhas-text);
+  background:var(--ilhas-light);line-height:1.6}
+.container{width:100%;max-width:var(--ilhas-container);margin-inline:auto;
+  padding-inline:var(--ilhas-gutter)}
+.section-y-sm{padding-block:clamp(1.5rem,3vw,2.5rem)}
+.kicker{font-weight:500;font-size:.875rem;letter-spacing:.06em;
+  text-transform:uppercase;color:var(--ilhas-primary);margin:0}
+h2{font-family:var(--ilhas-font-display);font-weight:600;
+  font-size:clamp(1.6rem,3vw,2.1rem);line-height:1.18;letter-spacing:-.02em;
+  color:var(--ilhas-dark);margin:.6rem 0 0}
+.lead{margin-top:1rem;font-size:1.0625rem;max-width:60ch}
+
+/* ==========================================================================
+   EL MAPA — un objeto de tres estratos
+   ==========================================================================
+   Sigue siendo UN objeto con tres capas apiladas, no tres tarjetas: eso es lo
+   que dice que las tres se sostienen entre sí. Lo que cambia es que ahora
+   cada área trae su lista, no solo su nombre. */
+.mapa{margin-top:2rem;border-radius:var(--ilhas-radius-card);overflow:hidden;
+  border:1px solid var(--ilhas-gray);background:var(--ilhas-white);
+  box-shadow:0 1px 2px rgba(14,14,15,.03),0 18px 44px rgba(14,14,15,.06)}
+
+.capa{display:grid;gap:1rem;padding:1.4rem 1.5rem;position:relative}
+.capa + .capa{border-top:1px solid var(--ilhas-gray)}
+/* La barra del carril: gana opacidad conforme se baja. Las tres capas no
+   pesan igual y la barra lo dice sin una palabra. */
+.capa::before{content:"";position:absolute;inset:0 auto 0 0;width:3px;
+  background:var(--ilhas-primary)}
+.capa--externa::before{opacity:.28}
+.capa--motor::before{opacity:.55}
+.capa--base::before{opacity:1}
+
+.capa--externa{background:var(--ilhas-white)}
+.capa--motor{background:var(--ilhas-light)}
+/* El cimiento va oscuro y con más aire: es el que sostiene a los otros dos y
+   el sitio ya usa ese contraste para decirlo. */
+.capa--base{background:var(--ilhas-dark);padding-block:1.9rem;
+  border-top-color:var(--ilhas-dark)}
+
+.capa__titulo{display:grid;gap:.1rem}
+.capa__nombre{font-family:var(--ilhas-font-display);font-weight:600;
+  font-size:1.0625rem;color:var(--ilhas-dark)}
+.capa__que{font-size:.8125rem;color:#75757F}
+.capa--base .capa__nombre{color:#fff}
+.capa--base .capa__que{color:rgba(248,250,255,.55)}
+
+.capa__areas{list-style:none;margin:0;padding:0;display:grid;gap:1.15rem;
+  align-items:start}
+
+/* --- el área: nombre arriba, lo que se construye ahí abajo --------------- */
+/* Sin caja: el fondo de la capa ya agrupa. Con tarjeta, las áreas de un
+   solo ítem quedaban como cajas altas medio vacías al lado de las de cinco,
+   y el vacío se veía más que el contenido. Una regla de 2 px arriba basta
+   para separar una columna de otra. */
+.area{padding-top:.6rem;border-top:2px solid var(--ilhas-gray)}
+.capa--base .area{border-top-color:rgba(248,250,255,.18)}
+
+.area__nombre{font-weight:600;font-size:.875rem;color:var(--ilhas-dark);
+  line-height:1.3}
+.capa--base .area__nombre{color:#fff}
+
+.area ul{list-style:none;margin:.6rem 0 0;padding:0;display:grid;gap:.3rem}
+.area li{position:relative;padding-left:.85rem;font-size:.8125rem;
+  line-height:1.4;color:#6E6E7A}
+.capa--base .area li{color:rgba(248,250,255,.62)}
+.area li::before{content:"";position:absolute;left:0;top:.55em;
+  width:.3rem;height:1.5px;border-radius:1px;background:#C3C3CE}
+.capa--base .area li::before{background:rgba(248,250,255,.3)}
+
+/* Lo que YA está corriendo con un cliente: punto morado lleno y tinta plena.
+   Es la única distinción del mapa, y es la que carga toda la credibilidad —
+   sin ella esto sería un catálogo de lo que se puede hacer. */
+.area li.hecho{color:var(--ilhas-dark);font-weight:500}
+.capa--base .area li.hecho{color:#fff}
+.area li.hecho::before{width:.4rem;height:.4rem;border-radius:50%;top:.5em;
+  background:var(--ilhas-primary)}
+.capa--base .area li.hecho::before{background:#B487FF}
+
+@media (min-width:720px){
+  .capa{grid-template-columns:minmax(0,11rem) minmax(0,1fr);gap:1.5rem;
+    align-items:start}
+  .capa__areas{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (min-width:1000px){
+  .capa__areas{grid-template-columns:repeat(4,minmax(0,1fr))}
+  .capa--base .capa__areas{grid-template-columns:repeat(5,minmax(0,1fr))}
+}
+
+.leyenda{display:flex;align-items:flex-start;gap:.55rem;margin:1rem 0 0;
+  font-size:.8125rem;color:#6E6E7A}
+.leyenda i{flex:0 0 auto;width:.4rem;height:.4rem;border-radius:50%;
+  background:var(--ilhas-primary);margin-top:.45em}
+.leyenda b{color:var(--ilhas-dark);font-weight:600}
+</style></head><body>
+
+<section class="section-y-sm">
+  <div class="container">
+    <p class="kicker">Dónde ya entramos</p>
+    <h2>Dónde ya lo hicimos.</h2>
+    <p class="lead">
+      Toda empresa son las mismas trece áreas en tres capas. El método no
+      cambia de capa a capa; lo que cambia es a dónde lo apuntas.
+    </p>
+
+    <div class="mapa" id="mapa">
+
+      <div class="capa capa--externa">
+        <div class="capa__titulo">
+          <span class="capa__nombre">Cadena de ingresos</span>
+          <span class="capa__que">Lo que el cliente ve</span>
+        </div>
+        <ul class="capa__areas">
+          <li class="area">
+            <span class="area__nombre">Marketing</span>
+            <ul>
+              <li>Agentes de generación de contenido</li>
+              <li>Automatización de CRM</li>
+              <li>Creación de CRM</li>
+            </ul>
+          </li>
+          <li class="area">
+            <span class="area__nombre">Ventas y cierre</span>
+            <ul>
+              <li class="hecho">Cotizador</li>
+              <li>Bots para llamadas de ventas</li>
+            </ul>
+          </li>
+          <li class="area">
+            <span class="area__nombre">Posventa y soporte</span>
+            <ul>
+              <li>Reportes automatizados</li>
+              <li>Agentes de WhatsApp de soporte</li>
+              <li>Agentes de análisis de quejas</li>
+            </ul>
+          </li>
+          <li class="area">
+            <span class="area__nombre">Cobranza</span>
+            <ul>
+              <li class="hecho">Cobranza automática</li>
+              <li class="hecho">Avisos a clientes</li>
+              <li>Recordatorios por WhatsApp</li>
+              <li>Recordatorios por push y correo</li>
+              <li>Pagos B2B</li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+
+      <div class="capa capa--motor">
+        <div class="capa__titulo">
+          <span class="capa__nombre">Motor de valor</span>
+          <span class="capa__que">Donde se construye lo que se vendió</span>
+        </div>
+        <ul class="capa__areas">
+          <li class="area">
+            <span class="area__nombre">Ingeniería y desarrollo</span>
+            <ul>
+              <li>Programación agéntica</li>
+              <li>Harness engineering</li>
+              <li>Spec driven development</li>
+            </ul>
+          </li>
+          <li class="area">
+            <span class="area__nombre">Cadena de suministro</span>
+            <ul>
+              <li>Agente de optimización de rutas</li>
+            </ul>
+          </li>
+          <li class="area">
+            <span class="area__nombre">Producción y manufactura</span>
+            <ul>
+              <li class="hecho">Despiece</li>
+              <li>Planeación de la producción</li>
+            </ul>
+          </li>
+          <li class="area">
+            <span class="area__nombre">Ejecución y entrega</span>
+            <ul>
+              <li>Agentes orquestadores que actualizan el ERP</li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+
+      <div class="capa capa--base">
+        <div class="capa__titulo">
+          <span class="capa__nombre">Cimiento</span>
+          <span class="capa__que">Lo que sostiene a las otras dos</span>
+        </div>
+        <ul class="capa__areas">
+          <li class="area">
+            <span class="area__nombre">Finanzas corporativas</span>
+            <ul>
+              <li class="hecho">Cuentas por cobrar y por pagar</li>
+              <li>Agentes financieros</li>
+            </ul>
+          </li>
+          <li class="area">
+            <span class="area__nombre">Contabilidad e impuestos</span>
+            <ul>
+              <li class="hecho">Conciliación bancaria</li>
+              <li>Conciliación fiscal</li>
+            </ul>
+          </li>
+          <li class="area">
+            <span class="area__nombre">Administración</span>
+            <ul>
+              <li>Infraestructura bancaria</li>
+              <li>Infraestructura de pagos</li>
+              <li>Automatización de reportes</li>
+              <li>Agentes recomendadores de inversión</li>
+              <li>Facturación electrónica</li>
+            </ul>
+          </li>
+          <li class="area">
+            <span class="area__nombre">Talento humano</span>
+            <ul>
+              <li class="hecho">Suite de nómina y timbrado</li>
+              <li>Agentes clasificadores de perfiles</li>
+              <li>Analizadores de CV</li>
+            </ul>
+          </li>
+          <li class="area">
+            <span class="area__nombre">Tecnología</span>
+            <ul>
+              <li>Algoritmos de machine learning</li>
+              <li>Data science</li>
+              <li>Bases de datos y data lakes</li>
+              <li>Apps</li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+
+    </div>
+
+    <p class="leyenda">
+      <i aria-hidden="true"></i>
+      <span>Lo marcado con punto es lo que <b>Ilhas ya construyó y dejó
+      corriendo</b> con un cliente. El resto es lo que se construye en cada
+      área con el mismo método.</span>
+    </p>
+  </div>
+</section>
+
+<div style="height:60px"></div>
+</body></html>
