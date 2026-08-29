@@ -1,7 +1,7 @@
 ---
 import Base from "../layouts/Base.astro";
 import TarjetaPersona from "../components/TarjetaPersona.astro";
-import { ENLACES } from "../data/personas";
+import { DISTINCIONES, ENLACES } from "../data/personas";
 import Captura from "../components/medios/Captura.astro";
 import VideoClip from "../components/medios/VideoClip.astro";
 import Stat from "../components/medios/Stat.astro";
@@ -27,7 +27,9 @@ const personas = [
     atribuciones: [
       { dato: "40 años", contexto: "asesorando empresas en LATAM" },
       { dato: "+200 empresas", contexto: "asesoradas" },
+      { dato: "+10,000 alumnos", contexto: "formados" },
     ],
+    distincion: DISTINCIONES.papa,
     foto: fotoPapa,
   },
   {
@@ -89,6 +91,7 @@ const hayAutoridad = mostrar(
               atribuciones={p.atribuciones}
               foto={p.foto}
               redes={p.redes}
+              distincion={p.distincion}
               prioritaria
             />
           ))

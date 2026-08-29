@@ -116,3 +116,43 @@ Nota de tono: el deseo que más repiten no es ganar más dinero — es **recuper
 En el mismo chat, cuando la conversación se abrió, aparecieron peticiones que **no son de finanzas**: "seguimiento de tareas", "RRHH", "investigación", "un asistente para tener más eficiencia en mi trabajo", "automatizar", "crear algo nuevo", "programar", "capacidades de negociación", "liderazgo".
 
 Eso es evidencia de campo de que la demanda existe más allá de la primera isla, y respalda la tesis del barco y las islas. **No se usa como copy todavía** —no se anuncian islas futuras— pero es la justificación de que la arquitectura del sitio esté hecha para crecer.
+
+---
+
+## Credenciales publicadas y de dónde salen
+
+Lo mismo que se le hizo al 24 % de Cisco: cada claim que va al sitio queda
+anotada aquí con su procedencia, para que nadie la reescriba de memoria.
+
+### «Mejor evaluado por sus alumnos · Finanzas · Tec de Monterrey»
+
+**Dónde se publica:** tarjeta de Jorge Sierra (papá), en `/finanzas` §04 y en
+`/nosotros` §01. El texto vive en `src/data/personas.ts` → `DISTINCIONES.papa`.
+
+**Cómo se dijo primero:** *«calificado como el mejor instructor del Tec de
+Monterrey»*.
+
+**Qué la respalda:** al preguntarle en qué se apoya, Jorge precisó que es **la
+evaluación de sus alumnos** y que es **en el área de Finanzas**. Confirmado por
+él el **28 ago 2026**.
+
+**Por qué se publica la versión angosta.** «El mejor instructor del Tec» es un
+superlativo institucional que nadie puede verificar y que el Tec no ha
+declarado. «Mejor evaluado por sus alumnos, en Finanzas» dice de dónde sale el
+juicio y en qué área — es lo que sí se sostiene, y encima pega más fuerte en
+`/finanzas`, que es justo lo que esa página vende.
+
+> ⚠️ **No la re-expandas.** Nada de «el mejor instructor», «el número uno», ni
+> quitarle el «en Finanzas» o el «por sus alumnos». La precisión es el punto.
+
+> ⚠️ **Lo que la sostiene hoy es la palabra de Jorge**, no un documento. Si
+> alguna vez hay una constancia del Tec o una captura de las evaluaciones,
+> anótala aquí. Mientras tanto, ésta es la única credencial del sitio sin
+> respaldo documental — el resto de las cifras tienen fuente pública o material
+> propio detrás.
+
+### «+10,000 alumnos formados»
+
+Atribución de Jorge Sierra (papá), en las mismas dos tarjetas. Contable, así
+que va en la lista de atribuciones y no como distinción. Confirmada por Jorge
+el 28 ago 2026, y también sin respaldo documental.

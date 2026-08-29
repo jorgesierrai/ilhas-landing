@@ -6,7 +6,7 @@ import Icono from "../components/medios/Icono.astro";
 import VideoClip from "../components/medios/VideoClip.astro";
 import { mostrar } from "../lib/medios";
 import plantillaImg from "../assets/media/capturas/finanzas-plantilla.png";
-import { ENLACES } from "../data/personas";
+import { DISTINCIONES, ENLACES } from "../data/personas";
 import fotoPapa from "../assets/equipo/jorge-papa.png";
 import fotoHijo from "../assets/equipo/jorge-hijo.png";
 import MapaEmpresa from "../components/MapaEmpresa.astro";
@@ -20,7 +20,9 @@ const maestros = [
     atribuciones: [
       { dato: "40 años", contexto: "de criterio financiero" },
       { dato: "+200 empresas", contexto: "asesoradas en LATAM" },
+      { dato: "+10,000 alumnos", contexto: "formados" },
     ],
+    distincion: DISTINCIONES.papa,
     foto: fotoPapa,
     redes: ENLACES.papa,
   },
@@ -237,6 +239,7 @@ const faqs = [
                   atribuciones={m.atribuciones}
                   foto={m.foto}
                   redes={m.redes}
+                  distincion={m.distincion}
                 />
               ))
             }

@@ -5,7 +5,7 @@
 // números se pasan ya atribuidos (nunca sumados entre personas).
 import { Image } from "astro:assets";
 import type { ImageMetadata } from "astro";
-import type { Enlace } from "../data/personas";
+import type { Distincion, Enlace } from "../data/personas";
 import IconoSocial from "./IconoSocial.astro";
 
 interface Atribucion {
@@ -42,6 +42,11 @@ interface Props {
    * separador colgando.
    */
   redes?: Enlace[];
+  /**
+   * Reconocimiento, cuando lo hay. Opcional: casi nadie trae uno, y la tarjeta
+   * sin él no debe dejar hueco donde iría.
+   */
+  distincion?: Distincion;
 }
 
 const {
@@ -53,6 +58,7 @@ const {
   fotoAlt,
   prioritaria = false,
   redes,
+  distincion,
 } = Astro.props;
 const inicial = nombre.trim().charAt(0).toUpperCase();
 ---
@@ -88,6 +94,35 @@ const inicial = nombre.trim().charAt(0).toUpperCase();
         ))
       }
     </ul>
+
+    {/* La distinción NO va en `atribuciones`: aquéllas son números contables y
+        ésta no, y como cuarto renglón de una lista de cifras rompería el ritmo
+        y se leería como estadística. La roseta es LITERAL —marca un
+        reconocimiento real, no una idea abstracta—, que es justo lo contrario
+        del caso de los principios de /metodo, donde los íconos se prohibieron
+        por ser abstracciones. */}
+    {
+      distincion && (
+        <p class="distincion">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.7"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+          >
+            <circle cx="12" cy="9" r="6" />
+            <path d="M8.6 14.2 7 22l5-2.6L17 22l-1.6-7.8" />
+          </svg>
+          <span>
+            <b>{distincion.texto}</b>
+            <em>{distincion.fuente}</em>
+          </span>
+        </p>
+      )
+    }
 
     {/* Al final de la tarjeta, después de la trayectoria: son el destino, no
         la presentación. El aria-label es obligatorio — un <a> cuyo único
@@ -162,6 +197,17 @@ const inicial = nombre.trim().charAt(0).toUpperCase();
 
   .tarjeta-persona__body {
     padding: 1.5rem;
+    /* Columna flexible para poder empujar las redes al fondo: las dos tarjetas
+       no miden lo mismo —el papá trae una atribución más y su distinción— y
+       sin esto los íconos quedan a distinta altura. Ya estaban desalineadas
+       21 px en /finanzas y 42 en /nosotros antes de esta iteración. */
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .tarjeta-persona__body .redes {
+    margin-top: auto;
   }
 
   .tarjeta-persona__nombre {
@@ -230,6 +276,40 @@ const inicial = nombre.trim().charAt(0).toUpperCase();
 
   .tarjeta-persona__contexto {
     color: var(--ilhas-text);
+  }
+
+  .distincion {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.55rem;
+    margin: 0.85rem 0 0;
+    padding: 0.7rem 0.8rem;
+    border-radius: 10px;
+    background: var(--ilhas-primary-10);
+    font-size: 0.8125rem;
+    line-height: 1.45;
+    color: var(--ilhas-text);
+  }
+
+  .distincion svg {
+    flex: 0 0 auto;
+    width: 1rem;
+    height: 1rem;
+    margin-top: 0.1rem;
+    color: var(--ilhas-primary);
+  }
+
+  .distincion b {
+    display: block;
+    font-weight: 600;
+    color: var(--ilhas-dark);
+  }
+
+  /* `normal`: el <em> está por semántica, no para inclinarlo. */
+  .distincion em {
+    display: block;
+    font-style: normal;
+    margin-top: 0.1rem;
   }
 
   /* Círculos de 2.25 rem (36 px): cumplen el mínimo de área táctil sin
