@@ -13,7 +13,7 @@ Decidido con Jorge el 28 ago 2026.
 ## Qué cambia, y por qué es más que agregar texto
 
 Hoy el mapa marca **6 áreas de 13** y las otras siete van vacías. Jorge pasó la
-lista completa: **36 cosas repartidas en las trece áreas.**
+lista completa: **38 cosas repartidas en las trece áreas.**
 
 Eso cambia lo que el mapa afirma:
 
@@ -25,7 +25,7 @@ Eso cambia lo que el mapa afirma:
 
 ⚠️ **Ahí está el problema que esta corrida tiene que resolver.** La leyenda de
 hoy dice *«Las áreas marcadas son donde Ilhas ya construyó y dejó corriendo un
-sistema»*. Con 36 renglones, esa frase deja de ser cierta: varios de la lista
+sistema»*. Con 38 renglones, esa frase deja de ser cierta: varios de la lista
 son **prácticas o disciplinas**, no sistemas entregados a un cliente —
 *Harness engineering*, *Spec driven development*, *Data science*, *Apps*.
 Publicarlos bajo esa leyenda sería una claim falsa.
@@ -43,7 +43,7 @@ hoy tiene, que es lo único que lo hace valer.
 
 ## 2 · Qué está marcado, y qué falta por confirmar
 
-De los 36, **solo se marcan los 6 que el mapa ya reconocía como entregas
+De los 38, **solo se marcan los 7 que el mapa ya reconocía como entregas
 reales** (vienen de `productos.ts` y de los casos con cliente):
 
 | Área | Marcado |
@@ -60,7 +60,7 @@ entregados —«Pagos B2B», «Infraestructura de pagos», «Apps»— y probabl
 estén, pero **eso lo confirma Jorge, no tú.** Un punto de más en este mapa es
 exactamente el tipo de claim que el sitio no hace.
 
-**Deja esa pregunta anotada en el reporte final:** cuáles de los otros 30 ya
+**Deja esa pregunta anotada en el reporte final:** cuáles de los otros 31 ya
 están corriendo con un cliente.
 
 ---
@@ -105,7 +105,8 @@ cobranza:    [{Cobranza automática, hecho}, {Avisos a clientes, hecho},
               "Recordatorios por WhatsApp", "Recordatorios por push y correo", "Pagos B2B"]
 
 // Motor de valor
-ingenieria:  ["Programación agéntica", "Harness engineering", "Spec driven development"]
+ingenieria:  ["Programación agéntica", "Harness engineering", "Spec driven development",
+              "Orquestador on call", "Bug bot"]
 suministro:  ["Agente de optimización de rutas"]
 produccion:  [{Despiece, hecho}, "Planeación de la producción"]
 entrega:     ["Agentes orquestadores que actualizan el ERP"]
@@ -226,7 +227,7 @@ criterio que ya usa el componente para el texto de esa capa.
 + método.
 ```
 
-Sin ese segundo enunciado, las 36 líneas quedan todas bajo una afirmación que
+Sin ese segundo enunciado, las 38 líneas quedan todas bajo una afirmación que
 no las cubre. **Esta frase no es opcional.**
 
 ---
@@ -247,8 +248,8 @@ grep -c "Harness engineering"        dist/metodo/index.html               # 0
 grep -c "Harness engineering"        dist/finanzas/index.html             # 0
 grep -c "Harness engineering"        dist/index.html                      # 0
 
-# Exactamente 6 marcados, ni uno más
-grep -o 'class="[^"]*hecho[^"]*"'    dist/soluciones/index.html | wc -l   # 6
+# Exactamente 7 marcados, ni uno más — son 7 ítems en 6 áreas: Cobranza trae dos
+grep -o 'class="[^"]*hecho[^"]*"'    dist/soluciones/index.html | wc -l   # 7
 
 # La leyenda nueva
 grep -c "lo que se construye en cada área" dist/soluciones/index.html     # 1
@@ -262,8 +263,8 @@ grep -c "<script" dist/soluciones/index.html   # 0
 
 ### Con el navegador
 
-- [ ] **Cuenta los puntos morados: tienen que ser exactamente 6.** Si hay más,
-      alguien marcó de más.
+- [ ] **Cuenta los puntos morados: tienen que ser exactamente 7.** (Siete
+      ítems en seis áreas — Cobranza trae dos.) Si hay más, alguien marcó de más.
 - [ ] Las trece áreas están y ninguna quedó vacía.
 - [ ] **`/metodo` y `/finanzas` NO crecieron.** Mide sus mapas antes y después:
       deben dar lo mismo. Si crecieron, las listas se colaron a una variante
@@ -277,22 +278,22 @@ grep -c "<script" dist/soluciones/index.html   # 0
 
 | | Antes | Referencia | Después |
 |---|---|---|---|
-| Mapa en `/soluciones` · 1440 | | 745 px | |
-| Mapa en `/soluciones` · 390 | | 1,926 px | |
+| Mapa en `/soluciones` · 1440 | | 771 px | |
+| Mapa en `/soluciones` · 390 | | 1,972 px | |
 | Mapa en `/metodo` · 1440 | | *(sin cambio)* | |
 | Mapa en `/finanzas` · 1440 | | *(sin cambio)* | |
 | `/soluciones` total | | | |
 
-En móvil el mapa mide 1,926 px. Es mucho, y es el costo de 36 renglones — pero
+En móvil el mapa mide 1,972 px. Es mucho, y es el costo de 38 renglones — pero
 si se pasa de **2,100 px**, dilo con la medida y lo revisamos.
 
 ---
 
 ## Qué NO hacer
 
-- **No marques como «hecho» nada fuera de los 6 listados.** Ni «Pagos B2B», ni
+- **No marques como «hecho» nada fuera de los 7 listados.** Ni «Pagos B2B», ni
   «Infraestructura de pagos», ni «Apps». Eso lo confirma Jorge.
-- **No dejes la leyenda vieja.** Con 36 renglones se vuelve falsa.
+- **No dejes la leyenda vieja.** Con 38 renglones se vuelve falsa.
 - No metas las listas en las variantes `limpio` ni `cimiento`.
 - No conviertas las áreas en tarjetas con borde.
 - No pases los textos a Title Case.
@@ -306,9 +307,9 @@ si se pasa de **2,100 px**, dilo con la medida y lo revisamos.
 
 1. Archivos tocados.
 2. `npm run build` y `npm run medios`.
-3. Todos los greps, en especial **el conteo de puntos morados = 6**.
+3. Todos los greps, en especial **el conteo de puntos morados = 7**.
 4. Capturas del mapa en `/soluciones` (1440 y 390) y de `/metodo` y
    `/finanzas` para probar que no crecieron.
 5. La tabla de alturas.
-6. **La pregunta abierta para Jorge:** cuáles de los otros 30 ítems ya están
+6. **La pregunta abierta para Jorge:** cuáles de los otros 31 ítems ya están
    corriendo con un cliente y deberían llevar punto.
