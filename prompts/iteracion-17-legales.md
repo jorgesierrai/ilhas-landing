@@ -41,22 +41,34 @@ Déjalo escrito en `docs/` cuando termines.
 
 ---
 
-## 0 · Los datos que faltan — bloquean la publicación, no el código
+## 0 · Los datos de la empresa — ya los dio Jorge
 
-Los tres documentos traen marcadores `[[ASÍ]]`. **Constrúyelos con los
-marcadores tal cual**: es preferible un `[[PENDIENTE]]` visible a un dato
-inventado en un documento legal.
+Van **literales** en los tres documentos:
 
-| Marcador | Qué hace falta |
+| Dato | Valor |
 |---|---|
-| `[[RAZÓN SOCIAL]]` | El nombre legal completo. La LFPDPPP lo exige. |
-| `[[DOMICILIO]]` | Domicilio fiscal. También obligatorio. |
-| `[[CORREO ARCO]]` | A dónde se mandan las solicitudes de datos. Puede ser `hola@ilhas.ai`. |
-| `[[PLATAFORMA EVENTOS]]` | Qué corre `eventos.ilhas.ai` — ahí es donde de verdad se capturan datos. |
-| `[[FECHA]]` | Fecha de última actualización. |
+| Responsable | **José Jorge Sierra Guerra**, persona física |
+| Domicilio | **Golfo de Cortés 2869, Guadalajara, Jalisco, C.P. 44690** |
+| Correo ARCO | **hola@ilhas.ai** |
+| Plataforma de eventos | **HighLevel** (`eventos.ilhas.ai`) |
+| Última actualización | **1 de agosto de 2026** |
 
-**Repórtalos todos al terminar.** Es lo que Jorge tiene que contestar antes de
-que estas páginas puedan salir a producción.
+⚠️ **El domicilio trae una contradicción que Jorge tiene que resolver.** Él lo
+pasó como *«Zapopan»*, pero **el C.P. 44690 corresponde a Guadalajara**, no a
+Zapopan (verificado en tres fuentes de códigos postales). Los documentos van
+con **Guadalajara**, que es lo que dice el código postal.
+
+**Esto no es un detalle:** el domicilio fiscal tiene que coincidir con la
+constancia de situación fiscal, y de él depende la cláusula de jurisdicción de
+los términos. **Repórtalo para que Jorge lo confirme contra su constancia.**
+
+⚠️ **Es persona física, no sociedad.** No escribas «S.A. de C.V.», «Ilhas S.C.»
+ni nada parecido. La LFPDPPP admite perfectamente a una persona física como
+responsable; se escribe con su nombre y su domicilio, y ya.
+
+⚠️ **HighLevel es una empresa estadounidense.** Eso significa que **sí hay
+transferencia internacional de datos**, y el aviso tiene que decirlo. Está
+escrito abajo; no lo quites.
 
 ---
 
@@ -123,11 +135,12 @@ venden.
 ```
 # Términos y condiciones
 
-Última actualización: [[FECHA]]
+Última actualización: 1 de agosto de 2026
 
-Este sitio (ilhas.ai) es operado por [[RAZÓN SOCIAL]], con domicilio en
-[[DOMICILIO]] («Ilhas», «nosotros»). Al usar el sitio aceptas estos términos.
-Si no estás de acuerdo con ellos, te pedimos que no lo uses.
+Este sitio (ilhas.ai) es operado por José Jorge Sierra Guerra, persona física
+con domicilio en Golfo de Cortés 2869, Guadalajara, Jalisco, C.P. 44690
+(«Ilhas», «nosotros»). Al usar el sitio aceptas estos términos. Si no estás de
+acuerdo con ellos, te pedimos que no lo uses.
 
 ## Qué es este sitio
 
@@ -136,7 +149,7 @@ hemos hecho y las formas de trabajar con nosotros. No es una plataforma
 transaccional: aquí no se compra nada ni se crea ninguna cuenta.
 
 Las inscripciones a eventos y programas se hacen fuera de este sitio, en
-[[PLATAFORMA EVENTOS]], que tiene sus propios términos.
+eventos.ilhas.ai, que corre sobre HighLevel y tiene sus propios términos.
 
 ## Esto no es asesoría profesional
 
@@ -160,7 +173,8 @@ página.
 ## Propiedad intelectual
 
 El Método Ilhas, sus contenidos, textos, materiales, marcas y el diseño de
-este sitio son propiedad de [[RAZÓN SOCIAL]] o se usan con autorización.
+este sitio son propiedad de José Jorge Sierra Guerra o se usan con
+autorización.
 
 Puedes leer, citar y compartir el contenido dando crédito y enlazando a la
 fuente. **No puedes** reproducirlo íntegro, revenderlo, ni usarlo como
@@ -190,7 +204,7 @@ mismo.
 
 Estos términos se rigen por las leyes de los Estados Unidos Mexicanos. Para
 cualquier controversia, las partes se someten a los tribunales competentes de
-[[DOMICILIO — ciudad]], renunciando a cualquier otro fuero.
+Guadalajara, Jalisco, renunciando a cualquier otro fuero.
 
 ## Contacto
 
@@ -209,13 +223,14 @@ ninguno.**
 ```
 # Aviso de privacidad
 
-Última actualización: [[FECHA]]
+Última actualización: 1 de agosto de 2026
 
 ## Quién es responsable de tus datos
 
-[[RAZÓN SOCIAL]], con domicilio en [[DOMICILIO]], es responsable del
-tratamiento de tus datos personales, conforme a la Ley Federal de Protección
-de Datos Personales en Posesión de los Particulares (LFPDPPP).
+José Jorge Sierra Guerra, persona física con domicilio en Golfo de Cortés
+2869, Guadalajara, Jalisco, C.P. 44690, es responsable del tratamiento de tus
+datos personales, conforme a la Ley Federal de Protección de Datos Personales
+en Posesión de los Particulares (LFPDPPP).
 
 ## Qué datos recabamos, y cuáles no
 
@@ -226,8 +241,9 @@ la política de cookies.
 Recabamos datos personales solo cuando tú nos los das, y en dos casos:
 
 - **Cuando te inscribes a un evento o programa.** El registro ocurre en
-  [[PLATAFORMA EVENTOS]], no en este sitio. Ahí se recaban tu nombre y tu
-  correo electrónico, y en su caso los datos que la propia plataforma solicite.
+  eventos.ilhas.ai, no en este sitio. Esa página corre sobre HighLevel, y ahí
+  se recaban tu nombre y tu correo electrónico, más los datos que el formulario
+  del evento pida en cada caso.
 - **Cuando nos escribes.** A hola@ilhas.ai, o por los canales que publicamos.
   Recibimos lo que decidas incluir en tu mensaje.
 
@@ -248,16 +264,20 @@ anterior— son:
 
 4. Enviarte contenido, avisos de nuevos programas e invitaciones.
 
-Si no quieres que usemos tus datos para el punto 4, contéstanos a
-[[CORREO ARCO]] con el asunto «Limitar uso». Lo aplicamos sin más trámite.
+Si no quieres que usemos tus datos para el punto 4, escríbenos a
+hola@ilhas.ai con el asunto «Limitar uso». Lo aplicamos sin más trámite.
 
 ## Con quién los compartimos
 
 No vendemos tus datos. Los compartimos únicamente con los proveedores que
-necesitamos para operar —la plataforma donde corre el evento y el servicio de
-correo—, que los tratan por nuestra cuenta y bajo nuestras instrucciones.
+necesitamos para operar, que los tratan por nuestra cuenta y bajo nuestras
+instrucciones. Hoy son:
 
-Algunos de esos proveedores pueden almacenar información fuera de México. Al
+- **HighLevel**, donde corre eventos.ilhas.ai: registros y comunicaciones de
+  los eventos y programas.
+
+**Transferencia internacional.** HighLevel es una empresa estadounidense, así
+que tus datos se almacenan y procesan en servidores fuera de México. Al
 inscribirte aceptas esa transferencia, limitada a las finalidades de este
 aviso.
 
@@ -271,7 +291,7 @@ Tienes derecho a **Acceder** a tus datos, **Rectificarlos** si son incorrectos,
 para fines específicos. También puedes **revocar tu consentimiento** en
 cualquier momento.
 
-Para ejercerlos, escribe a **[[CORREO ARCO]]** e incluye:
+Para ejercerlos, escribe a **hola@ilhas.ai** e incluye:
 
 - Tu nombre y un correo donde podamos contestarte.
 - Copia de una identificación oficial, para confirmar que eres tú.
@@ -307,7 +327,7 @@ apartado para cuando se agreguen. **No inventes cookies que no existen.**
 ```
 # Política de cookies
 
-Última actualización: [[FECHA]]
+Última actualización: 1 de agosto de 2026
 
 ## Qué es una cookie
 
@@ -325,9 +345,10 @@ primera vez que entres.
 
 ## Cookies de terceros
 
-Cuando sales de este sitio hacia [[PLATAFORMA EVENTOS]] o hacia las redes de
-Ilhas, esas plataformas sí pueden colocar sus propias cookies, bajo sus
-propias políticas. No las controlamos.
+Cuando sales de este sitio hacia **eventos.ilhas.ai** —que corre sobre
+HighLevel— o hacia redes sociales, esas plataformas sí colocan sus propias
+cookies, bajo sus propias políticas. No las controlamos y no nos dan acceso a
+lo que guardan ahí.
 
 ## Cómo desactivarlas
 
@@ -386,8 +407,21 @@ grep -c "ARCO"      dist/privacidad/index.html   # ≥ 1
 grep -c "INAI"      dist/privacidad/index.html   # ≥ 1
 grep -c "20 días hábiles" dist/privacidad/index.html  # 1
 
-# Los marcadores siguen visibles — NO se rellenaron a ojo
-grep -o "\[\[[^]]*\]\]" dist/terminos/index.html dist/privacidad/index.html dist/cookies/index.html | sort -u
+# NO debe quedar ningún marcador: los datos ya están todos
+grep -c "\[\[" dist/terminos/index.html dist/privacidad/index.html dist/cookies/index.html   # 0 en las tres
+
+# Los datos de la empresa, literales
+grep -c "José Jorge Sierra Guerra"  dist/terminos/index.html dist/privacidad/index.html   # 1 y 1
+grep -c "Golfo de Cortés 2869"      dist/terminos/index.html dist/privacidad/index.html   # 1 y 1
+grep -c "C.P. 44690"                dist/terminos/index.html dist/privacidad/index.html   # 1 y 1
+grep -c "HighLevel"                 dist/privacidad/index.html dist/cookies/index.html    # ≥1 y 1
+grep -c "Transferencia internacional" dist/privacidad/index.html                          # 1
+
+# Persona física, NO sociedad
+grep -ci "S.A. de C.V.\|S. de R.L.\|Sociedad Anónima"  dist/terminos/index.html dist/privacidad/index.html  # 0 y 0
+
+# El domicilio va con Guadalajara, no Zapopan (ver punto 0)
+grep -ci "zapopan"  dist/terminos/index.html dist/privacidad/index.html   # 0 y 0
 
 # Y no se coló nada de Atonom
 grep -ci "atonom\|Your Privacy Choices\|SOC 2" dist/*/index.html dist/index.html   # 0
@@ -402,7 +436,8 @@ grep -c "<script" dist/terminos/index.html   # 0
       quedó en `.pie ul` en vez de `.pie__inner ul`.
 - [ ] La marca de agua se ve detrás y **no estorba la lectura** del copyright.
 - [ ] Las tres páginas se leen cómodas: una columna, sin líneas larguísimas.
-- [ ] Los `[[MARCADORES]]` se ven a simple vista. **Es intencional.**
+- [ ] **No queda ningún `[[MARCADOR]]` en las tres páginas.** Los datos ya
+      están completos.
 - [ ] En 390 px el pie apila y la barra final no desborda.
 - [ ] 1440 × 900 y 390 × 844.
 
@@ -419,8 +454,12 @@ grep -c "<script" dist/terminos/index.html   # 0
 
 - **No copies texto de atonom.ai ni de ningún otro sitio.** Los tres
   documentos de arriba son los que van.
-- **No rellenes los `[[MARCADORES]]`.** Ni con datos plausibles, ni con «Ilhas
-  S.A. de C.V.». Eso lo contesta Jorge.
+- **No conviertas a Jorge en sociedad.** Es persona física: nada de «S.A. de
+  C.V.», «S.C.» ni «Ilhas Technologies». Va su nombre y su domicilio.
+- **No cambies «Guadalajara» por «Zapopan».** El C.P. 44690 es de Guadalajara;
+  la contradicción está anotada en el punto 0 para que Jorge la confirme.
+- **No quites la transferencia internacional del aviso.** HighLevel es
+  estadounidense y omitirlo sería la falla más común de un aviso mexicano.
 - No inventes cookies: hoy el sitio no pone ninguna.
 - No le pongas boletín, sello de certificación ni redes al pie.
 - No le quites el `noindex` a las tres páginas.
@@ -434,8 +473,9 @@ grep -c "<script" dist/terminos/index.html   # 0
 1. Archivos tocados (tres nuevos + `Footer.astro`).
 2. `npm run build` y `npm run medios`.
 3. Todos los greps.
-4. **La lista completa de `[[MARCADORES]]` que quedaron pendientes** — esto es
-   lo que Jorge tiene que contestar antes de publicar.
+4. **La contradicción del domicilio**, textual, para que Jorge la confirme
+   contra su constancia de situación fiscal: pasó «Zapopan» pero el C.P. 44690
+   es de Guadalajara. De ahí depende también la cláusula de jurisdicción.
 5. Capturas del pie y de las tres páginas, 1440 y 390.
 6. Confirma que dejaste anotado en `docs/` que los tres documentos **no han
    sido revisados por un abogado**.
