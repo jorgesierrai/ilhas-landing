@@ -61,6 +61,31 @@ export const ENLACES: Record<"papa" | "hijo", Enlace[]> = {
 };
 
 /**
+ * Las redes de la MARCA, no de una persona. Van en el pie.
+ *
+ * Viven en este archivo y no en `Footer.astro` por la misma razón que ENLACES:
+ * el tipo `Enlace`, el `IconoSocial` que lo pinta y la regla de limpiar las URLs
+ * ya están aquí. Un segundo archivo para un solo renglón partiría la convención
+ * en dos.
+ *
+ * HOY SOLO HAY INSTAGRAM (Jorge, 30 ago 2026). No inventes las demás: si el pie
+ * enseña un ícono de TikTok o de LinkedIn que lleva a una cuenta que no existe,
+ * es exactamente el tipo de promesa vacía que el resto del pie evita —por eso no
+ * tiene boletín ni sello de certificación—. Cuando Jorge abra otra, se agrega
+ * aquí y el pie la pinta solo.
+ */
+export const REDES_ILHAS: Enlace[] = [
+  {
+    red: "instagram",
+    // Jorge la pasó desde el botón de compartir, con `utm_source` e `igsi`
+    // pegados. Se guardan sin ellos: son atribución de una sesión concreta,
+    // caducan, y no cambian a dónde llega el enlace.
+    url: "https://www.instagram.com/ilhas.ai",
+    etiqueta: "Instagram de Ilhas: @ilhas.ai",
+  },
+];
+
+/**
  * Reconocimientos. Van APARTE de las atribuciones: éstas son números
  * contables y aquélla no, y meterla como cuarto renglón de una lista de cifras
  * la haría leer como estadística.

@@ -80,7 +80,10 @@ Aparte del hub viven `/terminos`, `/privacidad` y `/cookies`. **No cuentan como 
   - `src/components/Footer.astro` — reescrito en la 17: marca, dos columnas,
     logotipo de marca de agua y barra final con lo legal. **La regla de la lista
     va scopeada a `.pie__inner`, no a `.pie`** — con `.pie ul` los tres enlaces
-    legales se apilan en columna en vez de ir en fila.
+    legales se apilan en columna en vez de ir en fila. Lleva **una sola red**,
+    el Instagram de la marca (`REDES_ILHAS` en `personas.ts`, Jorge 30 ago 2026):
+    no le inventes TikTok ni LinkedIn — un ícono que lleva a una cuenta que no
+    existe es la misma promesa vacía que el boletín que este pie no tiene.
   - `.bg-lavado` en `src/styles/base.css` — la tercera superficie clara.
 - El `index.html` de la raíz es el sitio viejo (landing de bootcamp, sin rutas).
   **No lo borres**: Jorge lo conserva para revisar qué rescatar. Le queda un
@@ -102,7 +105,6 @@ Aparte del hub viven `/terminos`, `/privacidad` y `/cookies`. **No cuentan como 
 | **Párrafo de intro de la línea de tiempo** | Marcado como `TODO copy` en `src/pages/nosotros.astro`. Lo escribe Jorge |
 | **Revisión legal** | **Un abogado no ha visto `/terminos`, `/privacidad` ni `/cookies`.** Son borradores sólidos y honestos, escritos para México, pero sin revisar. Es un trámite de una sesión y hoy es un hueco abierto |
 | **El domicilio fiscal** | Jorge lo pasó como *Zapopan* y el **C.P. 44690 es de Guadalajara**. Los documentos van con Guadalajara; **falta que lo confirme contra su constancia**, porque de ahí depende la cláusula de jurisdicción |
-| **Redes propias de Ilhas** | El pie no lleva íconos de redes: no se sabe si Ilhas tiene cuentas propias. Las de Jorge ya viven en su tarjeta de persona. Si existen, las pasa y se agregan |
 | **`sitemap.xml`** | Decidido que va, pero **hasta el final**: se genera cuando las rutas y el contenido estén cerrados, como archivo estático en `public/` (sin instalar la integración). **Las tres legales NO entran**: llevan `noindex` |
 | **Hosting y DNS · plataforma del programa** | Ver `docs/00-INDEX.md` § "Lo que NO está resuelto" |
 

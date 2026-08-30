@@ -9,11 +9,18 @@
 //
 // Lo que NO se copió del footer de referencia, a propósito: la suscripción al
 // boletín (Ilhas no tiene boletín, y un campo de correo que no manda a ningún
-// lado es una promesa falsa), el sello de certificación (Ilhas no está
-// certificada en nada) y los íconos de redes (las de Jorge viven en su tarjeta
-// de persona; si Ilhas abre cuentas propias, se agregan aquí).
+// lado es una promesa falsa) y el sello de certificación (Ilhas no está
+// certificada en nada).
+//
+// Las redes SÍ entraron: Jorge confirmó que Ilhas tiene Instagram propio
+// (30 ago 2026). Es UNA sola cuenta y la fila la pinta `REDES_ILHAS`, así que
+// el día que abra otra se agrega ahí y aparece sola. Las de Jorge persona son
+// otras y siguen viviendo en su tarjeta, en /finanzas y /nosotros.
 //
 // El año se calcula en build time — sitio 100% estático, cero JS de cliente.
+import IconoSocial from "./IconoSocial.astro";
+import { REDES_ILHAS } from "../data/personas";
+
 const year = new Date().getFullYear();
 
 const links = [
@@ -35,6 +42,25 @@ const links = [
           <span>ilhas</span>
         </a>
         <p class="pie__tagline">El método, aplicado a tu trabajo.</p>
+
+        {
+          REDES_ILHAS.length > 0 && (
+            <ul class="pie__redes">
+              {REDES_ILHAS.map((e) => (
+                <li>
+                  <a
+                    href={e.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={e.etiqueta}
+                  >
+                    <IconoSocial red={e.red} />
+                  </a>
+                </li>
+              ))}
+            </ul>
+          )
+        }
       </div>
 
       <nav aria-label="Navegación del pie">
@@ -123,6 +149,36 @@ const links = [
     max-width: 26ch;
     /* .55 mide 6.03:1 sobre --ilhas-dark. */
     color: rgba(248, 250, 255, 0.55);
+  }
+
+  /* --- las redes de la marca ---
+     Va DESPUÉS de `.pie__inner ul` en el archivo para ganarle el `display:grid`
+     y el `gap` de aquella: ésta es una fila, no una columna. */
+  .pie__redes {
+    display: flex;
+    gap: 0.25rem;
+    margin: 1rem 0 0;
+    /* El <a> ya trae su propio padding; sin esto la fila arrancaría desplazada
+       a la derecha respecto de la marca y del tagline de arriba. */
+    margin-left: -0.55rem;
+  }
+
+  .pie__redes a {
+    display: grid;
+    place-items: center;
+    /* 40px de blanco alrededor de un glifo de 16.8px: el ícono suelto deja un
+       blanco de tiro demasiado chico para el pulgar. */
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 8px;
+    transition:
+      color 0.18s ease,
+      background-color 0.18s ease;
+  }
+
+  .pie__redes a:hover,
+  .pie__redes a:focus-visible {
+    background: rgba(248, 250, 255, 0.08);
   }
 
   /* --- las columnas --- */
