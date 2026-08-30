@@ -68,6 +68,11 @@ No inventes estos. Si el trabajo los necesita, para y pregunta:
 
 - **Casos y logos de clientes reales** para `/soluciones`. La tabla de linaje de productos sí está y sí se usa.
 - **Dónde vive el hosting hoy y quién controla el DNS de ilhas.ai.**
+- **El domicilio fiscal de Jorge.** Lo pasó como *Zapopan*, pero el C.P. 44690 es
+  de **Guadalajara**. Las tres páginas legales (30 ago 2026) van con Guadalajara,
+  que es lo que dice el código postal, pero **tiene que confirmarlo contra su
+  constancia de situación fiscal**: de ahí depende la cláusula de jurisdicción de
+  `/terminos`. Ver `06-stack-y-seguridad.md`.
 - **La plataforma de entrega del programa** — Skool u Hotmart. Jorge no ha decidido (25 ago 2026). Hasta entonces, el sitio no nombra ninguna.
 - ~~**Si "6 semanas" sigue siendo cierto.**~~ **Resuelto el 27 ago 2026: fuera.** Era herencia del formato bootcamp, que este mismo documento ya declaró muerto, y además dependía de una plataforma sin decidir. **El sitio no publica duración.** El formato lo explica el webinar, no este repositorio (regla 1 de `CLAUDE.md`).
 

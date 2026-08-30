@@ -1,6 +1,18 @@
 ---
-// Footer del sitio. Repite el menú principal (docs/01-arquitectura.md) y no
-// enlaza nada que no exista todavía (nada de "Términos"/"Privacidad" placeholder).
+// Pie del sitio. Repite el menú principal (docs/01-arquitectura.md) y, desde la
+// iteración 17, enlaza las tres páginas legales — /terminos, /privacidad y
+// /cookies — que ya existen de verdad. Nada de placeholders.
+//
+// Estructura tomada de medios/footer-referencia.html: marca a la izquierda,
+// columnas de enlaces, logotipo grande de marca de agua abajo, y una barra
+// final con el copyright a un lado y lo legal al otro.
+//
+// Lo que NO se copió del footer de referencia, a propósito: la suscripción al
+// boletín (Ilhas no tiene boletín, y un campo de correo que no manda a ningún
+// lado es una promesa falsa), el sello de certificación (Ilhas no está
+// certificada en nada) y los íconos de redes (las de Jorge viven en su tarjeta
+// de persona; si Ilhas abre cuentas propias, se agregan aquí).
+//
 // El año se calcula en build time — sitio 100% estático, cero JS de cliente.
 const year = new Date().getFullYear();
 
@@ -12,140 +24,227 @@ const links = [
 ];
 ---
 
-<footer class="site-footer">
-  <div class="site-footer__accent" aria-hidden="true"></div>
-  <div class="container site-footer__inner">
-    <div class="site-footer__brand-col">
-      <a href="/" class="site-footer__brand" aria-label="Ilhas — ir al inicio">
-        <img src="/assets/logo/logo-mark.svg" alt="" width="28" height="28" />
-        <span>ilhas</span>
-      </a>
-      <p class="site-footer__tagline">El método, aplicado a tu trabajo.</p>
+<footer class="pie">
+  <div class="pie__filete" aria-hidden="true"></div>
+
+  <div class="container">
+    <div class="pie__inner">
+      <div>
+        <a href="/" class="pie__marca" aria-label="Ilhas — ir al inicio">
+          <img src="/assets/logo/logo-mark.svg" alt="" width="28" height="28" />
+          <span>ilhas</span>
+        </a>
+        <p class="pie__tagline">El método, aplicado a tu trabajo.</p>
+      </div>
+
+      <nav aria-label="Navegación del pie">
+        <p class="pie__titulo">Navegación</p>
+        <ul>
+          {
+            links.map((link) => (
+              <li>
+                <a href={link.href}>{link.label}</a>
+              </li>
+            ))
+          }
+        </ul>
+      </nav>
+
+      <div>
+        <p class="pie__titulo">Contacto</p>
+        <ul>
+          <li><a href="mailto:hola@ilhas.ai">hola@ilhas.ai</a></li>
+          <li><a href="https://eventos.ilhas.ai/">Reservar el webinar</a></li>
+        </ul>
+      </div>
     </div>
 
-    <nav class="site-footer__nav" aria-label="Pie de página">
-      <p class="site-footer__heading">Navegación</p>
-      <ul>
-        {
-          links.map((link) => (
-            <li>
-              <a href={link.href}>{link.label}</a>
-            </li>
-          ))
-        }
+    <div class="pie__barra">
+      <p class="pie__copy">© {year} Ilhas. Todos los derechos reservados.</p>
+      {/* Rutas literales, no un arreglo con .map: son tres y no van a crecer. */}
+      <ul class="pie__legal">
+        <li><a href="/terminos">Términos y condiciones</a></li>
+        <li><a href="/privacidad">Aviso de privacidad</a></li>
+        <li><a href="/cookies">Política de cookies</a></li>
       </ul>
-    </nav>
-
-    <div class="site-footer__contact">
-      <p class="site-footer__heading">Contacto</p>
-      <a href="mailto:hola@ilhas.ai">hola@ilhas.ai</a>
     </div>
-
-    <p class="site-footer__copy">© {year} Ilhas.</p>
   </div>
+
+  <span class="pie__agua" aria-hidden="true">ilhas</span>
 </footer>
 
 <style>
-  .site-footer {
+  .pie {
     position: relative;
     background: var(--ilhas-dark);
     overflow: hidden;
+    color: rgba(248, 250, 255, 0.62);
   }
 
-  .site-footer__accent {
+  .pie__filete {
     position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
+    inset: 0 0 auto 0;
     height: 2px;
     background: var(--ilhas-gradient-h);
   }
 
-  .site-footer__inner {
+  .pie__inner {
+    position: relative;
+    z-index: 1;
     display: grid;
     gap: 2.5rem;
-    padding-block: 3rem 2rem;
+    padding-block: 3.25rem 0;
   }
 
-  .site-footer__brand-col {
-    display: flex;
-    flex-direction: column;
-    gap: 0.625rem;
-  }
-
-  .site-footer__brand {
-    display: flex;
+  /* --- la marca --- */
+  .pie__marca {
+    display: inline-flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: 0.6rem;
     text-decoration: none;
-    color: var(--ilhas-white);
+  }
+
+  .pie__marca img {
+    width: 1.75rem;
+    height: 1.75rem;
+  }
+
+  .pie__marca span {
     font-family: var(--ilhas-font-display);
     font-weight: 600;
-    font-size: 1.125rem;
+    font-size: 1.375rem;
+    color: var(--ilhas-white);
     letter-spacing: var(--ilhas-tracking-wordmark);
-    transition: transform 0.25s ease;
   }
 
-  .site-footer__brand:hover {
-    transform: translateY(-2px);
+  .pie__tagline {
+    margin: 0.85rem 0 0;
+    font-size: 0.9375rem;
+    max-width: 26ch;
+    /* .55 mide 6.03:1 sobre --ilhas-dark. */
+    color: rgba(248, 250, 255, 0.55);
+  }
+
+  /* --- las columnas --- */
+  .pie__titulo {
+    margin: 0 0 0.9rem;
+    font-family: var(--ilhas-font-display);
+    font-weight: 600;
+    font-size: var(--ilhas-fs-small);
     color: var(--ilhas-white);
   }
 
-  .site-footer__tagline {
-    font-family: var(--ilhas-font-body);
-    font-size: var(--ilhas-fs-small);
-    color: rgba(248, 250, 255, 0.6);
-    max-width: 28ch;
-  }
-
-  .site-footer__heading {
-    font-family: var(--ilhas-font-body);
-    font-weight: 600;
-    font-size: var(--ilhas-fs-small);
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-    /* 0.45 medía ~4.37:1 sobre --ilhas-dark — falla AA por poco (necesita
-       4.5:1 en texto de 14px). 0.55 mide ~6:1. */
-    color: rgba(248, 250, 255, 0.55);
-    margin-bottom: 0.875rem;
-  }
-
-  .site-footer__nav ul {
-    display: grid;
-    gap: 0.625rem;
+  /* Scoped a .pie__inner, NO a .pie: con `.pie ul` esta regla (0,1,1) le gana
+     por especificidad a `.pie__legal` (0,1,0) y los tres enlaces legales de la
+     barra final se apilan en columna en vez de ir en fila. Es una colisión que
+     no truena el build y solo se ve mirando. */
+  .pie__inner ul {
     list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 0.6rem;
+    /* El tamaño va en la LISTA, no solo en el <a>. El cuerpo del sitio es de
+       18px (--ilhas-fs-body), así que un <li> sin tamaño propio arma una caja
+       de 28.8px de alto para un enlace de 15px — 8px de aire muerto por
+       renglón. La referencia no lo enseña porque ahí el body corre a 16px. */
+    font-size: 0.9375rem;
   }
 
-  .site-footer__nav a,
-  .site-footer__contact a {
-    position: relative;
-    font-family: var(--ilhas-font-body);
-    font-size: var(--ilhas-fs-small);
-    color: rgba(248, 250, 255, 0.8);
+  .pie a {
+    /* .62 mide 7.41:1 sobre --ilhas-dark. */
+    color: rgba(248, 250, 255, 0.62);
     text-decoration: none;
-    transition: color 0.2s ease;
+    font-size: 0.9375rem;
+    transition: color 0.18s ease;
   }
 
-  .site-footer__nav a:hover,
-  .site-footer__contact a:hover {
-    /* --ilhas-primary mide ~3.6:1 sobre --ilhas-dark, insuficiente para
-       texto pequeño (AA pide 4.5:1). --ilhas-grad-start (cian) mide ~13:1. */
-    color: var(--ilhas-grad-start);
+  .pie a:hover,
+  .pie a:focus-visible {
+    color: var(--ilhas-white);
   }
 
-  .site-footer__copy {
-    grid-column: 1 / -1;
-    padding-top: 2rem;
+  .pie a:focus-visible {
+    /* .6 mide 6.99:1 contra el fondo del pie — 1.4.11 pide 3:1. */
+    outline: 2px solid rgba(248, 250, 255, 0.6);
+    outline-offset: 3px;
+    border-radius: 3px;
+  }
+
+  /* --- la marca de agua ---
+     Texto, no logo-wordmark-blanco.svg: ese SVG trae su tipografía embebida por
+     @font-face y a 13 rem cualquier fallo de carga se ve enorme. Aquí es
+     decoración pura, así que se dibuja con la tipografía de display que la
+     página ya carga. aria-hidden y pointer-events:none — no es contenido y no
+     debe interceptar clics del copyright que tiene encima. */
+  .pie__agua {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -0.18em;
+    z-index: 0;
+    font-family: var(--ilhas-font-display);
+    font-weight: 600;
+    font-size: clamp(5rem, 17vw, 13rem);
+    line-height: 0.8;
+    letter-spacing: -0.04em;
+    color: rgba(248, 250, 255, 0.035);
+    text-align: center;
+    user-select: none;
+    pointer-events: none;
+    white-space: nowrap;
+  }
+
+  /* --- la barra final --- */
+  .pie__barra {
+    position: relative;
+    z-index: 1;
+    margin-top: 3.5rem;
     border-top: 1px solid rgba(248, 250, 255, 0.12);
-    font-family: var(--ilhas-font-body);
-    font-size: var(--ilhas-fs-small);
-    color: rgba(248, 250, 255, 0.5);
-    max-width: none;
+    padding-block: 1.25rem 1.4rem;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem 1.5rem;
   }
 
-  @media (min-width: 640px) {
-    .site-footer__inner {
-      grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr) minmax(0, 1fr);
+  /* La referencia trae estos dos a .45, que sobre --ilhas-dark mide 4.38:1 y
+     falla AA para texto de 13px (pide 4.5:1). .46 pasa raspando con 4.53:1;
+     .52 mide 5.50:1 y sigue siendo claramente más callado que el .62 de las
+     columnas de arriba, que es lo que la jerarquía del pie quiere. */
+  .pie__copy {
+    margin: 0;
+    font-size: 0.8125rem;
+    color: rgba(248, 250, 255, 0.52);
+  }
+
+  .pie__legal {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem 1.5rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    /* Mismo motivo que en .pie__inner ul: sin esto el <li> mide 28.8px de alto
+       y desalinea la barra final contra el copyright, que sí mide 20.8. */
+    font-size: 0.8125rem;
+  }
+
+  .pie__legal a {
+    font-size: 0.8125rem;
+    color: rgba(248, 250, 255, 0.52);
+  }
+
+  .pie__legal a:hover,
+  .pie__legal a:focus-visible {
+    color: var(--ilhas-white);
+  }
+
+  @media (min-width: 760px) {
+    .pie__inner {
+      grid-template-columns: minmax(0, 1.4fr) repeat(2, minmax(0, 1fr));
+      gap: 3rem;
     }
   }
 </style>

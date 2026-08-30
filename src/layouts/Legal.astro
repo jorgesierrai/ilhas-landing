@@ -1,0 +1,103 @@
+---
+/**
+ * Envoltura de las tres páginas legales: /terminos, /privacidad y /cookies.
+ *
+ * Es una capa delgadísima sobre `Base` —el mismo layout que usan las cinco
+ * rutas del sitio—: lo único que agrega es el `noindex`, el titular con su
+ * fecha, y la maquetación de documento. Existe porque las tres páginas se ven
+ * exactamente igual, y con el estilo repetido en cada una habría tres copias
+ * del mismo CSS en el bundle (el sitio compila con `cssCodeSplit: false`, así
+ * que todo va a una sola hoja) y tres lugares donde cambiar la medida de
+ * lectura.
+ *
+ * Los selectores del cuerpo van con `:global()` a propósito: el estilo scopeado
+ * de Astro se aplica a los elementos de ESTE archivo, y el contenido que entra
+ * por el <slot> lleva el hash de la página que lo manda, no el de aquí. Sin
+ * `:global()` no le pegaría a un solo <h2>. El `.legal` de afuera sí lleva el
+ * hash, así que el alcance sigue estando acotado a este bloque.
+ *
+ * Sin hero, sin gradiente y sin ilustración: son documentos, se leen.
+ */
+import Base from "./Base.astro";
+
+interface Props {
+  title: string;
+  description: string;
+  /** El H1 visible. Va aparte del <title> porque ese lleva el sufijo «· Ilhas». */
+  encabezado: string;
+  /** Se escribe una sola vez aquí y se muestra bajo el H1. */
+  actualizado: string;
+}
+
+const { title, description, encabezado, actualizado } = Astro.props;
+---
+
+<Base title={title} description={description} noindex={true}>
+  <article class="container prose legal">
+    <h1>{encabezado}</h1>
+    <p class="legal__fecha">Última actualización: {actualizado}</p>
+    <slot />
+  </article>
+</Base>
+
+<style>
+  .legal {
+    padding-block: clamp(3rem, 7vw, 4.5rem) clamp(4rem, 9vw, 6rem);
+  }
+
+  /* El h1 baja de --ilhas-fs-display (hasta 80px) a escala de documento. A
+     tamaño de display el titular ES un hero, que es justo lo que estas tres
+     páginas no llevan; y a 80px «Términos y condiciones» se comía dos renglones
+     enteros antes de que empezara el texto. Sigue siendo el elemento más grande
+     de la página — los h2 van a 20px. */
+  .legal :global(h1) {
+    font-size: clamp(2rem, 4vw, 2.75rem);
+    margin-bottom: 0.5rem;
+  }
+
+  .legal__fecha {
+    margin: 0 0 clamp(2rem, 4vw, 2.75rem);
+    font-size: var(--ilhas-fs-small);
+    color: var(--ilhas-text);
+  }
+
+  .legal :global(h2) {
+    margin-block: clamp(2.25rem, 4vw, 2.75rem) 0.75rem;
+    font-size: 1.25rem;
+    max-width: var(--ilhas-measure);
+  }
+
+  .legal :global(p),
+  .legal :global(ul),
+  .legal :global(ol) {
+    max-width: var(--ilhas-measure);
+  }
+
+  .legal :global(p) {
+    margin-block: 0 1rem;
+  }
+
+  .legal :global(ul),
+  .legal :global(ol) {
+    margin-block: 0 1rem;
+    padding-left: 1.25rem;
+  }
+
+  .legal :global(li) {
+    margin-bottom: 0.5rem;
+  }
+
+  .legal :global(li:last-child) {
+    margin-bottom: 0;
+  }
+
+  .legal :global(strong) {
+    font-weight: 600;
+    color: var(--ilhas-dark);
+  }
+
+  .legal :global(a) {
+    color: var(--ilhas-primary);
+    text-underline-offset: 0.15em;
+  }
+</style>

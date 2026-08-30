@@ -252,3 +252,30 @@ Nunca se presentan como resultados de alumnos. Cuando existan resultados reales 
 
 ### ✅ Desbloqueada
 Nombre, bio y foto de los dos ya están confirmados y en el sitio (`src/assets/equipo/`). La página está de vuelta en el menú.
+
+---
+
+## `/terminos`, `/privacidad`, `/cookies` — las legales
+
+**Su único trabajo:** existir, ser correctas y no estorbar. No venden, no
+ramifican y no compiten por búsquedas.
+
+No son parte del hub de cinco páginas: **no van en el menú**, solo en la barra
+final del pie. Llevan `noindex`. Se maquetan como documento —una columna de
+lectura, sin hero, sin gradiente y sin ilustración— con
+`src/layouts/Legal.astro`.
+
+| Ruta | Qué es |
+|---|---|
+| `/terminos` | Términos y condiciones de uso del sitio |
+| `/privacidad` | **Aviso** de privacidad, en el sentido de la LFPDPPP |
+| `/cookies` | Política de cookies — hoy dice que no se pone ninguna |
+
+⚠️ **Se llama «aviso de privacidad», no «política de privacidad».** Es el
+término de la ley mexicana y el que un usuario de acá reconoce. No lo traduzcas
+del inglés.
+
+⚠️ **Los tres son borradores sin revisar por un abogado**, y el domicilio trae
+una contradicción abierta. Todo el detalle —incluidos los hechos que cada
+documento afirma y qué hay que tocar el día que entre analítica— está en
+`06-stack-y-seguridad.md`, sección «Las tres páginas legales».

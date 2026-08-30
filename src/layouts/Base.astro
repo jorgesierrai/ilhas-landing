@@ -23,9 +23,23 @@ interface Props {
    * esta bandera y ya.
    */
   heroOscuro?: boolean;
+  /**
+   * `true` en las páginas que no deben salir en resultados de búsqueda.
+   *
+   * Hoy son las tres legales —/terminos, /privacidad, /cookies—: no compiten
+   * por búsquedas y no deben posicionarse por encima de las páginas que sí
+   * venden. Siguen siendo enlazables y siguen teniendo su canonical; lo único
+   * que cambia es que el buscador no las indexa.
+   */
+  noindex?: boolean;
 }
 
-const { title, description, heroOscuro = false } = Astro.props;
+const {
+  title,
+  description,
+  heroOscuro = false,
+  noindex = false,
+} = Astro.props;
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 const pageTitle = title === "Ilhas" ? title : `${title} · Ilhas`;
 ---
@@ -37,6 +51,7 @@ const pageTitle = title === "Ilhas" ? title : `${title} · Ilhas`;
     <title>{pageTitle}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonicalURL} />
+    {noindex && <meta name="robots" content="noindex" />}
     <meta name="theme-color" content="#7A3CFF" />
 
     <!-- Open Graph -->

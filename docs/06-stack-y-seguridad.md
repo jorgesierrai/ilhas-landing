@@ -124,6 +124,89 @@ El `index.html` publicado hoy en ilhas.ai contiene:
 
 ---
 
+## Las tres páginas legales
+
+`/terminos`, `/privacidad` y `/cookies`. Entraron el 30 ago 2026 (iteración 17).
+
+### ⚠️ NO LAS HA REVISADO UN ABOGADO
+
+**Los tres documentos son borradores.** Los escribió Claude Code, que no es
+abogado y no da asesoría legal. Están redactados de buena fe, con los hechos
+reales de lo que el sitio hace y con los apartados que la ley mexicana pide,
+pero **antes de que el sitio se anuncie en serio tienen que pasar por un
+abogado.** Es un trámite de una sesión y cierra un hueco que hoy está abierto.
+
+Lo que un abogado tiene que revisar en particular:
+
+- La cláusula de **jurisdicción** de `/terminos` (depende del domicilio fiscal
+  real — ver abajo).
+- El **límite de responsabilidad**: qué se puede excluir y qué no bajo ley
+  mexicana.
+- Si la operación necesita además **registro ante el INAI** o algún trámite que
+  el aviso no contempla.
+- Si el tratamiento de datos de HighLevel requiere una **cláusula de encargado**
+  más específica que la que trae hoy el aviso.
+
+### ⚠️ El domicilio tiene una contradicción sin resolver
+
+Jorge pasó el domicilio como **Zapopan**, pero el **C.P. 44690 es de
+Guadalajara** — verificado en fuentes de códigos postales, y las cinco colonias
+de ese código (Vallarta Norte, Vallarta San Jorge, Vallarta San Lucas,
+Rinconada Santa Rita, Villa Santa Rita) son todas de Guadalajara.
+
+**Los tres documentos van con Guadalajara**, que es lo que dice el código
+postal. **Jorge tiene que confirmarlo contra su constancia de situación
+fiscal**, porque de ahí depende también a qué tribunales se someten los
+términos.
+
+### Por qué NO se copiaron los de otra empresa
+
+Jorge pidió tomar los tres de `atonom.ai` «tal cual pero adaptados». No se hizo,
+por dos razones:
+
+1. Un aviso de privacidad y unos términos son obra escrita, normalmente de un
+   despacho. Copiarlos cambiándoles el nombre es copiar.
+2. **La que de verdad importa: no le servirían a Ilhas.** Atonom es
+   estadounidense — su pie trae SOC 2 y *«Your Privacy Choices»*, que es CCPA de
+   California. **Ilhas es mexicana y vende en LATAM.** La ley que aplica es la
+   **LFPDPPP**, que exige un *aviso de privacidad* con contenido obligatorio que
+   una política gringa traducida no trae: identidad y domicilio del responsable,
+   finalidades, medios para ejercer los **derechos ARCO**, cómo revocar el
+   consentimiento, transferencias y cómo se comunican los cambios.
+
+### Los hechos que los tres documentos afirman
+
+Si alguno deja de ser cierto, **el documento se actualiza el mismo día.**
+
+| Afirmación | Dónde | Sigue siendo cierta mientras… |
+|---|---|---|
+| «Este sitio no recaba datos personales» | `/privacidad` | no haya formularios en este repositorio |
+| «Ilhas.ai no coloca cookies» | `/cookies` | no entre analítica ni scripts de terceros |
+| «No usa analítica» | `/privacidad` | ídem |
+| HighLevel es el único proveedor | `/privacidad` | no entre otro que trate datos |
+| Responsable: persona física | los dos | Jorge no constituya sociedad |
+
+El día que entre analítica hay que tocar **tres** cosas a la vez: el aviso, la
+política de cookies y la CSP. Y si esa analítica pone cookies, además el banner
+de consentimiento — que hoy el sitio no necesita, y ése es justo el motivo por
+el que conviene que la analítica sea sin cookies (ver «Analytics y el cruce a
+GHL» arriba).
+
+### Notas de implementación
+
+- Las tres llevan **`<meta name="robots" content="noindex">`**. No compiten por
+  búsquedas y no deben posicionarse por encima de las páginas que sí venden.
+  **Lighthouse les da SEO 69 por eso**, y está bien: la única auditoría que
+  falla es *«Page is blocked from indexing»*, que es exactamente lo que se pidió.
+  Accesibilidad y buenas prácticas van en 100.
+- Viven bajo `src/layouts/Legal.astro`, que es una capa delgada sobre `Base` —
+  la que agrega el `noindex`, el titular con su fecha y la maquetación de
+  documento.
+- La fecha de «Última actualización» es **una prop por página**, no la fecha de
+  build. Un documento legal no se «actualiza» porque recompiles el sitio.
+
+---
+
 ## Checklist antes de publicar
 
 - [ ] `npm run build` sin errores ni warnings
@@ -137,3 +220,7 @@ El `index.html` publicado hoy en ilhas.ai contiene:
 - [ ] Cada enlace al webinar lleva sus UTM
 - [ ] Lighthouse: 100 en accesibilidad y buenas prácticas; performance arriba de 95
 - [ ] Sin secretos en el repositorio ni en el historial de git
+- [ ] **Un abogado revisó `/terminos`, `/privacidad` y `/cookies`** — hoy no, y
+      el domicilio sigue sin confirmarse contra la constancia fiscal
+- [ ] Si entró analítica: el aviso de privacidad, la política de cookies y la
+      CSP dicen lo mismo que hace el sitio
