@@ -1,0 +1,136 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8">
+<title>Ilhas · el footer con las páginas legales</title>
+<style>
+:root{
+  --ilhas-primary:#7A3CFF; --ilhas-dark:#0E0E0F; --ilhas-text:#3C3C44;
+  --ilhas-light:#F8FAFF; --ilhas-gray:#E8ECF2; --ilhas-white:#FFF;
+  --ilhas-grad-start:#55E8FF; --ilhas-grad-end:#A14BFF;
+  --ilhas-gradient-h:linear-gradient(to right,#55E8FF 0%,#7A3CFF 50%,#A14BFF 100%);
+  --ilhas-font-display:"Space Grotesk",system-ui,sans-serif;
+  --ilhas-font-body:"Inter",system-ui,-apple-system,sans-serif;
+  --ilhas-container:1140px; --ilhas-gutter:clamp(1.25rem,4vw,3rem);
+}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;font-family:var(--ilhas-font-body);color:var(--ilhas-text);
+  background:var(--ilhas-light);line-height:1.6}
+.container{width:100%;max-width:var(--ilhas-container);margin-inline:auto;
+  padding-inline:var(--ilhas-gutter)}
+.antes{height:120px;display:grid;place-items:center;color:#9b9bab;font-size:.8125rem}
+
+/* ==========================================================================
+   EL PIE
+   ==========================================================================
+   Estructura tomada del footer que le gustó a Jorge: marca a la izquierda,
+   columnas de enlaces, el logotipo grande de marca de agua abajo, y una
+   barra final con el copyright a un lado y lo legal al otro.
+
+   Lo que NO se copió: la suscripción al boletín y el sello de certificación.
+   Ilhas no tiene boletín ni certificación, y un footer que promete cosas que
+   no existen es exactamente lo que este sitio evita. */
+.pie{position:relative;background:var(--ilhas-dark);overflow:hidden;
+  color:rgba(248,250,255,.62)}
+.pie__filete{position:absolute;inset:0 0 auto 0;height:2px;
+  background:var(--ilhas-gradient-h)}
+
+.pie__inner{position:relative;z-index:1;display:grid;gap:2.5rem;
+  padding-block:3.25rem 0}
+
+/* --- la marca --- */
+.pie__marca{display:inline-flex;align-items:center;gap:.6rem;
+  text-decoration:none}
+.pie__marca img{width:1.75rem;height:1.75rem}
+.pie__marca span{font-family:var(--ilhas-font-display);font-weight:600;
+  font-size:1.375rem;color:#fff;letter-spacing:-.02em}
+.pie__tagline{margin:.85rem 0 0;font-size:.9375rem;max-width:26ch;
+  color:rgba(248,250,255,.55)}
+
+/* --- las columnas --- */
+.pie__titulo{margin:0 0 .9rem;font-family:var(--ilhas-font-display);
+  font-weight:600;font-size:.875rem;color:#fff}
+/* Scoped a .pie__inner, NO a .pie: con `.pie ul` esta regla (0,1,1) le ganaba
+   por especificidad a `.pie__legal` (0,1,0) y los tres enlaces legales de la
+   barra final se apilaban en columna en vez de ir en fila. */
+.pie__inner ul{list-style:none;margin:0;padding:0;display:grid;gap:.6rem}
+.pie a{color:rgba(248,250,255,.62);text-decoration:none;font-size:.9375rem;
+  transition:color .18s ease}
+.pie a:hover,.pie a:focus-visible{color:#fff}
+.pie a:focus-visible{outline:2px solid rgba(248,250,255,.6);outline-offset:3px;
+  border-radius:3px}
+
+/* --- la marca de agua ---
+   Texto, no el SVG: el logotipo trae su tipografía embebida por @font-face y
+   a 18 rem cualquier fallo de carga se ve enorme. Aquí es decoración, así que
+   se dibuja con la tipografía de display que la página ya carga. */
+.pie__agua{position:absolute;left:0;right:0;bottom:-.18em;z-index:0;
+  font-family:var(--ilhas-font-display);font-weight:600;
+  font-size:clamp(5rem,17vw,13rem);line-height:.8;letter-spacing:-.04em;
+  color:rgba(248,250,255,.035);text-align:center;
+  user-select:none;pointer-events:none;white-space:nowrap}
+
+/* --- la barra final --- */
+.pie__barra{position:relative;z-index:1;margin-top:3.5rem;
+  border-top:1px solid rgba(248,250,255,.12);
+  padding-block:1.25rem 1.4rem;
+  display:flex;flex-wrap:wrap;align-items:center;
+  justify-content:space-between;gap:.75rem 1.5rem}
+.pie__copy{margin:0;font-size:.8125rem;color:rgba(248,250,255,.45)}
+.pie__legal{display:flex;flex-wrap:wrap;gap:.4rem 1.5rem;margin:0;padding:0;
+  list-style:none}
+.pie__legal a{font-size:.8125rem;color:rgba(248,250,255,.45)}
+.pie__legal a:hover,.pie__legal a:focus-visible{color:#fff}
+
+@media (min-width:760px){
+  .pie__inner{grid-template-columns:minmax(0,1.4fr) repeat(2,minmax(0,1fr));
+    gap:3rem}
+}
+</style></head><body>
+
+<div class="antes">↑ aquí termina la última sección de la página</div>
+
+<footer class="pie" id="pie">
+  <div class="pie__filete" aria-hidden="true"></div>
+  <div class="container">
+    <div class="pie__inner">
+
+      <div>
+        <a href="/" class="pie__marca" aria-label="Ilhas — ir al inicio">
+          <img src="../public/assets/logo/logo-mark.svg" alt="" width="28" height="28">
+          <span>ilhas</span>
+        </a>
+        <p class="pie__tagline">El método, aplicado a tu trabajo.</p>
+      </div>
+
+      <nav aria-label="Navegación del pie">
+        <p class="pie__titulo">Navegación</p>
+        <ul>
+          <li><a href="/metodo">El Método</a></li>
+          <li><a href="/finanzas">Ilhas Finanzas</a></li>
+          <li><a href="/soluciones">Soluciones</a></li>
+          <li><a href="/nosotros">Nosotros</a></li>
+        </ul>
+      </nav>
+
+      <div>
+        <p class="pie__titulo">Contacto</p>
+        <ul>
+          <li><a href="mailto:hola@ilhas.ai">hola@ilhas.ai</a></li>
+          <li><a href="https://eventos.ilhas.ai/">Reservar el webinar</a></li>
+        </ul>
+      </div>
+
+    </div>
+
+    <div class="pie__barra">
+      <p class="pie__copy">© 2026 Ilhas. Todos los derechos reservados.</p>
+      <ul class="pie__legal">
+        <li><a href="/terminos">Términos y condiciones</a></li>
+        <li><a href="/privacidad">Aviso de privacidad</a></li>
+        <li><a href="/cookies">Política de cookies</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <span class="pie__agua" aria-hidden="true">ilhas</span>
+</footer>
+
+</body></html>
