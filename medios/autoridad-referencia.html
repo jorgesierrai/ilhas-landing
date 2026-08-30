@@ -1,0 +1,180 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8">
+<title>Ilhas · /nosotros § autoridad — tres momentos en orden</title>
+<style>
+:root{
+  --ilhas-primary:#7A3CFF; --ilhas-dark:#0E0E0F; --ilhas-text:#3C3C44;
+  --ilhas-light:#F8FAFF; --ilhas-gray:#E8ECF2; --ilhas-white:#FFF;
+  --ilhas-grad-start:#55E8FF;
+  --ilhas-radius-card:14px;
+  --ilhas-font-display:"Space Grotesk",system-ui,sans-serif;
+  --ilhas-font-body:"Inter",system-ui,-apple-system,sans-serif;
+  --ilhas-container:1140px; --ilhas-gutter:clamp(1.25rem,4vw,3rem);
+}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;font-family:var(--ilhas-font-body);background:var(--ilhas-dark);
+  color:rgba(248,250,255,.7);line-height:1.6}
+.container{width:100%;max-width:var(--ilhas-container);margin-inline:auto;
+  padding-inline:var(--ilhas-gutter)}
+.section-y{padding-block:clamp(4rem,9vw,7.5rem)}
+.kicker{font-weight:500;font-size:.875rem;letter-spacing:.06em;
+  text-transform:uppercase;color:var(--ilhas-grad-start);margin:0}
+h2{font-family:var(--ilhas-font-display);font-weight:600;
+  font-size:clamp(1.75rem,3.2vw,2.4rem);line-height:1.15;letter-spacing:-.02em;
+  color:#fff;margin:.7rem 0 0;max-width:20ch}
+.lead{margin-top:1.25rem;font-size:1.0625rem;max-width:62ch;
+  color:rgba(248,250,255,.72)}
+.marco{overflow:hidden;border:1px solid rgba(248,250,255,.14);
+  border-radius:var(--ilhas-radius-card);background:#000}
+.marco img{display:block;width:100%;height:auto}
+.marco__barra{display:flex;align-items:center;gap:.375rem;padding:.6rem .875rem;
+  background:#fff;border-bottom:1px solid var(--ilhas-gray)}
+.marco__barra span{width:.625rem;height:.625rem;border-radius:50%;
+  background:var(--ilhas-gray)}
+
+/* ==========================================================================
+   LOS TRES MOMENTOS
+   ==========================================================================
+   Antes eran tres bloques apilados sin relación: el de radio, una foto suelta
+   y un clip suelto. Ahora van EN ORDEN CRONOLÓGICO y cada uno trae su fecha.
+   Eso hace dos cosas que el apilado no hacía: el titular dice «desde 2017» y
+   el primer momento ES de 2017, así que la afirmación se prueba sola; y las
+   tres piezas dejan de ser medios sueltos para volverse una línea de tiempo
+   corta que se recorre hacia adelante. */
+.momentos{margin-top:3rem;display:grid;gap:3.25rem}
+
+.momento__cabeza{display:flex;align-items:baseline;gap:.9rem;
+  padding-bottom:.7rem;margin-bottom:1.5rem;
+  border-bottom:1px solid rgba(248,250,255,.16)}
+.momento__fecha{font-family:var(--ilhas-font-display);font-weight:600;
+  font-size:.8125rem;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--ilhas-grad-start);flex:0 0 auto}
+.momento__que{font-size:.9375rem;color:rgba(248,250,255,.7)}
+
+/* --- pie de cada pieza: el contexto que Jorge pidió ---------------------- */
+.pie-medio{margin:.9rem 0 0;font-size:.875rem;line-height:1.5;
+  color:rgba(248,250,255,.55);max-width:60ch}
+.pie-medio b{color:#fff;font-weight:500}
+
+/* --- 1 · el escenario, nov 2017 --- */
+.escenario{max-width:44rem}
+
+/* --- 2 · la radio, ene 2018 --- */
+.radio{display:grid;gap:1.75rem}
+@media (min-width:820px){
+  .radio{grid-template-columns:minmax(0,340px) minmax(0,1fr);gap:2.5rem;
+    align-items:start}
+}
+.radio__video{max-width:340px}
+.dato{font-family:var(--ilhas-font-display);font-weight:600;
+  font-size:clamp(2rem,4vw,2.75rem);line-height:1;color:#fff}
+.dato span{display:block;margin-top:.4rem;font-family:var(--ilhas-font-body);
+  font-weight:400;font-size:.9375rem;color:rgba(248,250,255,.55)}
+.radio__cita{margin:1.5rem 0 0;padding-top:1.25rem;
+  border-top:1px solid rgba(248,250,255,.14);font-size:1.0625rem;
+  line-height:1.55;color:rgba(248,250,255,.86)}
+.radio__cita footer{margin-top:.5rem;font-size:.875rem;
+  color:rgba(248,250,255,.45)}
+.radio__firma{margin:1.5rem 0 0;font-size:.875rem;color:rgba(248,250,255,.55)}
+.radio__enlace{margin:.5rem 0 0;font-size:.875rem}
+.radio__enlace a{color:var(--ilhas-grad-start);text-decoration:none}
+.radio__enlace a:hover{text-decoration:underline}
+
+/* --- 3 · Talent Land, abr 2018 ---
+   Dos encuadres del mismo momento: la sala llena prueba la escala, el detalle
+   prueba de qué estaba hablando. Las columnas van en proporción a la relación
+   de aspecto de cada foto (1.93 y 1.36) para que las dos midan lo mismo de
+   alto sin recortar ninguna. */
+.talent{display:grid;gap:1rem}
+@media (min-width:820px){
+  .talent{grid-template-columns:1.93fr 1.29fr;align-items:start}
+}
+</style></head><body>
+
+<section class="section-y">
+  <div class="container">
+    <p class="kicker">En público</p>
+    <h2>Hablando de IA en público desde 2017.</h2>
+    <p class="lead">
+      Desde 2017 que comenzamos a comunicar lo que estábamos haciendo, teníamos
+      la visión de que la IA iba a ser accesible para todos, tanto en la vida
+      diaria como en sus trabajos. Comunicábamos cómo estaba siendo creada,
+      entrenada y facilitada para que cualquier persona pudiera utilizarla.
+    </p>
+
+    <div class="momentos" id="momentos">
+
+      <!-- 1 ······················································· nov 2017 -->
+      <div class="momento">
+        <div class="momento__cabeza">
+          <span class="momento__fecha">Noviembre 2017</span>
+          <span class="momento__que">Escenario</span>
+        </div>
+        <div class="escenario">
+          <div class="marco">
+            <div class="marco__barra" aria-hidden="true"><span></span><span></span><span></span></div>
+            <img src="../public/assets/video/nosotros-conferencia-clip.jpg" alt="Jorge Sierra en el escenario presentando su empresa de inteligencia artificial">
+          </div>
+          <p class="pie-medio">
+            <b>Presenta Coophi y hacia dónde ve que va la IA.</b>
+          </p>
+        </div>
+      </div>
+
+      <!-- 2 ······················································· ene 2018 -->
+      <div class="momento">
+        <div class="momento__cabeza">
+          <span class="momento__fecha">Enero 2018</span>
+          <span class="momento__que">Imagen Radio · RMX</span>
+        </div>
+        <div class="radio">
+          <div class="radio__video">
+            <div class="marco">
+              <div class="marco__barra" aria-hidden="true"><span></span><span></span><span></span></div>
+              <img src="../public/assets/video/nosotros-radio-2018.jpg" alt="Nota de RMX sobre Coophi">
+            </div>
+          </div>
+          <div>
+            <p class="dato">2018<span>hablando de IA en radio nacional</span></p>
+            <blockquote class="radio__cita">
+              «Nosotros lo que estamos haciendo es diseñar una plataforma que
+              introduzca inteligencia artificial, lenguaje natural y análisis
+              de datos.»
+            </blockquote>
+            <blockquote class="radio__cita">
+              «Creemos en el rediseño de la dinámica en la que la gente puede
+              hacer proyectos.»
+              <footer>En la entrevista completa</footer>
+            </blockquote>
+            <p class="radio__firma">Jorge Sierra · Imagen Radio · enero de 2018</p>
+            <p class="radio__enlace"><a href="#">Nota original en rmx.com.mx →</a></p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3 ······················································· abr 2018 -->
+      <div class="momento">
+        <div class="momento__cabeza">
+          <span class="momento__fecha">Abril 2018</span>
+          <span class="momento__que">Talent Land</span>
+        </div>
+        <div class="talent">
+          <figure style="margin:0">
+            <div class="marco"><img src="../src/assets/media/fotos/nosotros-conferencia.jpg" alt="Sala llena en la conferencia de Jorge Sierra sobre inteligencia artificial en Talent Land"></div>
+          </figure>
+          <figure style="margin:0">
+            <div class="marco"><img src="../src/assets/media/fotos/home-hero-conferencia.jpg" alt="Jorge Sierra en el escenario de Talent Land, frente a la pantalla que pregunta quién puede crear inteligencia artificial"></div>
+          </figure>
+        </div>
+        <p class="pie-medio">
+          <b>Sala llena, hablando de cómo se construye IA.</b> La misma charla
+          en dos encuadres: cuánta gente había, y la pregunta que estaba en
+          pantalla.
+        </p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div style="height:40px"></div>
+</body></html>
