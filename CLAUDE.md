@@ -91,11 +91,17 @@ Aparte del hub viven `/terminos`, `/privacidad` y `/cookies`. **No cuentan como 
     del 24 ago. Talent Land son las dos fotos.
   - `home-hero-conferencia` pasó a `pagina: "compartido"`: vive en el hero del
     home y como segunda foto de Talent Land en `/nosotros`.
-  - **El home corre más apretado que el resto** (Jorge, 30 ago 2026): el
-    `<article class="home">` redefine `--ilhas-section-y` a
-    `clamp(2.75rem, 5.5vw, 4.5rem)` —72px a 1440 contra los 120 del token
-    global—. Las interiores NO cambian: ahí el aire generoso es de marca. Si
-    tocas el ritmo del home, es esa línea y no `tokens.css`.
+  - **El ritmo entre secciones es UNO SOLO en todo el sitio: 144 px a 1440**
+    (88 en móvil). Sale de `--ilhas-section-y` en `tokens.css`, que bajó de
+    `clamp(4rem, 9vw, 7.5rem)` a `clamp(2.75rem, 5.5vw, 4.5rem)` el 30 ago
+    2026. Se probó primero solo en el home y Jorge lo pidió parejo en todas.
+    Dos excepciones, las dos a propósito: **`.section-y-sm`** abre cada página
+    interior y es asimétrica —40px arriba, el ritmo completo abajo—, porque
+    arriba está el header sticky y ése es el aire que se ajustó en la
+    iteración 18; y la **regla de colapso** de `base.css` deja 72 px cuando dos
+    secciones seguidas comparten fondo, para no meter una banda vacía del
+    mismo color. Si el ritmo vuelve a cambiar, se cambia en `tokens.css` y
+    ninguna página necesita override.
   - `.bg-lavado` en `src/styles/base.css` — la tercera superficie clara.
 - El `index.html` de la raíz es el sitio viejo (landing de bootcamp, sin rutas).
   **No lo borres**: Jorge lo conserva para revisar qué rescatar. Le queda un

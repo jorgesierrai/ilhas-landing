@@ -76,7 +76,11 @@
   --ilhas-radius-pill: 999px;    /* botones */
   --ilhas-container:   1140px;
   --ilhas-gutter:      clamp(1.25rem, 4vw, 3rem);
-  --ilhas-section-y:   clamp(4rem, 9vw, 7.5rem);  /* aire generoso: es la marca */
+  /* 72px a 1440, 44 en móvil. Bajó de clamp(4rem, 9vw, 7.5rem) —120px— el 30
+     ago 2026: Jorge lo probó primero en el home y pidió el mismo ritmo en todo
+     el sitio. Entre dos secciones seguidas son 144px de padding apilado, no
+     240. Si vuelve a subir, sube AQUÍ y ninguna página necesita override. */
+  --ilhas-section-y:   clamp(2.75rem, 5.5vw, 4.5rem);
 }
 
 /* ==========================================================================

@@ -156,11 +156,24 @@ a:hover {
   padding-block: var(--ilhas-section-y);
 }
 
-/* Espaciado compacto: para bloques que deben quedar cortos a propósito
-   (p. ej. el home, donde la bifurcación necesita llegar cerca del
-   pliegue). No es el ritmo por defecto — úsalo con intención. */
+/* La sección que ABRE una página interior. Hoy es su único uso: una por
+   ruta y siempre la primera (/metodo, /finanzas, /soluciones, /nosotros).
+
+   Asimétrica a propósito. Arriba va corto —40px— porque el header sticky ya
+   está pegado ahí y ése es el aire que Jorge midió en la iteración 18: con el
+   valor completo el titular colgaba a 195-229px en vez de 115-149.
+
+   Abajo va el ritmo COMPLETO, para que la frontera con la siguiente sección
+   mida los mismos 144px que todas las demás del sitio (Jorge, 30 ago 2026:
+   «ese mismo espacio entre cada sección de todo el sitio»). Con
+   `padding-block` simétrico esa primera frontera daba 112 y era la única
+   distinta de la página.
+
+   Si algún día se usa a media página, revisa que la asimetría tenga sentido
+   ahí — está pensada para abrir, no para separar. */
 .section-y-sm {
-  padding-block: clamp(1.5rem, 3vw, 2.5rem);
+  padding-top: clamp(1.5rem, 3vw, 2.5rem);
+  padding-bottom: var(--ilhas-section-y);
 }
 
 /* Dos secciones seguidas del MISMO fondo no necesitan doble aire: sin
