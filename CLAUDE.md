@@ -91,6 +91,11 @@ Aparte del hub viven `/terminos`, `/privacidad` y `/cookies`. **No cuentan como 
     del 24 ago. Talent Land son las dos fotos.
   - `home-hero-conferencia` pasó a `pagina: "compartido"`: vive en el hero del
     home y como segunda foto de Talent Land en `/nosotros`.
+  - **El home corre más apretado que el resto** (Jorge, 30 ago 2026): el
+    `<article class="home">` redefine `--ilhas-section-y` a
+    `clamp(2.75rem, 5.5vw, 4.5rem)` —72px a 1440 contra los 120 del token
+    global—. Las interiores NO cambian: ahí el aire generoso es de marca. Si
+    tocas el ritmo del home, es esa línea y no `tokens.css`.
   - `.bg-lavado` en `src/styles/base.css` — la tercera superficie clara.
 - El `index.html` de la raíz es el sitio viejo (landing de bootcamp, sin rutas).
   **No lo borres**: Jorge lo conserva para revisar qué rescatar. Le queda un

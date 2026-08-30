@@ -79,7 +79,7 @@ const kpis = [
   description="El método con el que se construyen productos que mueven millones, apuntado a tu trabajo. Aprende Ilhas, o deja que lo implementemos."
   heroOscuro
 >
-  <article>
+  <article class="home">
     <!-- 01 · Hero — la línea de identidad -->
     <!-- 01 · Hero — la foto de Talent Land, opción B2 aprobada el 25 ago 2026.
          Referencia: medios/hero-b2-referencia.html · las cuatro decisiones de
@@ -318,6 +318,37 @@ const kpis = [
 </Base>
 
 <style>
+  /* ===================================================================
+     EL RITMO DEL HOME
+     ===================================================================
+     El home corre más apretado que las páginas interiores (Jorge, 30 ago
+     2026). Se redefine el token AQUÍ, sobre el <article>, en vez de tocar
+     `--ilhas-section-y` en tokens.css: ahí vale `clamp(4rem, 9vw, 7.5rem)`
+     —120px a 1440— y ese aire generoso es de marca en /metodo, /soluciones y
+     /nosotros, que son páginas de lectura larga. El home no: es una portada
+     que ramifica en ocho segundos, y con 120 arriba y 120 abajo entre cada
+     par de secciones metía 240px de blanco entre bloque y bloque.
+
+     Como es una propiedad personalizada, la heredan todas las `.section-y` de
+     adentro sin tocar ni una regla más.
+     =================================================================== */
+  .home {
+    --ilhas-section-y: clamp(2.75rem, 5.5vw, 4.5rem);
+  }
+
+  /* La sección que sigue a la banda Ilhas→Hilas arranca aún más arriba: la
+     banda ya trae sus 2rem de padding y cierra con una regla, así que la
+     frontera visual ya está hecha y el padding completo solo agrega blanco
+     muerto. Es el hueco que Jorge señaló.
+
+     `.hilas` va en :global() porque ese elemento vive en BandaHilas.astro y
+     lleva SU hash de scope, no el de esta página: con `.hilas + .section-y` a
+     secas, Astro compila `.hilas[cid-del-home]` y la regla no le pega a nada.
+     Se probó y no aplicaba — la sección seguía en 72px. */
+  :global(.hilas) + .section-y {
+    padding-top: clamp(1.5rem, 3vw, 2.25rem);
+  }
+
   /* ===================================================================
      01 · HERO — opción B2. Referencia: medios/hero-b2-referencia.html
      Las cuatro decisiones numeradas de esa referencia, portadas tal cual.
