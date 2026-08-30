@@ -55,7 +55,6 @@
 | Ranura | Qué bloquea |
 |---|---|
 | `nosotros-historia-01/02/03` | No hay material. Es la sección "La historia" de `/nosotros` (prioridad 2) |
-| Caption de `nosotros-conferencia` | Los briefs del 24 ago se contradicen: nov 2017 sin evento, o Talent Land. Va sin caption hasta que Jorge decida |
 | Los 8 íconos de capacidades y los 5 loops | Prioridad 3. El sitio se ve bien sin ellos: una ranura vacía no pinta nada |
 
 ---
@@ -122,7 +121,7 @@ No se escribió copy de marketing nuevo (restricción del brief), pero algo ten�
 |---|---|
 | `src/pages/soluciones.astro` | `Testimonios` · «Lo que dicen los que ya lo hicieron.» |
 | `src/pages/nosotros.astro` | `La historia` · «De dónde sale Ilhas.» |
-| `src/pages/nosotros.astro` | `Autoridad` · «Hablando de IA en radio nacional desde 2018.» |
+| `src/pages/nosotros.astro` | `En público` · «Hablando de IA en público desde 2017.» — tres momentos en orden: nov 2017 (clip), ene 2018 (radio), abr 2018 (las dos fotos de Talent Land) |
 
 Ninguno se publica todavía: las tres secciones están apagadas hasta que llegue su material. Pero cuando llegue, se publican con estas palabras.
 

@@ -64,6 +64,12 @@ const hayAutoridad = mostrar(
   "nosotros-radio-2018",
   "nosotros-conferencia-clip",
 );
+
+// Las dos fotos de Talent Land solo van a dos columnas si las DOS existen.
+// Con una sola, las columnas 1.93fr/1.29fr dejarían la foto ocupando el 60%
+// del ancho y una columna muerta al lado.
+const dosFotosTalent =
+  mostrar("nosotros-conferencia") && mostrar("home-hero-conferencia");
 ---
 
 <Base
@@ -143,89 +149,158 @@ const hayAutoridad = mostrar(
     </div>
   </section>
 
-  {/* § nueva · Autoridad — layout, textos y specs de
-      medios/BRIEF-autoridad-radio.md. Tres piezas que cuentan la misma
-      historia: en 2018 Jorge no opinaba sobre IA, tenía una empresa de IA,
-      la presentaba en radio nacional y la defendía en un escenario grande.
-      La sección deja leer eso sin explicarlo. */}
+  {/* § En público — TRES MOMENTOS EN ORDEN CRONOLÓGICO.
+      Antes eran tres bloques apilados sin relación: el de radio, una foto
+      suelta y un clip suelto — y el rótulo decía «Imagen Radio · enero 2018»,
+      que solo describía la primera pieza.
+
+      El orden ES el argumento y NO se reordena: el titular dice «desde 2017» y
+      el primer momento es de 2017, así que la afirmación se prueba sola. Y las
+      tres dejan de ser medios sueltos para volverse una línea corta que se
+      recorre hacia adelante.
+
+      Los pies salen de `historial.ts`, que ya trae el copy aprobado de Jorge
+      para estos mismos hitos. No se inventa ninguno. */}
   {
     hayAutoridad && (
       <section class="section-y bg-dark">
         <div class="container">
           <div class="section-head reveal">
-            <p class="kicker">Imagen Radio · enero 2018</p>
+            <p class="kicker">En público</p>
             <h2>Hablando de IA en público desde 2017.</h2>
+            {/* Copy de Jorge, literal. Único ajuste: «la visión QUE la IA iba a
+                ser» → «la visión DE QUE la IA iba a ser». Concordancia, nada
+                más. Cubre el clip del escenario y Talent Land, por eso va de
+                entrada a toda la sección y no repetido en cada momento. */}
+            <p class="lead">
+              Desde 2017 que comenzamos a comunicar lo que estábamos haciendo,
+              teníamos la visión de que la IA iba a ser accesible para todos,
+              tanto en la vida diaria como en sus trabajos. Comunicábamos cómo
+              estaba siendo creada, entrenada y facilitada para que cualquier
+              persona pudiera utilizarla.
+            </p>
           </div>
 
-          {/* El bloque de radio: video vertical a la izquierda, el año y las
-              dos citas a la derecha. En móvil se apila. */}
-          {
-            mostrar("nosotros-radio-2018") && (
-              <div class="radio reveal">
-                <VideoClip
-                  id="nosotros-radio-2018"
-                  ratio="1080 / 1816"
-                  marco="navegador"
-                  maxAncho="420px"
-                />
-
-                <div class="radio__texto">
-                  <Stat dato="2018" contexto="hablando de IA en radio nacional" />
-
-                  <blockquote class="radio__cita">
-                    Nosotros lo que estamos haciendo es diseñar una plataforma
-                    que introduzca inteligencia artificial, lenguaje natural y
-                    análisis de datos.
-                  </blockquote>
-
-                  <blockquote class="radio__cita">
-                    Creemos en el rediseño de la dinámica en la que la gente
-                    puede hacer proyectos.
-                    {/* Esta segunda cita NO se oye en el corte de 10.8 s. Se
-                        marca como de la entrevista completa para que quien le
-                        dé play y no la escuche no dude — es la salida (a) de
-                        la decisión pendiente del brief. La (b) es que Jorge
-                        extienda el corte con el tramo 1:44-1:50. */}
-                    <footer class="radio__fuente">
-                      En la entrevista completa
-                    </footer>
-                  </blockquote>
-
-                  <p class="radio__firma">
-                    Jorge Sierra · Imagen Radio · enero de 2018
-                  </p>
-
-                  <p class="radio__enlace">
-                    <a
-                      href="https://www.rmx.com.mx/entrevistas/buscas-un-asistente-virtual-conoce-coophi"
-                      rel="noopener noreferrer"
-                    >
-                      Nota original en rmx.com.mx →
-                    </a>
+          <div class="momentos">
+            {/* 1 ······················································ nov 2017
+                Jorge cerró el 28 ago 2026 la duda que los dos briefs del 24 ago
+                dejaron abierta: este clip es de NOVIEMBRE 2017, no de Talent
+                Land. Talent Land (abr 2018) son las fotos de abajo. */}
+            {mostrar("nosotros-conferencia-clip") && (
+              <div class="momento reveal">
+                <div class="momento__cabeza">
+                  <span class="momento__fecha">Noviembre 2017</span>
+                  <span class="momento__que">Escenario</span>
+                </div>
+                <div class="escenario">
+                  <VideoClip
+                    id="nosotros-conferencia-clip"
+                    marco="navegador"
+                    mostrarPie={false}
+                  />
+                  <p class="pie-medio">
+                    <b>Presenta Coophi y hacia dónde ve que va la IA.</b>
                   </p>
                 </div>
               </div>
-            )
-          }
+            )}
 
-          {/* La conferencia. La foto de sala llena es la que prueba escala;
-              el clip prueba que hablaba. No inviertas el orden de peso: la
-              foto va más grande que el clip. */}
-          {
-            mostrar("nosotros-conferencia") && (
-              <div class="autoridad__foto reveal">
-                <Captura id="nosotros-conferencia" ancho={1100} />
-              </div>
-            )
-          }
+            {/* 2 ······················································ ene 2018
+                Video vertical a la izquierda, el año y las dos citas a la
+                derecha. En móvil se apila. */}
+            {mostrar("nosotros-radio-2018") && (
+              <div class="momento reveal">
+                <div class="momento__cabeza">
+                  <span class="momento__fecha">Enero 2018</span>
+                  <span class="momento__que">Imagen Radio · RMX</span>
+                </div>
+                <div class="radio">
+                  <VideoClip
+                    id="nosotros-radio-2018"
+                    ratio="1080 / 1816"
+                    marco="navegador"
+                    maxAncho="420px"
+                    mostrarPie={false}
+                  />
 
-          {
-            mostrar("nosotros-conferencia-clip") && (
-              <div class="autoridad__clip reveal">
-                <VideoClip id="nosotros-conferencia-clip" marco="navegador" />
+                  <div class="radio__texto">
+                    <Stat dato="2018" contexto="hablando de IA en radio nacional" />
+
+                    <blockquote class="radio__cita">
+                      <p>
+                        Nosotros lo que estamos haciendo es diseñar una
+                        plataforma que introduzca inteligencia artificial,
+                        lenguaje natural y análisis de datos.
+                      </p>
+                    </blockquote>
+
+                    <blockquote class="radio__cita">
+                      <p>
+                        Creemos en el rediseño de la dinámica en la que la gente
+                        puede hacer proyectos.
+                      </p>
+                      {/* Esta segunda cita NO se oye en el corte de 10.8 s. Se
+                          marca como de la entrevista completa para que quien le
+                          dé play y no la escuche no dude — es la salida (a) de
+                          la decisión pendiente del brief. La (b) es que Jorge
+                          extienda el corte con el tramo 1:44-1:50. */}
+                      <footer class="radio__fuente">
+                        En la entrevista completa
+                      </footer>
+                    </blockquote>
+
+                    <p class="radio__firma">
+                      Jorge Sierra · Imagen Radio · enero de 2018
+                    </p>
+
+                    <p class="radio__enlace">
+                      <a
+                        href="https://www.rmx.com.mx/entrevistas/buscas-un-asistente-virtual-conoce-coophi"
+                        rel="noopener noreferrer"
+                      >
+                        Nota original en rmx.com.mx →
+                      </a>
+                    </p>
+                  </div>
+                </div>
               </div>
-            )
-          }
+            )}
+
+            {/* 3 ······················································ abr 2018
+                Dos encuadres de la MISMA charla: la sala llena prueba la
+                escala, el recorte del home prueba de qué estaba hablando —se
+                lee la pregunta en pantalla—. Va `home-hero-conferencia` y NO
+                `nosotros-conferencia-detalle`: el detalle en crudo es otra toma
+                de sala desde un costado y junto a la de sala llena se ven
+                redundantes. */}
+            {mostrar("nosotros-conferencia") && (
+              <div class="momento reveal">
+                <div class="momento__cabeza">
+                  <span class="momento__fecha">Abril 2018</span>
+                  <span class="momento__que">Talent Land</span>
+                </div>
+                <div class:list={["talent", dosFotosTalent && "talent--par"]}>
+                  <Captura
+                    id="nosotros-conferencia"
+                    ancho={1100}
+                    mostrarPie={false}
+                  />
+                  {mostrar("home-hero-conferencia") && (
+                    <Captura
+                      id="home-hero-conferencia"
+                      ancho={760}
+                      mostrarPie={false}
+                    />
+                  )}
+                </div>
+                <p class="pie-medio">
+                  <b>Sala llena, hablando de cómo se construye IA.</b> La misma
+                  charla en dos encuadres: cuánta gente había, y la pregunta que
+                  estaba en pantalla.
+                </p>
+              </div>
+            )}
+          </div>
         </div>
       </section>
     )
@@ -252,13 +327,72 @@ const hayAutoridad = mostrar(
     margin-top: 2rem;
   }
 
-  /* --- § autoridad · el bloque de radio ---
+  /* --- § En público · los tres momentos ---
+     Separación generosa entre momentos (3.25rem) y apretada dentro de cada
+     uno: es lo que hace que se lean como tres cosas y no como seis. */
+  .momentos {
+    margin-top: 3rem;
+    display: grid;
+    gap: 3.25rem;
+  }
+
+  .momento__cabeza {
+    display: flex;
+    align-items: baseline;
+    gap: 0.9rem;
+    padding-bottom: 0.7rem;
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid rgba(248, 250, 255, 0.16);
+  }
+
+  /* Cian y no morado: --ilhas-primary sobre --ilhas-dark mide 3.6:1 y falla
+     AA para texto pequeño; --ilhas-grad-start mide 13:1. */
+  .momento__fecha {
+    font-family: var(--ilhas-font-display);
+    font-weight: 600;
+    font-size: 0.8125rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ilhas-grad-start);
+    flex: 0 0 auto;
+  }
+
+  .momento__que {
+    font-size: 0.9375rem;
+    color: rgba(248, 250, 255, 0.7);
+  }
+
+  /* El contexto que pidió Jorge. El copy sale de historial.ts. */
+  .pie-medio {
+    margin: 0.9rem 0 0;
+    font-size: var(--ilhas-fs-small);
+    line-height: 1.5;
+    color: rgba(248, 250, 255, 0.62);
+    max-width: 60ch;
+  }
+
+  .pie-medio b {
+    color: var(--ilhas-white);
+    font-weight: 500;
+  }
+
+  /* 1 · el escenario, nov 2017 */
+  .escenario {
+    max-width: 44rem;
+  }
+
+  /* 3 · Talent Land, abr 2018 */
+  .talent {
+    display: grid;
+    gap: 1rem;
+  }
+
+  /* --- § En público · el bloque de radio ---
      Video vertical a la izquierda, año y citas a la derecha. En móvil,
      una sola columna con el video arriba. */
   .radio {
     display: grid;
     gap: 2rem;
-    margin-top: 2.5rem;
     align-items: start;
   }
 
@@ -278,13 +412,21 @@ const hayAutoridad = mostrar(
     text-wrap: pretty;
   }
 
-  /* Las comillas van en CSS, no en el texto: así el contenido del
-     blockquote se puede citar y traducir sin arrastrarlas. */
-  .radio__cita::before {
+  .radio__cita p {
+    margin: 0;
+  }
+
+  /* Las comillas van en CSS, no en el texto: así el contenido de la cita se
+     puede citar y traducir sin arrastrarlas.
+
+     Cuelgan del PÁRRAFO y no del <blockquote>: con el ::after en el blockquote
+     la comilla de cierre se pintaba después del <footer>, o sea en un renglón
+     suelto debajo de «— En la entrevista completa». */
+  .radio__cita p::before {
     content: open-quote;
   }
 
-  .radio__cita::after {
+  .radio__cita p::after {
     content: close-quote;
   }
 
@@ -314,19 +456,19 @@ const hayAutoridad = mostrar(
     text-decoration: underline;
   }
 
-  /* --- § autoridad · la conferencia --- */
-  .autoridad__foto {
-    margin-top: 3rem;
-  }
-
-  .autoridad__clip {
-    margin-top: 1.5rem;
-    max-width: 48rem;
-  }
-
   @media (min-width: 768px) {
     .historia {
       grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+
+  /* Las columnas van en proporción a la relación de aspecto de cada foto
+     —2400×1245 = 1.928 y 1600×1240 = 1.290, medidas del archivo— para que las
+     dos midan LO MISMO de alto sin recortar ninguna. */
+  @media (min-width: 820px) {
+    .talent--par {
+      grid-template-columns: 1.93fr 1.29fr;
+      align-items: start;
     }
   }
 

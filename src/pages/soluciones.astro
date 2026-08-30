@@ -145,7 +145,29 @@ const diagnosticoUrl = "mailto:hola@ilhas.ai?subject=Quiero%20un%20diagn%C3%B3st
 </Base>
 
 <style>
-  /* --- 01 · hero: página interior, H1 menor que el del home --- */
+  /* --- 01 · hero ---
+     El aire de arriba que Jorge señaló NO era una ranura vacía. `Ranura` solo
+     se pinta en DEV (`import.meta.env.DEV`); en producción esa columna trae el
+     ícono `ia-camino` de 280px, que es el respaldo que `Loop.astro` declara a
+     propósito para que el hero no quede hueco antes de que exista el loop. Se
+     queda.
+
+     Tampoco era el `align-items:center`: la columna de texto mide 389px y el
+     ícono 280, así que el centrado empujaba al ÍCONO, no al texto.
+
+     Era el doble padding. `.hero-split` trae `padding-block: clamp(2.5rem,
+     6vw, 5rem)` propio —80px a 1440— y aquí vive dentro de un `section-y-sm`
+     que ya pone 40. El titular quedaba a 195px cuando el de /finanzas está a
+     115. Se anula solo el de ARRIBA: el de abajo separa el hero de §02 y ahí
+     no sobra nada.
+
+     Va scopeado aquí y no en base.css porque /soluciones es la ÚNICA página
+     que usa `.hero-split` — /finanzas tiene su propio `.hero-fin`. */
+  .hero-split {
+    padding-top: 0;
+  }
+
+  /* Página interior: H1 menor que el del home. */
   .hero-split h1 {
     max-width: 16ch;
     font-size: clamp(2rem, 3.5vw, 2.75rem);

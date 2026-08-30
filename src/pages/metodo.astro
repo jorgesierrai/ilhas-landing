@@ -228,7 +228,11 @@ const principioFinal = {
         por lo que NO eres es débil, y "producto" a secas no lo decodifica un
         contador ni un dueño de empresa. Ahora se define por lo que sí es.
         Un solo gradiente en el titular (tokens.css). */}
-    <section class="section-y">
+    {/* `section-y-sm`, NO `section-y`. Era la única de las cinco rutas que
+        abría con el espaciado grande: 120px de pad-top contra 40, y por eso su
+        titular colgaba a 229px cuando el del home está a 129 y el de /finanzas
+        a 115. Medido antes y después. */}
+    <section class="section-y-sm">
       <div class="container prose metodo-hero reveal">
         <p class="kicker">El método</p>
         <h1>

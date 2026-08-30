@@ -38,13 +38,13 @@ Aparte del hub viven `/terminos`, `/privacidad` y `/cookies`. **No cuentan como 
 
 ## Estado del repositorio
 
-*Actualizado: 30 ago 2026.*
+*Actualizado: 30 ago 2026 (iteración 18).*
 
 > **Este bloque se actualiza en cada iteración, no al final.** Es lo primero que
 > lee una sesión nueva; si miente, la sesión construye sobre una foto vieja. Lo
 > mismo aplica a `medios/ESTADO.md`. Ver el checklist de abajo.
 
-- Rama de trabajo: **`pie-y-legales`**, que sale de `credenciales-hijo`.
+- Rama de trabajo: **`aire-y-autoridad`**, que sale de `pie-y-legales`.
 - **Dos PRs abiertos sin mergear.** Hasta que entren, `main` no tiene nada de las
   iteraciones 10 a 17:
   - **#17 · `cabeceras-vercel`** — las cabeceras de seguridad. **`public/_headers`
@@ -59,8 +59,8 @@ Aparte del hub viven `/terminos`, `/privacidad` y `/cookies`. **No cuentan como 
   (`/metodo` §01–§04) · 7 (banda Ilhas→Hilas y §05–§09) · 8 (el visor de §07) · 9
   (cirugía de copy) · 10 (productos) · 11 (capas y el experimento como figura) ·
   12 (`/finanzas`) · 13 (redes) · 14 (distinción del papá) · 15 (credenciales del
-  hijo) · 16 (el mapa lleno) · 17 (el pie y las legales). Los briefs viven en
-  `prompts/iteracion-*.md`.
+  hijo) · 16 (el mapa lleno) · 17 (el pie y las legales) · 18 (el aire de
+  arriba y la § En público). Los briefs viven en `prompts/iteracion-*.md`.
 - **Piezas nuevas que conviene conocer antes de tocar nada:**
   - `src/data/mapa.ts` + `src/components/MapaEmpresa.astro` — las trece áreas en
     tres capas, con **38 renglones de lo que se construye en cada una**. Un
@@ -84,6 +84,13 @@ Aparte del hub viven `/terminos`, `/privacidad` y `/cookies`. **No cuentan como 
     el Instagram de la marca (`REDES_ILHAS` en `personas.ts`, Jorge 30 ago 2026):
     no le inventes TikTok ni LinkedIn — un ícono que lleva a una cuenta que no
     existe es la misma promesa vacía que el boletín que este pie no tiene.
+  - `/nosotros` § **En público** — tres momentos en orden cronológico (nov 2017
+    escenario · ene 2018 Imagen Radio · abr 2018 Talent Land). **El orden ES el
+    argumento: no lo reordenes.** El clip quedó fechado en **noviembre 2017, NO
+    Talent Land** (Jorge, 28 ago 2026) — era la contradicción de los dos briefs
+    del 24 ago. Talent Land son las dos fotos.
+  - `home-hero-conferencia` pasó a `pagina: "compartido"`: vive en el hero del
+    home y como segunda foto de Talent Land en `/nosotros`.
   - `.bg-lavado` en `src/styles/base.css` — la tercera superficie clara.
 - El `index.html` de la raíz es el sitio viejo (landing de bootcamp, sin rutas).
   **No lo borres**: Jorge lo conserva para revisar qué rescatar. Le queda un
@@ -101,7 +108,6 @@ Aparte del hub viven `/terminos`, `/privacidad` y `/cookies`. **No cuentan como 
 |---|---|
 | **`/finanzas` §07 · servicios del papá** | **Confirmado que va** (Jorge, 27 ago 2026). Faltan dos insumos suyos: el **copy de los servicios** y **a dónde apunta el botón de agenda** — hoy no hay ninguna URL de agenda en el repositorio, el único destino externo es `eventos.ilhas.ai` |
 | **`/nosotros` § La historia** | Tres clips (`nosotros-historia-01/02/03`) sin material |
-| **Caption de `nosotros-conferencia`** | Dos briefs del 24 ago se contradicen: conferencia de nov 2017 sin evento, o Talent Land. Va sin caption hasta que se resuelva |
 | **Párrafo de intro de la línea de tiempo** | Marcado como `TODO copy` en `src/pages/nosotros.astro`. Lo escribe Jorge |
 | **Revisión legal** | **Un abogado no ha visto `/terminos`, `/privacidad` ni `/cookies`.** Son borradores sólidos y honestos, escritos para México, pero sin revisar. Es un trámite de una sesión y hoy es un hueco abierto |
 | **El domicilio fiscal** | Jorge lo pasó como *Zapopan* y el **C.P. 44690 es de Guadalajara**. Los documentos van con Guadalajara; **falta que lo confirme contra su constancia**, porque de ahí depende la cláusula de jurisdicción |

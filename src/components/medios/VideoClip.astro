@@ -22,6 +22,13 @@ interface Props {
    * (medios/BRIEF-autoridad-radio.md, spec 1).
    */
   maxAncho?: string;
+  /**
+   * `false` cuando el contexto ya nombra el clip y el pie sería un eco.
+   * Misma prop que `Captura.astro`, por la misma razón: en /nosotros § En
+   * público cada momento ya trae su cabecera con fecha y evento, así que el
+   * figcaption repetiría las mismas dos palabras a 40 px de distancia.
+   */
+  mostrarPie?: boolean;
 }
 
 const {
@@ -30,6 +37,7 @@ const {
   ratio = "16 / 9",
   marco = "ninguno",
   maxAncho,
+  mostrarPie = true,
 } = Astro.props;
 
 const slot = porId(id);
@@ -87,7 +95,9 @@ const etiqueta = titulo ?? slot.alt;
         rangos que el archivo final no cumple (el clip de conferencia decía
         "45 s" durando 21). El largo real ya lo dice el propio <video>.
       */}
-      {slot.caption && <figcaption class="clip__pie">{slot.caption}</figcaption>}
+      {mostrarPie && slot.caption && (
+        <figcaption class="clip__pie">{slot.caption}</figcaption>
+      )}
     </figure>
   ) : (
     <Ranura slot={slot} />

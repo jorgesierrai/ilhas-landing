@@ -250,6 +250,38 @@ A nivel marca, cada quien trae lo suyo y la rejilla tiene que poder crecer. El *
 
 Nunca se presentan como resultados de alumnos. Cuando existan resultados reales de alumnos, van en sección aparte y claramente separados.
 
+### § En público — tres momentos, en orden
+
+Reescrita en la iteración 18 (30 ago 2026). Antes eran **tres bloques apilados
+sin relación** —el de radio, una foto suelta y un clip suelto— bajo un rótulo,
+«Imagen Radio · enero 2018», que solo describía la primera pieza.
+
+Ahora van en orden cronológico, cada uno con su fecha:
+
+| | Fecha | Qué es | Prueba |
+|---|---|---|---|
+| 1 | **Noviembre 2017** | Escenario | el clip |
+| 2 | **Enero 2018** | Imagen Radio · RMX | el video vertical y las dos citas |
+| 3 | **Abril 2018** | Talent Land | las dos fotos |
+
+⚠️ **El orden ES el argumento y no se reordena.** El titular dice «desde 2017» y
+el primer momento es de 2017, así que la afirmación se prueba sola. Y las tres
+dejan de ser medios sueltos para volverse una línea que se recorre.
+
+⚠️ **El clip es de noviembre 2017, NO de Talent Land.** Los dos briefs del 24 ago
+se contradecían; Jorge lo resolvió el 28 ago 2026. Talent Land (abr 2018) son
+las **fotos**. No vuelvas a etiquetar el clip así.
+
+Las dos fotos de Talent Land son `nosotros-conferencia` (sala llena — prueba la
+escala) y `home-hero-conferencia` (el recorte del home — prueba de qué hablaba:
+se lee la pregunta en pantalla). Las columnas van `1.93fr 1.29fr`, en proporción
+a la relación de aspecto real de cada archivo, para que midan lo mismo de alto
+sin recortar ninguna.
+
+Los pies salen de `src/data/historial.ts`, que ya trae el copy aprobado de
+Jorge para esos mismos hitos — por eso «Presenta Coophi…» y «Sala llena…»
+aparecen **dos veces en la página**: una en la línea de tiempo y otra aquí.
+
 ### ✅ Desbloqueada
 Nombre, bio y foto de los dos ya están confirmados y en el sitio (`src/assets/equipo/`). La página está de vuelta en el menú.
 

@@ -164,15 +164,18 @@ export const MEDIOS: SlotMedio[] = [
   {
     id: "home-hero-conferencia",
     tipo: "foto",
-    pagina: "home",
-    seccion: "§01 Hero",
+    // Compartida desde la iteración 18: además del hero del home, es la
+    // segunda foto de Talent Land en /nosotros § En público. Mismo trato que
+    // las capturas de producto.
+    pagina: "compartido",
+    seccion: "§01 Hero del home · /nosotros § En público",
     prioridad: 1,
     objecion: "«¿Quién eres tú?» · «¿Esto es real o es una landing más?»",
     alt: "Jorge Sierra en el escenario de Talent Land, frente a una pantalla que pregunta «¿Quién sea puede crear inteligencia artificial?»",
     caption: "Talent Land · abril 2018",
     pesoMaxKB: 400,
     notas:
-      "Recorte propio para el hero, no reutilices el de /nosotros: aquí la foto se enmascara y sangra desde la derecha, así que el encuadre tiene que aguantar que el 26% izquierdo desaparezca. Es el LCP del home — nunca lazy. Rehecho el 25 ago desde nosotros-conferencia-detalle.jpg (extract 300,180,1300x1060) porque el recorte anterior cortaba la palabra «crear» de la pregunta; lleva linear(1,+28) para levantar sombras sin quemar la pantalla, que es la parte más clara.",
+      "Recorte propio: NO es el mismo archivo que nosotros-conferencia. En el hero del home la foto se enmascara y sangra desde la derecha, así que el encuadre tiene que aguantar que el 26% izquierdo desaparezca. Es el LCP del home — nunca lazy. Rehecho el 25 ago desde nosotros-conferencia-detalle.jpg (extract 300,180,1300x1060) porque el recorte anterior cortaba la palabra «crear» de la pregunta; lleva linear(1,+28) para levantar sombras sin quemar la pantalla, que es la parte más clara. En /nosotros va al lado de nosotros-conferencia (la sala llena): ésa prueba la escala, ésta prueba de qué hablaba — se lee la pregunta en pantalla. Ahí el caption va apagado, porque el pie es compartido por las dos.",
   },
 
   // --- El sistema de agentes (A) · el bloque más importante de la lista
@@ -348,10 +351,11 @@ export const MEDIOS: SlotMedio[] = [
     prioridad: 2,
     objecion: "«¿Quién eres tú para enseñar?»",
     alt: "Jorge Sierra en el escenario presentando su empresa de inteligencia artificial",
+    caption: "Escenario · noviembre 2017",
     duracion: "20.8 s",
     pesoMaxKB: 12288,
     notas:
-      "PENDIENTE DE JORGE: los dos briefs del 24 ago se contradicen sobre este clip. BRIEF-historial lo da como conferencia de noviembre 2017 sin nombre de evento; el addendum de BRIEF-autoridad-radio lo da como Talent Land. Por eso va SIN caption: no se publica una fecha ni un evento que no esté confirmado.",
+      "RESUELTO POR JORGE EL 28 AGO 2026: es la conferencia de NOVIEMBRE 2017, no Talent Land. Los dos briefs del 24 ago se contradecían —BRIEF-historial lo daba como nov 2017 sin nombre de evento, el addendum de BRIEF-autoridad-radio como Talent Land— y por eso la ranura estuvo sin caption. Talent Land (abr 2018) son las FOTOS, no este clip: no vuelvas a etiquetarlo así. En /nosotros § En público el caption NO se pinta (mostrarPie={false}) porque la cabecera del momento ya dice «Noviembre 2017 · Escenario» y el pie sería un eco; vive aquí para que la ranura cargue su propia etiqueta si se usa en otro lado.",
   },
 
   // ===================================================================
