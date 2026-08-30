@@ -12,37 +12,38 @@
  * Fuente: `prompts/iteracion-5-bifurcacion-mapa.md` §2. El contenido es de
  * Jorge y va literal.
  *
- * **Chips revisados el 27 ago 2026** (`prompts/iteracion-10-productos.md`).
- * Cometa dejó de ser una herramienta de consultas financieras: es de
- * comunicación con clientes, así que su chip se movió de Finanzas corporativas
- * a Cobranza, donde ahora conviven dos builds. Paystand subió a Finanzas
- * corporativas.
+ * **El mapa se llenó el 28 ago 2026** (`prompts/iteracion-16-mapa-lleno.md`).
+ * Antes marcaba 6 áreas de 13 y las otras siete iban vacías; ahora las trece
+ * traen lo que se construye en ellas.
  *
- * **Administración quedó SIN prueba, y está bien.** Paystand era la única que
- * la cubría y se movió; no hay otro build ahí. Una ficha vacía dice la verdad
- * — inventarle una prueba con tal de no dejar hueco sería justo lo contrario
- * de para qué existe la variante "prueba".
+ * **Sin niveles ni marcas desde el 30 ago 2026.** La versión del 28 distinguía
+ * con punto lo que "ya estaba corriendo con un cliente" y dejaba el resto como
+ * capacidad. Jorge lo corrigió: todo lo listado ya se ha implementado y
+ * corrido con clientes, así que esa distinción era falsa. Los 38 renglones
+ * valen lo mismo y la leyenda que los separaba se fue.
+ *
+ * Los chips ya no llevan nombre de empresa (28 ago 2026): el sitio prueba qué
+ * se construyó, no de quién era el proyecto.
  */
 
 export interface AreaMapa {
   id: string;
   nombre: string;
   /**
-   * Los builds de Ilhas en esa área. Se muestran en la variante "prueba".
+   * Lo que Ilhas construye en esta área. Todo lo listado ya se ha implementado
+   * y corrido con clientes — no hay niveles ni marcas: los 38 renglones valen
+   * lo mismo (Jorge, 30 ago 2026).
    *
-   * Es QUÉ se construyó, nunca para quién: "cotizador", "conciliación
-   * bancaria". Un área puede tener más de uno —Cobranza tiene dos— y eso es
-   * señal, no ruido: significa que Ilhas construyó ahí más de una vez.
+   * Las seis "plataformas" que el sitio muestra como casos no son una
+   * categoría aparte: una plataforma es un conjunto de varias de estas cosas.
+   * Lo de aquí es el inventario de lo que se ha podido hacer.
    *
-   * **Sin nombres de empresa ni de cliente** (decisión de Jorge, 28 ago 2026).
-   * Antes iban en formato «qué · para quién» y decían "· Morgan", "· Cometa",
-   * "· Stampay". El mapa prueba que Ilhas ya construyó en esa área; de quién
-   * era el proyecto no cambia esa prueba, y nombrarlo expone clientes que no
-   * pidieron aparecer. Lo mismo aplica en productos.ts, historial.ts y
-   * medios.ts. Los dos testimonios son la excepción: ahí el nombre ES la
-   * atribución, y sin ella no se publican (regla 5 de CLAUDE.md).
+   * Se muestra COMPLETO solo en la variante "prueba" (/soluciones). Las otras
+   * —"limpio" en /metodo y "cimiento" en /finanzas— siguen pintando nada más
+   * el nombre del área: si las listas se colaran ahí, /metodo, que ya es la
+   * página más alta del sitio, se volvería inmanejable.
    */
-  pruebas?: string[];
+  construye?: string[];
 }
 
 export interface CapaMapa {
@@ -69,17 +70,42 @@ export const CAPAS: CapaMapa[] = [
     que: "Lo que el cliente ve",
     resumen: "marketing, ventas, cobranza",
     areas: [
-      { id: "marketing", nombre: "Marketing" },
-      { id: "ventas", nombre: "Ventas y cierre", pruebas: ["cotizador"] },
-      { id: "posventa", nombre: "Posventa y soporte" },
+      {
+        id: "marketing",
+        nombre: "Marketing",
+        construye: [
+          "Agentes de generación de contenido",
+          "Automatización de CRM",
+          "Creación de CRM",
+        ],
+      },
+      {
+        id: "ventas",
+        nombre: "Ventas y cierre",
+        construye: [
+          "Cotizador",
+          "Bots para llamadas de ventas",
+        ],
+      },
+      {
+        id: "posventa",
+        nombre: "Posventa y soporte",
+        construye: [
+          "Reportes automatizados",
+          "Agentes de WhatsApp de soporte",
+          "Agentes de análisis de quejas",
+        ],
+      },
       {
         id: "cobranza",
         nombre: "Cobranza",
-        // Dos builds. El PRIMERO va bajo NDA: sin nombre de producto ni de
-        // cliente, se describe por la clase de problema, que es experiencia de
-        // Jorge y no información del cliente — el mismo criterio que en
-        // src/data/medios.ts y en src/data/productos.ts. No lo nombres.
-        pruebas: ["cobranza automática", "avisos a clientes"],
+        construye: [
+          "Cobranza automática",
+          "Avisos a clientes",
+          "Recordatorios por WhatsApp",
+          "Recordatorios por push y correo",
+          "Pagos B2B",
+        ],
       },
     ],
   },
@@ -89,14 +115,36 @@ export const CAPAS: CapaMapa[] = [
     que: "Donde se construye lo que se vendió",
     resumen: "producción, suministro, entrega",
     areas: [
-      { id: "ingenieria", nombre: "Ingeniería y desarrollo" },
-      { id: "suministro", nombre: "Cadena de suministro" },
+      {
+        id: "ingenieria",
+        nombre: "Ingeniería y desarrollo",
+        construye: [
+          "Programación agéntica",
+          "Harness engineering",
+          "Spec driven development",
+          "Orquestador on call",
+          "Bug bot",
+        ],
+      },
+      {
+        id: "suministro",
+        nombre: "Cadena de suministro",
+        // Uno solo, y así se queda. No se inventan ítems para rellenar.
+        construye: ["Agente de optimización de rutas"],
+      },
       {
         id: "produccion",
         nombre: "Producción y manufactura",
-        pruebas: ["despiece"],
+        construye: [
+          "Despiece",
+          "Planeación de la producción",
+        ],
       },
-      { id: "entrega", nombre: "Ejecución y entrega" },
+      {
+        id: "entrega",
+        nombre: "Ejecución y entrega",
+        construye: ["Agentes orquestadores que actualizan el ERP"],
+      },
     ],
   },
   {
@@ -108,18 +156,49 @@ export const CAPAS: CapaMapa[] = [
       {
         id: "finanzas",
         nombre: "Finanzas corporativas",
-        pruebas: ["cuentas por cobrar y por pagar"],
+        construye: [
+          "Cuentas por cobrar y por pagar",
+          "Agentes financieros",
+        ],
       },
       {
         id: "contabilidad",
         nombre: "Contabilidad e impuestos",
-        pruebas: ["conciliación bancaria"],
+        construye: [
+          "Conciliación bancaria",
+          "Conciliación fiscal",
+        ],
       },
-      // SIN prueba a propósito: Paystand se movió a Finanzas corporativas y no
-      // hay otro build que cubra esta área. Vacía es correcto.
-      { id: "administracion", nombre: "Administración" },
-      { id: "talento", nombre: "Talento humano", pruebas: ["nómina y timbrado"] },
-      { id: "tecnologia", nombre: "Tecnología" },
+      {
+        id: "administracion",
+        nombre: "Administración",
+        construye: [
+          "Infraestructura bancaria",
+          "Infraestructura de pagos",
+          "Automatización de reportes",
+          "Agentes recomendadores de inversión",
+          "Facturación electrónica",
+        ],
+      },
+      {
+        id: "talento",
+        nombre: "Talento humano",
+        construye: [
+          "Suite de nómina y timbrado",
+          "Agentes clasificadores de perfiles",
+          "Analizadores de CV",
+        ],
+      },
+      {
+        id: "tecnologia",
+        nombre: "Tecnología",
+        construye: [
+          "Algoritmos de machine learning",
+          "Data science",
+          "Bases de datos y data lakes",
+          "Apps",
+        ],
+      },
     ],
   },
 ];
