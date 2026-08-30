@@ -157,14 +157,17 @@ const diagnosticoUrl = "mailto:hola@ilhas.ai?subject=Quiero%20un%20diagn%C3%B3st
 
      Era el doble padding. `.hero-split` trae `padding-block: clamp(2.5rem,
      6vw, 5rem)` propio —80px a 1440— y aquí vive dentro de un `section-y-sm`
-     que ya pone 40. El titular quedaba a 195px cuando el de /finanzas está a
-     115. Se anula solo el de ARRIBA: el de abajo separa el hero de §02 y ahí
-     no sobra nada.
+     que ya pone su ritmo. Se anulan LOS DOS.
+
+     El de abajo se había dejado puesto («separa el hero de §02»), y estaba
+     mal: el hueco visible entre el botón y «CÓMO TRABAJAMOS» medía 224px
+     contra los 144 del resto del sitio, y era la frontera más ancha de las
+     cinco páginas. La separación la pone la sección, no la caja de adentro.
 
      Va scopeado aquí y no en base.css porque /soluciones es la ÚNICA página
      que usa `.hero-split` — /finanzas tiene su propio `.hero-fin`. */
   .hero-split {
-    padding-top: 0;
+    padding-block: 0;
   }
 
   /* Página interior: H1 menor que el del home. */
