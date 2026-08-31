@@ -28,16 +28,29 @@ const flujo = [
   { paso: "Agente Despiece", agente: true },
   { paso: "Cotización" },
   { paso: "Agente Ahorro", agente: true },
-  { paso: "Reporte Ingresos Optimizados" },
+  { paso: "Reporte Ingresos" },
 ];
 
+// Lo que va entre asteriscos se resalta. Es una convención de UNA línea que
+// vive solo aquí, y se prefirió a meter <b> en el dato: así el texto sigue
+// siendo texto —se puede leer, buscar y corregir sin cuidar etiquetas— y no
+// hace falta `set:html`, que abriría la puerta a inyectar marcado desde datos.
+// Las palabras las eligió Jorge (31 ago 2026).
 const pasos = [
-  { letra: "I", paso: "Identificar", linea: "Cómo se mueve el dinero, dónde se fuga y desde qué número mides." },
-  { letra: "L", paso: "Levantamiento", linea: "Tus datos en un solo lugar, y el estándar de los mejores." },
-  { letra: "H", paso: "Hilar", linea: "Costos, precios y márgenes en un solo criterio." },
-  { letra: "A", paso: "Accionar", linea: "Decides con números, no con intuición." },
-  { letra: "S", paso: "Sistematizar", linea: "La IA como tu equipo, con alertas y mantenimiento." },
+  { letra: "I", paso: "Identificar", linea: "Cómo se mueve el *dinero*, dónde se *fuga* y desde qué *número* mides." },
+  { letra: "L", paso: "Levantamiento", linea: "Tus *datos* en un solo lugar, y el estándar de los *mejores*." },
+  { letra: "H", paso: "Hilar", linea: "Costos, precios y márgenes en un solo *criterio*." },
+  { letra: "A", paso: "Accionar", linea: "*Decides* con números, no con intuición." },
+  { letra: "S", paso: "Sistematizar", linea: "La *IA* como tu equipo, con alertas y *mantenimiento*." },
 ];
+
+/**
+ * Parte una línea en tramos alternos: los IMPARES van resaltados.
+ * `split` devuelve siempre normal-fuerte-normal-fuerte…, así que el índice par
+ * es texto llano aunque la línea arranque con asterisco — ahí el primer tramo
+ * sale vacío y no pinta nada.
+ */
+const tramos = (linea: string) => linea.split("*");
 
 // §02 · El mapa: lo que reportan que falló → el paso que lo cubre.
 // Las cifras y las fuentes van LITERALES (prompts/iteracion-4-hueco.md §2).
@@ -335,7 +348,9 @@ const kpis = [
                 <div class="paso">
                   <span class="paso__letra">{p.letra}</span>
                   <span class="paso__nombre">{p.paso}</span>
-                  <span class="paso__linea">{p.linea}</span>
+                  <span class="paso__linea">
+                    {tramos(p.linea).map((tr, i) => (i % 2 ? <b>{tr}</b> : tr))}
+                  </span>
                 </div>
               </div>
             ))
@@ -533,7 +548,7 @@ const kpis = [
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    gap: 0.45rem 0.6rem;
+    gap: 0.4rem 0.55rem;
     margin: 1rem 0 0;
     padding: 0;
     list-style: none;
@@ -554,10 +569,17 @@ const kpis = [
     display: inline-flex;
     align-items: center;
     gap: 0.6rem;
-    font-size: 0.8125rem;
+    /* 0.75rem y no 0.8125: con el rótulo largo la fila pedía 666 px y había
+       661 — le faltaban CINCO. Achicar solo el gap habría dejado 1.4 px de
+       margen, y con la fuente de respaldo (Inter carga con font-display:swap)
+       las métricas cambian lo suficiente para que saltara entre una y dos
+       líneas al terminar de cargar. Con el rótulo corto y este tamaño sobran
+       ~90 px, que sí es margen. */
+    font-size: 0.75rem;
     line-height: 1.3;
-    /* .68 mide 8.7:1 sobre tinta. */
-    color: rgba(248, 250, 255, 0.68);
+    /* .72 mide 9.6:1 sobre tinta. Sube de .68 porque el texto encogió: a 12 px
+       AA pide 4.5 y conviene ir con holgura, no al filo. */
+    color: rgba(248, 250, 255, 0.72);
     white-space: nowrap;
   }
 
@@ -571,7 +593,7 @@ const kpis = [
        Se deja por debajo de los rótulos a propósito: la flecha conecta, no
        compite. */
     color: rgba(248, 250, 255, 0.42);
-    font-size: 0.9375rem;
+    font-size: 0.875rem;
   }
 
   /* Los dos agentes son lo que Ilhas construye, y por eso son los únicos que
@@ -583,7 +605,7 @@ const kpis = [
      flecha del ::before quedaba DENTRO de la caja —«[→ Agente Despiece]»— y
      parecía parte del nombre del agente en vez del conector entre pasos. */
   .flujo__paso--agente .flujo__et {
-    padding: 0.3rem 0.7rem;
+    padding: 0.28rem 0.65rem;
     border-radius: 999px;
     border: 1px solid rgba(161, 75, 255, 0.55);
     background: rgba(122, 60, 255, 0.14);
@@ -939,6 +961,16 @@ const kpis = [
   .paso__linea {
     font-size: 1rem;
     color: var(--ilhas-text);
+  }
+
+  /* El resalte va en PESO y TINTA, no en color de marca. En una sección que ya
+     tiene las letras I·L·H·A·S en morado, pintar además once palabras sueltas
+     de morado convierte la columna en confeti y deja de destacar nada. Subir a
+     --ilhas-dark con 600 destaca igual y no mete un color nuevo — es el mismo
+     trato que ya llevan las negritas del párrafo del 95% de arriba. */
+  .paso__linea b {
+    font-weight: 600;
+    color: var(--ilhas-dark);
   }
 
   /* Sin border-top: medía 476 px contra los 1044 del mapa y se leía como una

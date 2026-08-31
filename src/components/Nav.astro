@@ -19,7 +19,14 @@ const navItems = [
   // /finanzas. «Aprender» y no «Formación»: pegado a «El Método», «Formación»
   // suena a lo mismo y no se sabe cuál abrir. «Aprender» es un verbo y dice
   // qué haces ahí.
-  { href: "/finanzas", label: "Aprender" },
+  // «Aprender» abre un submenú con el producto adentro (Jorge, 31 ago 2026).
+  // El nombre del producto NO cambió: la etiqueta del carril es «Aprender» y
+  // lo que vive dentro se sigue llamando Ilhas Finanzas.
+  {
+    href: "/finanzas",
+    label: "Aprender",
+    hijos: [{ href: "/finanzas", label: "Ilhas Finanzas" }],
+  },
   { href: "/soluciones", label: "Soluciones" },
   { href: "/nosotros", label: "Nosotros" },
 ];
@@ -58,13 +65,37 @@ const isCurrent = (href: string) =>
       <ul class="site-header__links">
         {
           navItems.map((item) => (
-            <li>
+            <li class:list={[item.hijos && "tiene-menu"]}>
               <a
                 href={item.href}
                 aria-current={isCurrent(item.href) ? "page" : undefined}
               >
                 {item.label}
+                {item.hijos && <span class="caret" aria-hidden="true" />}
               </a>
+
+              {/* Desplegable SIN JavaScript: el sitio corre con CSP
+                  `script-src 'self'` y cero JS de cliente, así que un menú
+                  gobernado por un listener no es una opción.
+
+                  Abre con :hover Y con :focus-within. El segundo no es un
+                  extra: es lo que hace que funcione con teclado — al tabular
+                  hasta el enlace de adentro, el <li> tiene el foco dentro y el
+                  panel se queda abierto. Sin eso el submenú sería inalcanzable
+                  sin ratón.
+
+                  El disparador sigue siendo un enlace a /finanzas y no un
+                  botón muerto: así llegar ahí no depende de poder abrir el
+                  panel. */}
+              {item.hijos && (
+                <ul class="submenu">
+                  {item.hijos.map((h) => (
+                    <li>
+                      <a href={h.href}>{h.label}</a>
+                    </li>
+                  ))}
+                </ul>
+              )}
             </li>
           ))
         }
@@ -91,6 +122,20 @@ const isCurrent = (href: string) =>
                 >
                   {item.label}
                 </a>
+
+                {/* En móvil el submenú NO se despliega: va anidado y siempre
+                    visible. `:hover` no existe en táctil y anidar un segundo
+                    <details> dentro del que ya abre el menú obliga a dos
+                    toques para llegar a un solo destino. */}
+                {item.hijos && (
+                  <ul class="submenu-movil">
+                    {item.hijos.map((h) => (
+                      <li>
+                        <a href={h.href}>{h.label}</a>
+                      </li>
+                    ))}
+                  </ul>
+                )}
               </li>
             ))
           }
@@ -208,6 +253,108 @@ const isCurrent = (href: string) =>
     border-bottom-color: var(--ilhas-primary);
   }
 
+  /* --- El desplegable de «Aprender» ------------------------------------- */
+  .tiene-menu {
+    position: relative;
+  }
+
+  .tiene-menu > a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+  }
+
+  /* Chevron dibujado con borde, sin SVG ni icono nuevo: son 6 px y no vale un
+     archivo. `currentColor` para que siga al enlace en hover y en activo. */
+  .caret {
+    width: 0.4rem;
+    height: 0.4rem;
+    border-right: 1.5px solid currentColor;
+    border-bottom: 1.5px solid currentColor;
+    transform: rotate(45deg) translate(-1px, -1px);
+    transition: transform 0.18s ease;
+  }
+
+  .tiene-menu:hover .caret,
+  .tiene-menu:focus-within .caret {
+    transform: rotate(-135deg) translate(-2px, -2px);
+  }
+
+  .submenu {
+    position: absolute;
+    top: 100%;
+    left: -0.9rem;
+    z-index: 1;
+    min-width: 11rem;
+    margin: 0;
+    /* El padding-top de 0.6rem NO es decorativo: es el puente. Sin él queda un
+       hueco muerto entre el enlace y el panel, el cursor lo cruza, el :hover se
+       pierde a media travesía y el menú se cierra en la cara del usuario. Al
+       vivir dentro del panel, ese medio centímetro sigue siendo zona de hover. */
+    padding: 0.6rem 0 0;
+    list-style: none;
+    /* NADA DE `visibility: hidden` NI `display: none` AQUÍ, y no es un detalle:
+       los dos sacan a sus descendientes del orden de tabulación. El enlace de
+       adentro deja de poder recibir foco, así que `:focus-within` nunca
+       dispara y el panel no abre nunca con teclado — el submenú existe pero es
+       inalcanzable sin ratón. Se probó con `visibility` y pasó exactamente eso:
+       enfocar el enlace por script dejaba el panel en opacity 0.
+
+       `pointer-events: none` hace el trabajo que se le pedía a `visibility`:
+       evita que un panel invisible se coma los clics del contenido de abajo.
+       El enlace se queda en el orden de tabulación, que para navegación es lo
+       correcto: son destinos reales del sitio. */
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(-4px);
+    transition:
+      opacity 0.16s ease,
+      transform 0.16s ease;
+  }
+
+  /* :focus-within es lo que lo hace usable con teclado — al tabular hasta el
+     enlace de adentro, el panel se queda abierto. Sin esto el submenú existe
+     pero no se puede alcanzar sin ratón. */
+  .tiene-menu:hover > .submenu,
+  .tiene-menu:focus-within > .submenu {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
+  }
+
+  .submenu > li {
+    background: var(--ilhas-white);
+    border: 1px solid var(--ilhas-gray);
+    border-radius: var(--ilhas-radius-card);
+    box-shadow: var(--ilhas-shadow-soft);
+    overflow: hidden;
+  }
+
+  .site-header__links .submenu a {
+    display: block;
+    padding: 0.7rem 0.9rem;
+    border-bottom: 0;
+    white-space: nowrap;
+  }
+
+  .site-header__links .submenu a:hover,
+  .site-header__links .submenu a:focus-visible {
+    background: var(--ilhas-light);
+    color: var(--ilhas-dark);
+  }
+
+  /* En escritorio los hijos ya viven en el desplegable. */
+  .submenu-movil {
+    display: none;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .caret,
+    .submenu {
+      transition-duration: 0s;
+    }
+  }
+
   .site-header__cta {
     flex-shrink: 0;
     padding: 0.6rem 1.25rem;
@@ -284,6 +431,19 @@ const isCurrent = (href: string) =>
 
     .site-header__nav--mobile .site-header__links a {
       font-size: var(--ilhas-fs-body);
+    }
+
+    /* En móvil manda el anidado, no el desplegable. */
+    .site-header__nav--mobile .submenu-movil {
+      display: block;
+      margin: 0.6rem 0 0;
+      padding: 0 0 0 0.9rem;
+      border-left: 1px solid var(--ilhas-gray);
+      list-style: none;
+    }
+
+    .site-header__nav--mobile .submenu-movil a {
+      font-size: var(--ilhas-fs-small);
     }
   }
 </style>

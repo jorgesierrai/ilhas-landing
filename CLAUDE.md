@@ -107,9 +107,14 @@ Aparte del hub viven `/terminos`, `/privacidad` y `/cookies`. **No cuentan como 
   - **La banda de autoridad salió del home.** El componente
     `BandaAutoridad.astro` SIGUE en el repo — solo se quitó su uso. Los tres
     hitos que resumía viven completos en `/nosotros` § En público desde la 18.
-  - **El menú dice «Aprender», no «Ilhas Finanzas».** Es solo la ETIQUETA: el
-    producto se sigue llamando Ilhas Finanzas en el `<h1>`, el `<title>`, el
-    `og:title` y el copy. No hagas buscar-y-reemplazar.
+  - **El menú dice «Aprender», y abre un desplegable con «Ilhas Finanzas»
+    dentro** (Jorge, 31 ago 2026). «Aprender» es el carril; el producto sigue
+    llamándose Ilhas Finanzas en el `<h1>`, el `<title>`, el `og:title` y el
+    copy — no hagas buscar-y-reemplazar. El desplegable va **sin JavaScript**,
+    con `:hover` Y `:focus-within`. ⚠️ **No le pongas `visibility:hidden` ni
+    `display:none` al panel cerrado**: los dos sacan al enlace del orden de
+    tabulación, `:focus-within` no puede dispararse nunca y el submenú queda
+    inalcanzable sin ratón. Va con `opacity` + `pointer-events`.
   - **El ritmo entre secciones es UNO SOLO en todo el sitio: 144 px a 1440**
     (88 en móvil). Sale de `--ilhas-section-y` en `tokens.css`, que bajó de
     `clamp(4rem, 9vw, 7.5rem)` a `clamp(2.75rem, 5.5vw, 4.5rem)` el 30 ago
