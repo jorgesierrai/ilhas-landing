@@ -113,9 +113,19 @@ línea.
 
 ## Vocabulario que el sitio tiene que definir
 
-**Mover la aguja.** Cumplir el objetivo que te planteaste. Se usa mucho en el
-sitio y no está definido en ninguna parte; va como nota al pie o como ayuda
-desplegable la primera vez que aparece.
+**Mover la aguja.** ✅ **Definido en el sitio** desde el 31 ago 2026: es la
+ayuda desplegable de `/metodo` §01, la primera vez que aparece el término.
+
+> Cumplir el objetivo que te planteaste. Que el número que ya medías cambie.
+> **Si no tenías el número antes de empezar, no puedes saber si se movió.**
+
+Va con tres ejemplos pareados **KPI → Outcome** —el número que cambió y lo que
+ese cambio te dejó hacer— y cierra con el contraejemplo: *«no mover la aguja es
+tener un chatbot que contesta bonito y un proceso que sigue tardando lo mismo»*.
+
+⚠️ El par KPI/Outcome **es** el argumento del bloque. Si alguna vez se recorta,
+lo último que se quita son los ejemplos: la definición sola vuelve a ser la
+línea de una frase que no distinguía nada.
 
 **Producto.** Cuando el sitio dice "el oficio de construir producto" se refiere a
 **construir software y tecnología**. Escríbelo completo la primera vez.

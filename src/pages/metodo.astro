@@ -253,10 +253,70 @@ const principioFinal = {
         {/* Primera aparición de "mover la aguja" en todo el sitio, y hasta hoy
             no estaba definida en ninguna parte (docs/07-metodo-detalle.md
             § Vocabulario). <details> nativo: cero JS. Nada de title="", que ni
-            lo lee un lector de pantalla ni existe en táctil. */}
+            lo lee un lector de pantalla ni existe en táctil.
+
+            Copy de Jorge (31 ago 2026), literal. Pasó de una línea a esto
+            porque la definición corta no decía lo que de verdad separa mover
+            la aguja de no moverla: que TENÍAS que estar midiendo antes.
+
+            El «(KPI)» y el «(Outcome)» que Jorge escribió entre paréntesis van
+            como etiquetas y no como texto suelto. Ese par ES la idea del
+            bloque —el número que cambió y lo que ese cambio te dejó hacer— y
+            entre paréntesis se lee como una nota al margen, que es justo lo
+            contrario. Las palabras son las suyas; lo único que cambia es que
+            dejan de ir entre paréntesis. */}
         <details class="ayuda">
           <summary>¿qué es mover la aguja?</summary>
-          <p>Cumplir el objetivo que te planteaste.</p>
+
+          <div class="ayuda__cuerpo">
+            <p>
+              Cumplir el objetivo que te planteaste. Que el número que ya medías
+              cambie. <b>Si no tenías el número antes de empezar, no puedes
+              saber si se movió.</b>
+            </p>
+
+            <p class="ayuda__rotulo">Ejemplo</p>
+
+            <ul class="pares">
+              <li>
+                <span class="pares__kpi">
+                  La cotización pasa de cuatro horas a veinte minutos
+                  <em class="etq">KPI</em>
+                </span>
+                <span class="pares__out">
+                  y con eso alcanzas a cotizar lo que antes se te caía
+                  <em class="etq etq--out">Outcome</em>
+                </span>
+              </li>
+              <li>
+                <span class="pares__kpi">
+                  El despiece pasa de cinco días a minutos
+                  <em class="etq">KPI</em>
+                </span>
+                <span class="pares__out">
+                  y la obra arranca una semana antes
+                  <em class="etq etq--out">Outcome</em>
+                </span>
+              </li>
+              <li>
+                <span class="pares__kpi">
+                  El cierre deja de costar tres días de captura y 3 personas
+                  full time
+                  <em class="etq">KPI</em>
+                </span>
+                <span class="pares__out">
+                  y el número llega cuando todavía sirve para decidir y generar
+                  más ingresos
+                  <em class="etq etq--out">Outcome</em>
+                </span>
+              </li>
+            </ul>
+
+            <p class="ayuda__contra">
+              No mover la aguja es tener un chatbot que contesta bonito y un
+              proceso que sigue tardando lo mismo.
+            </p>
+          </div>
         </details>
 
         <p>
@@ -1109,11 +1169,106 @@ const principioFinal = {
     text-decoration-color: currentColor;
   }
 
-  .ayuda > p {
-    margin-top: 0.4rem;
+  /* El cuerpo entero cuelga de la misma regla vertical que antes llevaba el
+     párrafo suelto. Ahora el bloque tiene cuatro piezas, así que la regla la
+     pone el contenedor y no cada una: si no, cada párrafo dibujaba su propio
+     trozo de línea y quedaban cortadas entre sí. */
+  .ayuda__cuerpo {
+    margin-top: 0.5rem;
     padding-left: 0.9rem;
     border-left: 2px solid var(--ilhas-gray);
     color: var(--ilhas-text);
+  }
+
+  .ayuda__cuerpo > p {
+    margin: 0;
+    max-width: 62ch;
+  }
+
+  .ayuda__cuerpo b {
+    font-weight: 600;
+    color: var(--ilhas-dark);
+  }
+
+  .ayuda__rotulo {
+    margin-top: 1rem !important;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    /* --ilhas-primary sobre --ilhas-light mide 5.7:1. */
+    color: var(--ilhas-primary);
+  }
+
+  /* --- los tres pares KPI → Outcome ---
+     Cada renglón son DOS mitades: el número que cambió y lo que ese cambio te
+     dejó hacer. Van una debajo de otra y no en una sola frase corrida porque
+     el par es el argumento: leídas en fila, la segunda mitad se pierde detrás
+     de la primera. */
+  .pares {
+    margin: 0.5rem 0 0;
+    padding: 0;
+    list-style: none;
+    max-width: 62ch;
+  }
+
+  .pares > li {
+    margin-top: 0.75rem;
+  }
+
+  .pares__kpi,
+  .pares__out {
+    display: block;
+  }
+
+  /* La sangría y la flecha marcan que la segunda mitad SALE de la primera. Es
+     la misma relación que el «—» de Jorge, dicha con posición en vez de con un
+     guion que a esta escala se pierde. */
+  .pares__out {
+    position: relative;
+    margin-top: 0.15rem;
+    padding-left: 1.1rem;
+    color: var(--ilhas-text);
+  }
+
+  .pares__out::before {
+    content: "→";
+    position: absolute;
+    left: 0;
+    /* Sólido, no al 55%. Medido: al .55 daba 2.38:1 y no alcanzaba ni el 3:1
+       de 1.4.11 — y una flecha que casi no se ve deja de hacer el trabajo por
+       el que está, que es marcar que la segunda mitad sale de la primera.
+       Sólido mide 5.13:1 y encima es el color de marca. */
+    color: var(--ilhas-primary);
+  }
+
+  .etq {
+    display: inline-block;
+    margin-left: 0.35rem;
+    padding: 0.1rem 0.4rem;
+    border-radius: 5px;
+    font-style: normal;
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    vertical-align: 0.08em;
+    white-space: nowrap;
+    /* KPI en gris: es el dato. #4A4A55 sobre el gris del chip mide 7.1:1. */
+    background: var(--ilhas-gray);
+    color: #4a4a55;
+  }
+
+  /* Outcome en morado: es el pago. El chip lleva el color de marca porque esa
+     mitad es la que el visitante tiene que recordar. #5B21D6 sobre el morado
+     al 12% mide 7.3:1. */
+  .etq--out {
+    background: rgba(122, 60, 255, 0.12);
+    color: #5b21d6;
+  }
+
+  .ayuda__contra {
+    margin-top: 1.1rem !important;
   }
 
   /* ======================================================================
