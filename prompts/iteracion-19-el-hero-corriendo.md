@@ -5,12 +5,15 @@ Decidido con Jorge el 31 ago 2026.
 
 > Rama: **`hero-corriendo`**, salida de donde quedó la 18.
 >
-> **Referencia: `medios/hero-referencia.html`.** Ya está construida y medida
-> (579 px en escritorio, 829 px en móvil, 576 px en 1024). El CSS de esa
-> referencia es el que va: cópialo, no lo reinventes.
+> **Dos referencias, las dos construidas y medidas. Copia ese CSS, no lo
+> reinventes:**
+> `medios/hero-referencia.html` — el hero (579 px escritorio · 829 móvil ·
+> 576 en 1024).
+> `medios/cifras-referencia.html` — la banda de cifras (184 px escritorio ·
+> 307 móvil).
 
-Son seis cambios: cuatro del análisis de Jorge, la barra de stats que pidió el
-31 de agosto, y el `og:image`. El quinto punto del análisis —el `alt` de la
+Son siete cambios: cuatro del análisis de Jorge, la barra de stats, la banda
+de cifras que baja del hero, y el `og:image`. El quinto punto del análisis —el `alt` de la
 foto del hero— **no se hace**, y abajo está por qué.
 
 ---
@@ -105,13 +108,29 @@ La sección pasa de `display:flex; align-items:center; min-height:620px` a un
 bloque con padding, y por dentro:
 
 ```
-.hero__texto   ← columna izquierda, max-width 38%, min-height 21rem
-.hero__medio   ← absoluto, arriba a la derecha
-.hero__kpis    ← a todo lo ancho, POR DEBAJO de los dos
+.hero__inner   ← grid de dos columnas en escritorio
+.hero__texto   ← columna izquierda
+.hero__medio   ← columna derecha, sangrando por el canto
 ```
 
-⚠️ **Los KPI van a todo lo ancho, debajo.** Se probó el video centrado en
-vertical y «2016→» quedaba encima del panel de KINZAL.
+⚠️ **Los KPI ya NO van en el hero: bajan a la § «Esto ya está corriendo».**
+Es el §7. Al sacarlos, el hero se queda con titular, párrafo y botones — y por
+eso `.hero__inner` pasa a **grid de dos columnas** en vez del medio absoluto
+con `min-height` a mano:
+
+```css
+@media (min-width:900px){
+  .hero__inner{display:grid;grid-template-columns:minmax(0,38%) minmax(0,1fr);
+    gap:clamp(2rem,4vw,3.5rem);align-items:center}
+  .hero__medio{margin-right:calc(-1 * var(--ilhas-gutter))}
+}
+```
+
+**Por qué el cambio y no sólo borrar el bloque:** con el medio `absolute`, la
+altura del hero la daba el `min-height:21rem` de la columna de texto. Sin los
+KPI el texto mide menos que el video (394 px a 1440), así que **el video se
+salía por abajo de la sección.** En grid la fila mide lo que mida el más
+alto de los dos, sola. El sangrado se conserva con `margin-right` negativo.
 
 ⚠️ **El titular baja a `clamp(2rem,3.6vw,2.9rem)` y `max-width:12ch`**, y el
 lead a `30ch`. Con la columna al 38% y el tamaño anterior, el titular rompía
@@ -474,6 +493,146 @@ pero el `og:title` merece la frase. En `Base.astro`:
 + <meta property="og:title" content={pageTitle === "Ilhas" ? "Ilhas — tu primer proceso corriendo con IA" : pageTitle} />
 ```
 
+## 7 · Las cifras bajan del hero a «Esto ya está corriendo»
+
+Jorge: *«mételo abajo donde está eso… porque justo ahí está la prueba de lo
+que causa que corra todo eso»*.
+
+Tiene razón y es un ascenso, no una mudanza: en el hero las tres cifras
+competían con el titular y por eso iban chiquitas. Abajo, pegadas a las
+tarjetas de lo que ya está corriendo, **son el respaldo de lo que las
+tarjetas enseñan** — y pueden mandar.
+
+Van en **dos páginas**:
+
+| Página | Sección | Archivo |
+|---|---|---|
+| Home | §05 · «De dónde sale el método / Esto ya está corriendo.» | `src/pages/index.astro:414` |
+| `/soluciones` | §03 · «Casos / Esto ya lo construimos para empresas como la tuya.» | `src/pages/soluciones.astro:88` |
+
+Las dos son `section-y bg-dark`, así que el tratamiento es el mismo.
+
+### 7.1 · El dato se muda a su propio archivo
+
+Hoy el array `kpis` vive dentro de `src/pages/index.astro:97`. Si `/soluciones`
+lo copia, en tres meses habrá dos verdades. **Sale a `src/data/cifras.ts`:**
+
+```ts
+/**
+ * Las tres cifras de respaldo. Copy de Jorge, va literal.
+ *
+ * Regla 4 de CLAUDE.md: los números se atribuyen, nunca se suman. El
+ * `contexto` de cada una dice de qué es el número.
+ *
+ * Vive aquí y no dentro de una página porque la usan DOS: el home y
+ * /soluciones. Copiarlas en cada una es cómo se acaba con dos verdades.
+ */
+export interface Cifra { dato: string; unidad?: string; contexto: string; }
+
+export const CIFRAS: Cifra[] = [
+  { dato: "+1,000", unidad: " MDP", contexto: "al mes, volumen respaldado" },
+  { dato: "6",      unidad: "+",    contexto: "startups · infraestructura creada" },
+  { dato: "2016",   unidad: "→",    contexto: "desarrollando IA" },
+];
+```
+
+⚠️ **El copy no se toca.** Ni el orden.
+
+### 7.2 · El marcado, igual en las dos páginas
+
+Va **entre el `.section-head` y la lista de tarjetas**, nunca después:
+
+```jsx
+<div class="section-head reveal">
+  <p class="kicker">De dónde sale el método</p>
+  <h2>Esto ya está corriendo.</h2>
+</div>
+
+<div class="cifras reveal">
+  {CIFRAS.map((c) => (
+    <div class="cifras__uno">
+      <span class="cifras__dato">
+        {c.dato}{c.unidad && <i class="cifras__unidad">{c.unidad}</i>}
+      </span>
+      <span class="cifras__pie">{c.contexto}</span>
+    </div>
+  ))}
+</div>
+
+<ul class="linaje"> … </ul>
+```
+
+⚠️ **Arriba de las tarjetas, no abajo.** Las cifras son la causa y las
+tarjetas el efecto; invertirlo convierte el respaldo en un pie de página.
+
+⚠️ La unidad va **dentro** del `<span>` del dato, no como hermano: así no se
+separa del número al envolver. Es el mismo patrón que ya usa `Stat.astro`.
+
+### 7.3 · El CSS
+
+Está completo en `medios/cifras-referencia.html`. Lo que no es negociable:
+
+```css
+.cifras{display:grid;gap:0;
+  border-block:1px solid rgba(248,250,255,.13);
+  padding-block:clamp(1.75rem,3vw,2.5rem)}
+@media (min-width:760px){
+  .cifras{grid-template-columns:repeat(3,1fr)}
+  .cifras__uno{padding-inline:clamp(1.25rem,3vw,2.5rem)}
+  .cifras__uno + .cifras__uno{border-left:1px solid rgba(248,250,255,.13)}
+  .cifras__uno:first-child{padding-left:0}
+  .cifras__uno:last-child{padding-right:0}
+}
+@media (max-width:759px){ .cifras{gap:1.5rem} }
+
+.cifras__dato{display:block;font-family:var(--ilhas-font-display);
+  font-weight:600;font-size:clamp(2.4rem,4.8vw,3.5rem);line-height:1;
+  letter-spacing:-.035em;color:#fff;white-space:nowrap}
+.cifras__unidad{font-style:normal;color:var(--ilhas-grad-end)}
+.cifras__pie{display:block;margin-top:.7rem;font-size:.75rem;
+  letter-spacing:.07em;text-transform:uppercase;line-height:1.45;
+  color:rgba(248,250,255,.62)}
+```
+
+⚠️ **`white-space:nowrap` en el dato.** Sin eso «+1,000 MDP» se parte en dos
+renglones en el rango 760-900 px y el número deja de leerse como número.
+
+⚠️ **Nada de `max-width` en el pie.** La columna del grid ya lo limita; poner
+un `ch` encima hace que las tres etiquetas rompan en sitios distintos.
+
+### 7.4 · Los dos tratamientos que se probaron y se cayeron
+
+Se construyeron los tres y se midieron. **No los vuelvas a proponer:**
+
+- **Cada cifra en su tarjeta**, con el mismo fondo y radio que `TarjetaCaso`.
+  Las cifras pesaban igual que las tarjetas de abajo y la sección se leía como
+  **seis tarjetas**, tres de ellas con números. El respaldo se volvía otro
+  caso más.
+- **El número en degradado**, como la barra de stats. Repite el tratamiento
+  de `12× / 8× / 6-12%`, y las dos filas de números de la misma página se
+  ponen a competir. Encima el violeta de la unidad —« MDP», «+», «→»— se
+  pierde adentro del degradado, y esa unidad en violeta es de la marca.
+
+**Va en blanco, con reglas, y la unidad en violeta.** Así la banda se lee como
+lo que es: el respaldo de las tarjetas, no otra fila de tarjetas.
+
+### 7.5 · Lo que se borra del hero
+
+`src/pages/index.astro`:
+
+- el array `kpis` de la línea 97 — se va a `src/data/cifras.ts`,
+- el `<div class="hero__kpis">` entero,
+- las reglas `.hero__kpis` y `.kpi` del `<style>`,
+- el `import Stat` **sólo si ya no queda ningún `<Stat>` en la página**.
+  Revísalo: `/nosotros` también usa `Stat` y ése no se toca.
+
+⚠️ **`Stat.astro` y su `variante="hero"` NO se borran.** La variante deja de
+usarse en el home, pero el componente lo usan otras páginas. Si `variante`
+queda sin ningún uso en todo el sitio, dilo en el reporte y que Jorge decida —
+no lo quites por tu cuenta.
+
+---
+
 ---
 
 ## Lo que NO se hace: el `alt` de la foto del hero
@@ -523,6 +682,14 @@ grep -c "hero__velo" dist/index.html               # 0
 # El hueco antes de la banda Hilas
 grep -c "margin-top: clamp(1.75rem" dist/_astro/*.css   # 0
 
+# Las cifras salen del hero y entran en DOS páginas
+grep -c "hero__kpis" dist/index.html                    # 0
+grep -c 'class="cifras' dist/index.html                 # 4  — la banda + tres cifras
+grep -c 'class="cifras' dist/soluciones/index.html      # 4
+grep -c "volumen respaldado" dist/index.html            # 1
+grep -c "volumen respaldado" dist/soluciones/index.html # 1
+grep -c "volumen respaldado" dist/metodo/index.html     # 0 — sólo van en esas dos
+
 # La foto sale del home y sigue en /nosotros
 grep -c "home-hero-conferencia" dist/index.html    # 0
 grep -c "home-hero-conferencia" dist/nosotros/index.html   # ≥1
@@ -567,8 +734,15 @@ grep -o 'og:url" content="[^"]*"' dist/finanzas/index.html   # .../finanzas
 - [ ] **La barra de KINZAL se lee** — el logotipo y «Generador de
       Cotizaciones». Si no se lee, el cuadro quedó demasiado chico.
 - [ ] **El titular rompe en TRES líneas**, no en cuatro con «IA.» sola.
-- [ ] **Los KPI no tocan el cuadro.** «2016→» es el que se mete si algo
-      quedó mal.
+- [ ] **El hero ya no trae la fila de cifras**, y el cuadro del video **no se
+      sale por abajo** de la sección. Si se sale, falta el grid del §1.4.
+- [ ] **La banda de cifras se ve en el home Y en `/soluciones`**, arriba de
+      las tarjetas, con sus dos reglas verticales y las reglas de arriba y
+      abajo.
+- [ ] **«+1,000 MDP» no se parte en dos renglones** en ningún ancho. Prueba
+      en 800 px, que es donde pasa.
+- [ ] Las tres cifras alinean su base. Si una baja, es el pie que rompió en
+      más líneas que las otras.
 - [ ] **No queda franja clara entre los números y la banda Hilas.** Del negro
       de la barra al blanco de la banda, directo.
 - [ ] **Solo hay UNA imagen o video en el hero.** Si ves el video y debajo el
@@ -593,6 +767,8 @@ grep -o 'og:url" content="[^"]*"' dist/finanzas/index.html   # .../finanzas
 | Hero del home · 1440 | | 579 px | |
 | Hero del home · 390 | | 829 px | |
 | Hero del home · 1024 | | 576 px | |
+| Banda de cifras · 1440 | — | 184 px | |
+| Banda de cifras · 390 | — | 307 px | |
 | Barra de stats · 1440 | — | 223 px | |
 | Barra de stats · 390 | — | 403 px | |
 | Home completo · 1440 | | | |
@@ -614,6 +790,12 @@ barra quedó con `section-y` o con margen contra el hero.
 - No agregues un `<source>` de webm.
 - No pongas el medio antes del texto en el DOM: en móvil el video se sube
   arriba del titular.
+- No dejes las cifras en el hero «y además» abajo. Se mudan, no se duplican.
+- No pongas la banda de cifras debajo de las tarjetas.
+- No copies el array de cifras en las dos páginas: sale de `src/data/cifras.ts`.
+- No pongas las cifras en `/metodo` ni en `/finanzas`: sólo home y
+  `/soluciones`.
+- No borres `Stat.astro`.
 - No borres `BandaAutoridad.astro`, solo su uso.
 - No cambies el `alt` de `home-hero-conferencia`.
 - No corrijas la errata de la pantalla sin mirar la foto.
@@ -639,4 +821,7 @@ barra quedó con `section-y` o con margen contra el hero.
 6. Captura con `prefers-reduced-motion: reduce`.
 7. La tabla de alturas.
 8. **La errata de la pantalla en la foto de Talent Land**: qué dice de verdad.
-9. El subtítulo del §2 sigue **pendiente de Jorge**. Dilo.
+9. Captura de la banda de cifras en el home **y** en `/soluciones`, 1440 y 390.
+10. Si `variante="hero"` de `Stat.astro` quedó sin usarse en todo el sitio,
+    dilo — no la borres.
+11. El subtítulo del §2 sigue **pendiente de Jorge**. Dilo.

@@ -1,0 +1,115 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Ilhas · la banda de cifras — referencia medida</title>
+<style>
+@font-face{font-family:"Space Grotesk";src:url(/assets/fonts/space-grotesk-600.woff2) format("woff2");font-weight:600;font-display:swap}
+@font-face{font-family:"Inter";src:url(/assets/fonts/inter-400.woff2) format("woff2");font-weight:400;font-display:swap}
+@font-face{font-family:"Inter";src:url(/assets/fonts/inter-500.woff2) format("woff2");font-weight:500;font-display:swap}
+:root{
+  --ilhas-primary:#7A3CFF; --ilhas-dark:#0E0E0F; --ilhas-white:#fff;
+  --ilhas-grad-start:#55E8FF; --ilhas-grad-end:#A14BFF;
+  --ilhas-font-display:"Space Grotesk",system-ui,sans-serif;
+  --ilhas-font-body:"Inter",system-ui,-apple-system,sans-serif;
+  --ilhas-container:1140px; --ilhas-gutter:clamp(1.25rem,4vw,3rem);
+}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;font-family:var(--ilhas-font-body);background:var(--ilhas-dark);
+  color:rgba(248,250,255,.7);line-height:1.6}
+.container{width:100%;max-width:var(--ilhas-container);margin-inline:auto;
+  padding-inline:var(--ilhas-gutter)}
+.rotulo{padding:.9rem clamp(1.25rem,4vw,3rem);background:#1b1b20;color:#8f8fa3;
+  font-size:.75rem;letter-spacing:.14em;text-transform:uppercase;font-weight:600}
+.section-y{padding-block:clamp(4rem,9vw,7.5rem)}
+.kicker{font-weight:500;font-size:.875rem;letter-spacing:.06em;
+  text-transform:uppercase;color:var(--ilhas-grad-start);margin:0}
+h2{font-family:var(--ilhas-font-display);font-weight:600;
+  font-size:clamp(1.75rem,3.2vw,2.4rem);line-height:1.15;letter-spacing:-.02em;
+  color:#fff;margin:.7rem 0 0;max-width:20ch}
+.section-head{margin-bottom:2.5rem}
+
+/* las tarjetas de abajo, para ver el empalme */
+.linaje{list-style:none;margin:2.5rem 0 0;padding:0;display:grid;gap:1.25rem;
+  grid-template-columns:repeat(3,1fr)}
+.tc{background:#171719;border:1px solid rgba(248,250,255,.07);
+  border-radius:14px;padding:1.35rem;min-height:190px}
+.tc__img{height:96px;border-radius:8px;background:#e9edf3;margin-bottom:1rem}
+.tc h3{margin:0;font-family:var(--ilhas-font-display);font-weight:600;
+  font-size:1.0625rem;color:#fff;line-height:1.25}
+.tc time{display:block;margin-top:.4rem;font-size:.875rem;
+  color:var(--ilhas-grad-start)}
+
+/* ==========================================================================
+   LA BANDA DE CIFRAS
+   ==========================================================================
+   Sube desde el hero. Va entre el titular de la sección y las tarjetas: los
+   números dicen a qué escala pasó, las tarjetas enseñan qué fue. En el hero
+   iban chiquitos porque competían con el titular; aquí mandan ellos, así que
+   crecen al doble. */
+.cifras{display:grid;gap:0;
+  border-block:1px solid rgba(248,250,255,.13);
+  padding-block:clamp(1.75rem,3vw,2.5rem)}
+@media (min-width:760px){
+  .cifras{grid-template-columns:repeat(3,1fr)}
+  .cifras__uno{padding-inline:clamp(1.25rem,3vw,2.5rem)}
+  .cifras__uno + .cifras__uno{border-left:1px solid rgba(248,250,255,.13)}
+  .cifras__uno:first-child{padding-left:0}
+  .cifras__uno:last-child{padding-right:0}
+}
+@media (max-width:759px){
+  .cifras{gap:1.5rem}
+}
+/* inline-block: la caja se ciñe al texto. Con `block` el degradado —o
+   cualquier cosa que se recorte sobre la caja— se estira a toda la columna. */
+.cifras__dato{display:block;font-family:var(--ilhas-font-display);
+  font-weight:600;font-size:clamp(2.4rem,4.8vw,3.5rem);line-height:1;
+  letter-spacing:-.035em;color:#fff;white-space:nowrap}
+.cifras__unidad{font-style:normal;color:var(--ilhas-grad-end)}
+/* SIN max-width: la columna del grid ya lo limita. En versalitas «AL MES,
+   mide mucho más de lo que sugiere su cuenta de caracteres, y a 24ch caía en
+   tres líneas mientras «DESARROLLANDO IA» quedaba en una. La fila salía
+   despareja. */
+.cifras__pie{display:block;margin-top:.7rem;font-size:.75rem;
+  letter-spacing:.07em;text-transform:uppercase;line-height:1.45;
+  color:rgba(248,250,255,.62)}
+
+
+</style></head><body>
+
+<!-- Se probaron tres tratamientos y ganó éste:
+     · En tarjetas, las cifras pesaban igual que las TarjetaCaso de abajo y la
+       secci&#243;n se le&#237;a como SEIS tarjetas, tres de ellas con n&#250;meros.
+     · En degradado, repet&#237;a el tratamiento de la barra de stats del hero
+       (12&#215; / 8&#215; / 6-12%) y las dos filas de n&#250;meros compet&#237;an entre s&#237;.
+     Con reglas y n&#250;mero en blanco, la banda se lee como lo que es: el
+     respaldo de las tarjetas, no otra fila de tarjetas. -->
+<section class="section-y v-a">
+  <div class="container">
+    <div class="section-head">
+      <p class="kicker">De d&#243;nde sale el m&#233;todo</p>
+      <h2>Esto ya est&#225; corriendo.</h2>
+    </div>
+
+    <div class="cifras">
+      <div class="cifras__uno">
+        <span class="cifras__dato">+1,000<i class="cifras__unidad"> MDP</i></span>
+        <span class="cifras__pie">al mes, volumen respaldado</span>
+      </div>
+      <div class="cifras__uno">
+        <span class="cifras__dato">6<i class="cifras__unidad">+</i></span>
+        <span class="cifras__pie">startups &#183; infraestructura creada</span>
+      </div>
+      <div class="cifras__uno">
+        <span class="cifras__dato">2016<i class="cifras__unidad">&#8594;</i></span>
+        <span class="cifras__pie">desarrollando IA</span>
+      </div>
+    </div>
+
+    <ul class="linaje">
+      <li class="tc"><div class="tc__img"></div><h3>Conciliaci&#243;n bancaria autom&#225;tica</h3><time>2022</time></li>
+      <li class="tc"><div class="tc__img"></div><h3>Cobranza autom&#225;tica con reglas</h3><time>2026</time></li>
+      <li class="tc"><div class="tc__img"></div><h3>Herramienta de comunicaci&#243;n para avisos espec&#237;ficos</h3><time>2025</time></li>
+    </ul>
+  </div>
+</section>
+
+</body></html>
