@@ -1,0 +1,151 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Ilhas · el hero del home con el loop — referencia medida</title>
+<style>
+@font-face{font-family:"Space Grotesk";src:url(/assets/fonts/space-grotesk-600.woff2) format("woff2");font-weight:600;font-display:swap}
+@font-face{font-family:"Inter";src:url(/assets/fonts/inter-400.woff2) format("woff2");font-weight:400;font-display:swap}
+@font-face{font-family:"Inter";src:url(/assets/fonts/inter-500.woff2) format("woff2");font-weight:500;font-display:swap}
+:root{
+  --ilhas-primary:#7A3CFF; --ilhas-dark:#0E0E0F;
+  --ilhas-grad-start:#55E8FF; --ilhas-grad-end:#A14BFF;
+  --ilhas-font-display:"Space Grotesk",system-ui,sans-serif;
+  --ilhas-font-body:"Inter",system-ui,-apple-system,sans-serif;
+  --ilhas-container:1140px; --ilhas-gutter:clamp(1.25rem,4vw,3rem);
+}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;font-family:var(--ilhas-font-body);background:var(--ilhas-dark);
+  color:rgba(248,250,255,.7);line-height:1.6}
+.text-gradient{background:linear-gradient(100deg,var(--ilhas-grad-start),var(--ilhas-grad-end));
+  -webkit-background-clip:text;background-clip:text;color:transparent}
+.btn{display:inline-flex;align-items:center;justify-content:center;
+  padding:.8rem 1.5rem;border-radius:999px;font-weight:600;font-size:.9375rem;
+  text-decoration:none;border:1px solid transparent}
+.btn-primary{background:var(--ilhas-primary);color:#fff}
+.btn-ghost-oscuro{border-color:rgba(248,250,255,.3);color:#fff}
+
+/* ==========================================================================
+   EL HERO
+   ==========================================================================
+   La estructura NO cambia respecto a lo que ya existe: sigue siendo un hero
+   de una sola capa con el medio sangrando desde la derecha, máscara de
+   disolución y velo de contraste encima. Lo único que cambia es QUÉ va en la
+   ranura del medio —antes la foto de Talent Land, ahora el loop— y el
+   `object-position`, que es lo que hace que funcione.
+
+   Se probó también una variante a dos columnas con el video en su marco.
+   Se descartó: a 534 px de ancho el screencast no se lee, y el bloque
+   desenfocado queda al centro del encuadre convertido en una mancha rosa
+   que es lo primero que ve el ojo. */
+.hero{position:relative;display:flex;align-items:center;min-height:620px;
+  overflow:hidden;background:var(--ilhas-dark)}
+
+/* --- el medio ---
+   ANCLADO AL 100%, no al 18% que llevaba la foto.
+   El loop mide 2.12:1 y la ranura del hero 1.30:1, así que `cover` recorta
+   por los lados. Anclarlo a la derecha hace dos cosas a la vez:
+     1 · entra la cotización COMPLETA, con el «Total» adentro. Al 88% el
+         canto de la pantalla partía el Total, que es justo lo que la demo
+         prueba.
+     2 · la ventana de Vista Previa desenfocada vive en el extremo IZQUIERDO
+         del cuadro, así que sale de encuadre por completo. El desenfoque
+         sigue en el archivo —eso no se toca— pero en el hero nunca se ve. */
+.hero__medio{position:absolute;top:0;right:0;z-index:1;width:56%;height:100%;
+  -webkit-mask-image:linear-gradient(to right,transparent 0%,rgba(0,0,0,.55) 14%,#000 26%);
+  mask-image:linear-gradient(to right,transparent 0%,rgba(0,0,0,.55) 14%,#000 26%)}
+.hero__medio video,
+.hero__medio img{width:100%;height:100%;object-fit:cover;object-position:100% 50%;
+  display:block}
+
+/* --- el velo: idéntico al que ya está en producción, no se toca --- */
+.hero__velo{position:absolute;inset:0;z-index:2;
+  background:linear-gradient(95deg,
+    rgba(14,14,15,.98) 0%, rgba(14,14,15,.90) 42%,
+    rgba(14,14,15,.30) 52%, rgba(14,14,15,.02) 66%,
+    rgba(14,14,15,0) 100%)}
+
+.hero__inner{position:relative;z-index:3;width:100%;
+  max-width:var(--ilhas-container);margin-inline:auto;
+  padding-inline:var(--ilhas-gutter)}
+.hero h1{font-family:var(--ilhas-font-display);font-weight:600;
+  font-size:clamp(2.1rem,4.6vw,3.4rem);line-height:1.08;letter-spacing:-.03em;
+  color:#fff;margin:0;max-width:19ch}
+.hero__lead{margin:1.4rem 0 0;font-size:1.0625rem;max-width:44ch;
+  color:rgba(248,250,255,.74)}
+.hero__ctas{display:flex;flex-wrap:wrap;gap:.75rem;margin-top:2rem}
+.hero__kpis{display:flex;flex-wrap:wrap;gap:2.5rem;margin-top:3rem}
+.kpi{text-shadow:0 1px 12px rgba(14,14,15,.95)}
+.kpi b{display:block;font-family:var(--ilhas-font-display);font-weight:600;
+  font-size:1.9rem;line-height:1;color:#fff}
+.kpi span{display:block;margin-top:.35rem;font-size:.8125rem;
+  color:rgba(248,250,255,.55);max-width:20ch}
+
+/* --- MOVIMIENTO REDUCIDO ---
+   Obligatorio, y no es opcional: un loop que arranca solo y no para es
+   exactamente lo que esta media query existe para apagar. Con
+   prefers-reduced-motion el video se esconde y se pinta el póster, que por
+   eso NO es el primer cuadro sino el de la cotización terminada: si alguien
+   nunca ve el video, tiene que quedarse con el resultado, no con la pantalla
+   vacía del arranque. */
+/* 0,2,0 para que le gane a `.hero__medio img`, que también es 0,2,0 pero va
+   antes. Con `.hero__poster` a secas (0,1,0) el póster se pintaba SIEMPRE,
+   debajo del video: en móvil salían los dos apilados. */
+.hero__medio .hero__poster{display:none}
+@media (prefers-reduced-motion: reduce){
+  .hero__medio video{display:none}
+  .hero__medio .hero__poster{display:block}
+}
+
+@media (max-width:899px){
+  .hero{min-height:0;flex-direction:column;align-items:stretch;
+    padding-block:2.5rem 0}
+  .hero__inner{order:1}
+  /* El recorte se MANTIENE en móvil, solo cambia de forma.
+     A ancho completo y sin recortar pasan las dos cosas que no queremos: el
+     screencast se vuelve una tira de 390 x 184 donde no se lee nada, y el
+     bloque desenfocado —que en escritorio queda fuera de encuadre— vuelve a
+     entrar convertido en una mancha rosa. Con aspect-ratio 4/3 y el mismo
+     anclaje a la derecha, en móvil se ve la cotización y nada más. */
+  .hero__medio{position:relative;order:2;width:100%;height:auto;
+    aspect-ratio:4/3;margin-top:2.25rem;
+    -webkit-mask-image:none;mask-image:none;
+    border-radius:12px;overflow:hidden}
+  .hero__medio video,.hero__medio img{height:100%}
+  .hero__velo{display:none}
+  .hero__kpis{gap:1.5rem;margin-top:2.25rem}
+  .kpi{text-shadow:none}
+}
+</style></head><body>
+
+<section class="hero">
+  <div class="hero__medio" aria-hidden="true">
+    <video
+      poster="/assets/video/home-hero-loop.jpg"
+      autoplay muted loop playsinline preload="metadata"
+      width="1600" height="754">
+      <source src="/assets/video/home-hero-loop.webm" type="video/webm">
+      <source src="/assets/video/home-hero-loop.mp4" type="video/mp4">
+    </video>
+    <img class="hero__poster" src="/assets/video/home-hero-loop.jpg" alt="" width="1600" height="754">
+  </div>
+  <div class="hero__velo" aria-hidden="true"></div>
+
+  <div class="hero__inner">
+    <h1>Tu primer proceso corriendo <span class="text-gradient">con IA</span>.</h1>
+    <p class="hero__lead">
+      Lo que hoy le toma horas a alguien de tu equipo, hecho por un sistema que
+      tú entiendes y que corre solo. Te lo enseñamos, o te lo dejamos corriendo.
+    </p>
+    <div class="hero__ctas">
+      <a href="/finanzas" class="btn btn-primary">Quiero aprenderlo</a>
+      <a href="/soluciones" class="btn btn-ghost-oscuro">Quiero implementarlo</a>
+    </div>
+    <div class="hero__kpis">
+      <div class="kpi"><b>+10,000</b><span>alumnos formados</span></div>
+      <div class="kpi"><b>8 años</b><span>construyendo con IA</span></div>
+      <div class="kpi"><b>13 áreas</b><span>de la empresa cubiertas</span></div>
+    </div>
+  </div>
+</section>
+
+<div style="height:60px"></div>
+</body></html>
