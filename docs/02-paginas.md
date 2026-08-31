@@ -18,12 +18,30 @@ Página por página: su único trabajo, quién llega, los bloques en orden, el C
 Frase de poder de 12–16 palabras + subfrase de una línea + los dos carriles como CTA doble.
 Sin imagen de stock. Si hay algo visual, que sea el gradiente de marca o el isotipo a escala grande.
 
-> **Resuelto el 25–26 ago 2026.** La línea de identidad está escrita y en producción:
-> *"Tecnología y experiencia de **clase mundial**. Accesible para tu empresa **con IA**."*
-> El hero además dejó de ser abstracto: lleva la foto de Jorge en Talent Land, el
-> riel de tres cifras atribuidas y la banda de "hablando de IA en público desde
-> 2017". Ver `prompts/iteracion-3-hero.md`. **No lo reabras**: las tres candidatas
-> que vivían aquí ya se descartaron.
+> **Reescrito el 31 ago 2026** (`prompts/iteracion-19-el-hero-corriendo.md`).
+> El titular es *"Tu primer proceso corriendo **con IA**."*, elegido por Jorge, y
+> lo que se ve detrás **ya no es una foto: es el proceso corriendo**. El loop
+> (`home-hero-loop`) va hasta que sale la cotización con su Total.
+>
+> El `object-position: 100% 50%` no es cosmético y no se toca sin medir: al 100%
+> entra el «Total» completo —lo único que la demo prueba— y la ventana que lleva
+> el bloque desenfocado queda fuera de encuadre. Se probó al 88% y el canto
+> partía el Total en dos.
+>
+> ⚠️ **El subtítulo de hoy es una propuesta, no copy aprobado.** Falta el visto
+> bueno de Jorge.
+>
+> Se conservan el riel de tres cifras atribuidas y los dos CTA. **La banda de
+> "hablando de IA en público desde 2017" salió**: sus tres hitos viven completos
+> en `/nosotros` § En público desde la iteración 18, así que era el índice de una
+> sección que entonces no existía. En su hueco entró la barra de stats (§01b).
+> **No lo reabras**: las tres candidatas de identidad ya se descartaron.
+
+**01b · La barra de stats**
+Tres cifras de lo que hace el método —**12×** más rápido · **8×** menos costo que humanos · **6-12%** más ingresos—, en degradado y grandes.
+Va **pegada al hero**, sin `section-y` y sin margen: los dos bloques oscuros se leen como uno solo y el corte a blanco pasa una sola vez, abajo.
+⚠️ **No confundir con el riel de KPI del hero.** Aquéllos son chicos y apagados y dicen **quiénes son** (+1,000 MDP, 6+ startups, 2016); éstos son grandes y dicen **qué hace el método**. Si se igualan los tamaños se leen como seis números sueltos y ninguno pega.
+⚠️ El copy es de Jorge y va literal. Sin asterisco, sin nota al pie y sin fuente: eso lo decide él.
 
 **02 · El hueco**
 El 95% de los proyectos de IA empresarial fracasan — no por la tecnología, por falta de criterio. GIGO²: si le metes basura al modelo, sale basura al cuadrado. La IA amplifica el input, así que el fundamento importa **más**, no menos.

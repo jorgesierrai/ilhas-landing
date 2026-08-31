@@ -164,18 +164,15 @@ export const MEDIOS: SlotMedio[] = [
   {
     id: "home-hero-conferencia",
     tipo: "foto",
-    // Compartida desde la iteración 18: además del hero del home, es la
-    // segunda foto de Talent Land en /nosotros § En público. Mismo trato que
-    // las capturas de producto.
-    pagina: "compartido",
-    seccion: "§01 Hero del home · /nosotros § En público",
+    pagina: "nosotros",
+    seccion: "§ En público · segunda foto de Talent Land",
     prioridad: 1,
     objecion: "«¿Quién eres tú?» · «¿Esto es real o es una landing más?»",
     alt: "Jorge Sierra en el escenario de Talent Land, frente a una pantalla que pregunta «¿Quién sea puede crear inteligencia artificial?»",
     caption: "Talent Land · abril 2018",
     pesoMaxKB: 400,
     notas:
-      "Recorte propio: NO es el mismo archivo que nosotros-conferencia. En el hero del home la foto se enmascara y sangra desde la derecha, así que el encuadre tiene que aguantar que el 26% izquierdo desaparezca. Es el LCP del home — nunca lazy. Rehecho el 25 ago desde nosotros-conferencia-detalle.jpg (extract 300,180,1300x1060) porque el recorte anterior cortaba la palabra «crear» de la pregunta; lleva linear(1,+28) para levantar sombras sin quemar la pantalla, que es la parte más clara. En /nosotros va al lado de nosotros-conferencia (la sala llena): ésa prueba la escala, ésta prueba de qué hablaba — se lee la pregunta en pantalla. Ahí el caption va apagado, porque el pie es compartido por las dos.",
+      "Recorte propio: NO es el mismo archivo que nosotros-conferencia. En el hero del home la foto se enmascara y sangra desde la derecha, así que el encuadre tiene que aguantar que el 26% izquierdo desaparezca. Es el LCP del home — nunca lazy. Rehecho el 25 ago desde nosotros-conferencia-detalle.jpg (extract 300,180,1300x1060) porque el recorte anterior cortaba la palabra «crear» de la pregunta; lleva linear(1,+28) para levantar sombras sin quemar la pantalla, que es la parte más clara. En /nosotros va al lado de nosotros-conferencia (la sala llena): ésa prueba la escala, ésta prueba de qué hablaba — se lee la pregunta en pantalla. Ahí el caption va apagado, porque el pie es compartido por las dos. Desde el 31 ago 2026 ya NO es el hero del home —ahí va home-hero-loop— y vuelve a ser exclusiva de /nosotros. El recorte se conserva TAL CUAL: en /nosotros es la foto que prueba de qué hablaba (se lee la pregunta en pantalla) al lado de nosotros-conferencia, que prueba la escala. Lo del enmascarado y el 26% izquierdo ya no aplica.",
   },
 
   // --- El sistema de agentes (A) · el bloque más importante de la lista
@@ -373,9 +370,8 @@ export const MEDIOS: SlotMedio[] = [
     alt: "",
     duracion: "8.2 s",
     pesoMaxKB: 1536,
-    sinUsar: true,
     notas:
-      "EL MATERIAL YA ESTÁ (31 ago 2026), FALTA CABLEARLO — es la iteración 19. Hoy el hero lo sigue ocupando la foto de Talent Land (home-hero-conferencia), por eso la marca `sinUsar` se queda hasta que el hero cambie. Qué muestra: el proceso corriendo de punta a punta hasta que sale la cotización. 1600×754 · 8.2 s · sin audio · mp4 150 KB · webm 124 KB. RECORTADO al tramo Morgan (0-4.78 s) más 3.4 s de congelado sobre la cotización terminada: la segunda demo —la de aluminio— se cayó porque ocupaba más de la mitad del loop, es una hoja de cálculo que sobre el velo del hero queda ilegible, y no prueba lo que dice el titular. El material completo sigue en el original por si va a /soluciones. REDACTADO EN TRES CAJAS, activas en todo el clip recortado: (1) la línea fiscal del PDF y (2) su columna DESCRIPCIÓN, desde t=3.10; (3) la ventana de Vista Previa abajo a la izquierda, x 0-472 y 502-754, desde t=0. En el hero además nunca se ve la (3): el object-position al 100% la deja fuera de encuadre — segunda línea de defensa, no sustituto. El original dejaba legibles el RFC y el domicilio fiscal del cliente, y el protocolo completo de quimioterapia DOS VECES: en el PDF y, durante los primeros cinco segundos, en la indicación médica de la ventana de Vista Previa. La segunda se pasó por alto en la primera pasada. Se dejan a propósito visibles el nombre de la clínica (ya acreditada en el sitio) y todos los importes, que son lo que la demo prueba. NO subas otra versión sin repetir las tres cajas. Decorativo: aria-hidden.",
+      "CABLEADO EL 31 AGO 2026 (iteración 19): es el hero del home y sustituyó a la foto de Talent Land. Qué muestra: el proceso corriendo de punta a punta hasta que sale la cotización. 1600×754 · 8.2 s · sin audio · mp4 150 KB · webm 124 KB. RECORTADO al tramo Morgan (0-4.78 s) más 3.4 s de congelado sobre la cotización terminada: la segunda demo —la de aluminio— se cayó porque ocupaba más de la mitad del loop, es una hoja de cálculo que sobre el velo del hero queda ilegible, y no prueba lo que dice el titular. El material completo sigue en el original por si va a /soluciones. REDACTADO EN TRES CAJAS, activas en todo el clip recortado: (1) la línea fiscal del PDF y (2) su columna DESCRIPCIÓN, desde t=3.10; (3) la ventana de Vista Previa abajo a la izquierda, x 0-472 y 502-754, desde t=0. En el hero además nunca se ve la (3): el object-position al 100% la deja fuera de encuadre — segunda línea de defensa, no sustituto. El original dejaba legibles el RFC y el domicilio fiscal del cliente, y el protocolo completo de quimioterapia DOS VECES: en el PDF y, durante los primeros cinco segundos, en la indicación médica de la ventana de Vista Previa. La segunda se pasó por alto en la primera pasada. Se dejan a propósito visibles el nombre de la clínica (ya acreditada en el sitio) y todos los importes, que son lo que la demo prueba. NO subas otra versión sin repetir las tres cajas. Decorativo: aria-hidden.",
   },
   {
     id: "soluciones-hero-loop",

@@ -97,7 +97,7 @@ Las tres primeras cambian lo que se ve en producción. Revísalas.
 
 2. **Las tarjetas de `/soluciones` §03 pasaron de blanco opaco a la tarjeta oscura de `.card`.** Sale de la instrucción "usa `.card` de `base.css`". Efecto lateral bueno: las **mismas seis tarjetas** ahora se ven igual en el home y en `/soluciones`; antes eran blancas en una página y oscuras en la otra.
 
-3. **La banda de autoridad del home está condicionada al clip de radio.** Se enciende sola cuando exista `nosotros-radio-2018`. Se hizo así porque su tercer ítem ("6 productos financieros construidos de cero a uno") **duplica el stat rail del hero** — hay que decidir si conviven o si uno reemplaza al otro. Para encenderla ya: quita `hayMedio("nosotros-radio-2018") ||` en `src/pages/index.astro`.
+3. ~~**La banda de autoridad del home está condicionada al clip de radio.**~~ **Resuelto el 31 ago 2026 (iteración 19): la banda salió del home.** Los tres hitos que resumía viven completos en `/nosotros` § En público desde la iteración 18 — era el índice de una sección que entonces no existía. El componente `BandaAutoridad.astro` se queda en el repo por si vuelve en otra página. En su hueco entró la barra de stats.
 
 4. **Un noveno componente, `Icono.astro`.** El brief lista ocho; las 13 ranuras de íconos necesitaban dónde vivir.
 

@@ -32,6 +32,15 @@ interface Props {
    * que cambia es que el buscador no las indexa.
    */
   noindex?: boolean;
+  /**
+   * Tarjeta para redes (og:image). Ruta absoluta desde la raíz del sitio.
+   *
+   * El default es la portada. Una página puede poner la suya sin rehacer nada:
+   * la etiqueta se resuelve a URL ABSOLUTA con `new URL(imagen, Astro.site)`,
+   * porque con una ruta relativa ni Facebook ni LinkedIn ni WhatsApp la
+   * encuentran y la tarjeta sale sin imagen.
+   */
+  imagen?: string;
 }
 
 const {
@@ -39,6 +48,7 @@ const {
   description,
   heroOscuro = false,
   noindex = false,
+  imagen = "/assets/og/portada.jpg",
 } = Astro.props;
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 const pageTitle = title === "Ilhas" ? title : `${title} · Ilhas`;
@@ -58,10 +68,33 @@ const pageTitle = title === "Ilhas" ? title : `${title} · Ilhas`;
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Ilhas" />
     <meta property="og:locale" content="es_LA" />
-    <meta property="og:title" content={title} />
+    {/* El home pasa title="Ilhas" para que su <title> no salga «Ilhas · Ilhas».
+        Eso está bien para la pestaña, pero de titular de una tarjeta compartida
+        «Ilhas» a secas no dice nada, así que ahí sí lleva la frase. */}
+    <meta
+      property="og:title"
+      content={
+        pageTitle === "Ilhas"
+          ? "Ilhas — tu primer proceso corriendo con IA"
+          : pageTitle
+      }
+    />
     <meta property="og:description" content={description} />
+    {/* og:url sale de canonicalURL y es DISTINTA en cada página. No la fijes a
+        https://ilhas.ai: compartir /finanzas reportaría la portada. Lo mismo el
+        canonical de arriba. Los dos están bien. */}
     <meta property="og:url" content={canonicalURL} />
-    <meta name="twitter:card" content="summary" />
+    <meta property="og:image" content={new URL(imagen, Astro.site)} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta
+      property="og:image:alt"
+      content="Ilhas — tu primer proceso corriendo con IA"
+    />
+    {/* `summary_large_image` y no `summary`: con `summary` la tarjeta sale
+        cuadrada y recorta una imagen de 1200×630 por los lados, o sea que se
+        pierde la cotización, que es la mitad del diseño. */}
+    <meta name="twitter:card" content="summary_large_image" />
 
     <!-- Favicon, generado desde public/assets/logo/logo-mark.svg -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />

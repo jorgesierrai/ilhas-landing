@@ -1,20 +1,18 @@
 ---
-import { Image } from "astro:assets";
 import Base from "../layouts/Base.astro";
 import Bifurcacion from "../components/Bifurcacion.astro";
 import BandaHilas from "../components/BandaHilas.astro";
-import BandaAutoridad from "../components/medios/BandaAutoridad.astro";
 import TarjetaCaso from "../components/medios/TarjetaCaso.astro";
 import Stat from "../components/medios/Stat.astro";
-import { buscarImagen, mostrar } from "../lib/medios";
+import { mostrar } from "../lib/medios";
 import { porId } from "../data/medios";
 import { PRODUCTOS } from "../data/productos";
 
-// La foto del hero va por el sistema de ranuras pero NO por Captura.astro:
-// ese componente mete <figure> + <figcaption> y loading="lazy", y las tres
-// cosas pelean con un hero absoluto que además es el LCP del home.
-const fotoHero = buscarImagen("home-hero-conferencia");
-const altHero = porId("home-hero-conferencia")!.alt;
+// El hero lo ocupa el LOOP desde el 31 ago 2026 (iteración 19), no la foto de
+// Talent Land. Va con rutas absolutas de public/ y no por `astro:assets`: los
+// loops no pasan por el optimizador. La ranura sigue siendo la fuente de verdad
+// de si el medio existe o no.
+const LOOP = "/assets/video/home-hero-loop";
 
 const pasos = [
   { letra: "I", paso: "Identificar", linea: "Cómo se mueve el dinero, dónde se fuga y desde qué número mides." },
@@ -85,16 +83,43 @@ const kpis = [
          Referencia: medios/hero-b2-referencia.html · las cuatro decisiones de
          CSS están numeradas en el <style> de abajo. -->
     <section class="hero">
+      {/* El loop, no una foto. La estructura del hero NO cambia: sigue siendo
+          una capa con el medio sangrando desde la derecha, máscara de
+          disolución y velo encima. Se probó a dos columnas y se descartó — a
+          534px el screencast no se lee.
+
+          Los cuatro atributos del <video> son obligatorios y ninguno sobra:
+          `muted` sin `autoplay` no arranca; `autoplay` sin `muted` lo bloquea
+          el navegador; sin `playsinline` iOS lo abre a pantalla completa; sin
+          `loop` se queda congelado a los 8 segundos.
+
+          `aria-hidden` va en el CONTENEDOR, no en el <video>: el loop es
+          decorativo —la ranura tiene alt: ""— y así el lector de pantalla se
+          salta también el póster de respaldo.
+
+          Nada de loading="lazy" ni preload="none": esto es el LCP. */}
       {
-        fotoHero && (
-          <div class="hero__foto">
-            <Image
-              src={fotoHero}
-              alt={altHero}
-              widths={[900, 1600]}
-              sizes="(max-width: 899px) 100vw, 56vw"
-              loading="eager"
-              fetchpriority="high"
+        mostrar("home-hero-loop") && (
+          <div class="hero__medio" aria-hidden="true">
+            <video
+              poster={`${LOOP}.jpg`}
+              autoplay
+              muted
+              loop
+              playsinline
+              preload="metadata"
+              width="1600"
+              height="754"
+            >
+              <source src={`${LOOP}.webm`} type="video/webm" />
+              <source src={`${LOOP}.mp4`} type="video/mp4" />
+            </video>
+            <img
+              class="hero__poster"
+              src={`${LOOP}.jpg`}
+              alt=""
+              width="1600"
+              height="754"
             />
           </div>
         )
@@ -102,17 +127,19 @@ const kpis = [
       <div class="hero__velo" aria-hidden="true"></div>
 
       <div class="hero__inner">
+        {/* Titular elegido por Jorge el 31 ago 2026. Va literal. */}
         <h1>
-          Tecnología y experiencia de{" "}
-          <span class="text-gradient">clase mundial</span>. Accesible para tu
-          empresa <span class="text-gradient">con IA</span>.
+          Tu primer proceso corriendo <span class="text-gradient">con IA</span>.
         </h1>
 
+        {/* ⚠️ SUBTÍTULO PENDIENTE DEL VISTO BUENO DE JORGE. Es una propuesta,
+            no copy aprobado: el anterior hablaba de infraestructura crítica y
+            empresas unicornio, que era el pie del titular viejo, y no podía
+            quedarse. Está puesto para que la página no quede coja. */}
         <p class="hero__lead">
-          Convertimos años de experiencia creando infraestructura crítica en un
-          método probado. Todo lo que aprendimos escalando productos de millones
-          de dólares y empresas unicornio, ahora adaptado para potenciar tus
-          ventas, finanzas y operaciones.
+          Lo que hoy le toma horas a alguien de tu equipo, hecho por un sistema
+          que tú entiendes y que corre solo. Te lo enseñamos, o te lo dejamos
+          corriendo.
         </p>
 
         <div class="hero__ctas">
@@ -133,30 +160,48 @@ const kpis = [
           }
         </div>
       </div>
-
-      {fotoHero && <p class="hero__credito">Talent Land · abril 2018</p>}
     </section>
 
 
-    {/* Banda de autoridad — medios/BRIEF-historial.md §3. Tira delgada, no
-        una sección, y SIN los tres videos: el home tiene ocho segundos, y
-        meterle la prueba completa lo mata y hace que no se vea ninguno. La
-        banda vende en dos segundos y manda a /nosotros a quien la quiera.
+    {/* LA BARRA DE STATS · 31 ago 2026.
+        Ocupa exactamente el hueco que deja la banda de autoridad al salir, así
+        que el home no crece por meterla.
 
-        Va pegada al hero, arriba de la banda Hilas. La iteración 7 probó el
-        orden inverso y Jorge lo revirtió el 27 ago 2026: la trayectoria se
-        queda donde estaba y el juego del nombre entra después. */}
-    <div class="container banda-autoridad">
-      <BandaAutoridad
-        titulo="Hablando de IA en público desde 2017."
-        items={[
-          { año: "nov 2017", etiqueta: "conferencia" },
-          { año: "ene 2018", etiqueta: "radio nacional" },
-          { año: "abr 2018", etiqueta: "Talent Land" },
-        ]}
-        href="/nosotros"
-      />
-    </div>
+        Va PEGADA al hero: sin `section-y` y sin margen. Los dos bloques
+        oscuros tienen que leerse como uno solo y el corte a blanco pasa una
+        sola vez, abajo. Se probó en tarjeta blanca flotante y obligaba a un
+        segundo corte de fondo —oscuro, blanco, oscuro, blanco— en 200px.
+
+        El copy es de Jorge y va LITERAL. Sin asteriscos, sin notas al pie y
+        sin fuente: eso es decisión suya, no mía.
+
+        `aria-label` porque la sección no tiene encabezado; sin él es una
+        región anónima en el árbol de accesibilidad.
+
+        La banda de autoridad se fue de aquí y no se pierde nada: los tres
+        hitos que resumía —nov 2017, ene 2018, abr 2018— son los tres momentos
+        que la iteración 18 desplegó completos en /nosotros § En público, con
+        sus medios y sus pies. Era el índice de una sección que entonces no
+        existía. El COMPONENTE se queda en el repo. */}
+    <section class="stats" aria-label="Resultados del método">
+      <div class="stats__reja">
+        <div class="stats__uno">
+          {/* El signo es × U+00D7, el de MULTIPLICACIÓN — no una equis
+              minúscula, que en la tipografía de display se ve torcida al lado
+              de la cifra. Va literal, como los acentos del resto del sitio. */}
+          <span class="stats__cifra">12×</span>
+          <span class="stats__pie">más rápido</span>
+        </div>
+        <div class="stats__uno">
+          <span class="stats__cifra">8×</span>
+          <span class="stats__pie">menos costo que humanos</span>
+        </div>
+        <div class="stats__uno">
+          <span class="stats__cifra">6-12%</span>
+          <span class="stats__pie">más ingresos</span>
+        </div>
+      </div>
+    </section>
 
     {/* La banda Ilhas → Hilas. El hero NO se toca.
         Aquí solo se ve el juego; se explica en /metodo §09. */}
@@ -344,15 +389,10 @@ const kpis = [
     background: var(--ilhas-dark);
   }
 
-  /* 1 · La foto SANGRA desde la derecha y se disuelve hacia la izquierda con
+  /* 1 · El medio SANGRA desde la derecha y se disuelve hacia la izquierda con
         máscara. No es una caja con una sombra encima: es la imagen misma
-        desapareciendo.
-        La disolución termina al 26% y no al 58%: con el recorte anterior
-        Jorge caía en el 12-23% del ancho, o sea que la máscara lo estaba
-        pintando al 23-44% de opacidad — ESA era la razón de que se viera
-        fantasma, no el velo. Ahora el recorte lo deja al 28-38%, ya en la
-        zona sólida, y lo que se disuelve es pared vacía. */
-  .hero__foto {
+        desapareciendo. La disolución termina al 26%. */
+  .hero__medio {
     position: absolute;
     top: 0;
     right: 0;
@@ -373,11 +413,52 @@ const kpis = [
     );
   }
 
-  .hero__foto :global(img) {
+  /* AL 100%, no al 18% que llevaba la foto. El loop mide 2.12:1 y la ranura
+     del hero 1.30:1, así que `cover` recorta por los lados, y de qué lado
+     recorte decide dos cosas:
+
+     1 · Entra la cotización COMPLETA, con el «Total» adentro. Se probó al 88%
+         y el canto de la pantalla partía el Total en dos — y el Total es lo
+         único que la demo prueba.
+     2 · La ventana de Vista Previa, que lleva la caja de desenfoque sobre la
+         indicación médica, vive en el extremo IZQUIERDO del cuadro. Anclado a
+         la derecha nunca aparece.
+
+     El desenfoque del ARCHIVO no se toca por esto: que aquí no se vea es una
+     segunda línea de defensa, no un sustituto — el mismo archivo se usa de
+     póster y de og:image. */
+  .hero__medio video,
+  .hero__medio img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: 18% 40%;
+    object-position: 100% 50%;
+    display: block;
+  }
+
+  /* MOVIMIENTO REDUCIDO. Un loop que arranca solo y no para es exactamente lo
+     que esta media query existe para apagar. El póster no es el primer cuadro
+     sino el de la cotización terminada: si alguien nunca ve el video, tiene
+     que quedarse con el resultado y no con la pantalla vacía del arranque.
+
+     Va scopeado a `.hero__medio .hero__poster` (0,2,0) y NO a `.hero__poster`
+     a secas (0,1,0): así le gana a `.hero__medio img`, que también es 0,2,0
+     pero va antes. Con la versión corta el póster se pintaba SIEMPRE, debajo
+     del video, y en móvil salían los dos apilados. Es la misma clase de bug
+     que el del pie en la iteración 17: no rompe el build y no sale en ningún
+     grep — solo se ve mirando la página. */
+  .hero__medio .hero__poster {
+    display: none;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero__medio video {
+      display: none;
+    }
+
+    .hero__medio .hero__poster {
+      display: block;
+    }
   }
 
   /* 2 · Velo de contraste, para que el texto pase AA sobre cualquier zona de
@@ -444,7 +525,9 @@ const kpis = [
 
   .hero__lead {
     margin-top: 1.1rem;
-    max-width: 46ch;
+    /* 44ch y no 46: con el texto nuevo, a 46ch la tercera línea quedaba de
+       tres palabras. */
+    max-width: 44ch;
     font-size: 1.0625rem;
     /* .70 mide 9.6:1 sobre tinta. */
     color: rgba(255, 255, 255, 0.7);
@@ -487,18 +570,6 @@ const kpis = [
     text-shadow: 0 1px 12px rgba(14, 14, 15, 0.9);
   }
 
-  .hero__credito {
-    position: absolute;
-    left: var(--ilhas-gutter);
-    bottom: 18px;
-    z-index: 3;
-    max-width: none;
-    font-size: 0.75rem;
-    /* .46 y no el .38 de la referencia: a 12 px, .38 mide 3.55:1 y falla AA.
-       .46 mide 4.68:1. Sigue siendo blanco con opacidad, no un color nuevo. */
-    color: rgba(255, 255, 255, 0.46);
-  }
-
   /* Móvil: la foto pasa a ser una banda arriba y el texto queda abajo. Nunca
      texto encima de la foto en pantallas angostas — ahí no hay ancho
      suficiente para que la máscara separe una cosa de la otra. */
@@ -507,18 +578,35 @@ const kpis = [
       min-height: 0;
       flex-direction: column;
       align-items: stretch;
+      padding-block: 2.5rem 0;
     }
 
-    .hero__foto {
+    /* El recorte se MANTIENE en móvil, solo cambia de forma. A ancho completo
+       y sin recortar pasan las dos cosas que no queremos: el screencast se
+       vuelve una tira de 390×184 donde no se lee nada, y el bloque desenfocado
+       —que en escritorio queda fuera de encuadre— vuelve a entrar convertido
+       en una mancha rosa. Con aspect-ratio 4/3 y el mismo anclaje a la
+       derecha, en móvil se ve la cotización y nada más. */
+    .hero__medio {
       position: relative;
+      order: 2;
       width: 100%;
-      height: 240px;
-      -webkit-mask-image: linear-gradient(to bottom, #000 60%, transparent 100%);
-      mask-image: linear-gradient(to bottom, #000 60%, transparent 100%);
+      height: auto;
+      aspect-ratio: 4 / 3;
+      margin-top: 2.25rem;
+      -webkit-mask-image: none;
+      mask-image: none;
+      border-radius: 12px;
+      overflow: hidden;
     }
 
-    .hero__foto :global(img) {
-      object-position: 22% 40%;
+    .hero__medio video,
+    .hero__medio img {
+      height: 100%;
+    }
+
+    .hero__inner {
+      order: 1;
     }
 
     .hero__velo {
@@ -532,23 +620,111 @@ const kpis = [
     .hero__kpis {
       gap: 1.5rem;
     }
+  }
 
-    .hero__credito {
-      position: static;
-      margin-top: 1.5rem;
-      padding-inline: 0;
+  /* ===================================================================
+     LA BARRA DE STATS — pegada al hero
+     ===================================================================
+     Oscura y no en tarjeta blanca flotante: la tarjeta obliga a un segundo
+     corte de fondo —oscuro, blanco, oscuro, blanco— en 200px, y encima los
+     números en degradado pierden fuerza sobre blanco. Con la banda oscura el
+     hero se prolonga y el corte a blanco pasa una sola vez, abajo.
+
+     CUIDADO con confundirla con los KPI del hero: son dos cosas distintas y
+     por eso pesan distinto. Los del hero son chicos y apagados y dicen QUIÉNES
+     SON (+1,000 MDP, 6+ startups, 2016). Éstos son grandes y en degradado y
+     dicen QUÉ HACE EL MÉTODO. Si igualas los tamaños se leen como seis números
+     sueltos y ninguno pega. No los muevas de una a otra.
+     =================================================================== */
+  .stats {
+    background: var(--ilhas-dark);
+    position: relative;
+    padding-block: clamp(2.75rem, 5vw, 3.75rem);
+  }
+
+  .stats::before {
+    content: "";
+    position: absolute;
+    inset: 0 0 auto 0;
+    height: 1px;
+    background: linear-gradient(
+      to right,
+      transparent,
+      rgba(248, 250, 255, 0.22) 22%,
+      rgba(248, 250, 255, 0.22) 78%,
+      transparent
+    );
+  }
+
+  .stats__reja {
+    width: 100%;
+    max-width: var(--ilhas-container);
+    margin-inline: auto;
+    padding-inline: var(--ilhas-gutter);
+    display: grid;
+    gap: 2.25rem;
+  }
+
+  /* `inline-block`, NO `block`. Con `display:block` la caja de la cifra mide
+     toda la columna, y como `background-clip:text` recorta sobre la CAJA y no
+     sobre el texto, «12×» alcanzaba nada más el arranque cian del degradado
+     mientras «6-12%» sí lo recorría entero: los tres números salían de colores
+     distintos sin que nadie lo hubiera pedido. Con `inline-block` la caja se
+     ciñe al texto y los tres recorren el mismo degradado completo. */
+  .stats__cifra {
+    display: inline-block;
+    font-family: var(--ilhas-font-display);
+    font-weight: 600;
+    font-size: clamp(2.75rem, 6.4vw, 4.25rem);
+    line-height: 0.95;
+    letter-spacing: -0.04em;
+    background: linear-gradient(
+      100deg,
+      var(--ilhas-grad-start),
+      var(--ilhas-grad-end)
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  /* 24ch y no 16: «menos costo que humanos» mide 24 caracteres y a 16ch caía
+     en dos líneas mientras las otras dos quedaban en una. La fila salía
+     despareja y el número de en medio se veía hundido. */
+  .stats__pie {
+    display: block;
+    margin-top: 0.7rem;
+    font-size: 1.0625rem;
+    font-weight: 500;
+    color: rgba(248, 250, 255, 0.82);
+    max-width: 24ch;
+  }
+
+  @media (min-width: 760px) {
+    .stats__reja {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0;
+    }
+
+    .stats__uno {
+      padding-inline: clamp(1.25rem, 3vw, 2.75rem);
+    }
+
+    .stats__uno + .stats__uno {
+      border-left: 1px solid rgba(248, 250, 255, 0.13);
+    }
+
+    .stats__uno:first-child {
+      padding-left: 0;
+    }
+
+    .stats__uno:last-child {
+      padding-right: 0;
     }
   }
 
   section > .container.prose > p:not(.kicker):not(.lead) {
     margin-top: 1.25rem;
-  }
-
-  /* --- Banda de autoridad --- */
-  /* Corto: arriba tiene el hero, no otra tira. El aire que separa esta tira de
-     la banda Hilas lo pone la banda, con su propio margen. */
-  .banda-autoridad {
-    margin-top: 0.5rem;
   }
 
   /* --- 02 · El hueco: causa, mapa y prueba ---

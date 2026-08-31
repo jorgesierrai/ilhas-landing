@@ -38,13 +38,13 @@ Aparte del hub viven `/terminos`, `/privacidad` y `/cookies`. **No cuentan como 
 
 ## Estado del repositorio
 
-*Actualizado: 30 ago 2026 (iteración 18).*
+*Actualizado: 31 ago 2026 (iteración 19).*
 
 > **Este bloque se actualiza en cada iteración, no al final.** Es lo primero que
 > lee una sesión nueva; si miente, la sesión construye sobre una foto vieja. Lo
 > mismo aplica a `medios/ESTADO.md`. Ver el checklist de abajo.
 
-- Rama de trabajo: **`aire-y-autoridad`**, que sale de `pie-y-legales`.
+- Rama de trabajo: **`hero-corriendo`**, que sale de `aire-y-autoridad`.
 - **Dos PRs abiertos sin mergear.** Hasta que entren, `main` no tiene nada de las
   iteraciones 10 a 17:
   - **#17 · `cabeceras-vercel`** — las cabeceras de seguridad. **`public/_headers`
@@ -60,7 +60,8 @@ Aparte del hub viven `/terminos`, `/privacidad` y `/cookies`. **No cuentan como 
   (cirugía de copy) · 10 (productos) · 11 (capas y el experimento como figura) ·
   12 (`/finanzas`) · 13 (redes) · 14 (distinción del papá) · 15 (credenciales del
   hijo) · 16 (el mapa lleno) · 17 (el pie y las legales) · 18 (el aire de
-  arriba y la § En público). Los briefs viven en `prompts/iteracion-*.md`.
+  arriba y la § En público) · 19 (el hero corriendo). Los briefs viven en
+  `prompts/iteracion-*.md`.
 - **Piezas nuevas que conviene conocer antes de tocar nada:**
   - `src/data/mapa.ts` + `src/components/MapaEmpresa.astro` — las trece áreas en
     tres capas, con **38 renglones de lo que se construye en cada una**. Un
@@ -89,8 +90,22 @@ Aparte del hub viven `/terminos`, `/privacidad` y `/cookies`. **No cuentan como 
     argumento: no lo reordenes.** El clip quedó fechado en **noviembre 2017, NO
     Talent Land** (Jorge, 28 ago 2026) — era la contradicción de los dos briefs
     del 24 ago. Talent Land son las dos fotos.
-  - `home-hero-conferencia` pasó a `pagina: "compartido"`: vive en el hero del
-    home y como segunda foto de Talent Land en `/nosotros`.
+  - **El hero del home es un LOOP, no una foto** (31 ago 2026): `home-hero-loop`
+    muestra el proceso corriendo hasta que sale la cotización. Va con
+    `object-position: 100% 50%` y eso NO es cosmético — al 100% entra el «Total»
+    completo y la ventana con el bloque desenfocado queda fuera de encuadre.
+    `home-hero-conferencia` volvió a ser exclusiva de `/nosotros`.
+  - **La barra de stats** del home (12× · 8× · 6-12%) va PEGADA al hero, sin
+    `section-y`, ocupando el hueco que dejó la banda de autoridad. El copy es de
+    Jorge y va literal: sin asteriscos, sin nota al pie y sin fuente. **No la
+    confundas con los KPI del hero**: aquéllos dicen quiénes son, ésta dice qué
+    hace el método, y por eso pesan distinto.
+  - **La banda de autoridad salió del home.** El componente
+    `BandaAutoridad.astro` SIGUE en el repo — solo se quitó su uso. Los tres
+    hitos que resumía viven completos en `/nosotros` § En público desde la 18.
+  - **El menú dice «Aprender», no «Ilhas Finanzas».** Es solo la ETIQUETA: el
+    producto se sigue llamando Ilhas Finanzas en el `<h1>`, el `<title>`, el
+    `og:title` y el copy. No hagas buscar-y-reemplazar.
   - **El ritmo entre secciones es UNO SOLO en todo el sitio: 144 px a 1440**
     (88 en móvil). Sale de `--ilhas-section-y` en `tokens.css`, que bajó de
     `clamp(4rem, 9vw, 7.5rem)` a `clamp(2.75rem, 5.5vw, 4.5rem)` el 30 ago
@@ -120,6 +135,7 @@ Aparte del hub viven `/terminos`, `/privacidad` y `/cookies`. **No cuentan como 
 | **`/finanzas` §07 · servicios del papá** | **Confirmado que va** (Jorge, 27 ago 2026). Faltan dos insumos suyos: el **copy de los servicios** y **a dónde apunta el botón de agenda** — hoy no hay ninguna URL de agenda en el repositorio, el único destino externo es `eventos.ilhas.ai` |
 | **`/nosotros` § La historia** | Tres clips (`nosotros-historia-01/02/03`) sin material |
 | **Párrafo de intro de la línea de tiempo** | Marcado como `TODO copy` en `src/pages/nosotros.astro`. Lo escribe Jorge |
+| **Subtítulo del hero** | El de hoy —«Lo que hoy le toma horas a alguien de tu equipo…»— es una **propuesta mía, no copy aprobado**. El titular sí es de Jorge. Está puesto para que la página no quede coja; falta su visto bueno |
 | **Revisión legal** | **Un abogado no ha visto `/terminos`, `/privacidad` ni `/cookies`.** Son borradores sólidos y honestos, escritos para México, pero sin revisar. Es un trámite de una sesión y hoy es un hueco abierto |
 | **El domicilio fiscal** | Jorge lo pasó como *Zapopan* y el **C.P. 44690 es de Guadalajara**. Los documentos van con Guadalajara; **falta que lo confirme contra su constancia**, porque de ahí depende la cláusula de jurisdicción |
 | **`sitemap.xml`** | Decidido que va, pero **hasta el final**: se genera cuando las rutas y el contenido estén cerrados, como archivo estático en `public/` (sin instalar la integración). **Las tres legales NO entran**: llevan `noindex` |

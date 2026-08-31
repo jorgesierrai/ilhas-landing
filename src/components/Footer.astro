@@ -25,7 +25,12 @@ const year = new Date().getFullYear();
 
 const links = [
   { href: "/metodo", label: "El Método" },
-  { href: "/finanzas", label: "Ilhas Finanzas" },
+  // Solo la ETIQUETA del menú (Jorge, 31 ago 2026). El producto se sigue
+  // llamando Ilhas Finanzas en el <h1>, el <title>, el og:title y el copy de
+  // /finanzas. «Aprender» y no «Formación»: pegado a «El Método», «Formación»
+  // suena a lo mismo y no se sabe cuál abrir. «Aprender» es un verbo y dice
+  // qué haces ahí.
+  { href: "/finanzas", label: "Aprender" },
   { href: "/soluciones", label: "Soluciones" },
   { href: "/nosotros", label: "Nosotros" },
 ];
