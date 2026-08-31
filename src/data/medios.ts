@@ -371,11 +371,11 @@ export const MEDIOS: SlotMedio[] = [
     prioridad: 3,
     objecion: "«Esto es teoría» · «Es puro prompt copiado»",
     alt: "",
-    duracion: "8-15 s",
+    duracion: "10.5 s",
     pesoMaxKB: 1536,
     sinUsar: true,
     notas:
-      "SIN USAR desde el 25 ago 2026: el hero del home lo ocupa la foto de Talent Land (home-hero-conferencia). La ranura se conserva por si el loop vuelve en otra sección. Un agente corriendo: terminal + dashboard actualizándose. webm ≤ 800 KB · mp4 ≤ 1.5 MB · póster .jpg obligatorio. Decorativo: aria-hidden.",
+      "EL MATERIAL YA ESTÁ (31 ago 2026), FALTA CABLEARLO — es la iteración 19. Hoy el hero lo sigue ocupando la foto de Talent Land (home-hero-conferencia), por eso la marca `sinUsar` se queda hasta que el hero cambie. Qué muestra: el proceso corriendo de punta a punta hasta que sale la cotización. 1600×754 · 10.5 s · sin audio · mp4 564 KB · webm 629 KB. REDACTADO: el archivo original mostraba legibles el RFC y el domicilio fiscal del cliente y el desglose completo de medicamentos de un protocolo de quimioterapia. Se aplicó desenfoque fijo sobre la línea fiscal y sobre la columna DESCRIPCIÓN entre t=3.10 y t=4.85, que es el único tramo donde el PDF está en pantalla. Se dejan a propósito visibles el nombre de la clínica (ya acreditada en el sitio) y todos los importes, que son lo que la demo prueba. NO subas otra versión sin repetir la redacción. Decorativo: aria-hidden.",
   },
   {
     id: "soluciones-hero-loop",
