@@ -14,6 +14,23 @@ import { PRODUCTOS } from "../data/productos";
 // de si el medio existe o no.
 const LOOP = "/assets/video/home-hero-loop";
 
+// El flujo que va debajo del video. A tamaño de hero la hoja de cálculo es
+// ilegible: el loop enseña QUE algo corre, pero no QUÉ. Esto lo nombra.
+//
+// `agente: true` distingue las dos piezas que Ilhas construye de los tres
+// documentos que entran y salen. Ésa es la estructura real —documento, agente,
+// documento, agente, documento— y es lo que hace que se lea de un vistazo sin
+// tener que leerlo.
+//
+// Los rótulos son de Jorge (31 ago 2026) y van literales.
+const flujo = [
+  { paso: "Planos" },
+  { paso: "Agente Despiece", agente: true },
+  { paso: "Cotización" },
+  { paso: "Agente Ahorro", agente: true },
+  { paso: "Reporte Ingresos Optimizados" },
+];
+
 const pasos = [
   { letra: "I", paso: "Identificar", linea: "Cómo se mueve el dinero, dónde se fuga y desde qué número mides." },
   { letra: "L", paso: "Levantamiento", linea: "Tus datos en un solo lugar, y el estándar de los mejores." },
@@ -149,6 +166,7 @@ const kpis = [
             Nada de loading="lazy" ni preload="none": esto es el LCP. */}
         {
           mostrar("home-hero-loop") && (
+            <div class="hero__demo">
             <div class="hero__medio" aria-hidden="true">
               <video
                 poster={`${LOOP}.jpg`}
@@ -169,6 +187,27 @@ const kpis = [
                 width="1280"
                 height="604"
               />
+            </div>
+
+            {/* El flujo NO va aria-hidden: es contenido, no decoración — es lo
+                único que explica qué está pasando en el video. Va en <ol>
+                porque es una secuencia y el orden es el dato.
+
+                La flecha cuelga del ::before del paso SIGUIENTE y no del
+                anterior. Con cinco pasos y estos rótulos la fila no cabe en una
+                línea a ningún ancho, así que va a envolver; poniéndola así, la
+                línea nueva ARRANCA con flecha y sigue leyéndose como flujo. Al
+                revés dejaba una flecha huérfana colgando al final del renglón,
+                apuntando a nada. */}
+            <ol class="flujo">
+              {
+                flujo.map((f) => (
+                  <li class:list={["flujo__paso", f.agente && "flujo__paso--agente"]}>
+                    <span class="flujo__et">{f.paso}</span>
+                  </li>
+                ))
+              }
+            </ol>
             </div>
           )
         }
@@ -467,18 +506,89 @@ const kpis = [
      del look anterior. Y la caja lleva la RELACIÓN DE ASPECTO del video, así
      que no hay nada que recortar: con `cover` se perdían los planos cargando,
      que es justo lo que pidió que se viera. */
-  .hero__medio {
+  .hero__demo {
     position: absolute;
     right: calc(-1 * var(--ilhas-gutter));
     top: 0.5rem;
     z-index: 1;
     width: 58%;
+  }
+
+  .hero__medio {
     aspect-ratio: 1280 / 604;
     border-radius: 12px 0 0 12px;
     overflow: hidden;
     border: 1px solid rgba(248, 250, 255, 0.14);
     border-right: 0;
     box-shadow: 0 40px 80px -30px rgba(0, 0, 0, 0.95);
+  }
+
+  /* ---- el flujo, debajo del cuadro ----
+     Cabe en el aire que ya había entre el video y la fila de KPI (94 px a
+     1440), así que el hero no crece en escritorio por ponerlo.
+
+     El padding-right compensa el sangrado: el cuadro se sale hasta el canto,
+     pero el texto no debe irse con él o el último paso queda cortado. */
+  .flujo {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.45rem 0.6rem;
+    margin: 1rem 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  /* El padding solo hace falta cuando el cuadro DE VERDAD se sale del
+     viewport, que es a 1236 y abajo: ahí el `right` negativo lo saca del canto
+     y sin esto el último paso se cortaría. A 1440 el cuadro termina 102 px
+     antes del borde, así que el padding solo estaba robando ancho — y era
+     justo lo que empujaba el último paso a un segundo renglón. */
+  @media (max-width: 1236px) {
+    .flujo {
+      padding-right: var(--ilhas-gutter);
+    }
+  }
+
+  .flujo__paso {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-size: 0.8125rem;
+    line-height: 1.3;
+    /* .68 mide 8.7:1 sobre tinta. */
+    color: rgba(248, 250, 255, 0.68);
+    white-space: nowrap;
+  }
+
+  /* La flecha va en el paso SIGUIENTE, no en el anterior: al envolver, el
+     renglón nuevo arranca con ella en vez de dejarla huérfana al final del
+     anterior apuntando a nada. */
+  .flujo__paso + .flujo__paso::before {
+    content: "→";
+    /* .42 sobre tinta mide 4.0:1. No es texto que haya que leer —la secuencia
+       ya la da el <ol>— así que la regla que aplica es 1.4.11 (3:1), y la pasa.
+       Se deja por debajo de los rótulos a propósito: la flecha conecta, no
+       compite. */
+    color: rgba(248, 250, 255, 0.42);
+    font-size: 0.9375rem;
+  }
+
+  /* Los dos agentes son lo que Ilhas construye, y por eso son los únicos que
+     llevan caja y color de marca. Los tres documentos van como texto pelón:
+     documento → AGENTE → documento → AGENTE → documento se lee de un vistazo
+     sin tener que leerlo.
+
+     La píldora cuelga del <span> y NO del <li>. Con el estilo en el <li>, la
+     flecha del ::before quedaba DENTRO de la caja —«[→ Agente Despiece]»— y
+     parecía parte del nombre del agente en vez del conector entre pasos. */
+  .flujo__paso--agente .flujo__et {
+    padding: 0.3rem 0.7rem;
+    border-radius: 999px;
+    border: 1px solid rgba(161, 75, 255, 0.55);
+    background: rgba(122, 60, 255, 0.14);
+    color: var(--ilhas-white);
+    font-weight: 500;
   }
 
   .hero__medio video,
@@ -584,14 +694,22 @@ const kpis = [
   @media (max-width: 899px) {
     /* En móvil el cuadro deja de sangrar y se mete en la columna, DEBAJO del
        texto — que es donde lo pone el orden del DOM. */
-    .hero__medio {
+    .hero__demo {
       position: relative;
       right: auto;
       top: auto;
       width: 100%;
       margin-top: 2.25rem;
+    }
+
+    .hero__medio {
       border-radius: 10px;
       border-right-width: 1px;
+    }
+
+    /* Ya no sangra, así que no hay nada que compensar. */
+    .flujo {
+      padding-right: 0;
     }
 
     .hero__texto {
