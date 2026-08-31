@@ -1,6 +1,6 @@
 <!doctype html><html lang="es"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Ilhas · el hero del home con el loop y la barra de stats — referencia medida</title>
+<title>Ilhas · el hero del home con el loop de Kinzal — referencia medida</title>
 <style>
 @font-face{font-family:"Space Grotesk";src:url(/assets/fonts/space-grotesk-600.woff2) format("woff2");font-weight:600;font-display:swap}
 @font-face{font-family:"Inter";src:url(/assets/fonts/inter-400.woff2) format("woff2");font-weight:400;font-display:swap}
@@ -15,6 +15,8 @@
 *,*::before,*::after{box-sizing:border-box}
 body{margin:0;font-family:var(--ilhas-font-body);background:var(--ilhas-dark);
   color:rgba(248,250,255,.7);line-height:1.6}
+.rotulo{padding:.9rem clamp(1.25rem,4vw,3rem);background:#1b1b20;color:#8f8fa3;
+  font-size:.75rem;letter-spacing:.14em;text-transform:uppercase;font-weight:600}
 .text-gradient{background:linear-gradient(100deg,var(--ilhas-grad-start),var(--ilhas-grad-end));
   -webkit-background-clip:text;background-clip:text;color:transparent}
 .btn{display:inline-flex;align-items:center;justify-content:center;
@@ -23,53 +25,15 @@ body{margin:0;font-family:var(--ilhas-font-body);background:var(--ilhas-dark);
 .btn-primary{background:var(--ilhas-primary);color:#fff}
 .btn-ghost-oscuro{border-color:rgba(248,250,255,.3);color:#fff}
 
-/* ==========================================================================
-   EL HERO
-   ==========================================================================
-   La estructura NO cambia respecto a lo que ya existe: sigue siendo un hero
-   de una sola capa con el medio sangrando desde la derecha, máscara de
-   disolución y velo de contraste encima. Lo único que cambia es QUÉ va en la
-   ranura del medio —antes la foto de Talent Land, ahora el loop— y el
-   `object-position`, que es lo que hace que funcione.
-
-   Se probó también una variante a dos columnas con el video en su marco.
-   Se descartó: a 534 px de ancho el screencast no se lee, y el bloque
-   desenfocado queda al centro del encuadre convertido en una mancha rosa
-   que es lo primero que ve el ojo. */
 .hero{position:relative;display:flex;align-items:center;min-height:620px;
   overflow:hidden;background:var(--ilhas-dark)}
-
-/* --- el medio ---
-   ANCLADO AL 100%, no al 18% que llevaba la foto.
-   El loop mide 2.12:1 y la ranura del hero 1.30:1, así que `cover` recorta
-   por los lados. Anclarlo a la derecha hace dos cosas a la vez:
-     1 · entra la cotización COMPLETA, con el «Total» adentro. Al 88% el
-         canto de la pantalla partía el Total, que es justo lo que la demo
-         prueba.
-     2 · la ventana de Vista Previa desenfocada vive en el extremo IZQUIERDO
-         del cuadro, así que sale de encuadre por completo. El desenfoque
-         sigue en el archivo —eso no se toca— pero en el hero nunca se ve. */
-.hero__medio{position:absolute;top:0;right:0;z-index:1;width:56%;height:100%;
-  -webkit-mask-image:linear-gradient(to right,transparent 0%,rgba(0,0,0,.55) 14%,#000 26%);
-  mask-image:linear-gradient(to right,transparent 0%,rgba(0,0,0,.55) 14%,#000 26%)}
-.hero__medio video,
-.hero__medio img{width:100%;height:100%;object-fit:cover;object-position:100% 50%;
-  display:block}
-
-/* --- el velo: idéntico al que ya está en producción, no se toca --- */
-.hero__velo{position:absolute;inset:0;z-index:2;
-  background:linear-gradient(95deg,
-    rgba(14,14,15,.98) 0%, rgba(14,14,15,.90) 42%,
-    rgba(14,14,15,.30) 52%, rgba(14,14,15,.02) 66%,
-    rgba(14,14,15,0) 100%)}
-
 .hero__inner{position:relative;z-index:3;width:100%;
   max-width:var(--ilhas-container);margin-inline:auto;
   padding-inline:var(--ilhas-gutter)}
 .hero h1{font-family:var(--ilhas-font-display);font-weight:600;
   font-size:clamp(2.1rem,4.6vw,3.4rem);line-height:1.08;letter-spacing:-.03em;
-  color:#fff;margin:0;max-width:19ch}
-.hero__lead{margin:1.4rem 0 0;font-size:1.0625rem;max-width:44ch;
+  color:#fff;margin:0;max-width:15ch}
+.hero__lead{margin:1.4rem 0 0;font-size:1.0625rem;max-width:38ch;
   color:rgba(248,250,255,.74)}
 .hero__ctas{display:flex;flex-wrap:wrap;gap:.75rem;margin-top:2rem}
 .hero__kpis{display:flex;flex-wrap:wrap;gap:2.5rem;margin-top:3rem}
@@ -79,144 +43,103 @@ body{margin:0;font-family:var(--ilhas-font-body);background:var(--ilhas-dark);
 .kpi span{display:block;margin-top:.35rem;font-size:.8125rem;
   color:rgba(248,250,255,.55);max-width:20ch}
 
+
+.hero{position:relative;background:var(--ilhas-dark)}
+.hero__medio video,.hero__medio img{width:100%;height:100%;
+  object-fit:contain;display:block}
+
 /* --- MOVIMIENTO REDUCIDO ---
-   Obligatorio, y no es opcional: un loop que arranca solo y no para es
-   exactamente lo que esta media query existe para apagar. Con
-   prefers-reduced-motion el video se esconde y se pinta el póster, que por
-   eso NO es el primer cuadro sino el de la cotización terminada: si alguien
-   nunca ve el video, tiene que quedarse con el resultado, no con la pantalla
-   vacía del arranque. */
-/* 0,2,0 para que le gane a `.hero__medio img`, que también es 0,2,0 pero va
+   Obligatorio. Un loop que arranca solo y no para es exactamente lo que esta
+   media query existe para apagar. El póster NO es el primer cuadro sino el
+   último —el bloque verde del ahorro—: si alguien nunca ve el video, tiene
+   que quedarse con el resultado.
+   0,2,0 para que le gane a `.hero__medio img`, que también es 0,2,0 pero va
    antes. Con `.hero__poster` a secas (0,1,0) el póster se pintaba SIEMPRE,
-   debajo del video: en móvil salían los dos apilados. */
+   debajo del video. */
 .hero__medio .hero__poster{display:none}
 @media (prefers-reduced-motion: reduce){
   .hero__medio video{display:none}
   .hero__medio .hero__poster{display:block}
 }
-
-@media (max-width:899px){
-  .hero{min-height:0;flex-direction:column;align-items:stretch;
-    padding-block:2.5rem 0}
-  .hero__inner{order:1}
-  /* El recorte se MANTIENE en móvil, solo cambia de forma.
-     A ancho completo y sin recortar pasan las dos cosas que no queremos: el
-     screencast se vuelve una tira de 390 x 184 donde no se lee nada, y el
-     bloque desenfocado —que en escritorio queda fuera de encuadre— vuelve a
-     entrar convertido en una mancha rosa. Con aspect-ratio 4/3 y el mismo
-     anclaje a la derecha, en móvil se ve la cotización y nada más. */
-  .hero__medio{position:relative;order:2;width:100%;height:auto;
-    aspect-ratio:4/3;margin-top:2.25rem;
-    -webkit-mask-image:none;mask-image:none;
-    border-radius:12px;overflow:hidden}
-  .hero__medio video,.hero__medio img{height:100%}
-  .hero__velo{display:none}
-  .hero__kpis{gap:1.5rem;margin-top:2.25rem}
-  .kpi{text-shadow:none}
-}
-
 /* ==========================================================================
-   LA BARRA DE STATS — va PEGADA al hero, arriba de la banda Hilas
+   F · LA BUENA — dos columnas reales, el cuadro entero y a la derecha
    ==========================================================================
-   Ocupa el hueco que deja la banda de autoridad al salir del home, así que
-   la página no crece por meterla.
-
-   Va oscura y no en tarjeta blanca flotante: se probaron las dos y la
-   tarjeta obliga a un segundo corte de fondo —oscuro, blanco, oscuro,
-   blanco— en 200 px, y encima los números en degradado pierden fuerza sobre
-   blanco. Con la banda oscura el hero se prolonga y el corte a blanco pasa
-   una sola vez, abajo.
-
-   Cuidado con confundirla con los KPI del hero: son dos cosas distintas y
-   por eso pesan distinto. Los del hero son chicos y apagados y dicen QUIÉNES
-   SON (+1,000 MDP, 6+ startups, 2016). Estos son grandes y en degradado y
-   dicen QUÉ HACE EL MÉTODO. Si igualas los tamaños, se leen como seis
-   números sueltos. */
-.stats{background:var(--ilhas-dark);position:relative;
-  padding-block:clamp(2.75rem,5vw,3.75rem)}
-.stats::before{content:"";position:absolute;inset:0 0 auto 0;height:1px;
-  background:linear-gradient(to right,transparent,rgba(248,250,255,.22) 22%,
-    rgba(248,250,255,.22) 78%,transparent)}
-.stats__reja{width:100%;max-width:var(--ilhas-container);margin-inline:auto;
-  padding-inline:var(--ilhas-gutter);display:grid;gap:2.25rem}
-@media (min-width:760px){
-  .stats__reja{grid-template-columns:repeat(3,1fr);gap:0}
-  .stats__uno{padding-inline:clamp(1.25rem,3vw,2.75rem)}
-  .stats__uno + .stats__uno{border-left:1px solid rgba(248,250,255,.13)}
-  .stats__uno:first-child{padding-left:0}
-  .stats__uno:last-child{padding-right:0}
+   Se probaron cinco. Lo que se aprendió:
+     · Centrado en vertical (A/B/C) choca con la fila de KPI.
+     · Achicándolo a 52% (D) el panel de KINZAL se vuelve ilegible: la demo
+       deja de probar nada.
+     · El velo del hero viejo apagaba la captura. Existía para que el texto
+       se leyera ENCIMA de la foto; ahora el texto y el video no se tocan.
+   Así que: columna de texto fija a la izquierda, el cuadro completo a la
+   derecha sangrando hasta el canto del navegador, y los KPI corriendo a todo
+   lo ancho por debajo de los dos. */
+.v-f{display:block;position:relative;overflow:hidden;min-height:0;
+  padding-block:clamp(2.75rem,5vw,4.25rem) clamp(2.25rem,4vw,3.25rem)}
+.v-f .hero__inner{position:relative;z-index:3}
+.v-f .hero__resplandor{position:absolute;z-index:0;right:-10%;top:-10%;
+  width:74%;height:86%;pointer-events:none;
+  background:radial-gradient(50% 50% at 50% 50%,rgba(122,60,255,.32),transparent 70%)}
+/* Sangra hasta el canto: el `right` negativo compensa el gutter del
+   contenedor, así que el borde derecho del cuadro cae en el borde del
+   navegador y no en el del contenedor. Sin recorte: la caja lleva la
+   relación de aspecto del video. */
+.v-f .hero__medio{position:absolute;right:calc(-1 * var(--ilhas-gutter));
+  top:.5rem;translate:none;z-index:1;width:58%;aspect-ratio:1280/604;
+  border-radius:12px 0 0 12px;overflow:hidden;
+  border:1px solid rgba(248,250,255,.14);border-right:0;
+  box-shadow:0 40px 80px -30px rgba(0,0,0,.95)}
+.v-f .hero__texto{position:relative;z-index:3;max-width:38%;min-height:21rem}
+/* 12ch para que el titular rompa en TRES líneas y no en cuatro con «IA.»
+   colgando sola en la última. */
+.v-f h1{max-width:12ch;font-size:clamp(2rem,3.6vw,2.9rem)}
+.v-f .hero__lead{max-width:30ch}
+.v-f .hero__kpis{margin-top:clamp(2rem,3.5vw,2.75rem)}
+.v-f .hero__velo{display:none}
+@media (max-width:899px){
+  .v-f .hero__medio{position:relative;right:auto;top:auto;width:100%;
+    margin-top:2.25rem;border-radius:10px;border-right-width:1px}
+  .v-f .hero__texto{max-width:none;min-height:0}
+  .v-f h1,.v-f .hero__lead{max-width:none}
 }
 
-/* `inline-block`, NO `block`.
-   Con `display:block` la caja de la cifra mide toda la columna, y como
-   `background-clip:text` recorta sobre la CAJA y no sobre el texto, «12×»
-   alcanzaba nada más el arranque cian del degradado mientras «6-12%» sí lo
-   recorría entero: los tres números salían de colores distintos sin que
-   nadie lo hubiera pedido. Con `inline-block` la caja se ciñe al texto y los
-   tres recorren el mismo degradado completo. */
-.stats__cifra{display:inline-block;font-family:var(--ilhas-font-display);
-  font-weight:600;font-size:clamp(2.75rem,6.4vw,4.25rem);line-height:.95;
-  letter-spacing:-.04em;
-  background:linear-gradient(100deg,var(--ilhas-grad-start),var(--ilhas-grad-end));
-  -webkit-background-clip:text;background-clip:text;color:transparent}
-
-/* 24ch y no 16: «menos costo que humanos» mide 24 caracteres y a 16ch caía
-   en dos líneas mientras las otras dos quedaban en una. La fila salía
-   despareja y el número de en medio se veía hundido. */
-.stats__pie{display:block;margin-top:.7rem;font-size:1.0625rem;font-weight:500;
-  color:rgba(248,250,255,.82);max-width:24ch}
 </style></head><body>
 
-<section class="hero">
-  <div class="hero__medio" aria-hidden="true">
-    <video
-      poster="/assets/video/home-hero-loop.jpg"
-      autoplay muted loop playsinline preload="metadata"
-      width="1600" height="754">
-      <source src="/assets/video/home-hero-loop.webm" type="video/webm">
-      <source src="/assets/video/home-hero-loop.mp4" type="video/mp4">
-    </video>
-    <img class="hero__poster" src="/assets/video/home-hero-loop.jpg" alt="" width="1600" height="754">
-  </div>
-  <div class="hero__velo" aria-hidden="true"></div>
-
+<section class="hero v-f">
   <div class="hero__inner">
-    <h1>Tu primer proceso corriendo <span class="text-gradient">con IA</span>.</h1>
-    <p class="hero__lead">
-      Lo que hoy le toma horas a alguien de tu equipo, hecho por un sistema que
-      tú entiendes y que corre solo. Te lo enseñamos, o te lo dejamos corriendo.
-    </p>
-    <div class="hero__ctas">
-      <a href="/finanzas" class="btn btn-primary">Quiero aprenderlo</a>
-      <a href="/soluciones" class="btn btn-ghost-oscuro">Quiero implementarlo</a>
+    <div class="hero__resplandor" aria-hidden="true"></div>
+
+    <div class="hero__texto">
+      <h1>Tu primer proceso corriendo <span class="text-gradient">con IA</span>.</h1>
+      <p class="hero__lead">
+        Lo que hoy le toma horas a alguien de tu equipo, hecho por un sistema
+        que t&#250; entiendes y que corre solo.
+      </p>
+      <div class="hero__ctas">
+        <a href="/finanzas" class="btn btn-primary">Quiero aprenderlo</a>
+        <a href="/soluciones" class="btn btn-ghost-oscuro">Quiero implementarlo</a>
+      </div>
     </div>
+
+    <!-- El medio va DESPU&#201;S del texto en el DOM.
+         En escritorio es `position:absolute`, as&#237; que el orden da igual; en
+         m&#243;vil pasa a `relative` y el orden ES el que manda. Con el medio
+         primero, el video sal&#237;a ARRIBA del titular. -->
+    <div class="hero__medio" aria-hidden="true">
+      <video poster="/assets/video/home-hero-loop.jpg"
+             autoplay muted loop playsinline preload="metadata"
+             width="1280" height="604">
+        <source src="/assets/video/home-hero-loop.mp4" type="video/mp4">
+      </video>
+      <img class="hero__poster" src="/assets/video/home-hero-loop.jpg" alt=""
+           width="1280" height="604">
+    </div>
+
     <div class="hero__kpis">
-      <div class="kpi"><b>+10,000</b><span>alumnos formados</span></div>
-      <div class="kpi"><b>8 años</b><span>construyendo con IA</span></div>
-      <div class="kpi"><b>13 áreas</b><span>de la empresa cubiertas</span></div>
+      <div class="kpi"><b>+1,000 MDP</b><span>al mes, volumen respaldado</span></div>
+      <div class="kpi"><b>6+</b><span>startups &#183; infraestructura creada</span></div>
+      <div class="kpi"><b>2016&#8594;</b><span>desarrollando IA</span></div>
     </div>
   </div>
 </section>
 
-
-<!-- La barra de stats. Va PEGADA al hero: sin section-y, sin margen entre
-     las dos. El copy es de Jorge y va literal. -->
-<section class="stats" aria-label="Resultados del método">
-  <div class="stats__reja">
-    <div class="stats__uno">
-      <span class="stats__cifra">12&#215;</span>
-      <span class="stats__pie">m&#225;s r&#225;pido</span>
-    </div>
-    <div class="stats__uno">
-      <span class="stats__cifra">8&#215;</span>
-      <span class="stats__pie">menos costo que humanos</span>
-    </div>
-    <div class="stats__uno">
-      <span class="stats__cifra">6-12%</span>
-      <span class="stats__pie">m&#225;s ingresos</span>
-    </div>
-  </div>
-</section>
-
-<div style="height:60px"></div>
 </body></html>

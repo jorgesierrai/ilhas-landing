@@ -6,8 +6,8 @@ Decidido con Jorge el 31 ago 2026.
 > Rama: **`hero-corriendo`**, salida de donde quedó la 18.
 >
 > **Referencia: `medios/hero-referencia.html`.** Ya está construida y medida
-> (620 px en escritorio, 893 px en móvil). El CSS de esa referencia es el que
-> va: cópialo, no lo reinventes.
+> (579 px en escritorio, 829 px en móvil, 576 px en 1024). El CSS de esa
+> referencia es el que va: cópialo, no lo reinventes.
 
 Son seis cambios: cuatro del análisis de Jorge, la barra de stats que pidió el
 31 de agosto, y el `og:image`. El quinto punto del análisis —el `alt` de la
@@ -15,27 +15,124 @@ foto del hero— **no se hace**, y abajo está por qué.
 
 ---
 
-## 1 · El hero del home: el loop en vez de la foto
+## 1 · El hero del home: el loop de Kinzal, entero
 
-`src/pages/index.astro:87-136`
+`src/pages/index.astro`
 
-### 1.1 · La ranura cambia de medio, no de estructura
+> **ESTA SECCIÓN SE REESCRIBIÓ EL 31 AGO 2026, DESPUÉS DE QUE LA 19 YA SE
+> CORRIÓ UNA VEZ.** Cambian el video y el tratamiento. Si ya ejecutaste la
+> versión anterior, esto la sustituye.
 
-El hero sigue siendo lo que ya es: una capa con el medio sangrando desde la
-derecha, máscara de disolución y velo de contraste encima. **No lo conviertas
-en dos columnas.** Se probó y se descartó (ver §1.4).
+### 1.1 · El video es otro: Kinzal, no Morgan
 
-Lo que cambia es qué va en la ranura:
+Jorge lo cambió y tiene razón. El de Morgan **necesitaba desenfoque para ser
+publicable**, y un desenfoque visible en el hero anuncia que ahí había algo
+escondido. Encima nombraba a la clínica en pantalla y enseñaba el total de un
+ciclo de quimioterapia: material de un tercero, sobre un tema que no es de
+nadie más.
+
+El de Kinzal **no necesita taparse nada.** Se revisó cuadro por cuadro: los
+campos de cliente del generador —«TADI», «Desarrolladora del Occidente S.A.»,
+«Arq. Marco Torres», «Torre Topacio»— son **texto placeholder**, no valores
+capturados; se distinguen por el gris apagado contra el blanco de los campos
+llenos. La hoja de cálculo no enseña ningún correo. Y es empresa de Jorge, así
+que el permiso no depende de nadie más.
+
+⚠️ **Los tres archivos del repo ya son los nuevos.** No reutilices nada del
+loop anterior.
+
+### 1.2 · Va COMPLETO y va en mp4 solo
+
+Nueve segundos y medio, sin recortes: los planos cargando, la solicitud
+saliendo, el generador de KINZAL armando la cotización, y el cierre en el
+bloque verde del **ahorro: $211,772.77, 6.14% contra base.**
+
+**Se cae el `<source>` de webm.** El presupuesto de la ranura lo daba por
+sentado, pero con este contenido —texto de UI y tablas densas— VP9 pierde
+contra H.264: el webm salía en 996 KB *y peor de calidad* contra 842 KB del
+mp4. Un formato más grande y más feo, servido primero, es peor que no
+tenerlo. **Un solo `<source>`, mp4.**
 
 ```
-- home-hero-conferencia   (foto, Talent Land abr 2018)
-+ home-hero-loop          (video, el proceso corriendo)
+public/assets/video/home-hero-loop.mp4   842 KB · 1280 × 604 · 9.4 s · sin audio
+public/assets/video/home-hero-loop.jpg    88 KB · el ÚLTIMO cuadro, el del ahorro
 ```
 
-Los tres archivos ya están en el repo desde la iteración anterior:
-`public/assets/video/home-hero-loop.{mp4,webm,jpg}`.
+⚠️ **El póster es el último cuadro, no el primero.** Con movimiento reducido
+el video no se pinta y sólo queda el póster: quien nunca vea el loop tiene que
+quedarse con el resultado, no con un formulario vacío.
 
-### 1.2 · El marcado
+### 1.3 · El cuadro ENTERO, sin recortar
+
+Esto es lo que pidió Jorge: *«se tiene que ver todo… ponlo más pequeño, que se
+vea que están cargando los planos y todo»*.
+
+Antes la caja medía 56% × 100% del hero y el video la llenaba con
+`object-fit: cover` — o sea recortando por los lados. Se veía la cotización y
+se perdía la mitad de la demo.
+
+**Ahora la caja lleva la relación de aspecto del video, así que no hay nada
+que recortar.**
+
+```css
+.hero__medio{
+  position:absolute; right:calc(-1 * var(--ilhas-gutter)); top:.5rem;
+  z-index:1; width:58%; aspect-ratio:1280/604;
+  border-radius:12px 0 0 12px; overflow:hidden;
+  border:1px solid rgba(248,250,255,.14); border-right:0;
+  box-shadow:0 40px 80px -30px rgba(0,0,0,.95);
+}
+.hero__medio video,.hero__medio img{
+  width:100%; height:100%; object-fit:contain; display:block;
+}
+```
+
+El `right` negativo compensa el gutter del contenedor: el canto derecho del
+cuadro cae en el borde del navegador y no en el del contenedor. **Sangra, pero
+no recorta** — que es lo que Jorge quería conservar del look anterior.
+
+### 1.4 · El velo se va, y el hero deja de ser una sola capa
+
+```css
+- .hero__velo { … }          /* borrar la regla y el <div> */
+```
+
+El velo existía para que el texto se leyera **encima** de la foto. Ahora el
+texto y el video no se tocan, así que lo único que hacía era apagar la
+captura: en las pruebas dejaba la mitad izquierda del panel de KINZAL gris.
+
+La sección pasa de `display:flex; align-items:center; min-height:620px` a un
+bloque con padding, y por dentro:
+
+```
+.hero__texto   ← columna izquierda, max-width 38%, min-height 21rem
+.hero__medio   ← absoluto, arriba a la derecha
+.hero__kpis    ← a todo lo ancho, POR DEBAJO de los dos
+```
+
+⚠️ **Los KPI van a todo lo ancho, debajo.** Se probó el video centrado en
+vertical y «2016→» quedaba encima del panel de KINZAL.
+
+⚠️ **El titular baja a `clamp(2rem,3.6vw,2.9rem)` y `max-width:12ch`**, y el
+lead a `30ch`. Con la columna al 38% y el tamaño anterior, el titular rompía
+en cuatro líneas con «IA.» colgando sola.
+
+### 1.5 · El orden del DOM importa, y no por lo que parece
+
+```jsx
+<div class="hero__texto"> … </div>
+<div class="hero__medio" aria-hidden="true"> … </div>   ← DESPUÉS del texto
+<div class="hero__kpis"> … </div>
+```
+
+En escritorio el medio es `position:absolute` y el orden da igual. **En móvil
+pasa a `relative` y el orden es el que manda**: con el medio primero, el video
+salía ARRIBA del titular. El padre no es flex, así que `order` no lo arregla —
+tiene que ser el DOM.
+
+En móvil queda: titular → subtítulo → botones → **video** → KPI.
+
+### 1.6 · El marcado
 
 ```jsx
 {mostrar("home-hero-loop") && (
@@ -43,12 +140,11 @@ Los tres archivos ya están en el repo desde la iteración anterior:
     <video
       poster="/assets/video/home-hero-loop.jpg"
       autoplay muted loop playsinline preload="metadata"
-      width="1600" height="754">
-      <source src="/assets/video/home-hero-loop.webm" type="video/webm" />
+      width="1280" height="604">
       <source src="/assets/video/home-hero-loop.mp4" type="video/mp4" />
     </video>
     <img class="hero__poster" src="/assets/video/home-hero-loop.jpg"
-         alt="" width="1600" height="754" />
+         alt="" width="1280" height="604" />
   </div>
 )}
 ```
@@ -56,84 +152,42 @@ Los tres archivos ya están en el repo desde la iteración anterior:
 ⚠️ **Los cuatro atributos del `<video>` son obligatorios y ninguno sobra.**
 `muted` sin `autoplay` no arranca; `autoplay` sin `muted` lo bloquea el
 navegador; sin `playsinline` iOS lo abre a pantalla completa; sin `loop` se
-queda congelado a los 8 segundos. Van los cuatro.
+congela a los nueve segundos.
 
-⚠️ **`aria-hidden` va en el contenedor, no en el `<video>`.** El loop es
-decorativo —la ranura tiene `alt: ""`— y así el lector de pantalla se salta
-también el póster de respaldo.
+⚠️ **`aria-hidden` va en el contenedor, no en el `<video>`.**
 
-⚠️ Usa rutas absolutas de `public/`, **no `import`**. Los loops no pasan por
-`astro:assets`; para eso existe `rutaVideo()` en `src/lib/medios.ts` si
-prefieres resolverlas ahí.
-
-### 1.3 · El `object-position` es lo que hace que funcione
+⚠️ **Ojo con la especificidad del póster.** `.hero__poster` a secas es (0,1,0)
+y pierde contra `.hero__medio img` (0,2,0), así que el póster se pinta SIEMPRE
+debajo del video. Va scopeado:
 
 ```css
-.hero__medio video,
-.hero__medio img { width:100%; height:100%; object-fit:cover;
-                   object-position:100% 50%; display:block }
-```
-
-**Al 100%, no al 18% que llevaba la foto.** El loop mide 2.12:1 y la ranura
-del hero 1.30:1, así que `cover` recorta por los lados, y de qué lado recorte
-decide dos cosas:
-
-1. **Entra la cotización completa, con el «Total» dentro.** Se probó al 88% y
-   el canto de la pantalla partía el Total en dos. El Total es lo único que la
-   demo prueba; si se corta, el video no está haciendo nada.
-2. **El bloque desenfocado sale de encuadre.** La ventana de Vista Previa
-   —la que lleva la caja de desenfoque sobre la indicación médica— vive en el
-   extremo izquierdo del cuadro. Anclado a la derecha nunca aparece.
-
-⚠️ **El desenfoque del archivo NO se toca por esto.** Que en el hero no se vea
-es una segunda línea de defensa, no un sustituto: el archivo se usa también
-como póster y como og:image recortado.
-
-### 1.4 · Dos bugs que la referencia ya trae resueltos
-
-**El póster se pintaba siempre.** `.hero__poster` es (0,1,0) y
-`.hero__medio img` es (0,2,0), así que la regla de esconderlo perdía por
-especificidad y el póster salía debajo del video —en móvil, los dos apilados.
-Va scopeado:
-
-```css
-.hero__medio .hero__poster { display: none }
-@media (prefers-reduced-motion: reduce) {
-  .hero__medio video { display: none }
-  .hero__medio .hero__poster { display: block }
+.hero__medio .hero__poster{display:none}
+@media (prefers-reduced-motion: reduce){
+  .hero__medio video{display:none}
+  .hero__medio .hero__poster{display:block}
 }
 ```
 
 Es la misma clase de bug que el del pie en la iteración 17. **No rompe el
-build y no sale en ningún grep: solo se ve mirando la página.**
+build y no sale en ningún grep: sólo se ve mirando la página.**
 
-**En móvil el recorte se mantiene, solo cambia de forma.** A ancho completo y
-sin recortar, el screencast queda en una tira de 390 × 184 donde no se lee
-nada, y el bloque desenfocado vuelve a entrar convertido en una mancha rosa.
-
-```css
-@media (max-width: 899px) {
-  .hero__medio { position:relative; order:2; width:100%; height:auto;
-                 aspect-ratio:4/3; margin-top:2.25rem;
-                 -webkit-mask-image:none; mask-image:none;
-                 border-radius:12px; overflow:hidden }
-  .hero__medio video, .hero__medio img { height:100% }
-}
-```
-
-### 1.5 · El pie de foto se va
+### 1.7 · El pie de foto se va
 
 ```
 - {fotoHero && <p class="hero__credito">Talent Land · abril 2018</p>}
 ```
 
-Ese crédito describía la foto. Ya no hay foto. **No lo sustituyas por un
-crédito del video**: el loop es material propio de Ilhas y no acredita a
-nadie.
+Ese crédito describía la foto. **No lo sustituyas por un crédito del video.**
 
-Si `.hero__credito` queda sin usar en el CSS, bórralo.
+### 1.8 · La ranura, en `src/data/medios.ts`
 
----
+`duracion` pasa a `"9.4 s"` y las `notas` se reescriben enteras — las que hay
+hablan de Morgan, del recorte y de las tres cajas de desenfoque, y **todo eso
+ya no aplica**:
+
+```
+CABLEADO el 31 ago 2026. Es el hero del home. Video de KINZAL, empresa de Jorge: los planos cargando, la solicitud, el generador armando la cotización, y el cierre en el bloque de ahorro ($211,772.77 · 6.14% vs base). 1280×604 · 9.4 s · sin audio · mp4 842 KB, SIN webm (con este contenido VP9 salía en 996 KB y peor: un formato más grande y más feo servido primero es peor que no tenerlo). NO LLEVA REDACCIÓN Y NO LA NECESITA: se revisó cuadro por cuadro y los campos de cliente del generador son texto placeholder, no valores. Sustituyó a un corte del video de Morgan que sí exigía tres cajas de desenfoque — se descartó el 31 ago porque nombraba a la clínica y enseñaba el total de un ciclo de quimioterapia. El póster es el ÚLTIMO cuadro, el del ahorro, no el primero: con prefers-reduced-motion es lo único que se ve. Decorativo: aria-hidden.
+```
 
 ## 2 · El titular y el subtítulo
 
@@ -157,8 +211,13 @@ crítica y empresas unicornio, que era el pie del titular viejo—:
 copy del sitio. Déjalo puesto para que la página no quede coja, y repórtalo
 como pendiente de su visto bueno.
 
-`max-width` del lead pasa de `46ch` a `44ch`: con el texto nuevo a 46ch la
-tercera línea quedaba de tres palabras.
+El lead se acorta —se le cae la última oración— porque la columna de texto
+ahora mide 38% y a 44ch rompía feo:
+
+> Lo que hoy le toma horas a alguien de tu equipo, hecho por un sistema que tú
+> entiendes y que corre solo.
+
+`max-width` del lead: **30ch**. Del `<h1>`: **12ch**.
 
 ---
 
@@ -284,6 +343,33 @@ Son dos cosas distintas y por eso pesan distinto:
 pega. La jerarquía es lo que hace que funcionen los dos juntos.
 
 ⚠️ **No muevas los KPI del hero adentro de la barra** ni al revés.
+
+---
+
+### 4.4 · El hueco entre la barra y la banda Hilas
+
+`src/components/BandaHilas.astro:78`
+
+```
+  .hilas {
+-   margin-top: clamp(1.75rem, 3.5vw, 2.75rem);
++   margin-top: 0;
+```
+
+Ese margen deja **28 a 44 px del fondo claro de la página** asomando entre la
+barra de stats —que es oscura y va a sangre— y la banda Hilas —que es blanca.
+Se ve como una franja gris pálido pegada debajo de los números. Es lo que
+Jorge llama «el huequito».
+
+**Por qué estaba y por qué ya no aplica:** la banda Hilas venía después de la
+banda de autoridad, que vivía dentro de un `.container` sobre el fondo claro,
+y ahí el margen era el aire que la separaba. Ahora la precede una sección
+oscura a sangre que termina en canto duro, y el margen se volvió una raya
+suelta.
+
+⚠️ Se toca en el componente y no con un selector hermano desde `index.astro`
+porque **`BandaHilas` sólo se usa en el home** — se verificó. Si algún día se
+usa en otra página, ahí sí habría que devolverle el margen desde fuera.
 
 ---
 
@@ -424,12 +510,18 @@ en esta iteración**, que es cuando por fin se usa. Si lo dejas,
 `medios-check.mjs` avisa «marcada `sinUsar` pero SÍ aparece en dist/».
 
 ```bash
-# El loop entra al hero, en los dos formatos
-grep -c "home-hero-loop.webm" dist/index.html      # 1
+# El loop entra al hero — mp4 solo
 grep -c "home-hero-loop.mp4"  dist/index.html      # 1
+grep -c "home-hero-loop.webm" dist/index.html      # 0  — el webm se cayó a propósito
 grep -c "home-hero-loop.jpg"  dist/index.html      # 2  — poster + <img> de respaldo
 grep -c "autoplay"            dist/index.html      # 1
 grep -c "playsinline"         dist/index.html      # 1
+
+# El velo se fue
+grep -c "hero__velo" dist/index.html               # 0
+
+# El hueco antes de la banda Hilas
+grep -c "margin-top: clamp(1.75rem" dist/_astro/*.css   # 0
 
 # La foto sale del home y sigue en /nosotros
 grep -c "home-hero-conferencia" dist/index.html    # 0
@@ -469,14 +561,16 @@ grep -o 'og:url" content="[^"]*"' dist/finanzas/index.html   # .../finanzas
 
 - [ ] **El loop arranca solo, sin sonido, y da la vuelta.** Si se queda
       congelado a los 8 s, falta `loop`.
-- [ ] **A los ~4.5 s se ve la cotización COMPLETA**, con «Total: $253,559.62»
-      dentro del encuadre. Si el Total sale partido por el canto derecho, el
-      `object-position` está mal.
-- [ ] **En ningún momento aparece un bloque rosa desenfocado**, ni en 1440 ni
-      en 390. Si aparece, el `object-position` no está al 100%.
-- [ ] **El H1 y el párrafo se leen sobre el video en todo el loop**, incluidos
-      los segundos en que la cotización blanca está en pantalla. Mide el
-      contraste en el cuadro más claro, no en el primero.
+- [ ] **El cuadro se ve ENTERO en todo el loop.** Nada recortado por ningún
+      lado: al segundo 1 tienen que verse los planos en la ventana de la
+      izquierda, y al 9 el bloque verde del ahorro.
+- [ ] **La barra de KINZAL se lee** — el logotipo y «Generador de
+      Cotizaciones». Si no se lee, el cuadro quedó demasiado chico.
+- [ ] **El titular rompe en TRES líneas**, no en cuatro con «IA.» sola.
+- [ ] **Los KPI no tocan el cuadro.** «2016→» es el que se mete si algo
+      quedó mal.
+- [ ] **No queda franja clara entre los números y la banda Hilas.** Del negro
+      de la barra al blanco de la banda, directo.
 - [ ] **Solo hay UNA imagen o video en el hero.** Si ves el video y debajo el
       póster, es el bug de especificidad del §1.4.
 - [ ] Con **movimiento reducido activado** (DevTools → Rendering →
@@ -496,8 +590,9 @@ grep -o 'og:url" content="[^"]*"' dist/finanzas/index.html   # .../finanzas
 
 | | Antes | Referencia | Después |
 |---|---|---|---|
-| Hero del home · 1440 | | 620 px | |
-| Hero del home · 390 | | 893 px | |
+| Hero del home · 1440 | | 579 px | |
+| Hero del home · 390 | | 829 px | |
+| Hero del home · 1024 | | 576 px | |
 | Barra de stats · 1440 | — | 223 px | |
 | Barra de stats · 390 | — | 403 px | |
 | Home completo · 1440 | | | |
@@ -510,10 +605,15 @@ barra quedó con `section-y` o con margen contra el hero.
 
 ## Qué NO hacer
 
-- No conviertas el hero en dos columnas. Se probó con el video en su marco y
-  se descartó: a 534 px no se lee, y el bloque desenfocado queda al centro
-  del encuadre.
-- No quites el desenfoque del archivo de video porque «en el hero no se ve».
+- No recortes el cuadro. La caja lleva la relación de aspecto del video y
+  `object-fit: contain` a propósito: si le pones `cover`, se pierden los
+  planos, que es lo que Jorge pidió que se viera.
+- No lo achiques más de 58%. A 52% el panel de KINZAL deja de leerse y la
+  demo no prueba nada.
+- No le devuelvas el velo: apaga la captura y ya no protege nada.
+- No agregues un `<source>` de webm.
+- No pongas el medio antes del texto en el DOM: en móvil el video se sube
+  arriba del titular.
 - No borres `BandaAutoridad.astro`, solo su uso.
 - No cambies el `alt` de `home-hero-conferencia`.
 - No corrijas la errata de la pantalla sin mirar la foto.
@@ -533,8 +633,8 @@ barra quedó con `section-y` o con margen contra el hero.
 1. Archivos tocados.
 2. `npm run build` y `npm run medios`.
 3. Todos los greps.
-4. Captura del hero **más la barra de stats** a 1440, en **dos momentos**: el
-   arranque y el segundo ~4.5, con la cotización.
+4. Captura del hero **más la barra de stats** a 1440, en **tres momentos**:
+   segundo 1 (los planos), segundo 5.5 (la cotización) y segundo 9 (el ahorro).
 5. Captura del hero a 390.
 6. Captura con `prefers-reduced-motion: reduce`.
 7. La tabla de alturas.
