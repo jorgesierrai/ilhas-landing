@@ -9,9 +9,9 @@ Decidido con Jorge el 31 ago 2026.
 > (620 px en escritorio, 893 px en móvil). El CSS de esa referencia es el que
 > va: cópialo, no lo reinventes.
 
-Son cinco cambios, cuatro de ellos de los que Jorge levantó en su análisis. El
-quinto punto de ese análisis —el `alt` de la foto del hero— **no se hace**, y
-abajo está por qué.
+Son seis cambios: cuatro del análisis de Jorge, la barra de stats que pidió el
+31 de agosto, y el `og:image`. El quinto punto del análisis —el `alt` de la
+foto del hero— **no se hace**, y abajo está por qué.
 
 ---
 
@@ -209,7 +209,85 @@ render.
 
 ---
 
-## 4 · El nav: «Ilhas Finanzas» → «Aprender»
+## 4 · La barra de stats
+
+Va **pegada al hero**, arriba de la banda Hilas — o sea, exactamente en el
+hueco que deja la banda de autoridad al salir en el §3. Por eso el home no
+crece por meterla.
+
+**El copy es de Jorge y va literal. No lo edites, no lo "mejores", no le
+agregues asteriscos ni notas al pie.**
+
+| Cifra | Pie |
+|---|---|
+| **12×** | más rápido |
+| **8×** | menos costo que humanos |
+| **6-12%** | más ingresos |
+
+### 4.1 · El marcado
+
+```jsx
+<section class="stats" aria-label="Resultados del método">
+  <div class="stats__reja">
+    <div class="stats__uno">
+      <span class="stats__cifra">12×</span>
+      <span class="stats__pie">más rápido</span>
+    </div>
+    <div class="stats__uno">
+      <span class="stats__cifra">8×</span>
+      <span class="stats__pie">menos costo que humanos</span>
+    </div>
+    <div class="stats__uno">
+      <span class="stats__cifra">6-12%</span>
+      <span class="stats__pie">más ingresos</span>
+    </div>
+  </div>
+</section>
+```
+
+⚠️ El signo de «12×» y «8×» es **× U+00D7**, el de multiplicación — no una
+equis minúscula. En una tipografía de display la equis se ve torcida al lado
+de la cifra.
+
+⚠️ **Sin `section-y` y sin margen contra el hero.** Los dos bloques oscuros
+tienen que leerse como uno solo; el corte a blanco pasa una vez, abajo.
+
+⚠️ El `<section>` lleva `aria-label` porque no tiene encabezado. Sin eso es
+una región anónima en el árbol de accesibilidad.
+
+### 4.2 · El CSS va tal cual de la referencia
+
+`medios/hero-referencia.html` lo trae completo y medido: **223 px en
+escritorio, 403 px en móvil.** Cópialo. Dos cosas de ahí no son opcionales:
+
+**`display:inline-block` en `.stats__cifra`, NO `block`.** Con `block` la caja
+de la cifra mide toda la columna, y `background-clip:text` recorta sobre la
+**caja**, no sobre el texto: «12×» alcanzaba nada más el arranque cian del
+degradado mientras «6-12%» sí lo recorría entero. Los tres números salían de
+colores distintos sin que nadie lo hubiera pedido. Con `inline-block` la caja
+se ciñe al texto y los tres recorren el mismo degradado.
+
+**`max-width:24ch` en `.stats__pie`, no 16ch.** «menos costo que humanos» mide
+24 caracteres; a 16ch caía en dos líneas mientras las otras dos quedaban en
+una, y el número de en medio se veía hundido.
+
+### 4.3 · No las confundas con los KPI del hero
+
+Son dos cosas distintas y por eso pesan distinto:
+
+| | Tamaño | Qué dicen |
+|---|---|---|
+| KPI del hero | chicos, apagados | **quiénes son** — +1,000 MDP, 6+ startups, 2016 |
+| Barra de stats | grandes, en degradado | **qué hace el método** |
+
+⚠️ **Si igualas los tamaños se leen como seis números sueltos** y ninguno
+pega. La jerarquía es lo que hace que funcionen los dos juntos.
+
+⚠️ **No muevas los KPI del hero adentro de la barra** ni al revés.
+
+---
+
+## 5 · El nav: «Ilhas Finanzas» → «Aprender»
 
 Dos archivos, la misma línea:
 
@@ -244,14 +322,14 @@ opciones. No lo toques.
 
 ---
 
-## 5 · `og:image`
+## 6 · `og:image`
 
 `src/layouts/Base.astro:57-64`
 
 El archivo ya está en el repo: `public/assets/og/portada.jpg`, 1200 × 630,
 75 KB.
 
-### 5.1 · Las cuatro etiquetas
+### 6.1 · Las cuatro etiquetas
 
 ```jsx
     <meta property="og:url" content={canonicalURL} />
@@ -285,7 +363,7 @@ Astro.site)`.
 `summary` la tarjeta sale cuadrada y recorta una imagen de 1200 × 630 por los
 lados: se pierde la cotización, que es la mitad del diseño.
 
-### 5.2 · El `og:url` NO se toca
+### 6.2 · El `og:url` NO se toca
 
 El análisis proponía fijarlo a `https://ilhas.ai`. **Eso rompería lo que ya
 funciona:** hoy `og:url` sale de `canonicalURL`, que es distinta en cada
@@ -293,7 +371,7 @@ página. Fijarlo haría que compartir `/finanzas` reportara la portada.
 
 Lo mismo el `canonical`. Están bien. Déjalos.
 
-### 5.3 · El `og:title` del home
+### 6.3 · El `og:title` del home
 
 `og:title` usa `title`, y el home pasa `title="Ilhas"` — o sea que compartir
 la portada hoy diría, de titular, «Ilhas». En `src/pages/index.astro:78`:
@@ -362,8 +440,12 @@ grep -c "Talent Land · abril 2018" dist/index.html # 0 — el crédito se fue
 grep -c "Tu primer proceso corriendo" dist/index.html   # 1
 grep -c "clase mundial" dist/index.html                 # 0
 
-# La banda de autoridad se fue del home
+# La banda de autoridad se fue del home y en su hueco entran los stats
 grep -c "banda-autoridad" dist/index.html          # 0
+grep -c 'class="stats"' dist/index.html            # 1
+grep -c "menos costo que humanos" dist/index.html  # 1
+grep -c "más ingresos" dist/index.html             # 1
+grep -c "12&#215;\|12×" dist/index.html             # 1  — el signo de multiplicar, no una equis
 grep -c "Hablando de IA en público desde 2017" dist/index.html      # 0
 grep -c "Hablando de IA en público desde 2017" dist/nosotros/index.html  # 1
 
@@ -401,6 +483,12 @@ grep -o 'og:url" content="[^"]*"' dist/finanzas/index.html   # .../finanzas
       `prefers-reduced-motion: reduce`) el video desaparece y queda el póster
       con la cotización. No una pantalla negra.
 - [ ] En 390 px el recorte se mantiene y no hay scroll horizontal.
+- [ ] **Los tres números de la barra corren el mismo degradado**, de cian a
+      morado, los tres. Si «12×» sale casi todo cian y «6-12%» sí llega al
+      morado, falta el `inline-block` del §4.2.
+- [ ] **Los tres pies de la barra van en una sola línea** cada uno.
+- [ ] La barra de stats **se ve pegada al hero**, sin franja ni salto entre
+      los dos bloques oscuros.
 - [ ] El menú dice **Aprender** en las cinco páginas y en el pie.
 - [ ] 1440 × 900 y 390 × 844.
 
@@ -410,10 +498,13 @@ grep -o 'og:url" content="[^"]*"' dist/finanzas/index.html   # .../finanzas
 |---|---|---|---|
 | Hero del home · 1440 | | 620 px | |
 | Hero del home · 390 | | 893 px | |
+| Barra de stats · 1440 | — | 223 px | |
+| Barra de stats · 390 | — | 403 px | |
 | Home completo · 1440 | | | |
 
-El home completo tiene que **bajar** — sale la banda de autoridad. Si sube,
-algo quedó de más.
+El home completo tiene que quedar **más o menos igual**: sale la banda de
+autoridad (~230 px) y entra la barra de stats (223 px). Si crece mucho, la
+barra quedó con `section-y` o con margen contra el hero.
 
 ---
 
@@ -430,6 +521,10 @@ algo quedó de más.
 - No renombres el producto Ilhas Finanzas — solo la etiqueta del menú.
 - No toques el botón «Hablemos».
 - No pongas `loading="lazy"` ni `preload="none"` en el hero: es el LCP.
+- No edites el copy de la barra de stats. Es de Jorge y va literal.
+- No le pongas asterisco, nota al pie ni fuente a los stats sin decírselo
+  antes a Jorge: es decisión suya, no tuya.
+- No iguales el tamaño de los stats con los KPI del hero.
 
 ---
 
@@ -438,8 +533,8 @@ algo quedó de más.
 1. Archivos tocados.
 2. `npm run build` y `npm run medios`.
 3. Todos los greps.
-4. Captura del hero a 1440 en **dos momentos**: el arranque y el segundo ~4.5,
-   con la cotización.
+4. Captura del hero **más la barra de stats** a 1440, en **dos momentos**: el
+   arranque y el segundo ~4.5, con la cotización.
 5. Captura del hero a 390.
 6. Captura con `prefers-reduced-motion: reduce`.
 7. La tabla de alturas.

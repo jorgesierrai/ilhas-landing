@@ -1,6 +1,6 @@
 <!doctype html><html lang="es"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Ilhas · el hero del home con el loop — referencia medida</title>
+<title>Ilhas · el hero del home con el loop y la barra de stats — referencia medida</title>
 <style>
 @font-face{font-family:"Space Grotesk";src:url(/assets/fonts/space-grotesk-600.woff2) format("woff2");font-weight:600;font-display:swap}
 @font-face{font-family:"Inter";src:url(/assets/fonts/inter-400.woff2) format("woff2");font-weight:400;font-display:swap}
@@ -114,6 +114,57 @@ body{margin:0;font-family:var(--ilhas-font-body);background:var(--ilhas-dark);
   .hero__kpis{gap:1.5rem;margin-top:2.25rem}
   .kpi{text-shadow:none}
 }
+
+/* ==========================================================================
+   LA BARRA DE STATS — va PEGADA al hero, arriba de la banda Hilas
+   ==========================================================================
+   Ocupa el hueco que deja la banda de autoridad al salir del home, así que
+   la página no crece por meterla.
+
+   Va oscura y no en tarjeta blanca flotante: se probaron las dos y la
+   tarjeta obliga a un segundo corte de fondo —oscuro, blanco, oscuro,
+   blanco— en 200 px, y encima los números en degradado pierden fuerza sobre
+   blanco. Con la banda oscura el hero se prolonga y el corte a blanco pasa
+   una sola vez, abajo.
+
+   Cuidado con confundirla con los KPI del hero: son dos cosas distintas y
+   por eso pesan distinto. Los del hero son chicos y apagados y dicen QUIÉNES
+   SON (+1,000 MDP, 6+ startups, 2016). Estos son grandes y en degradado y
+   dicen QUÉ HACE EL MÉTODO. Si igualas los tamaños, se leen como seis
+   números sueltos. */
+.stats{background:var(--ilhas-dark);position:relative;
+  padding-block:clamp(2.75rem,5vw,3.75rem)}
+.stats::before{content:"";position:absolute;inset:0 0 auto 0;height:1px;
+  background:linear-gradient(to right,transparent,rgba(248,250,255,.22) 22%,
+    rgba(248,250,255,.22) 78%,transparent)}
+.stats__reja{width:100%;max-width:var(--ilhas-container);margin-inline:auto;
+  padding-inline:var(--ilhas-gutter);display:grid;gap:2.25rem}
+@media (min-width:760px){
+  .stats__reja{grid-template-columns:repeat(3,1fr);gap:0}
+  .stats__uno{padding-inline:clamp(1.25rem,3vw,2.75rem)}
+  .stats__uno + .stats__uno{border-left:1px solid rgba(248,250,255,.13)}
+  .stats__uno:first-child{padding-left:0}
+  .stats__uno:last-child{padding-right:0}
+}
+
+/* `inline-block`, NO `block`.
+   Con `display:block` la caja de la cifra mide toda la columna, y como
+   `background-clip:text` recorta sobre la CAJA y no sobre el texto, «12×»
+   alcanzaba nada más el arranque cian del degradado mientras «6-12%» sí lo
+   recorría entero: los tres números salían de colores distintos sin que
+   nadie lo hubiera pedido. Con `inline-block` la caja se ciñe al texto y los
+   tres recorren el mismo degradado completo. */
+.stats__cifra{display:inline-block;font-family:var(--ilhas-font-display);
+  font-weight:600;font-size:clamp(2.75rem,6.4vw,4.25rem);line-height:.95;
+  letter-spacing:-.04em;
+  background:linear-gradient(100deg,var(--ilhas-grad-start),var(--ilhas-grad-end));
+  -webkit-background-clip:text;background-clip:text;color:transparent}
+
+/* 24ch y no 16: «menos costo que humanos» mide 24 caracteres y a 16ch caía
+   en dos líneas mientras las otras dos quedaban en una. La fila salía
+   despareja y el número de en medio se veía hundido. */
+.stats__pie{display:block;margin-top:.7rem;font-size:1.0625rem;font-weight:500;
+  color:rgba(248,250,255,.82);max-width:24ch}
 </style></head><body>
 
 <section class="hero">
@@ -143,6 +194,26 @@ body{margin:0;font-family:var(--ilhas-font-body);background:var(--ilhas-dark);
       <div class="kpi"><b>+10,000</b><span>alumnos formados</span></div>
       <div class="kpi"><b>8 años</b><span>construyendo con IA</span></div>
       <div class="kpi"><b>13 áreas</b><span>de la empresa cubiertas</span></div>
+    </div>
+  </div>
+</section>
+
+
+<!-- La barra de stats. Va PEGADA al hero: sin section-y, sin margen entre
+     las dos. El copy es de Jorge y va literal. -->
+<section class="stats" aria-label="Resultados del método">
+  <div class="stats__reja">
+    <div class="stats__uno">
+      <span class="stats__cifra">12&#215;</span>
+      <span class="stats__pie">m&#225;s r&#225;pido</span>
+    </div>
+    <div class="stats__uno">
+      <span class="stats__cifra">8&#215;</span>
+      <span class="stats__pie">menos costo que humanos</span>
+    </div>
+    <div class="stats__uno">
+      <span class="stats__cifra">6-12%</span>
+      <span class="stats__pie">m&#225;s ingresos</span>
     </div>
   </div>
 </section>
