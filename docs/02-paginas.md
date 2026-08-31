@@ -23,10 +23,15 @@ Sin imagen de stock. Si hay algo visual, que sea el gradiente de marca o el isot
 > lo que se ve detrás **ya no es una foto: es el proceso corriendo**. El loop
 > (`home-hero-loop`) va hasta que sale la cotización con su Total.
 >
-> El `object-position: 100% 50%` no es cosmético y no se toca sin medir: al 100%
-> entra el «Total» completo —lo único que la demo prueba— y la ventana que lleva
-> el bloque desenfocado queda fuera de encuadre. Se probó al 88% y el canto
-> partía el Total en dos.
+> El video es de **Kinzal**, empresa de Jorge, y **va entero y sin recortar**: la
+> caja lleva la relación de aspecto del video y `object-fit: contain`. Con
+> `cover` se perdían los planos cargando, que es justo lo que Jorge pidió que se
+> viera. No lo achiques de 58%: a 52% el panel deja de leerse y la demo no prueba
+> nada.
+>
+> **El velo se fue.** Existía para que el texto se leyera *encima* de la foto;
+> ahora el texto y el video son dos columnas que no se tocan, así que lo único
+> que hacía era apagar la captura.
 >
 > ⚠️ **El subtítulo de hoy es una propuesta, no copy aprobado.** Falta el visto
 > bueno de Jorge.

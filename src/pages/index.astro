@@ -78,75 +78,104 @@ const kpis = [
   heroOscuro
 >
   <article>
-    <!-- 01 · Hero — la línea de identidad -->
-    <!-- 01 · Hero — la foto de Talent Land, opción B2 aprobada el 25 ago 2026.
-         Referencia: medios/hero-b2-referencia.html · las cuatro decisiones de
-         CSS están numeradas en el <style> de abajo. -->
+    {/* 01 · HERO — el loop de Kinzal, ENTERO.
+         Referencia: medios/hero-referencia.html (variante F, la buena).
+
+         Reescrito el 31 ago 2026, después de que la iteración 19 ya se había
+         corrido una vez con el video de Morgan. Aquel necesitaba desenfoque
+         para ser publicable —y un desenfoque visible en el hero anuncia que
+         ahí había algo escondido—, nombraba a la clínica en pantalla y
+         enseñaba el total de un ciclo de quimioterapia. Éste es de Kinzal,
+         empresa de Jorge, y no necesita taparse nada.
+
+         DEJA DE RECORTAR. Antes la caja medía 56%×100% y el video la llenaba
+         con `object-fit: cover`, o sea recortando por los lados: se veía la
+         cotización y se perdía la mitad de la demo. Ahora la caja lleva la
+         relación de aspecto del video y va con `contain`, así que se ve
+         entero: los planos cargando, la solicitud, el generador armando la
+         cotización y el cierre en el bloque de ahorro.
+
+         Y DEJA DE SER UNA SOLA CAPA. El velo existía para que el texto se
+         leyera ENCIMA de la foto; ahora el texto y el video no se tocan, así
+         que lo único que hacía era apagar la captura. Se fue. */}
     <section class="hero">
-      {/* El loop, no una foto. La estructura del hero NO cambia: sigue siendo
-          una capa con el medio sangrando desde la derecha, máscara de
-          disolución y velo encima. Se probó a dos columnas y se descartó — a
-          534px el screencast no se lee.
-
-          Los cuatro atributos del <video> son obligatorios y ninguno sobra:
-          `muted` sin `autoplay` no arranca; `autoplay` sin `muted` lo bloquea
-          el navegador; sin `playsinline` iOS lo abre a pantalla completa; sin
-          `loop` se queda congelado a los 8 segundos.
-
-          `aria-hidden` va en el CONTENEDOR, no en el <video>: el loop es
-          decorativo —la ranura tiene alt: ""— y así el lector de pantalla se
-          salta también el póster de respaldo.
-
-          Nada de loading="lazy" ni preload="none": esto es el LCP. */}
-      {
-        mostrar("home-hero-loop") && (
-          <div class="hero__medio" aria-hidden="true">
-            <video
-              poster={`${LOOP}.jpg`}
-              autoplay
-              muted
-              loop
-              playsinline
-              preload="metadata"
-              width="1600"
-              height="754"
-            >
-              <source src={`${LOOP}.webm`} type="video/webm" />
-              <source src={`${LOOP}.mp4`} type="video/mp4" />
-            </video>
-            <img
-              class="hero__poster"
-              src={`${LOOP}.jpg`}
-              alt=""
-              width="1600"
-              height="754"
-            />
-          </div>
-        )
-      }
-      <div class="hero__velo" aria-hidden="true"></div>
-
       <div class="hero__inner">
-        {/* Titular elegido por Jorge el 31 ago 2026. Va literal. */}
-        <h1>
-          Tu primer proceso corriendo <span class="text-gradient">con IA</span>.
-        </h1>
+        <div class="hero__resplandor" aria-hidden="true"></div>
 
-        {/* ⚠️ SUBTÍTULO PENDIENTE DEL VISTO BUENO DE JORGE. Es una propuesta,
-            no copy aprobado: el anterior hablaba de infraestructura crítica y
-            empresas unicornio, que era el pie del titular viejo, y no podía
-            quedarse. Está puesto para que la página no quede coja. */}
-        <p class="hero__lead">
-          Lo que hoy le toma horas a alguien de tu equipo, hecho por un sistema
-          que tú entiendes y que corre solo. Te lo enseñamos, o te lo dejamos
-          corriendo.
-        </p>
+        <div class="hero__texto">
+          {/* Titular elegido por Jorge el 31 ago 2026. Va literal. */}
+          <h1>
+            Tu primer proceso corriendo <span class="text-gradient">con IA</span>
+            .
+          </h1>
 
-        <div class="hero__ctas">
-          <a href="/finanzas" class="btn btn-primary">Quiero aprenderlo</a>
-          <a href="/soluciones" class="btn btn-ghost-oscuro">Quiero implementarlo</a>
+          {/* ⚠️ SUBTÍTULO PENDIENTE DEL VISTO BUENO DE JORGE. Es una propuesta,
+              no copy aprobado: el anterior hablaba de infraestructura crítica y
+              empresas unicornio, que era el pie del titular viejo, y no podía
+              quedarse. Está puesto para que la página no quede coja. */}
+          <p class="hero__lead">
+            Lo que hoy le toma horas a alguien de tu equipo, hecho por un
+            sistema que tú entiendes y que corre solo.
+          </p>
+
+          <div class="hero__ctas">
+            <a href="/finanzas" class="btn btn-primary">Quiero aprenderlo</a>
+            <a href="/soluciones" class="btn btn-ghost-oscuro">
+              Quiero implementarlo
+            </a>
+          </div>
         </div>
 
+        {/* EL MEDIO VA DESPUÉS DEL TEXTO EN EL DOM, y no por estética. En
+            escritorio es `position:absolute` y el orden da igual; en móvil pasa
+            a `relative` y el orden ES el que manda: con el medio primero, el
+            video salía ARRIBA del titular. El padre no es flex, así que `order`
+            no lo arregla — tiene que ser el DOM.
+
+            Los cuatro atributos del <video> son obligatorios y ninguno sobra:
+            `muted` sin `autoplay` no arranca; `autoplay` sin `muted` lo bloquea
+            el navegador; sin `playsinline` iOS lo abre a pantalla completa; sin
+            `loop` se congela a los nueve segundos.
+
+            UN SOLO <source>, mp4. El webm se cayó a propósito: con este
+            contenido —texto de UI y tablas densas— VP9 pierde contra H.264, y
+            salía en 996 KB y peor de calidad contra 842 KB del mp4. Un formato
+            más grande y más feo, servido primero, es peor que no tenerlo.
+
+            `aria-hidden` va en el CONTENEDOR, no en el <video>: el loop es
+            decorativo —la ranura tiene alt: ""— y así el lector de pantalla se
+            salta también el póster de respaldo.
+
+            Nada de loading="lazy" ni preload="none": esto es el LCP. */}
+        {
+          mostrar("home-hero-loop") && (
+            <div class="hero__medio" aria-hidden="true">
+              <video
+                poster={`${LOOP}.jpg`}
+                autoplay
+                muted
+                loop
+                playsinline
+                preload="metadata"
+                width="1280"
+                height="604"
+              >
+                <source src={`${LOOP}.mp4`} type="video/mp4" />
+              </video>
+              <img
+                class="hero__poster"
+                src={`${LOOP}.jpg`}
+                alt=""
+                width="1280"
+                height="604"
+              />
+            </div>
+          )
+        }
+
+        {/* Los KPI van a todo lo ancho, POR DEBAJO de los dos. Se probó el
+            video centrado en vertical y «2016→» quedaba encima del panel de
+            KINZAL. */}
         <div class="hero__kpis">
           {
             kpis.map((k) => (
@@ -377,76 +406,99 @@ const kpis = [
   }
 
   /* ===================================================================
-     01 · HERO — opción B2. Referencia: medios/hero-b2-referencia.html
-     Las cuatro decisiones numeradas de esa referencia, portadas tal cual.
-     =================================================================== */
+     01 · HERO — el loop de Kinzal, entero
+     Referencia: medios/hero-referencia.html, variante F.
+     ===================================================================
+     Se probaron cinco variantes. Lo que se aprendió:
+       · Centrado en vertical choca con la fila de KPI.
+       · Achicando el cuadro a 52% el panel de KINZAL se vuelve ilegible y la
+         demo deja de probar nada. Por eso 58% y no menos.
+       · El velo del hero viejo apagaba la captura: existía para que el texto
+         se leyera ENCIMA de la foto, y ahora no se tocan.
+
+     Deja de ser un flex centrado de 620px de alto y pasa a bloque con
+     padding: columna de texto a la izquierda, el cuadro completo a la derecha
+     sangrando hasta el canto del navegador, y los KPI a todo lo ancho debajo
+     de los dos. */
   .hero {
+    display: block;
     position: relative;
-    display: flex;
-    align-items: center;
-    min-height: 620px;
     overflow: hidden;
     background: var(--ilhas-dark);
+    padding-block: clamp(2.75rem, 5vw, 4.25rem) clamp(2.25rem, 4vw, 3.25rem);
   }
 
-  /* 1 · El medio SANGRA desde la derecha y se disuelve hacia la izquierda con
-        máscara. No es una caja con una sombra encima: es la imagen misma
-        desapareciendo. La disolución termina al 26%. */
+  .hero__inner {
+    position: relative;
+    z-index: 3;
+    width: 100%;
+    max-width: var(--ilhas-container);
+    margin-inline: auto;
+    padding-inline: var(--ilhas-gutter);
+  }
+
+  /* Resplandor detrás del cuadro. Decorativo y sin eventos: solo levanta la
+     esquina para que el video no aterrice sobre tinta plana. */
+  .hero__resplandor {
+    position: absolute;
+    z-index: 0;
+    right: -10%;
+    top: -10%;
+    width: 74%;
+    height: 86%;
+    pointer-events: none;
+    background: radial-gradient(
+      50% 50% at 50% 50%,
+      rgba(122, 60, 255, 0.32),
+      transparent 70%
+    );
+  }
+
+  .hero__texto {
+    position: relative;
+    z-index: 3;
+    max-width: 38%;
+    min-height: 21rem;
+  }
+
+  /* SANGRA, PERO NO RECORTA. El `right` negativo compensa el gutter del
+     contenedor, así que el canto derecho del cuadro cae en el borde del
+     navegador y no en el del contenedor — que es lo que Jorge quería conservar
+     del look anterior. Y la caja lleva la RELACIÓN DE ASPECTO del video, así
+     que no hay nada que recortar: con `cover` se perdían los planos cargando,
+     que es justo lo que pidió que se viera. */
   .hero__medio {
     position: absolute;
-    top: 0;
-    right: 0;
+    right: calc(-1 * var(--ilhas-gutter));
+    top: 0.5rem;
     z-index: 1;
-    width: 56%;
-    height: 100%;
-    -webkit-mask-image: linear-gradient(
-      to right,
-      transparent 0%,
-      rgba(0, 0, 0, 0.55) 14%,
-      #000 26%
-    );
-    mask-image: linear-gradient(
-      to right,
-      transparent 0%,
-      rgba(0, 0, 0, 0.55) 14%,
-      #000 26%
-    );
+    width: 58%;
+    aspect-ratio: 1280 / 604;
+    border-radius: 12px 0 0 12px;
+    overflow: hidden;
+    border: 1px solid rgba(248, 250, 255, 0.14);
+    border-right: 0;
+    box-shadow: 0 40px 80px -30px rgba(0, 0, 0, 0.95);
   }
 
-  /* AL 100%, no al 18% que llevaba la foto. El loop mide 2.12:1 y la ranura
-     del hero 1.30:1, así que `cover` recorta por los lados, y de qué lado
-     recorte decide dos cosas:
-
-     1 · Entra la cotización COMPLETA, con el «Total» adentro. Se probó al 88%
-         y el canto de la pantalla partía el Total en dos — y el Total es lo
-         único que la demo prueba.
-     2 · La ventana de Vista Previa, que lleva la caja de desenfoque sobre la
-         indicación médica, vive en el extremo IZQUIERDO del cuadro. Anclado a
-         la derecha nunca aparece.
-
-     El desenfoque del ARCHIVO no se toca por esto: que aquí no se vea es una
-     segunda línea de defensa, no un sustituto — el mismo archivo se usa de
-     póster y de og:image. */
   .hero__medio video,
   .hero__medio img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
-    object-position: 100% 50%;
+    object-fit: contain;
     display: block;
   }
 
   /* MOVIMIENTO REDUCIDO. Un loop que arranca solo y no para es exactamente lo
-     que esta media query existe para apagar. El póster no es el primer cuadro
-     sino el de la cotización terminada: si alguien nunca ve el video, tiene
-     que quedarse con el resultado y no con la pantalla vacía del arranque.
+     que esta media query existe para apagar. El póster NO es el primer cuadro
+     sino el ÚLTIMO —el bloque verde del ahorro—: si alguien nunca ve el video,
+     tiene que quedarse con el resultado.
 
      Va scopeado a `.hero__medio .hero__poster` (0,2,0) y NO a `.hero__poster`
      a secas (0,1,0): así le gana a `.hero__medio img`, que también es 0,2,0
      pero va antes. Con la versión corta el póster se pintaba SIEMPRE, debajo
-     del video, y en móvil salían los dos apilados. Es la misma clase de bug
-     que el del pie en la iteración 17: no rompe el build y no sale en ningún
-     grep — solo se ve mirando la página. */
+     del video. Es la misma clase de bug que el del pie en la iteración 17: no
+     rompe el build y no sale en ningún grep — solo se ve mirando la página. */
   .hero__medio .hero__poster {
     display: none;
   }
@@ -461,56 +513,23 @@ const kpis = [
     }
   }
 
-  /* 2 · Velo de contraste, para que el texto pase AA sobre cualquier zona de
-        la foto.
-        Ajustado el 25 ago: Jorge cae entre el 50% y el 57% del hero, justo
-        donde el velo original iba de .72 a .58 y se lo comía. La meseta
-        oscura se mantiene hasta 42% —que es donde terminan el H1 y el
-        párrafo, lo medí— y a partir de ahí baja más rápido. Sobre Jorge pasa
-        de .72/.58 a .62/.38.
-        Las métricas sí quedan sobre zona más clara que antes; por eso llevan
-        sombra propia (ver .hero__kpis abajo). */
-  .hero__velo {
-    position: absolute;
-    inset: 0;
-    z-index: 2;
-    background: linear-gradient(
-      95deg,
-      rgba(14, 14, 15, 0.98) 0%,
-      rgba(14, 14, 15, 0.9) 42%,
-      rgba(14, 14, 15, 0.3) 52%,
-      rgba(14, 14, 15, 0.02) 66%,
-      rgba(14, 14, 15, 0) 100%
-    );
-  }
-
-  .hero__inner {
-    position: relative;
-    z-index: 3;
-    width: 100%;
-    max-width: var(--ilhas-container);
-    margin-inline: auto;
-    padding-inline: var(--ilhas-gutter);
-  }
-
+  /* 12ch para que el titular rompa en TRES líneas y no en cuatro con «IA.»
+     colgando sola en la última. Con la columna al 38% y el tamaño anterior no
+     cabía. */
   .hero h1 {
-    /* 19ch y no 16: con el titular nuevo, a 16ch caía en cinco líneas y el
-       bloque de texto se comía el hero. A 19ch son cuatro y el texto sigue
-       terminando antes del 45% del ancho, o sea lejos de Jorge y de la
-       pantalla. */
-    max-width: 19ch;
-    font-size: clamp(2.1rem, 3.4vw, 2.9rem);
+    max-width: 12ch;
+    font-size: clamp(2rem, 3.6vw, 2.9rem);
     line-height: 1.06;
     color: var(--ilhas-white);
   }
 
-  /* 3 · Las frases clave en el gradiente de marca, con white-space:nowrap
-        para que nunca se partan entre líneas. Sobre fondo oscuro este tramo
-        —violeta claro → violeta— mide de 7.5:1 a 4.6:1, así que pasa AA de
-        texto grande con margen. El cian NO se toca aquí: sobre tinta es el
-        único tramo del gradiente de marca que se ve barato.
-        Ojo: pisa a .text-gradient de base.css, que arranca en --ilhas-primary
-        y sobre oscuro se apaga demasiado. */
+  /* Las frases clave en el gradiente de marca, con white-space:nowrap para que
+     nunca se partan entre líneas. Sobre fondo oscuro este tramo —violeta claro
+     → violeta— mide de 7.5:1 a 4.6:1, así que pasa AA de texto grande con
+     margen. El cian NO se toca aquí: sobre tinta es el único tramo del
+     gradiente de marca que se ve barato.
+     Ojo: pisa a .text-gradient de base.css, que arranca en --ilhas-primary y
+     sobre oscuro se apaga demasiado. */
   .hero h1 .text-gradient {
     white-space: nowrap;
     background: linear-gradient(
@@ -525,9 +544,7 @@ const kpis = [
 
   .hero__lead {
     margin-top: 1.1rem;
-    /* 44ch y no 46: con el texto nuevo, a 46ch la tercera línea quedaba de
-       tres palabras. */
-    max-width: 44ch;
+    max-width: 30ch;
     font-size: 1.0625rem;
     /* .70 mide 9.6:1 sobre tinta. */
     color: rgba(255, 255, 255, 0.7);
@@ -554,67 +571,37 @@ const kpis = [
     color: var(--ilhas-white);
   }
 
-  /* 4 · Métricas en FILA debajo del texto, no en columna a la derecha. Esa
-        mitad la ocupan Jorge y la pantalla, que son dos sujetos fijos:
-        cualquier número puesto ahí aterriza encima de uno de los dos. */
   .hero__kpis {
+    position: relative;
+    z-index: 3;
     display: flex;
     flex-wrap: wrap;
     gap: 1.25rem;
-    margin-top: 2.1rem;
-    /* Compactas a propósito: medido a 1440 px, con el tamaño anterior la
-       tercera métrica llegaba a x=925 y Jorge empieza en x=859, así que se le
-       encimaba. Con este tamaño la fila termina antes de él. Es la regla 4 de
-       la referencia: las métricas van en fila, pero ninguna aterriza sobre
-       uno de los dos sujetos fijos de la foto. */
+    margin-top: clamp(2rem, 3.5vw, 2.75rem);
     text-shadow: 0 1px 12px rgba(14, 14, 15, 0.9);
   }
 
-  /* Móvil: la foto pasa a ser una banda arriba y el texto queda abajo. Nunca
-     texto encima de la foto en pantallas angostas — ahí no hay ancho
-     suficiente para que la máscara separe una cosa de la otra. */
   @media (max-width: 899px) {
-    .hero {
-      min-height: 0;
-      flex-direction: column;
-      align-items: stretch;
-      padding-block: 2.5rem 0;
-    }
-
-    /* El recorte se MANTIENE en móvil, solo cambia de forma. A ancho completo
-       y sin recortar pasan las dos cosas que no queremos: el screencast se
-       vuelve una tira de 390×184 donde no se lee nada, y el bloque desenfocado
-       —que en escritorio queda fuera de encuadre— vuelve a entrar convertido
-       en una mancha rosa. Con aspect-ratio 4/3 y el mismo anclaje a la
-       derecha, en móvil se ve la cotización y nada más. */
+    /* En móvil el cuadro deja de sangrar y se mete en la columna, DEBAJO del
+       texto — que es donde lo pone el orden del DOM. */
     .hero__medio {
       position: relative;
-      order: 2;
+      right: auto;
+      top: auto;
       width: 100%;
-      height: auto;
-      aspect-ratio: 4 / 3;
       margin-top: 2.25rem;
-      -webkit-mask-image: none;
-      mask-image: none;
-      border-radius: 12px;
-      overflow: hidden;
+      border-radius: 10px;
+      border-right-width: 1px;
     }
 
-    .hero__medio video,
-    .hero__medio img {
-      height: 100%;
+    .hero__texto {
+      max-width: none;
+      min-height: 0;
     }
 
-    .hero__inner {
-      order: 1;
-    }
-
-    .hero__velo {
-      display: none;
-    }
-
-    .hero__inner {
-      padding-block: 1.5rem 3rem;
+    .hero h1,
+    .hero__lead {
+      max-width: none;
     }
 
     .hero__kpis {

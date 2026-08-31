@@ -90,10 +90,14 @@ Aparte del hub viven `/terminos`, `/privacidad` y `/cookies`. **No cuentan como 
     argumento: no lo reordenes.** El clip quedó fechado en **noviembre 2017, NO
     Talent Land** (Jorge, 28 ago 2026) — era la contradicción de los dos briefs
     del 24 ago. Talent Land son las dos fotos.
-  - **El hero del home es un LOOP, no una foto** (31 ago 2026): `home-hero-loop`
-    muestra el proceso corriendo hasta que sale la cotización. Va con
-    `object-position: 100% 50%` y eso NO es cosmético — al 100% entra el «Total»
-    completo y la ventana con el bloque desenfocado queda fuera de encuadre.
+  - **El hero del home es un LOOP, no una foto** (31 ago 2026): `home-hero-loop`,
+    video de **Kinzal** —empresa de Jorge— con el proceso entero: los planos
+    cargando, la solicitud, el generador armando la cotización y el cierre en el
+    bloque de ahorro. **Va SIN RECORTAR**: la caja lleva la relación de aspecto
+    del video y `object-fit: contain`. Si le pones `cover` se pierden los planos,
+    que es lo que Jorge pidió que se viera. **Un solo `<source>`, mp4** — con
+    este contenido VP9 salía más grande y peor. **El velo se fue**: existía para
+    que el texto se leyera encima de la foto y ahora no se tocan.
     `home-hero-conferencia` volvió a ser exclusiva de `/nosotros`.
   - **La barra de stats** del home (12× · 8× · 6-12%) va PEGADA al hero, sin
     `section-y`, ocupando el hueco que dejó la banda de autoridad. El copy es de

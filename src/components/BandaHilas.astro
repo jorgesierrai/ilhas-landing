@@ -75,7 +75,20 @@ const lineas = [
      marca" que abre el objeto. */
   .hilas {
     position: relative;
-    margin-top: clamp(1.75rem, 3.5vw, 2.75rem);
+    /* 0 desde el 31 ago 2026. Ese margen dejaba 28-44px del fondo claro de la
+       página asomando entre la barra de stats —oscura y a sangre— y esta
+       banda, que es blanca: se veía como una franja gris pálido pegada debajo
+       de los números. Es «el huequito» que Jorge señaló.
+
+       Por qué estaba: la banda venía después de la banda de autoridad, que
+       vivía dentro de un .container sobre el fondo claro, y ahí el margen era
+       el aire que la separaba. Ahora la precede una sección oscura a sangre
+       que termina en canto duro, y el margen se volvió una raya suelta.
+
+       Se toca AQUÍ y no con un selector hermano desde index.astro porque este
+       componente solo se usa en el home — verificado. Si algún día se usa en
+       otra página, ahí sí habría que devolverle el margen desde fuera. */
+    margin-top: 0;
     background: var(--ilhas-white);
     border-top: 1px solid var(--ilhas-gray);
     border-bottom: 1px solid var(--ilhas-gray);
