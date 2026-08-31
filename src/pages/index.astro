@@ -3,10 +3,10 @@ import Base from "../layouts/Base.astro";
 import Bifurcacion from "../components/Bifurcacion.astro";
 import BandaHilas from "../components/BandaHilas.astro";
 import TarjetaCaso from "../components/medios/TarjetaCaso.astro";
-import Stat from "../components/medios/Stat.astro";
 import { mostrar } from "../lib/medios";
 import { porId } from "../data/medios";
 import { PRODUCTOS } from "../data/productos";
+import Cifras from "../components/Cifras.astro";
 
 // El hero lo ocupa el LOOP desde el 31 ago 2026 (iteración 19), no la foto de
 // Talent Land. Va con rutas absolutas de public/ y no por `astro:assets`: los
@@ -92,13 +92,6 @@ const fallas: Record<string, { texto: string; fuente: string; url?: string }> = 
 // completo vive en /soluciones, que es a donde manda la liga.
 const testimonio = porId("soluciones-testimonio-oncologia")!.atribucion!;
 
-// Métricas del hero. El copy es de Jorge y va literal (brief de la
-// iteración 3): número, unidad en violeta, y etiqueta en versalitas.
-const kpis = [
-  { dato: "+1,000", unidad: " MDP", contexto: "al mes, volumen respaldado" },
-  { dato: "6", unidad: "+", contexto: "startups · infraestructura creada" },
-  { dato: "2016", unidad: "→", contexto: "desarrollando IA" },
-];
 
 ---
 
@@ -225,21 +218,6 @@ const kpis = [
           )
         }
 
-        {/* Los KPI van a todo lo ancho, POR DEBAJO de los dos. Se probó el
-            video centrado en vertical y «2016→» quedaba encima del panel de
-            KINZAL. */}
-        <div class="hero__kpis">
-          {
-            kpis.map((k) => (
-              <Stat
-                dato={k.dato}
-                unidad={k.unidad}
-                contexto={k.contexto}
-                variante="hero"
-              />
-            ))
-          }
-        </div>
       </div>
     </section>
 
@@ -418,6 +396,8 @@ const kpis = [
           <h2>Esto ya está corriendo.</h2>
         </div>
 
+        <Cifras />
+
         <ul class="linaje">
           {
             PRODUCTOS.map((p) => (
@@ -511,8 +491,24 @@ const kpis = [
   .hero__texto {
     position: relative;
     z-index: 3;
-    max-width: 38%;
-    min-height: 21rem;
+  }
+
+  /* 900px y no 899: es el mismo corte que usa el bloque de móvil de abajo
+     (max-width:899px), así que las dos ramas no se pisan ni dejan hueco. */
+  @media (min-width: 900px) {
+    .hero__inner {
+      display: grid;
+      grid-template-columns: minmax(0, 38%) minmax(0, 1fr);
+      gap: clamp(2rem, 4vw, 3.5rem);
+      align-items: center;
+    }
+
+    /* Sangra hasta pasarse del contenedor, igual que antes, pero desde dentro
+       del grid: el margen negativo saca el canto derecho del cuadro fuera del
+       contenedor de 1140 sin sacarlo del flujo. */
+    .hero__demo {
+      margin-right: calc(-1 * var(--ilhas-gutter));
+    }
   }
 
   /* SANGRA, PERO NO RECORTA. El `right` negativo compensa el gutter del
@@ -521,12 +517,19 @@ const kpis = [
      del look anterior. Y la caja lleva la RELACIÓN DE ASPECTO del video, así
      que no hay nada que recortar: con `cover` se perdían los planos cargando,
      que es justo lo que pidió que se viera. */
+  /* Columna derecha del grid. Antes iba `position:absolute` con `right`
+     negativo y la altura del hero la daba el `min-height:21rem` de la columna
+     de texto — que alcanzaba mientras el texto llevaba los KPI debajo.
+
+     Al bajar las cifras a «Esto ya está corriendo» (§7), el texto se quedó en
+     titular + párrafo + botones y mide MENOS que el video, así que el cuadro
+     absoluto se salía por abajo de la sección. En grid la fila mide lo que
+     mida el más alto de los dos, sola, sin `min-height` a mano.
+
+     El sangrado se conserva con `margin-right` negativo en vez de `right`. */
   .hero__demo {
-    position: absolute;
-    right: calc(-1 * var(--ilhas-gutter));
-    top: 0.5rem;
+    position: relative;
     z-index: 1;
-    width: 58%;
   }
 
   .hero__medio {
@@ -703,24 +706,10 @@ const kpis = [
     color: var(--ilhas-white);
   }
 
-  .hero__kpis {
-    position: relative;
-    z-index: 3;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1.25rem;
-    margin-top: clamp(2rem, 3.5vw, 2.75rem);
-    text-shadow: 0 1px 12px rgba(14, 14, 15, 0.9);
-  }
-
   @media (max-width: 899px) {
     /* En móvil el cuadro deja de sangrar y se mete en la columna, DEBAJO del
        texto — que es donde lo pone el orden del DOM. */
     .hero__demo {
-      position: relative;
-      right: auto;
-      top: auto;
-      width: 100%;
       margin-top: 2.25rem;
     }
 
@@ -743,10 +732,6 @@ const kpis = [
     .hero__lead {
       max-width: none;
     }
-
-    .hero__kpis {
-      gap: 1.5rem;
-    }
   }
 
   /* ===================================================================
@@ -757,11 +742,15 @@ const kpis = [
      números en degradado pierden fuerza sobre blanco. Con la banda oscura el
      hero se prolonga y el corte a blanco pasa una sola vez, abajo.
 
-     CUIDADO con confundirla con los KPI del hero: son dos cosas distintas y
-     por eso pesan distinto. Los del hero son chicos y apagados y dicen QUIÉNES
-     SON (+1,000 MDP, 6+ startups, 2016). Éstos son grandes y en degradado y
-     dicen QUÉ HACE EL MÉTODO. Si igualas los tamaños se leen como seis números
-     sueltos y ninguno pega. No los muevas de una a otra.
+     CUIDADO con confundirla con la BANDA DE CIFRAS de §05. Son dos cosas
+     distintas y por eso se tratan distinto: aquélla dice QUIÉNES SON (+1,000
+     MDP, 6+ startups, 2016) y va en blanco con reglas; ésta dice QUÉ HACE EL
+     MÉTODO y va en degradado. Si les das el mismo tratamiento, las dos filas de
+     números de la misma página se ponen a competir y ninguna pega.
+
+     Hasta el 31 ago 2026 esas cifras vivían en el hero, chiquitas; el §7 de la
+     iteración 19 las bajó a §05, donde están las tarjetas que prueban lo que
+     los números dicen.
      =================================================================== */
   .stats {
     background: var(--ilhas-dark);

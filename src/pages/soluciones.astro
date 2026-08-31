@@ -7,6 +7,7 @@ import MapaEmpresa from "../components/MapaEmpresa.astro";
 import Testimonio from "../components/medios/Testimonio.astro";
 import { mostrar } from "../lib/medios";
 import { PRODUCTOS } from "../data/productos";
+import Cifras from "../components/Cifras.astro";
 import iaCaminoIcon from "../assets/icons/ia-camino.png";
 
 const testimonios = [
@@ -92,6 +93,8 @@ const diagnosticoUrl = "mailto:hola@ilhas.ai?subject=Quiero%20un%20diagn%C3%B3st
           <p class="kicker">Casos</p>
           <h2>Esto ya lo construimos para empresas como la tuya.</h2>
         </div>
+
+        <Cifras />
 
         <ul class="casos">
           {

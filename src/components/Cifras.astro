@@ -1,0 +1,119 @@
+---
+/**
+ * La banda de cifras de respaldo. Referencia: medios/cifras-referencia.html.
+ *
+ * La usan DOS secciones y las dos son `section-y bg-dark`, así que el
+ * tratamiento es idéntico:
+ *   · home §05        — «De dónde sale el método / Esto ya está corriendo.»
+ *   · /soluciones §03 — «Casos / Esto ya lo construimos para empresas como la tuya.»
+ *
+ * Es componente y no marcado repetido en cada página por lo mismo que el dato
+ * salió a `src/data/cifras.ts`: dos copias de veinte líneas de marcado y
+ * treinta de CSS son dos verdades esperando a desincronizarse. Mismo patrón que
+ * `BandaHilas`, `MapaEmpresa` y `Bifurcacion`.
+ *
+ * VA ARRIBA DE LAS TARJETAS, nunca abajo. Las cifras son la causa y las
+ * tarjetas el efecto; invertirlo convierte el respaldo en un pie de página.
+ *
+ * Bajaron del hero el 31 ago 2026. Es un ascenso, no una mudanza: arriba
+ * competían con el titular y por eso iban chiquitas; aquí mandan ellas y por
+ * eso crecen al doble.
+ *
+ * SE PROBARON TRES TRATAMIENTOS Y NO SE VUELVEN A PROPONER:
+ *   · Cada cifra en su tarjeta, con el fondo y el radio de `TarjetaCaso`: las
+ *     cifras pesaban igual que las tarjetas de abajo y la sección se leía como
+ *     SEIS tarjetas, tres de ellas con números. El respaldo se volvía otro caso.
+ *   · El número en degradado, como la barra de stats del hero: repite el
+ *     tratamiento de «12× / 8× / 6-12%» y las dos filas de números de la misma
+ *     página se ponen a competir. Encima el violeta de la unidad —« MDP», «+»,
+ *     «→»— se pierde dentro del degradado, y esa unidad en violeta es de marca.
+ */
+import { CIFRAS } from "../data/cifras";
+---
+
+<div class="cifras reveal">
+  {
+    CIFRAS.map((c) => (
+      <div class="cifras__uno">
+        {/* La unidad va DENTRO del <span> del dato, no como hermana: así no se
+            separa del número al envolver. Mismo patrón que `Stat.astro`. */}
+        <span class="cifras__dato">
+          {c.dato}
+          {c.unidad && <i class="cifras__unidad">{c.unidad}</i>}
+        </span>
+        <span class="cifras__pie">{c.contexto}</span>
+      </div>
+    ))
+  }
+</div>
+
+<style>
+  .cifras {
+    display: grid;
+    gap: 0;
+    border-block: 1px solid rgba(248, 250, 255, 0.13);
+    padding-block: clamp(1.75rem, 3vw, 2.5rem);
+  }
+
+  /* `white-space: nowrap` NO es opcional: sin él «+1,000 MDP» se parte en dos
+     renglones en el rango 760-900 px y el número deja de leerse como número. */
+  .cifras__dato {
+    display: block;
+    font-family: var(--ilhas-font-display);
+    font-weight: 600;
+    font-size: clamp(2.4rem, 4.8vw, 3.5rem);
+    line-height: 1;
+    letter-spacing: -0.035em;
+    color: var(--ilhas-white);
+    white-space: nowrap;
+  }
+
+  .cifras__unidad {
+    font-style: normal;
+    color: var(--ilhas-grad-end);
+  }
+
+  /* SIN `max-width`. La columna del grid ya limita el ancho; poner un `ch`
+     encima hace que las tres etiquetas rompan en sitios distintos — en
+     versalitas «AL MES, VOLUMEN RESPALDADO» mide mucho más de lo que sugiere su
+     cuenta de caracteres, y a 24ch caía en tres líneas mientras
+     «DESARROLLANDO IA» quedaba en una. La fila salía despareja. */
+  .cifras__pie {
+    display: block;
+    margin-top: 0.7rem;
+    font-size: 0.75rem;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    line-height: 1.45;
+    /* .62 mide 7.4:1 sobre --ilhas-dark. */
+    color: rgba(248, 250, 255, 0.62);
+  }
+
+  @media (min-width: 760px) {
+    .cifras {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .cifras__uno {
+      padding-inline: clamp(1.25rem, 3vw, 2.5rem);
+    }
+
+    .cifras__uno + .cifras__uno {
+      border-left: 1px solid rgba(248, 250, 255, 0.13);
+    }
+
+    .cifras__uno:first-child {
+      padding-left: 0;
+    }
+
+    .cifras__uno:last-child {
+      padding-right: 0;
+    }
+  }
+
+  @media (max-width: 759px) {
+    .cifras {
+      gap: 1.5rem;
+    }
+  }
+</style>

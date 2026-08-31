@@ -42,6 +42,12 @@ Sin imagen de stock. Si hay algo visual, que sea el gradiente de marca o el isot
 > sección que entonces no existía. En su hueco entró la barra de stats (§01b).
 > **No lo reabras**: las tres candidatas de identidad ya se descartaron.
 
+**05b · La banda de cifras** — *también en `/soluciones` §03*
++1,000 MDP · 6+ startups · 2016→, en blanco con reglas y la unidad en violeta.
+Va **arriba de las tarjetas**: las cifras son la causa y las tarjetas el efecto; abajo se leerían como un pie de página.
+El dato vive en `src/data/cifras.ts` y el bloque en `src/components/Cifras.astro`, porque lo pintan dos páginas.
+⚠️ **No se trata como la barra de stats de §01b.** Aquélla va en degradado y dice *qué hace el método*; ésta va en blanco y dice *quiénes son*. Con el mismo tratamiento, las dos filas de números de la misma página compiten y ninguna pega.
+
 **01b · La barra de stats**
 Tres cifras de lo que hace el método —**12×** más rápido · **8×** menos costo que humanos · **6-12%** más ingresos—, en degradado y grandes.
 Va **pegada al hero**, sin `section-y` y sin margen: los dos bloques oscuros se leen como uno solo y el corte a blanco pasa una sola vez, abajo.

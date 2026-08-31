@@ -101,9 +101,20 @@ Aparte del hub viven `/terminos`, `/privacidad` y `/cookies`. **No cuentan como 
     `home-hero-conferencia` volvió a ser exclusiva de `/nosotros`.
   - **La barra de stats** del home (12× · 8× · 6-12%) va PEGADA al hero, sin
     `section-y`, ocupando el hueco que dejó la banda de autoridad. El copy es de
-    Jorge y va literal: sin asteriscos, sin nota al pie y sin fuente. **No la
-    confundas con los KPI del hero**: aquéllos dicen quiénes son, ésta dice qué
-    hace el método, y por eso pesan distinto.
+    Jorge y va literal: sin asteriscos, sin nota al pie y sin fuente.
+  - **La banda de cifras** (+1,000 MDP · 6+ · 2016→) vive en
+    `src/components/Cifras.astro` y su dato en `src/data/cifras.ts`. La pintan
+    DOS secciones —home §05 y `/soluciones` §03— y siempre **arriba de las
+    tarjetas**: son la causa, las tarjetas el efecto. Bajaron del hero el 31 ago
+    2026. **No la confundas con la barra de stats**: aquélla dice qué hace el
+    método y va en degradado; ésta dice quiénes son y va en blanco con reglas.
+    Si les das el mismo tratamiento, las dos filas de números de la misma página
+    compiten.
+  - ⚠️ **`.hero__inner` es un GRID de dos columnas a partir de 900px**, y no por
+    gusto: con el medio `absolute` la altura del hero la daba el `min-height` de
+    la columna de texto, y al bajar las cifras el texto quedó más corto que el
+    video — el cuadro se salía por abajo de la sección. En grid la fila mide lo
+    que mida el más alto de los dos.
   - **La banda de autoridad salió del home.** El componente
     `BandaAutoridad.astro` SIGUE en el repo — solo se quitó su uso. Los tres
     hitos que resumía viven completos en `/nosotros` § En público desde la 18.
