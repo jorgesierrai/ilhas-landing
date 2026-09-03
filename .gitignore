@@ -152,5 +152,12 @@ public/assets/ilhas-iconografia/
 
 # Material crudo de video: nunca se commitea (GitHub bloquea >100 MB por archivo)
 _material-crudo/
+
+# Carpeta de tránsito: lo que se saca del sitio pero todavía no se tira.
+# Ignorada porque ya se coló una vez — el 31 ago 2026 un `git add -A` metió al
+# repositorio 19 archivos de bloqueo y objetos temporales de .git/ que alguien
+# había movido a `_to_delete/git-locks/`. Nada de aquí adentro pertenece al
+# repositorio: si algo tiene que quedarse, se saca de esta carpeta primero.
+_to_delete/
 *.mov
 
