@@ -142,7 +142,26 @@ function revisar(slot) {
       if (!poster) avisos.push("falta el póster .jpg");
       else registrar(poster, MAX_POSTER_KB, "póster");
       // Todo clip de este sitio lleva voz; los mudos son tipo "loop".
-      if (!existe(path.join(DIR_VIDEO, `${slot.id}.es.vtt`))) {
+      //
+      // La excepción es `subtitulosQuemados`: cuando los subtítulos van
+      // pintados en la imagen del video, un <track> encima los duplica —se ven
+      // dos juegos de subtítulos, uno sobre el otro— y el video se vuelve
+      // ilegible. Ahí el .es.vtt deja de ser obligatorio.
+      //
+      // NO ES GRATIS, Y POR ESO SE ESCRIBE: unos subtítulos quemados no los lee
+      // un lector de pantalla, no los indexa un buscador, y no se pueden
+      // apagar, traducir ni copiar. Se pierden las tres cosas por las que
+      // existe un .es.vtt. Es una DECISIÓN CONSCIENTE de Jorge (3 sep 2026),
+      // no un descuido del verificador ni un archivo que se olvidó subir — que
+      // es exactamente lo que este aviso existía para atrapar.
+      //
+      // La marca vive en el manifiesto, donde se ve al revisar la ranura, y no
+      // escondida aquí: quien mire `finanzas-edificacion` tiene que enterarse
+      // de que ese video no tiene pista de texto.
+      if (
+        !slot.subtitulosQuemados &&
+        !existe(path.join(DIR_VIDEO, `${slot.id}.es.vtt`))
+      ) {
         avisos.push("falta el .es.vtt (obligatorio: hay voz)");
       }
     } else {

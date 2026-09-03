@@ -436,11 +436,11 @@ export const MEDIOS: SlotMedio[] = [
     prioridad: 3,
     objecion: "«¿Los dos de verdad trabajan juntos?»",
     alt: "Jorge Sierra papá y Jorge Sierra hijo hablando de su trabajo en conjunto",
-    duracion: "60-90 s",
-    pesoMaxKB: 12288,
+    duracion: "2:08",
+    pesoMaxKB: 23552,
     subtitulosQuemados: true,
     notas:
-      "IDENTIDAD, NO OFERTA: que no mencione temario, precio ni bonos. El VSL no va en el sitio (regla 1 de CLAUDE.md). El archivo trae los subtítulos quemados en la imagen, así que su <track> NO se autoenciende: se veían dobles. El .es.vtt se queda por accesibilidad e indexado.",
+      "REEMPLAZADO EL 3 SEP 2026: ahora es el VSL del webinar «Finanzas con IA: de Reportes a Decisiones». 1280×720 a 30 fps, 2:08, 21.7 MB. Antes vivía aquí un clip de 1:30 de los dos Jorges hablando de su trabajo en conjunto. IDENTIDAD, NO OFERTA sigue mandando: que no mencione temario, precio ni bonos (regla 1 de CLAUDE.md). YA NO LLEVA .es.vtt, y es decisión de Jorge, no un olvido — los subtítulos van quemados en la imagen, así que el <track> se veía doble encima de ellos. Queda anotado el costo: quemados no sirven para lector de pantalla ni para indexado. La marca `subtitulosQuemados` es lo que hace que medios-check deje de exigir el .es.vtt para esta ranura; sin ella el verificador avisa. COMPRESIÓN: el fuente son 642 MB en _material-crudo y se bajó a 720p30 con crf 26. Se probó 1080p60 y triplicaba el peso sin verse mejor — es una cabeza hablando con diapositivas, no hay detalle fino ni movimiento rápido que justifique ni la resolución ni los cuadros.",
   },
 
   // --- Íconos de las ocho capacidades (F) · /finanzas §02
