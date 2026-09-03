@@ -1,0 +1,537 @@
+---
+/**
+ * /jorgesierra — el link in bio.
+ * Referencia: medios/bio-referencia.html (896 px en 390×844 · 900 en escritorio).
+ *
+ * GENÉRICA A PROPÓSITO. La misma URL sirve para la slide de una masterclass,
+ * para el perfil de Instagram y para el de TikTok: sin parámetros, sin
+ * variantes, sin saludos de evento. Una sola página que no caduca — y por eso
+ * el QR impreso tampoco caduca.
+ *
+ * NO USA `Base.astro`, y no es descuido: ese layout mete el menú y el pie del
+ * sitio, y aquí los dos sobran. Un link in bio con navegación deja de ser un
+ * link in bio. Por eso el documento va completo aquí, con `tokens.css` para las
+ * variables y `base.css` para las @font-face (las tres viven ahí).
+ *
+ * CERO JAVASCRIPT. La versión anterior del brief traía un saludo condicional
+ * con `?src=`; Jorge lo quitó al hacerla genérica, así que no queda nada que
+ * necesite JS y la página sigue la regla del sitio.
+ *
+ * SIN `noindex`: es la página personal de Jorge y debe poder encontrarse.
+ */
+import "../styles/tokens.css";
+import "../styles/base.css";
+
+const TITULO = "Jorge Sierra";
+const LINEA = "Enseño a convertir el caos en dinero.";
+
+/**
+ * ⚠️ EL TIKTOK ES `@jorgesierrai`, CON i AL FINAL. La slide que Jorge proyecta
+ * dice `@jorgesierra` —sin la i— y ésa manda a una cuenta que no es suya. La
+ * fuente de verdad es src/data/personas.ts. Está reportado para que corrija la
+ * slide; aquí va el correcto.
+ */
+const enlaces = [
+  {
+    href: "https://www.instagram.com/soyjorgesierra",
+    label: "Instagram",
+    sub: "@soyjorgesierra",
+    icono: "instagram",
+    fuera: true,
+  },
+  {
+    href: "https://www.tiktok.com/@jorgesierrai",
+    label: "TikTok",
+    sub: "@jorgesierrai",
+    icono: "tiktok",
+    fuera: true,
+  },
+  {
+    href: "https://www.jorgesierra.io/",
+    label: "Mi portafolio",
+    sub: "jorgesierra.io",
+    icono: "sitio",
+    fuera: true,
+  },
+  // Sin `target`: es el mismo sitio, y sacarlo a otra pestaña deja al visitante
+  // con dos ilhas.ai abiertas.
+  {
+    href: "/",
+    label: "ilhas.ai",
+    sub: "El método, aplicado a tu trabajo",
+    icono: "ilhas",
+    fuera: false,
+  },
+];
+---
+
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Jorge Sierra · Ilhas</title>
+    <meta
+      name="description"
+      content="Jorge Sierra — fundador de Ilhas y Kinzal. Instagram, TikTok, portafolio y el manual de IA agéntica, gratis."
+    />
+    <link rel="canonical" href="https://ilhas.ai/jorgesierra" />
+    <meta name="theme-color" content="#0E0E0F" />
+
+    <meta property="og:type" content="profile" />
+    <meta property="og:site_name" content="Ilhas" />
+    <meta property="og:locale" content="es_LA" />
+    <meta property="og:title" content="Jorge Sierra · Ilhas" />
+    <meta
+      property="og:description"
+      content="Instagram, TikTok, portafolio y el manual de IA agéntica, gratis."
+    />
+    <meta property="og:url" content="https://ilhas.ai/jorgesierra" />
+    <meta name="twitter:card" content="summary" />
+
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" href="/favicon.ico" sizes="32x32" />
+
+    {/* La foto es el LCP de esta página y lo único pesado que carga. */}
+    <link rel="preload" as="image" href="/assets/bio/jorge-full.webp" />
+    <link
+      rel="preload"
+      href="/assets/fonts/space-grotesk-600.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="/assets/fonts/inter-400.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+  </head>
+
+  <body>
+    <main class="bio">
+      <div class="figura">
+        <div class="figura__luz" aria-hidden="true"></div>
+        <img
+          src="/assets/bio/jorge-full.webp"
+          alt="Jorge Sierra"
+          width="609"
+          height="1000"
+          fetchpriority="high"
+          decoding="async"
+        />
+      </div>
+
+      <div class="cuerpo">
+        <h1>{TITULO}</h1>
+        <p class="bio__linea">{LINEA}</p>
+
+        <ul class="enlaces">
+          {
+            enlaces.map((e) => (
+              <li>
+                <a
+                  class="enlace"
+                  href={e.href}
+                  target={e.fuera ? "_blank" : undefined}
+                  rel={e.fuera ? "noopener" : undefined}
+                >
+                  <span class="enlace__icono" aria-hidden="true">
+                    {e.icono === "instagram" && (
+                      <svg viewBox="0 0 24 24">
+                        <path d="M12 2.16c3.2 0 3.58.01 4.85.07 1.17.05 1.8.25 2.23.41.56.22.96.48 1.38.9.42.42.68.82.9 1.38.16.42.36 1.06.41 2.23.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.25 1.8-.41 2.23-.22.56-.48.96-.9 1.38-.42.42-.82.68-1.38.9-.42.16-1.06.36-2.23.41-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.8-.25-2.23-.41-.56-.22-.96-.48-1.38-.9-.42-.42-.68-.82-.9-1.38-.16-.42-.36-1.06-.41-2.23C2.17 15.58 2.16 15.2 2.16 12s.01-3.58.07-4.85c.05-1.17.25-1.8.41-2.23.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.42-.16 1.06-.36 2.23-.41C8.42 2.17 8.8 2.16 12 2.16zm0 5.68a4.16 4.16 0 100 8.32 4.16 4.16 0 000-8.32zm0 6.86a2.7 2.7 0 110-5.4 2.7 2.7 0 010 5.4zm5.3-7.02a.97.97 0 11-1.94 0 .97.97 0 011.94 0z" />
+                      </svg>
+                    )}
+                    {e.icono === "tiktok" && (
+                      <svg viewBox="0 0 24 24">
+                        <path d="M16.6 5.82A4.28 4.28 0 0115.54 3h-3.09v12.4a2.59 2.59 0 01-2.59 2.5 2.59 2.59 0 01-2.59-2.59 2.59 2.59 0 013.39-2.47V9.7a5.68 5.68 0 00-.8-.06A5.68 5.68 0 003.5 15.3 5.68 5.68 0 009.18 21a5.68 5.68 0 005.68-5.68V9.01a7.35 7.35 0 004.3 1.38V7.3a4.28 4.28 0 01-2.56-1.48z" />
+                      </svg>
+                    )}
+                    {e.icono === "sitio" && (
+                      <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="1.7"
+                      >
+                        <circle cx="12" cy="12" r="9" />
+                        <path d="M3 12h18M12 3a15 15 0 010 18 15 15 0 010-18" />
+                      </svg>
+                    )}
+                    {e.icono === "ilhas" && (
+                      <img
+                        src="/assets/logo/logo-mark.svg"
+                        alt=""
+                        width="22"
+                        height="22"
+                      />
+                    )}
+                  </span>
+                  <span class="enlace__txt">
+                    {e.label}
+                    <span class="enlace__sub">{e.sub}</span>
+                  </span>
+                  <span class="enlace__flecha" aria-hidden="true">
+                    {e.fuera ? "↗" : "→"}
+                  </span>
+                </a>
+              </li>
+            ))
+          }
+
+          {/* El ÚNICO sólido en morado. No es capricho: es lo único que la
+              página regala, y es lo que la hace valer la pena aunque no te
+              quieran seguir. */}
+          <li>
+            <a
+              class="enlace enlace--manual"
+              href="/manual-ia-agentica.pdf"
+              download
+            >
+              <span class="enlace__icono" aria-hidden="true">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path d="M12 3v12m0 0l-4-4m4 4l4-4M4 17v2a2 2 0 002 2h12a2 2 0 002-2v-2" />
+                </svg>
+              </span>
+              <span class="enlace__txt">
+                Descarga el manual
+                <span class="enlace__sub">
+                  Un agente no es un chatbot con esteroides · 24 páginas, gratis
+                </span>
+              </span>
+            </a>
+          </li>
+        </ul>
+
+        <p class="pie">
+          <img src="/assets/logo/logo-mark.svg" alt="" width="17" height="17" />
+          <b>ilhas</b> · Fundador de Ilhas y Kinzal
+        </p>
+      </div>
+    </main>
+  </body>
+</html>
+
+<style is:global>
+  /* El documento entero es de esta página: base.css pinta el body claro para
+     el resto del sitio y aquí manda el oscuro. */
+  body {
+    margin: 0;
+    background: var(--ilhas-dark);
+    color: rgba(248, 250, 255, 0.72);
+    line-height: 1.5;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  /* `100svh` y NO `100vh`: en Safari de iOS, `100vh` ignora la barra del
+     navegador y la página se corta justo donde están los botones — que es lo
+     único que esta página tiene que entregar. */
+  .bio {
+    position: relative;
+    min-height: 100svh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* --- la figura --- */
+  .figura {
+    position: relative;
+    flex: 0 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    padding-top: clamp(1rem, 4vw, 2rem);
+  }
+
+  /* El degradado de marca aparece UNA vez en toda la página: aquí. En los
+     botones dejaría de ser acento y sería decoración. */
+  .figura__luz {
+    position: absolute;
+    z-index: 0;
+    left: 50%;
+    bottom: 6%;
+    translate: -50% 0;
+    width: min(115%, 520px);
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: linear-gradient(
+      115deg,
+      var(--ilhas-grad-start) 0%,
+      var(--ilhas-primary) 50%,
+      var(--ilhas-grad-end) 100%
+    );
+    filter: blur(60px);
+    opacity: 0.34;
+    pointer-events: none;
+  }
+
+  /* `contain`, NO `cover`: Jorge pidió la foto COMPLETA. Con `cover` se le
+     corta la cabeza o las piernas según el alto disponible. */
+  .figura img {
+    position: relative;
+    z-index: 1;
+    display: block;
+    height: clamp(300px, 42svh, 420px);
+    width: auto;
+    max-width: 88vw;
+    object-fit: contain;
+  }
+
+  /* El desvanecido que amarra la figura con el fondo. El recorte de origen
+     termina a medio muslo con un canto recto: sin degradado se ve como una
+     foto mal cortada, con degradado se lee como decisión. Va en los DOS
+     tamaños. */
+  .figura::after {
+    content: "";
+    position: absolute;
+    z-index: 2;
+    inset: auto 0 0 0;
+    height: 22%;
+    pointer-events: none;
+    background: linear-gradient(to top, var(--ilhas-dark) 12%, transparent);
+  }
+
+  /* --- el texto --- */
+  .cuerpo {
+    position: relative;
+    z-index: 3;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 0 clamp(1.25rem, 5vw, 2rem) clamp(1.5rem, 5vw, 2.5rem);
+    margin-top: -1.25rem;
+  }
+
+  /* `inline-block` para que `background-clip: text` recorte sobre el TEXTO y
+     no sobre una caja del ancho de la columna — con `block` el degradado del
+     nombre sale truncado. Es el mismo bug que ya salió en la barra de stats
+     del home. */
+  .bio h1 {
+    margin: 0;
+    display: inline-block;
+    font-family: var(--ilhas-font-display);
+    font-weight: 600;
+    font-size: clamp(2.1rem, 8.5vw, 2.9rem);
+    line-height: 1;
+    letter-spacing: -0.035em;
+    background: linear-gradient(
+      115deg,
+      var(--ilhas-grad-start) 0%,
+      var(--ilhas-primary) 50%,
+      var(--ilhas-grad-end) 100%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .bio__linea {
+    margin: 0.6rem 0 0;
+    font-size: 1rem;
+    color: rgba(248, 250, 255, 0.72);
+    max-width: 30ch;
+  }
+
+  /* --- los botones --- */
+  .enlaces {
+    width: 100%;
+    max-width: 26rem;
+    margin: 1.4rem 0 0;
+    padding: 0;
+    list-style: none;
+    display: grid;
+    gap: 0.55rem;
+  }
+
+  /* 58 px mínimo: por encima del objetivo táctil de 44 de Apple y 48 de
+     Android, con holgura para un pulgar con prisa. */
+  .enlace {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    min-height: 58px;
+    padding: 0.6rem 1.05rem;
+    border-radius: 14px;
+    text-decoration: none;
+    background: rgba(248, 250, 255, 0.055);
+    border: 1px solid rgba(248, 250, 255, 0.12);
+    color: var(--ilhas-white);
+    font-weight: 500;
+    font-size: 1rem;
+    transition:
+      background 0.16s ease,
+      border-color 0.16s ease,
+      transform 0.16s ease;
+  }
+
+  .enlace:hover,
+  .enlace:focus-visible {
+    background: rgba(248, 250, 255, 0.1);
+    border-color: rgba(248, 250, 255, 0.28);
+    color: var(--ilhas-white);
+  }
+
+  .enlace:active {
+    transform: scale(0.985);
+  }
+
+  .enlace:focus-visible {
+    outline: 2px solid var(--ilhas-grad-start);
+    outline-offset: 3px;
+  }
+
+  .enlace--manual {
+    background: var(--ilhas-primary);
+    border-color: transparent;
+  }
+
+  .enlace--manual:hover,
+  .enlace--manual:focus-visible {
+    background: #8b52ff;
+    border-color: transparent;
+  }
+
+  .enlace__icono {
+    flex: 0 0 auto;
+    width: 1.375rem;
+    height: 1.375rem;
+    opacity: 0.9;
+  }
+
+  .enlace__icono svg,
+  .enlace__icono img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    fill: currentColor;
+  }
+
+  .enlace__txt {
+    flex: 1;
+    text-align: left;
+  }
+
+  .enlace__sub {
+    display: block;
+    margin-top: 0.1rem;
+    font-size: 0.8125rem;
+    font-weight: 400;
+    color: rgba(255, 255, 255, 0.62);
+    line-height: 1.35;
+  }
+
+  .enlace--manual .enlace__sub {
+    color: rgba(255, 255, 255, 0.84);
+  }
+
+  .enlace__flecha {
+    flex: 0 0 auto;
+    opacity: 0.45;
+    font-size: 1.05rem;
+  }
+
+  /* --- el pie --- */
+  .pie {
+    margin-top: 1.35rem;
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+    font-size: 0.8125rem;
+    color: rgba(248, 250, 255, 0.45);
+  }
+
+  .pie img {
+    width: 1.05rem;
+    height: 1.05rem;
+  }
+
+  .pie b {
+    font-family: var(--ilhas-font-display);
+    font-weight: 600;
+    font-size: 0.9375rem;
+    color: rgba(248, 250, 255, 0.8);
+    letter-spacing: -0.02em;
+  }
+
+  /* ======================================================================
+     ESCRITORIO — el encuadre de la slide que Jorge proyecta
+     ====================================================================== */
+  @media (min-width: 860px) {
+    .bio {
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      gap: clamp(2rem, 6vw, 5rem);
+      max-width: 72rem;
+      margin-inline: auto;
+      padding-inline: clamp(2rem, 5vw, 4rem);
+    }
+
+    .figura {
+      flex: 0 0 auto;
+      padding-top: 0;
+      align-items: center;
+    }
+
+    .figura img {
+      height: min(78svh, 620px);
+      max-width: none;
+    }
+
+    .figura::after {
+      height: 14%;
+    }
+
+    .figura__luz {
+      width: 420px;
+      bottom: 14%;
+    }
+
+    .cuerpo {
+      flex: 0 1 26rem;
+      align-items: flex-start;
+      text-align: left;
+      margin-top: 0;
+      padding: 0;
+    }
+
+    .bio h1 {
+      font-size: clamp(2.6rem, 4.6vw, 3.6rem);
+    }
+
+    .bio__linea {
+      font-size: 1.0625rem;
+      max-width: 28ch;
+    }
+
+    .enlaces {
+      margin-top: 1.75rem;
+      max-width: none;
+    }
+
+    .pie {
+      margin-top: 1.6rem;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .enlace {
+      transition-duration: 0s;
+    }
+
+    .enlace:active {
+      transform: none;
+    }
+  }
+</style>
