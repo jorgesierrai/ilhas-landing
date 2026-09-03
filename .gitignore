@@ -153,6 +153,10 @@ public/assets/ilhas-iconografia/
 # Material crudo de video: nunca se commitea (GitHub bloquea >100 MB por archivo)
 _material-crudo/
 
+# Salidas del asistente. Igual que _to_delete/: se coló sola con un `git add -A`
+# el 3 sep 2026. No es material del sitio y nada lo referencia.
+Claude outputs/
+
 # Carpeta de tránsito: lo que se saca del sitio pero todavía no se tira.
 # Ignorada porque ya se coló una vez — el 31 ago 2026 un `git add -A` metió al
 # repositorio 19 archivos de bloqueo y objetos temporales de .git/ que alguien
