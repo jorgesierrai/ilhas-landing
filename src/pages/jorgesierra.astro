@@ -109,7 +109,7 @@ const enlaces = [
     />
   </head>
 
-  <body>
+  <body class="bio-doc">
     <main class="bio">
       <div class="figura">
         <div class="figura__luz" aria-hidden="true"></div>
@@ -220,10 +220,23 @@ const enlaces = [
   </body>
 </html>
 
-<style is:global>
-  /* El documento entero es de esta página: base.css pinta el body claro para
-     el resto del sitio y aquí manda el oscuro. */
-  body {
+{/* ⚠️ SIN `is:global`, Y ESTO NO SE TOCA.
+
+    Lo tuvo un rato y rompió el sitio entero: `is:global` NO deja los estilos
+    en esta página, los manda a la hoja compartida —el sitio compila con
+    `cssCodeSplit: false`, o sea UNA sola hoja para todo—. Dos destrozos:
+    `body{background:dark}` pintó de negro las ocho páginas, y `.pie` chocó de
+    frente con el pie del sitio, que usa exactamente esa clase, y lo volvió un
+    flex de 13px.
+
+    Scopeado funciona igual de bien aquí porque el <html> y el <body> están en
+    ESTA plantilla, así que Astro les pone su hash y las reglas les llegan. */}
+<style>
+  /* La clase va en el <body> y la regla apunta a la CLASE, no al elemento.
+     Astro NUNCA scopea `body`, `html` ni `:root` —los trata como globales
+     siempre— así que un `body { background: dark }` aquí se le aplica a las
+     ocho páginas del sitio. Ya pasó. Con una clase propia sí se scopea. */
+  .bio-doc {
     margin: 0;
     background: var(--ilhas-dark);
     color: rgba(248, 250, 255, 0.72);
