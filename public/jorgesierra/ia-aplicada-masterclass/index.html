@@ -1,6 +1,12 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
+<!-- Ancla las rutas relativas del deck (./deck.js, ./img/*) a esta carpeta.
+     SIN esto, al abrir la URL SIN barra final el navegador resuelve ./deck.js
+     contra /jorgesierra/ y da 404: sin JS no hay escalado ni navegación, y la
+     presentación sale a tamaño natural y sin flechas. Con <base> funciona con
+     barra y sin ella. `base-uri 'self'` de la CSP lo permite. -->
+<base href="/jorgesierra/ia-aplicada-masterclass/">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>IA aplicada: de la idea al resultado · Masterclass · Jorge Sierra</title>
