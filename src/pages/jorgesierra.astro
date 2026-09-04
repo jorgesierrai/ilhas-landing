@@ -57,8 +57,8 @@ const enlaces = [
   // con dos ilhas.ai abiertas.
   {
     href: "/",
-    label: "ilhas.ai",
-    sub: "El método, aplicado a tu trabajo",
+    label: "Tu primer proceso corriendo con agentes de IA.",
+    sub: "ilhas.ai",
     icono: "ilhas",
     fuera: false,
   },
@@ -211,10 +211,14 @@ const enlaces = [
           </li>
         </ul>
 
-        <p class="pie">
+        {/* El renglón entero es enlace al home, logo incluido. Va como <a> y
+            no como <p> con un <a> dentro para que el área de clic sea la fila
+            completa y no solo el texto — en un teléfono la diferencia entre
+            acertar y no. */}
+        <a class="pie" href="/">
           <img src="/assets/logo/logo-mark.svg" alt="" width="17" height="17" />
           <b>ilhas</b> · Fundador de Ilhas y Kinzal
-        </p>
+        </a>
       </div>
     </main>
   </body>
@@ -444,8 +448,11 @@ const enlaces = [
     line-height: 1.35;
   }
 
+  /* .95 y no el .84 de la referencia: sobre el morado de marca, .84 mide
+     4.23:1 y falla AA para 13px —lo cachó Lighthouse—. .95 mide 4.99. No hace
+     falta oscurecer el botón: el blanco puro sobre ese morado llega a 5.36. */
   .enlace--manual .enlace__sub {
-    color: rgba(255, 255, 255, 0.84);
+    color: rgba(255, 255, 255, 0.95);
   }
 
   .enlace__flecha {
@@ -461,7 +468,31 @@ const enlaces = [
     align-items: center;
     gap: 0.55rem;
     font-size: 0.8125rem;
-    color: rgba(248, 250, 255, 0.45);
+    /* .52 y no el .45 de la referencia: sobre --ilhas-dark, .45 mide 4.38:1 y
+       falla AA para 13px. .46 pasa raspando con 4.53; .52 mide 5.50. Es el
+       mismo fallo que ya traía el pie del sitio en la iteración 17. */
+    color: rgba(248, 250, 255, 0.52);
+  }
+
+  .pie {
+    text-decoration: none;
+    border-radius: 8px;
+    transition: color 0.16s ease;
+  }
+
+  .pie:hover,
+  .pie:focus-visible {
+    color: rgba(248, 250, 255, 0.75);
+  }
+
+  .pie:hover b,
+  .pie:focus-visible b {
+    color: var(--ilhas-white);
+  }
+
+  .pie:focus-visible {
+    outline: 2px solid var(--ilhas-grad-start);
+    outline-offset: 4px;
   }
 
   .pie img {
