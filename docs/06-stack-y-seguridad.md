@@ -207,6 +207,41 @@ GHL» arriba).
 
 ---
 
+## La presentación de la masterclass y la CSP
+
+`/jorgesierra/ia-aplicada-masterclass` trae **494 atributos `style="…"` en
+línea más un `<style>`** —así exporta Claude Design— y por eso es la página del
+sitio más sensible a la política de seguridad.
+
+Medido sirviéndola con cada política y contando eventos
+`securitypolicyviolation`:
+
+| CSP | Violaciones |
+|---|---|
+| La de `cabeceras-vercel`, con `style-src 'self' 'unsafe-inline'` | **0** |
+| `style-src 'self'` a secas | **495** (`style-src-attr` y `style-src-elem`) |
+
+**Hoy no hace falta excepción.** El `'unsafe-inline'` que ya trae la política la
+cubre. La trampa es endurecer la CSP quitando ese `'unsafe-inline'` —que es
+exactamente lo que uno querría hacer algún día— sin acordarse de esta ruta.
+
+Si eso pasa, la ruta necesita su propia entrada en `vercel.json` repitiendo la
+política con `'unsafe-inline'` en `style-src`. Y hay que verificar en qué orden
+aplica Vercel dos `source` que coinciden, cosa que **no se puede comprobar hasta
+que las cabeceras estén desplegadas**:
+
+```bash
+curl -sI https://ilhas.ai/jorgesierra/ia-aplicada-masterclass/ | grep -i content-security
+```
+
+Debe devolver la política CON `'unsafe-inline'`. Si devuelve la global, la regla
+específica tiene que ir **antes** que la de `/(.*)`.
+
+`script-src 'self'` no estorba: `deck.js` es del mismo dominio, no hay ningún
+`<script>` inline ni ningún `on*=`, y no se carga nada de CDN.
+
+---
+
 ## Checklist antes de publicar
 
 - [ ] `npm run build` sin errores ni warnings
