@@ -118,6 +118,45 @@ Aparte del hub viven `/terminos`, `/privacidad` y `/cookies`. **No cuentan como 
   - **La banda de autoridad salió del home.** El componente
     `BandaAutoridad.astro` SIGUE en el repo — solo se quitó su uso. Los tres
     hitos que resumía viven completos en `/nosotros` § En público desde la 18.
+  - **`/jorgesierra/ia-aplicada-masterclass` — la presentación de la masterclass.**
+    Vive en `public/`, lleva `noindex`, no va al sitemap y **no se enlaza desde
+    ninguna página**: se llega por la URL, que es la que Jorge proyecta. Comparte
+    carpeta de salida con `/jorgesierra` (el link in bio) y conviven —verificado
+    en cada build—: son `dist/jorgesierra/index.html` y
+    `dist/jorgesierra/ia-aplicada-masterclass/index.html`.
+
+    ⚠️ **Y ES LA PÁGINA MÁS FRÁGIL DEL SITIO ANTE UNA CSP.** Trae **494
+    atributos `style="…"` en línea más un `<style>`** — así exporta Claude
+    Design, y reescribirlos no es opción. **Medido sirviéndola con cada
+    política:**
+
+    | CSP | Violaciones |
+    |---|---|
+    | La de `cabeceras-vercel` tal cual, con `'unsafe-inline'` | **0** — corre entera |
+    | `style-src 'self'` a secas | **495** — `style-src-attr` y `style-src-elem` |
+
+    O sea: **hoy NO hace falta ninguna excepción.** La CSP del PR #17 ya trae
+    `style-src 'self' 'unsafe-inline'` y eso la cubre. Lo que hay que cuidar es
+    **el día que alguien le quite el `'unsafe-inline'`** para endurecerla: ese
+    día la presentación se queda sin un solo estilo. Si pasa, la ruta necesita
+    su propia regla en `vercel.json`:
+
+    ```json
+    { "source": "/jorgesierra/ia-aplicada-masterclass/(.*)",
+      "headers": [{ "key": "Content-Security-Policy",
+        "value": "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; object-src 'none'" }] }
+    ```
+
+    ⚠️ **Sin verificar: en qué orden aplica Vercel dos `source` que coinciden.**
+    No se puede comprobar hasta que las cabeceras estén desplegadas. El día que
+    entren, la prueba es una línea —debe devolver la CSP con `'unsafe-inline'`,
+    no la global:
+    `curl -sI https://ilhas.ai/jorgesierra/ia-aplicada-masterclass/ | grep -i content-security`
+    Si devolviera la global, la regla específica va **antes** que la de `/(.*)`.
+
+    `script-src 'self'` no es problema: `deck.js` es del mismo dominio y no hay
+    ni un `<script>` inline ni un `on*=`. Tampoco carga nada de CDN — cero
+    `unpkg`, `googleapis` ni `gstatic`.
   - **El menú dice «Aprender», y abre un desplegable con «Ilhas Finanzas»
     dentro** (Jorge, 31 ago 2026). «Aprender» es el carril; el producto sigue
     llamándose Ilhas Finanzas en el `<h1>`, el `<title>`, el `og:title` y el
