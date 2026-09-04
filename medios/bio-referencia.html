@@ -1,6 +1,6 @@
 <!doctype html><html lang="es"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Ilhas · /jorgesierra — referencia medida (896 px en 390×844 · 900 en escritorio)</title>
+<title>Ilhas · /jorgesierra — referencia medida (907 px en 390×844 · 900 en escritorio)</title>
 <style>
 @font-face{font-family:"Space Grotesk";src:url(/assets/fonts/space-grotesk-600.woff2) format("woff2");font-weight:600;font-display:swap}
 @font-face{font-family:"Inter";src:url(/assets/fonts/inter-400.woff2) format("woff2");font-weight:400;font-display:swap}
@@ -95,10 +95,16 @@ h1{margin:0;font-family:var(--ilhas-font-display);font-weight:600;
 .enlace__flecha{flex:0 0 auto;opacity:.45;font-size:1.05rem}
 
 /* --- el pie -------------------------------------------------------------- */
+/* Es un enlace, no un rótulo: todo el renglón lleva a ilhas.ai. */
 .pie{margin-top:1.35rem;display:flex;align-items:center;gap:.55rem;
-  font-size:.8125rem;color:rgba(248,250,255,.45)}
+  font-size:.8125rem;color:rgba(248,250,255,.45);text-decoration:none;
+  transition:color .16s ease}
+.pie:hover,.pie:focus-visible{color:rgba(248,250,255,.72)}
+.pie:hover b,.pie:focus-visible b{color:#fff}
+.pie:focus-visible{outline:2px solid var(--ilhas-grad-start);outline-offset:4px;
+  border-radius:6px}
 .pie img{width:1.05rem;height:1.05rem}
-.pie b{font-family:var(--ilhas-font-display);font-weight:600;font-size:.9375rem;
+.pie b{transition:color .16s ease;font-family:var(--ilhas-font-display);font-weight:600;font-size:.9375rem;
   color:rgba(248,250,255,.8);letter-spacing:-.02em}
 
 /* ==========================================================================
@@ -160,7 +166,7 @@ h1{margin:0;font-family:var(--ilhas-font-display);font-weight:600;
       <li>
         <a class="enlace" href="/">
           <span class="enlace__icono" aria-hidden="true"><img src="/assets/logo/logo-mark.svg" alt="" width="22" height="22"></span>
-          <span class="enlace__txt">ilhas.ai<span class="enlace__sub">El método, aplicado a tu trabajo</span></span>
+          <span class="enlace__txt">Tu primer proceso corriendo con agentes de IA.<span class="enlace__sub">ilhas.ai</span></span>
           <span class="enlace__flecha" aria-hidden="true">→</span>
         </a>
       </li>
@@ -172,10 +178,10 @@ h1{margin:0;font-family:var(--ilhas-font-display);font-weight:600;
       </li>
     </ul>
 
-    <p class="pie">
+    <a class="pie" href="/">
       <img src="/assets/logo/logo-mark.svg" alt="" width="17" height="17">
       <b>ilhas</b> · Fundador de Ilhas y Kinzal
-    </p>
+    </a>
   </div>
 </main>
 

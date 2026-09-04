@@ -4,7 +4,7 @@
 **URGENTE: tiene que estar vivo antes del mediodía.**
 
 > **Referencia: `medios/bio-referencia.html`.** Construida y medida:
-> **896 px en un iPhone de 390×844 · 900 px en escritorio.** El CSS de esa
+> **907 px en un iPhone de 390×844 · 900 px en escritorio.** El CSS de esa
 > referencia es el que va: cópialo, no lo reinventes.
 
 **La página es genérica.** Sin parámetros, sin variantes, sin saludos de
@@ -144,7 +144,7 @@ de Android.
 | 1 | Instagram | `https://www.instagram.com/soyjorgesierra` |
 | 2 | TikTok | `https://www.tiktok.com/@jorgesierrai` |
 | 3 | Mi portafolio | `https://www.jorgesierra.io/` |
-| 4 | ilhas.ai | `/` |
+| 4 | **Tu primer proceso corriendo con agentes de IA.** · sub: `ilhas.ai` | `/` |
 | 5 | **Descarga el manual** | `/manual-ia-agentica.pdf` |
 
 El del manual es **el único sólido en morado**. No es capricho: es lo único
@@ -161,6 +161,25 @@ la tiene; el esquema propio falla en medio parque de dispositivos.
 ⚠️ **`ilhas.ai` va sin `target`**: es el mismo sitio.
 
 ⚠️ El del manual lleva `download`.
+
+### 5.1 · El pie es un enlace, no un rótulo
+
+`ilhas · Fundador de Ilhas y Kinzal` va envuelto en `<a href="/">`, todo el
+renglón. Copy de Jorge, no se toca:
+
+```html
+<a class="pie" href="/">
+  <img src="/assets/logo/logo-mark.svg" alt="" width="17" height="17">
+  <b>ilhas</b> · Fundador de Ilhas y Kinzal
+</a>
+```
+
+⚠️ Lleva `:hover` y `:focus-visible`. Un enlace que no se ve como enlace ni
+responde al teclado es un adorno.
+
+⚠️ **Apunta al mismo sitio que el botón 4.** Es a propósito: el botón hace el
+trabajo con su copy, el pie recoge a quien busca el logotipo. Pero no esperes
+tráfico del pie — el que convierte es el botón.
 
 ---
 
@@ -204,6 +223,8 @@ grep -c "tiktok.com/@jorgesierrai"   dist/jorgesierra/index.html   # 1
 grep -c 'tiktok.com/@jorgesierra"'   dist/jorgesierra/index.html   # 0  ← el malo
 grep -c "instagram.com/soyjorgesierra" dist/jorgesierra/index.html # 1
 grep -c "jorgesierra.io"             dist/jorgesierra/index.html   # 1
+grep -c "Tu primer proceso corriendo con agentes de IA" dist/jorgesierra/index.html  # 1
+grep -c 'class="pie" href="/"'       dist/jorgesierra/index.html   # 1
 
 # El manual existe de verdad
 test -f public/manual-ia-agentica.pdf && echo "pdf ok"
@@ -234,7 +255,7 @@ ls -l public/assets/bio/jorge-full.webp    # < 100 KB
 
 | | Referencia | Después |
 |---|---|---|
-| `/jorgesierra` · 390 | 896 px | |
+| `/jorgesierra` · 390 | 907 px | |
 | `/jorgesierra` · 1440 | 900 px | |
 
 ---
