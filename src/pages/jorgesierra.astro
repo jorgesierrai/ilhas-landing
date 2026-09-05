@@ -420,6 +420,15 @@ const enlaces = [
   .enlace__txt{flex:1;text-align:left}
   .enlace__sub{display:block;margin-top:.1rem;font-size:.8125rem;font-weight:400;
     color:rgba(255,255,255,.62);line-height:1.35}
+  /* El renglón de abajo va en violeta cuando es un DESTINO —un @ o un dominio—
+     y en gris cuando es una descripción (Jorge, 5 sep 2026). Es la misma
+     declaración que `kinzal.ai` en la tarjeta de abajo, para que el violeta
+     signifique lo mismo en toda la página: «esto es a dónde vas».
+     El manual queda fuera por las dos razones: su renglón describe el PDF, no
+     es una dirección, y encima va sobre el morado sólido, donde este violeta
+     sería ilegible. Medido sobre el fondo real del botón —rgb(27,27,28), que
+     es rgba(248,250,255,.055) sobre --ilhas-dark—: 5.52:1, AA para 13px. */
+  .enlace:not(.enlace--manual) .enlace__sub{color:rgba(192,132,252,.9)}
   /* .95 y no el .84 de la referencia: sobre el morado de marca, .84 mide
      4.23:1 y falla AA para 13px — lo cachó Lighthouse el 3 sep. .95 mide 4.99. */
   .enlace--manual .enlace__sub{color:rgba(255,255,255,.95)}

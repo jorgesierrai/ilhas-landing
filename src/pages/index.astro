@@ -126,10 +126,18 @@ const testimonio = porId("soluciones-testimonio-oncologia")!.atribucion!;
         <div class="hero__resplandor" aria-hidden="true"></div>
 
         <div class="hero__texto">
-          {/* Titular elegido por Jorge el 31 ago 2026. Va literal. */}
+          {/* Titular elegido por Jorge el 31 ago 2026, «con agentes de IA» desde el
+              5 sep 2026. Va literal.
+
+              SIN PUNTO FINAL, y es decisión de Jorge (5 sep 2026), no un olvido.
+              El punto vivía fuera del <span>, y como el span es `inline-block`
+              —lo necesita para que el `background-clip:text` recorte sobre el
+              texto y no sobre la columna— el navegador puede romper el renglón
+              entre los dos. Con el titular largo eso pasaba a partir de ~1200 px:
+              el punto caía solo, pegado al margen izquierdo. Si algún día vuelve
+              el punto, va DENTRO de un `white-space:nowrap` junto al span. */}
           <h1>
             Tu primer proceso corriendo <span class="text-gradient">con agentes de IA</span>
-            .
           </h1>
 
           {/* ⚠️ SUBTÍTULO PENDIENTE DEL VISTO BUENO DE JORGE. Es una propuesta,
