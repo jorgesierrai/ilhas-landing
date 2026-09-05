@@ -38,13 +38,30 @@ Aparte del hub viven `/terminos`, `/privacidad` y `/cookies`. **No cuentan como 
 
 ## Estado del repositorio
 
-*Actualizado: 31 ago 2026 (iteración 19).*
+*Actualizado: 5 sep 2026 (Kinzal v2 en `/jorgesierra`).*
 
 > **Este bloque se actualiza en cada iteración, no al final.** Es lo primero que
 > lee una sesión nueva; si miente, la sesión construye sobre una foto vieja. Lo
 > mismo aplica a `medios/ESTADO.md`. Ver el checklist de abajo.
 
-- Rama de trabajo: **`hero-corriendo`**, que sale de `aire-y-autoridad`.
+> ### ⚠️ Las referencias de `medios/` NO son la fuente de los tokens
+>
+> Son páginas sueltas: traen su propio `:root` con nombres que **el sitio no
+> tiene**. `medios/kinzal-referencia.html` define `--ilhas-gradient-d`, que no
+> existe en `docs/marca/tokens.css`. Copiar su CSS tal cual dejó el nombre de
+> Jorge y el resplandor de la figura pintados con un token vacío: **no falla el
+> build, no falla ningún grep, simplemente no se ve nada**. Sólo salió en una
+> captura.
+>
+> Al traer CSS de una referencia: pasa cada `var(--…)` contra la hoja compilada
+> (`dist/_astro/*.css`) y **compara la captura contra la de la referencia**, no
+> sólo las alturas. Las alturas cuadraban al píxel con el degradado roto.
+>
+> Lo mismo al revés: la referencia **no** trae `prefers-reduced-motion` ni la
+> mitad `img` de `.enlace__icono svg, .enlace__icono img`, y la página sí las
+> necesita. Reconstruir un `<style>` desde la referencia las borra en silencio.
+
+- Rama de trabajo: **`kinzal-en-bio`**, que sale de `main`.
 - **Dos PRs abiertos sin mergear.** Hasta que entren, `main` no tiene nada de las
   iteraciones 10 a 17:
   - **#17 · `cabeceras-vercel`** — las cabeceras de seguridad. **`public/_headers`
@@ -118,6 +135,17 @@ Aparte del hub viven `/terminos`, `/privacidad` y `/cookies`. **No cuentan como 
   - **La banda de autoridad salió del home.** El componente
     `BandaAutoridad.astro` SIGUE en el repo — solo se quitó su uso. Los tres
     hitos que resumía viven completos en `/nosotros` § En público desde la 18.
+  - **El bloque Kinzal de `/jorgesierra` (v2, 5 sep 2026).** Los cinco enlaces
+    ya no salen de un solo `.map()`: cada entrada del array lleva
+    `grupo: "redes" | "tec"` y hay **dos `<ul class="enlaces">`** que filtran por
+    él. **No se parte con `.slice(0,3)`** — el índice se rompe callado el día que
+    alguien reordene un enlace. Los rótulos `.bio__sep` («La parte tecnológica»,
+    «La parte tradicional») son el mismo componente de separador para los dos
+    grupos; el viejo `.kz__sep` ya no existe. La foto de la tarjeta es
+    `kz-obra.webp` (IU Life, Zapopan), 880×278.
+    ⚠️ **El `<style>` de esta página es scopeado y NUNCA `is:global`** — la
+    advertencia larga vive arriba del `<style>` en el archivo. Y el titular del
+    home lo lee `src/pages/index.astro`, no esta página.
   - **`/jorgesierra/ia-aplicada-masterclass` — la presentación de la masterclass.**
     Vive en `public/`, lleva `noindex`, no va al sitemap y **no se enlaza desde
     ninguna página**: se llega por la URL, que es la que Jorge proyecta. Comparte
@@ -183,7 +211,7 @@ Aparte del hub viven `/terminos`, `/privacidad` y `/cookies`. **No cuentan como 
 - **Sistema de medios: montado, prioridad 1 completa.** El sitio declara **34
   ranuras** con nombre; dejas caer un archivo con el nombre exacto y aparece
   solo, sin tocar código. Una ranura vacía no pinta nada en producción. Hoy:
-  **19 de 34 listas, 0 con problema**.
+  **20 de 34 listas, 0 con problema**.
   - **Si vas a trabajar en medios, lee `medios/ESTADO.md` primero.**
   - `npm run medios` te dice qué falta, qué pesa de más y qué no tiene atribución.
 
@@ -191,6 +219,8 @@ Aparte del hub viven `/terminos`, `/privacidad` y `/cookies`. **No cuentan como 
 
 | Tema | Qué falta |
 |---|---|
+| **El punto huérfano del titular del home** | Desde que el titular es «…con agentes de IA.» (5 sep 2026), **a ≥1200 px el punto final cae solo en su propio renglón**. Medido: a 1440 el `<h1>` pasó de 4 a 5 renglones y el punto queda en `left=198`, al margen. A 390 y 768 se lee bien. Es la costura entre el `<span class="text-gradient">` —que es `inline-block` por el `background-clip:text`— y el punto que va fuera. **No se tocó: la decisión es de Jorge.** El arreglo es envolver span y punto en un `white-space:nowrap`, no cambiar el copy |
+| **`<title>` y `og:title` dicen «con IA»** | `src/layouts/Base.astro:78` y `:92` siguen con «Ilhas — tu primer proceso corriendo con IA», mientras el `<h1>` ya dice «con agentes de IA». **No se tocó**: es copy de Jorge y son las dos cadenas que ve Google y ven las redes al compartir. Igual `medios/hero-b2-referencia.html:129`, que es otra referencia del hero |
 | **`/finanzas` §07 · servicios del papá** | **Confirmado que va** (Jorge, 27 ago 2026). Faltan dos insumos suyos: el **copy de los servicios** y **a dónde apunta el botón de agenda** — hoy no hay ninguna URL de agenda en el repositorio, el único destino externo es `eventos.ilhas.ai` |
 | **`/nosotros` § La historia** | Tres clips (`nosotros-historia-01/02/03`) sin material |
 | **Párrafo de intro de la línea de tiempo** | Marcado como `TODO copy` en `src/pages/nosotros.astro`. Lo escribe Jorge |

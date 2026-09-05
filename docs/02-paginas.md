@@ -19,7 +19,8 @@ Frase de poder de 12–16 palabras + subfrase de una línea + los dos carriles c
 Sin imagen de stock. Si hay algo visual, que sea el gradiente de marca o el isotipo a escala grande.
 
 > **Reescrito el 31 ago 2026** (`prompts/iteracion-19-el-hero-corriendo.md`).
-> El titular es *"Tu primer proceso corriendo **con IA**."*, elegido por Jorge, y
+> El titular es *"Tu primer proceso corriendo **con agentes de IA**."* —era "con
+> IA" hasta el 5 sep 2026, y lo cambió Jorge—, y
 > lo que se ve detrás **ya no es una foto: es el proceso corriendo**. El loop
 > (`home-hero-loop`) va hasta que sale la cotización con su Total.
 >

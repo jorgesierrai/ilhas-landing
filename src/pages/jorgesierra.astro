@@ -31,9 +31,15 @@ const LINEA = "Enseño a convertir el caos en dinero.";
  * fuente de verdad es src/data/personas.ts. Está reportado para que corrija la
  * slide; aquí va el correcto.
  */
+/**
+ * `grupo` parte la lista en dos, con un rótulo en medio. Se filtra por este
+ * campo y NO con `.slice(0, 3)`: un índice se rompe callado el día que alguien
+ * reordene un enlace, y el rótulo quedaría en medio de la nada.
+ */
 const enlaces = [
   {
     href: "https://www.instagram.com/soyjorgesierra",
+    grupo: "redes",
     label: "Instagram",
     sub: "@soyjorgesierra",
     icono: "instagram",
@@ -41,6 +47,7 @@ const enlaces = [
   },
   {
     href: "https://www.tiktok.com/@jorgesierrai",
+    grupo: "redes",
     label: "TikTok",
     sub: "@jorgesierrai",
     icono: "tiktok",
@@ -48,6 +55,7 @@ const enlaces = [
   },
   {
     href: "https://www.jorgesierra.io/",
+    grupo: "redes",
     label: "Mi portafolio",
     sub: "jorgesierra.io",
     icono: "sitio",
@@ -57,6 +65,7 @@ const enlaces = [
   // con dos ilhas.ai abiertas.
   {
     href: "/",
+    grupo: "tec",
     label: "Tu primer proceso corriendo con agentes de IA.",
     sub: "ilhas.ai",
     icono: "ilhas",
@@ -127,9 +136,66 @@ const enlaces = [
         <h1>{TITULO}</h1>
         <p class="bio__linea">{LINEA}</p>
 
+        {/* LA LISTA VA PARTIDA EN DOS, con un rótulo en medio. Se filtra por
+            el campo `grupo`, no por índice. */}
         <ul class="enlaces">
           {
-            enlaces.map((e) => (
+            enlaces.filter((e) => e.grupo === "redes").map((e) => (
+              <li>
+                <a
+                  class="enlace"
+                  href={e.href}
+                  target={e.fuera ? "_blank" : undefined}
+                  rel={e.fuera ? "noopener" : undefined}
+                >
+                  <span class="enlace__icono" aria-hidden="true">
+                    {e.icono === "instagram" && (
+                      <svg viewBox="0 0 24 24">
+                        <path d="M12 2.16c3.2 0 3.58.01 4.85.07 1.17.05 1.8.25 2.23.41.56.22.96.48 1.38.9.42.42.68.82.9 1.38.16.42.36 1.06.41 2.23.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.25 1.8-.41 2.23-.22.56-.48.96-.9 1.38-.42.42-.82.68-1.38.9-.42.16-1.06.36-2.23.41-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.8-.25-2.23-.41-.56-.22-.96-.48-1.38-.9-.42-.42-.68-.82-.9-1.38-.16-.42-.36-1.06-.41-2.23C2.17 15.58 2.16 15.2 2.16 12s.01-3.58.07-4.85c.05-1.17.25-1.8.41-2.23.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.42-.16 1.06-.36 2.23-.41C8.42 2.17 8.8 2.16 12 2.16zm0 5.68a4.16 4.16 0 100 8.32 4.16 4.16 0 000-8.32zm0 6.86a2.7 2.7 0 110-5.4 2.7 2.7 0 010 5.4zm5.3-7.02a.97.97 0 11-1.94 0 .97.97 0 011.94 0z" />
+                      </svg>
+                    )}
+                    {e.icono === "tiktok" && (
+                      <svg viewBox="0 0 24 24">
+                        <path d="M16.6 5.82A4.28 4.28 0 0115.54 3h-3.09v12.4a2.59 2.59 0 01-2.59 2.5 2.59 2.59 0 01-2.59-2.59 2.59 2.59 0 013.39-2.47V9.7a5.68 5.68 0 00-.8-.06A5.68 5.68 0 003.5 15.3 5.68 5.68 0 009.18 21a5.68 5.68 0 005.68-5.68V9.01a7.35 7.35 0 004.3 1.38V7.3a4.28 4.28 0 01-2.56-1.48z" />
+                      </svg>
+                    )}
+                    {e.icono === "sitio" && (
+                      <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="1.7"
+                      >
+                        <circle cx="12" cy="12" r="9" />
+                        <path d="M3 12h18M12 3a15 15 0 010 18 15 15 0 010-18" />
+                      </svg>
+                    )}
+                    {e.icono === "ilhas" && (
+                      <img
+                        src="/assets/logo/logo-mark.svg"
+                        alt=""
+                        width="22"
+                        height="22"
+                      />
+                    )}
+                  </span>
+                  <span class="enlace__txt">
+                    {e.label}
+                    <span class="enlace__sub">{e.sub}</span>
+                  </span>
+                  <span class="enlace__flecha" aria-hidden="true">
+                    {e.fuera ? "↗" : "→"}
+                  </span>
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+
+        <p class="bio__sep">La parte tecnológica</p>
+        <ul class="enlaces">
+          {
+            enlaces.filter((e) => e.grupo === "tec").map((e) => (
               <li>
                 <a
                   class="enlace"
@@ -180,9 +246,7 @@ const enlaces = [
             ))
           }
 
-          {/* El ÚNICO sólido en morado. No es capricho: es lo único que la
-              página regala, y es lo que la hace valer la pena aunque no te
-              quieran seguir. */}
+          {/* El ÚNICO sólido en morado: es lo único que la página regala. */}
           <li>
             <a
               class="enlace enlace--manual"
@@ -211,6 +275,11 @@ const enlaces = [
           </li>
         </ul>
 
+        {/* El separador se llama .bio__sep y ya NO .kz__sep: rotula los DOS
+            grupos, no solo el de Kinzal, y el nombre sigue la familia que ya
+            existe en la página (.bio__linea). */}
+        <p class="bio__sep">La parte tradicional</p>
+
         {/* KINZAL — FUERA DE LA LISTA, a propósito. Mientras sea un <li> más
             de .enlaces compite con el botón del manual —el único sólido de la
             página— y pierde. Aquí es otra cosa: no es un enlace más de Jorge,
@@ -223,11 +292,10 @@ const enlaces = [
             veces. `loading="lazy"` porque queda debajo del pliegue en los dos
             tamaños. */}
         <section class="kz">
-          <p class="kz__sep">La otra mitad</p>
-          <a class="kz__card" href="https://kinzal.ai" target="_blank" rel="noopener">
+              <a class="kz__card" href="https://kinzal.ai" target="_blank" rel="noopener">
             <span class="kz__foto">
-              <img src="/assets/kinzal/kz-obra.webp" alt="" width="880" height="342" loading="lazy" decoding="async">
-              <span class="kz__etiq">Edificio Mutuo · Guadalajara</span>
+              <img src="/assets/kinzal/kz-obra.webp" alt="" width="880" height="278" loading="lazy" decoding="async">
+              <span class="kz__etiq">IU Life · Zapopan</span>
             </span>
             <span class="kz__cuerpo">
               <span class="kz__top">
@@ -266,276 +334,154 @@ const enlaces = [
     Scopeado funciona igual de bien aquí porque el <html> y el <body> están en
     ESTA plantilla, así que Astro les pone su hash y las reglas les llegan. */}
 <style>
-  /* La clase va en el <body> y la regla apunta a la CLASE, no al elemento.
-     Astro NUNCA scopea `body`, `html` ni `:root` —los trata como globales
-     siempre— así que un `body { background: dark }` aquí se le aplica a las
-     ocho páginas del sitio. Ya pasó. Con una clase propia sí se scopea. */
-  .bio-doc {
-    margin: 0;
-    background: var(--ilhas-dark);
-    color: rgba(248, 250, 255, 0.72);
-    line-height: 1.5;
-    -webkit-text-size-adjust: 100%;
-  }
+  /* Va en una CLASE del <body> y no en `body`: Astro nunca scopea `body`,
+     `html` ni `:root` —los trata como globales— y un `body{background:dark}`
+     aquí pinta de negro las ocho páginas del sitio. Ya pasó una vez. */
+  .bio-doc{margin:0;font-family:var(--ilhas-font-body);background:var(--ilhas-dark);
+    color:rgba(248,250,255,.72);line-height:1.5;-webkit-text-size-adjust:100%}
 
-  /* `100svh` y NO `100vh`: en Safari de iOS, `100vh` ignora la barra del
-     navegador y la página se corta justo donde están los botones — que es lo
-     único que esta página tiene que entregar. */
-  .bio {
-    position: relative;
-    min-height: 100svh;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-  }
+  /* ==========================================================================
+     LINK IN BIO — /jorgesierra
+     ==========================================================================
+     Genérica a propósito: la misma URL sirve para la slide de una masterclass,
+     para el perfil de Instagram y para el de TikTok. Sin parámetros, sin
+     variantes, sin saludos de evento — una sola página que no caduca.
 
-  /* --- la figura --- */
-  .figura {
-    position: relative;
-    flex: 0 0 auto;
-    display: flex;
-    justify-content: center;
-    align-items: flex-end;
-    padding-top: clamp(1rem, 4vw, 2rem);
-  }
+     Dos composiciones distintas, no una que se estira:
+       · teléfono  → la figura arriba, el nombre encima del desvanecido, los
+                     botones abajo. Es como se va a ver el 90% de las veces.
+       · pantalla  → la figura a la izquierda a toda altura y el contenido a la
+                     derecha, que es el encuadre de la slide que Jorge proyecta.
 
-  /* El degradado de marca aparece UNA vez en toda la página: aquí. En los
-     botones dejaría de ser acento y sería decoración. */
-  .figura__luz {
-    position: absolute;
-    z-index: 0;
-    left: 50%;
-    bottom: 6%;
-    translate: -50% 0;
-    width: min(115%, 520px);
-    aspect-ratio: 1;
-    border-radius: 50%;
-    background: linear-gradient(
-      115deg,
-      var(--ilhas-grad-start) 0%,
-      var(--ilhas-primary) 50%,
-      var(--ilhas-grad-end) 100%
-    );
-    filter: blur(60px);
-    opacity: 0.34;
-    pointer-events: none;
-  }
+     El degradado de marca aparece UNA vez: el resplandor detrás de la figura.
+     En los botones dejaría de ser acento y sería decoración. */
 
-  /* `contain`, NO `cover`: Jorge pidió la foto COMPLETA. Con `cover` se le
-     corta la cabeza o las piernas según el alto disponible. */
-  .figura img {
-    position: relative;
-    z-index: 1;
-    display: block;
-    height: clamp(300px, 42svh, 420px);
-    width: auto;
-    max-width: 88vw;
-    object-fit: contain;
-  }
+  .bio{position:relative;min-height:100svh;overflow:hidden;
+    display:flex;flex-direction:column}
 
-  /* El desvanecido que amarra la figura con el fondo. El recorte de origen
-     termina a medio muslo con un canto recto: sin degradado se ve como una
-     foto mal cortada, con degradado se lee como decisión. Va en los DOS
-     tamaños. */
-  .figura::after {
-    content: "";
-    position: absolute;
-    z-index: 2;
-    inset: auto 0 0 0;
-    height: 22%;
-    pointer-events: none;
-    background: linear-gradient(to top, var(--ilhas-dark) 12%, transparent);
-  }
+  /* --- la figura ----------------------------------------------------------- */
+  .figura{position:relative;flex:0 0 auto;display:flex;justify-content:center;
+    align-items:flex-end;padding-top:clamp(1rem,4vw,2rem)}
+  .figura__luz{position:absolute;z-index:0;left:50%;bottom:6%;translate:-50% 0;
+    width:min(115%,520px);aspect-ratio:1;border-radius:50%;
+    background:linear-gradient(115deg,var(--ilhas-grad-start) 0%,var(--ilhas-primary) 50%,var(--ilhas-grad-end) 100%);filter:blur(60px);opacity:.34;
+    pointer-events:none}
+  /* `contain`, no `cover`: Jorge pidió la foto COMPLETA. Con `cover` se le
+     corta la cabeza o los pies según el alto disponible. */
+  .figura img{position:relative;z-index:1;display:block;
+    height:clamp(300px,42svh,420px);width:auto;max-width:88vw;
+    object-fit:contain}
+  /* El desvanecido que amarra la figura con el fondo. Sin él, el recorte
+     termina en un canto duro contra el negro y se ve pegado. */
+  .figura::after{content:"";position:absolute;z-index:2;inset:auto 0 0 0;
+    height:22%;pointer-events:none;
+    background:linear-gradient(to top,var(--ilhas-dark) 12%,transparent)}
 
-  /* --- el texto --- */
-  .cuerpo {
-    position: relative;
-    z-index: 3;
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    padding: 0 clamp(1.25rem, 5vw, 2rem) clamp(1.5rem, 5vw, 2.5rem);
-    margin-top: -1.25rem;
-  }
+  /* --- el texto ------------------------------------------------------------ */
+  .cuerpo{position:relative;z-index:3;flex:1;display:flex;flex-direction:column;
+    align-items:center;text-align:center;
+    padding:0 clamp(1.25rem,5vw,2rem) clamp(1.5rem,5vw,2.5rem);
+    margin-top:-1.25rem}
+  h1{margin:0;font-family:var(--ilhas-font-display);font-weight:600;
+    font-size:clamp(2.1rem,8.5vw,2.9rem);line-height:1;letter-spacing:-.035em;
+    background:linear-gradient(115deg,var(--ilhas-grad-start) 0%,var(--ilhas-primary) 50%,var(--ilhas-grad-end) 100%);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+    /* inline-block para que el degradado se recorte sobre el TEXTO y no sobre
+       una caja del ancho de la columna. */
+    display:inline-block}
+  .bio__linea{margin:.6rem 0 0;font-size:1rem;color:rgba(248,250,255,.72);
+    max-width:30ch}
 
-  /* `inline-block` para que `background-clip: text` recorte sobre el TEXTO y
-     no sobre una caja del ancho de la columna — con `block` el degradado del
-     nombre sale truncado. Es el mismo bug que ya salió en la barra de stats
-     del home. */
-  .bio h1 {
-    margin: 0;
-    display: inline-block;
-    font-family: var(--ilhas-font-display);
-    font-weight: 600;
-    font-size: clamp(2.1rem, 8.5vw, 2.9rem);
-    line-height: 1;
-    letter-spacing: -0.035em;
-    background: linear-gradient(
-      115deg,
-      var(--ilhas-grad-start) 0%,
-      var(--ilhas-primary) 50%,
-      var(--ilhas-grad-end) 100%
-    );
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-  }
-
-  .bio__linea {
-    margin: 0.6rem 0 0;
-    font-size: 1rem;
-    color: rgba(248, 250, 255, 0.72);
-    max-width: 30ch;
-  }
-
-  /* --- los botones --- */
-  .enlaces {
-    width: 100%;
-    max-width: 26rem;
-    margin: 1.4rem 0 0;
-    padding: 0;
-    list-style: none;
-    display: grid;
-    gap: 0.55rem;
-  }
-
+  /* --- los botones --------------------------------------------------------- */
+  .bio__sep+.enlaces{margin-top:0}
+  .enlaces{width:100%;max-width:26rem;margin:1.4rem 0 0;padding:0;list-style:none;
+    display:grid;gap:.55rem}
   /* 58 px mínimo: por encima del objetivo táctil de 44 de Apple y 48 de
      Android, con holgura para un pulgar con prisa. */
-  .enlace {
-    display: flex;
-    align-items: center;
-    gap: 0.85rem;
-    min-height: 58px;
-    padding: 0.6rem 1.05rem;
-    border-radius: 14px;
-    text-decoration: none;
-    background: rgba(248, 250, 255, 0.055);
-    border: 1px solid rgba(248, 250, 255, 0.12);
-    color: var(--ilhas-white);
-    font-weight: 500;
-    font-size: 1rem;
-    transition:
-      background 0.16s ease,
-      border-color 0.16s ease,
-      transform 0.16s ease;
-  }
-
-  .enlace:hover,
-  .enlace:focus-visible {
-    background: rgba(248, 250, 255, 0.1);
-    border-color: rgba(248, 250, 255, 0.28);
-    color: var(--ilhas-white);
-  }
-
-  .enlace:active {
-    transform: scale(0.985);
-  }
-
-  .enlace:focus-visible {
-    outline: 2px solid var(--ilhas-grad-start);
-    outline-offset: 3px;
-  }
-
-  .enlace--manual {
-    background: var(--ilhas-primary);
-    border-color: transparent;
-  }
-
-  .enlace--manual:hover,
-  .enlace--manual:focus-visible {
-    background: #8b52ff;
-    border-color: transparent;
-  }
-
-  .enlace__icono {
-    flex: 0 0 auto;
-    width: 1.375rem;
-    height: 1.375rem;
-    opacity: 0.9;
-  }
-
+  .enlace{display:flex;align-items:center;gap:.85rem;min-height:58px;
+    padding:.6rem 1.05rem;border-radius:14px;text-decoration:none;
+    background:rgba(248,250,255,.055);border:1px solid rgba(248,250,255,.12);
+    color:#fff;font-weight:500;font-size:1rem;
+    transition:background .16s ease,border-color .16s ease,transform .16s ease}
+  .enlace:hover,.enlace:focus-visible{background:rgba(248,250,255,.1);
+    border-color:rgba(248,250,255,.28)}
+  .enlace:active{transform:scale(.985)}
+  .enlace:focus-visible{outline:2px solid var(--ilhas-grad-start);outline-offset:3px}
+  /* El manual es el único sólido: es lo único que la página REGALA, y por eso
+     es lo que la hace valer la pena aunque no te quieran seguir. */
+  .enlace--manual{background:var(--ilhas-primary);border-color:transparent}
+  .enlace--manual:hover,.enlace--manual:focus-visible{background:#8b52ff}
+  .enlace__icono{flex:0 0 auto;width:1.375rem;height:1.375rem;opacity:.9}
+  /* El `img` va junto al `svg` y NO se quita: el icono de ilhas es un
+     <img src="logo-mark.svg">, no un <svg> en línea. La referencia sólo trae la
+     mitad del selector porque ahí ese icono no existe. */
   .enlace__icono svg,
-  .enlace__icono img {
-    width: 100%;
-    height: 100%;
-    display: block;
-    fill: currentColor;
-  }
-
-  .enlace__txt {
-    flex: 1;
-    text-align: left;
-  }
-
-  .enlace__sub {
-    display: block;
-    margin-top: 0.1rem;
-    font-size: 0.8125rem;
-    font-weight: 400;
-    color: rgba(255, 255, 255, 0.62);
-    line-height: 1.35;
-  }
-
+  .enlace__icono img{width:100%;height:100%;display:block;fill:currentColor}
+  .enlace__txt{flex:1;text-align:left}
+  .enlace__sub{display:block;margin-top:.1rem;font-size:.8125rem;font-weight:400;
+    color:rgba(255,255,255,.62);line-height:1.35}
   /* .95 y no el .84 de la referencia: sobre el morado de marca, .84 mide
-     4.23:1 y falla AA para 13px —lo cachó Lighthouse—. .95 mide 4.99. No hace
-     falta oscurecer el botón: el blanco puro sobre ese morado llega a 5.36. */
-  .enlace--manual .enlace__sub {
-    color: rgba(255, 255, 255, 0.95);
-  }
+     4.23:1 y falla AA para 13px — lo cachó Lighthouse el 3 sep. .95 mide 4.99. */
+  .enlace--manual .enlace__sub{color:rgba(255,255,255,.95)}
+  .enlace__flecha{flex:0 0 auto;opacity:.45;font-size:1.05rem}
 
-  .enlace__flecha {
-    flex: 0 0 auto;
-    opacity: 0.45;
-    font-size: 1.05rem;
-  }
+  /* --- el pie -------------------------------------------------------------- */
+  /* Es un enlace, no un rótulo: todo el renglón lleva a ilhas.ai. */
+  .pie{margin-top:1.35rem;display:flex;align-items:center;gap:.55rem;
+    font-size:.8125rem;
+    /* .52 y no el .45 de la referencia: .45 mide 4.38:1 sobre --ilhas-dark y
+       falla AA para 13px. .52 mide 5.50. Mismo caso que el pie del sitio. */
+    color:rgba(248,250,255,.52);text-decoration:none;
+    transition:color .16s ease}
+  .pie:hover,.pie:focus-visible{color:rgba(248,250,255,.72)}
+  .pie:hover b,.pie:focus-visible b{color:#fff}
+  .pie:focus-visible{outline:2px solid var(--ilhas-grad-start);outline-offset:4px;
+    border-radius:6px}
+  .pie img{width:1.05rem;height:1.05rem}
+  .pie b{transition:color .16s ease;font-family:var(--ilhas-font-display);font-weight:600;font-size:.9375rem;
+    color:rgba(248,250,255,.8);letter-spacing:-.02em}
 
-  /* --- el pie --- */
-  .pie {
-    margin-top: 1.35rem;
-    display: flex;
-    align-items: center;
-    gap: 0.55rem;
-    font-size: 0.8125rem;
-    /* .52 y no el .45 de la referencia: sobre --ilhas-dark, .45 mide 4.38:1 y
-       falla AA para 13px. .46 pasa raspando con 4.53; .52 mide 5.50. Es el
-       mismo fallo que ya traía el pie del sitio en la iteración 17. */
-    color: rgba(248, 250, 255, 0.52);
-  }
+  /* ==========================================================================
+     ESCRITORIO — el encuadre de la slide
+     ========================================================================== */
+  @media (min-width:860px){
+    /* `safe center`: centra mientras quepa y se comporta como flex-start en
+       cuanto NO quepa. Con `center` a secas, una columna más alta que la
+       ventana desborda por ARRIBA y por abajo a la vez, y lo de arriba —el
+       nombre— se sale de la pantalla al hacer scroll. Es lo que estaba pasando. */
+    .bio{flex-direction:row;align-items:safe center;justify-content:center;
+      padding-block:clamp(.75rem,2vh,1.5rem);
+      gap:clamp(2rem,6vw,5rem);max-width:72rem;margin-inline:auto;
+      padding-inline:clamp(2rem,5vw,4rem)}
+    .figura{flex:0 0 auto;padding-top:0;align-items:center}
+    .figura img{height:min(78svh,620px);max-width:none}
+    /* El desvanecido se queda, más corto. El recorte de origen termina a medio
+       muslo con un canto recto: sin degradado se ve como una foto mal cortada,
+       con degradado se lee como decisión. */
+    .figura::after{height:14%}
+    .figura__luz{width:420px;bottom:14%}
+    .cuerpo{flex:0 1 26rem;align-items:flex-start;text-align:left;
+      margin-top:0;padding:0}
+    h1{font-size:clamp(2.4rem,4vw,3.1rem)}
+    .bio__linea{font-size:1.0625rem;max-width:28ch}
+    /* --- La dieta de escritorio -------------------------------------------
+       Con los dos rótulos y la tarjeta, la columna pedía 881 px y no cabía en
+       una laptop. Cada número de aquí abajo salió de medir el desglose, no de
+       tantear. Nada de esto toca el teléfono: ahí la página crece y hace
+       scroll, que es lo correcto. */
 
-  .pie {
-    text-decoration: none;
-    border-radius: 8px;
-    transition: color 0.16s ease;
-  }
+    /* La columna más ancha es la palanca más barata: a 26rem el botón de Ilhas
+       y el del manual parten su subtítulo en dos renglones. A 30rem caben en
+       uno y se van 48 px sin quitar una sola palabra. */
+    .cuerpo{flex:0 1 30rem}
 
-  .pie:hover,
-  .pie:focus-visible {
-    color: rgba(248, 250, 255, 0.75);
-  }
-
-  .pie:hover b,
-  .pie:focus-visible b {
-    color: var(--ilhas-white);
-  }
-
-  .pie:focus-visible {
-    outline: 2px solid var(--ilhas-grad-start);
-    outline-offset: 4px;
-  }
-
-  .pie img {
-    width: 1.05rem;
-    height: 1.05rem;
-  }
-
-  .pie b {
-    font-family: var(--ilhas-font-display);
-    font-weight: 600;
-    font-size: 0.9375rem;
-    color: rgba(248, 250, 255, 0.8);
-    letter-spacing: -0.02em;
+    .enlaces{margin-top:.55rem;max-width:none;gap:.4rem}
+    /* El alto de estas filas no lo manda `min-height` —el contenido ya pasa de
+       58 px— lo manda el padding. 58 px es el objetivo táctil de un PULGAR; con
+       ratón sobra, y .4rem devuelve 32 px repartidos en las cinco filas. */
+    .enlace{min-height:0;padding:.4rem 1.05rem}
+    .bio__linea{margin-top:.4rem}
+    .pie{margin-top:.85rem}
   }
 
   /* ==========================================================================
@@ -549,12 +495,12 @@ const enlaces = [
      la bisagra. Si Kinzal usara el morado de Ilhas parecería un producto de
      Ilhas — que es justo lo que NO es. */
 
-  .kz{margin:1.15rem 0 0;width:100%;max-width:26rem;text-align:left}
-  .kz__sep{display:flex;align-items:center;gap:.7rem;margin:0 0 .7rem;
+  .kz{margin:0;width:100%;max-width:26rem;text-align:left}
+  .bio__sep{display:flex;align-items:center;gap:.7rem;margin:1.15rem 0 .6rem;width:100%;max-width:26rem;
     font-size:.6875rem;letter-spacing:.14em;text-transform:uppercase;
     /* .48 y no .38: a 11px hace falta 4.5:1 contra #0E0E0F y .38 medía 3.45. */
     color:rgba(248,250,255,.48)}
-  .kz__sep::after{content:"";flex:1;height:1px;
+  .bio__sep::after{content:"";flex:1;height:1px;
     background:linear-gradient(to right,rgba(248,250,255,.16),transparent)}
   .kz__card{display:block;position:relative;overflow:hidden;text-decoration:none;
     border-radius:16px;
@@ -587,14 +533,14 @@ const enlaces = [
     transform:translateY(-1px)}
   .kz__foto{position:relative;display:block;height:132px;overflow:hidden;
     background:#0A1128}
-  .kz__foto img{width:100%;height:100%;object-fit:cover;object-position:50% 46%;
+  .kz__foto img{width:100%;height:100%;object-fit:cover;object-position:50% 34%;
     display:block;transition:transform .5s ease}
   .kz__card:hover .kz__foto img{transform:scale(1.035)}
   /* El desvanecido amarra la foto con la tarjeta: sin él es una foto pegada
      arriba, con él es una tarjeta que tiene una foto. */
   .kz__foto::after{content:"";position:absolute;inset:0;pointer-events:none;
-    background:linear-gradient(to top,#0D1630 5%,rgba(13,22,48,.9) 24%,
-      rgba(13,22,48,.12) 58%,rgba(13,22,48,.34))}
+    background:linear-gradient(to top,#0D1630 3%,rgba(13,22,48,.9) 21%,
+      rgba(13,22,48,0) 48%)}
   /* El canto de arriba, el gradiente del logo. */
   .kz__foto::before{content:"";position:absolute;inset:0 0 auto 0;height:2px;z-index:2;
     background:linear-gradient(to right,#1A2A6C,#2E5BE0 45%,#7B3FD4 78%,#9B3FD4)}
@@ -606,67 +552,25 @@ const enlaces = [
     color:rgba(255,255,255,.94);text-shadow:0 1px 8px rgba(0,0,0,.75)}
   .kz__cuerpo{padding:.85rem 1.1rem 1rem}
 
-  /* ======================================================================
-     ESCRITORIO — el encuadre de la slide que Jorge proyecta
-     ====================================================================== */
-  @media (min-width: 860px) {
-    .bio {
-      flex-direction: row;
-      align-items: center;
-      justify-content: center;
-      gap: clamp(2rem, 6vw, 5rem);
-      max-width: 72rem;
-      margin-inline: auto;
-      padding-inline: clamp(2rem, 5vw, 4rem);
-    }
 
-    .figura {
-      flex: 0 0 auto;
-      padding-top: 0;
-      align-items: center;
-    }
-
-    .figura img {
-      height: min(78svh, 620px);
-      max-width: none;
-    }
-
-    .figura::after {
-      height: 14%;
-    }
-
-    .figura__luz {
-      width: 420px;
-      bottom: 14%;
-    }
-
-    .cuerpo {
-      flex: 0 1 26rem;
-      align-items: flex-start;
-      text-align: left;
-      margin-top: 0;
-      padding: 0;
-    }
-
-    .bio h1 {
-      font-size: clamp(2.6rem, 4.6vw, 3.6rem);
-    }
-
-    .bio__linea {
-      font-size: 1.0625rem;
-      max-width: 28ch;
-    }
-
-    .enlaces {
-      margin-top: 1.75rem;
-      max-width: none;
-    }
-
-    .pie {
-      margin-top: 1.6rem;
-    }
+  /* ⚠️ ESTE SEGUNDO @media EXISTE POR ORDEN DE CASCADA, NO POR CAPRICHO.
+     El @media de escritorio de arriba va ANTES que este bloque de Kinzal en el
+     archivo. Con la misma especificidad (0,1,0) gana la última regla escrita, o
+     sea la base — y cuatro overrides de escritorio simplemente no se aplicaban:
+     se midió y `.bio__sep` seguía con el margen de móvil y la foto con 112 px.
+     Es el tercer bug de cascada de este proyecto. Si algún día alguien mueve
+     este bloque más arriba en el <style>, esto vuelve a romperse en silencio. */
+  @media (min-width:860px){
+    .bio__sep{margin:.75rem 0 .4rem;max-width:none}
+    .kz__foto{height:108px;}
+    .kz__foto img{object-position:50% 26%}
+    .kz__cuerpo{padding:.7rem 1.1rem .75rem}
+    .kz__pies{margin-top:.5rem}
   }
 
+  /* La referencia NO trae este bloque; la v1 de la página sí, y se queda. Es
+     accesibilidad, no adorno: sin él, quien pidió menos movimiento en el
+     sistema sigue recibiendo el hundido de los botones al tocarlos. */
   @media (prefers-reduced-motion: reduce) {
     .enlace {
       transition-duration: 0s;
