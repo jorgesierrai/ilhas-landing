@@ -1,0 +1,276 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Ilhas · /jorgesierra con Kinzal — referencia medida (1,234 px en 390×844 · 900 px en escritorio)</title>
+<style>
+@font-face{font-family:"Space Grotesk";src:url(/assets/fonts/space-grotesk-600.woff2) format("woff2");font-weight:600;font-display:swap}
+@font-face{font-family:"Inter";src:url(/assets/fonts/inter-400.woff2) format("woff2");font-weight:400;font-display:swap}
+@font-face{font-family:"Inter";src:url(/assets/fonts/inter-500.woff2) format("woff2");font-weight:500;font-display:swap}
+:root{
+  --ilhas-primary:#7A3CFF; --ilhas-dark:#0E0E0F;
+  --ilhas-grad-start:#55E8FF; --ilhas-grad-end:#A14BFF;
+  --ilhas-gradient-d:linear-gradient(115deg,#55E8FF 0%,#7A3CFF 50%,#A14BFF 100%);
+  --ilhas-font-display:"Space Grotesk",system-ui,sans-serif;
+  --ilhas-font-body:"Inter",system-ui,-apple-system,sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;font-family:var(--ilhas-font-body);background:var(--ilhas-dark);
+  color:rgba(248,250,255,.72);line-height:1.5;-webkit-text-size-adjust:100%}
+
+/* ==========================================================================
+   LINK IN BIO — /jorgesierra
+   ==========================================================================
+   Genérica a propósito: la misma URL sirve para la slide de una masterclass,
+   para el perfil de Instagram y para el de TikTok. Sin parámetros, sin
+   variantes, sin saludos de evento — una sola página que no caduca.
+
+   Dos composiciones distintas, no una que se estira:
+     · teléfono  → la figura arriba, el nombre encima del desvanecido, los
+                   botones abajo. Es como se va a ver el 90% de las veces.
+     · pantalla  → la figura a la izquierda a toda altura y el contenido a la
+                   derecha, que es el encuadre de la slide que Jorge proyecta.
+
+   El degradado de marca aparece UNA vez: el resplandor detrás de la figura.
+   En los botones dejaría de ser acento y sería decoración. */
+
+.bio{position:relative;min-height:100svh;overflow:hidden;
+  display:flex;flex-direction:column}
+
+/* --- la figura ----------------------------------------------------------- */
+.figura{position:relative;flex:0 0 auto;display:flex;justify-content:center;
+  align-items:flex-end;padding-top:clamp(1rem,4vw,2rem)}
+.figura__luz{position:absolute;z-index:0;left:50%;bottom:6%;translate:-50% 0;
+  width:min(115%,520px);aspect-ratio:1;border-radius:50%;
+  background:var(--ilhas-gradient-d);filter:blur(60px);opacity:.34;
+  pointer-events:none}
+/* `contain`, no `cover`: Jorge pidió la foto COMPLETA. Con `cover` se le
+   corta la cabeza o los pies según el alto disponible. */
+.figura img{position:relative;z-index:1;display:block;
+  height:clamp(300px,42svh,420px);width:auto;max-width:88vw;
+  object-fit:contain}
+/* El desvanecido que amarra la figura con el fondo. Sin él, el recorte
+   termina en un canto duro contra el negro y se ve pegado. */
+.figura::after{content:"";position:absolute;z-index:2;inset:auto 0 0 0;
+  height:22%;pointer-events:none;
+  background:linear-gradient(to top,var(--ilhas-dark) 12%,transparent)}
+
+/* --- el texto ------------------------------------------------------------ */
+.cuerpo{position:relative;z-index:3;flex:1;display:flex;flex-direction:column;
+  align-items:center;text-align:center;
+  padding:0 clamp(1.25rem,5vw,2rem) clamp(1.5rem,5vw,2.5rem);
+  margin-top:-1.25rem}
+h1{margin:0;font-family:var(--ilhas-font-display);font-weight:600;
+  font-size:clamp(2.1rem,8.5vw,2.9rem);line-height:1;letter-spacing:-.035em;
+  background:var(--ilhas-gradient-d);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  /* inline-block para que el degradado se recorte sobre el TEXTO y no sobre
+     una caja del ancho de la columna. */
+  display:inline-block}
+.bio__linea{margin:.6rem 0 0;font-size:1rem;color:rgba(248,250,255,.72);
+  max-width:30ch}
+
+/* --- los botones --------------------------------------------------------- */
+.enlaces{width:100%;max-width:26rem;margin:1.4rem 0 0;padding:0;list-style:none;
+  display:grid;gap:.55rem}
+/* 58 px mínimo: por encima del objetivo táctil de 44 de Apple y 48 de
+   Android, con holgura para un pulgar con prisa. */
+.enlace{display:flex;align-items:center;gap:.85rem;min-height:58px;
+  padding:.6rem 1.05rem;border-radius:14px;text-decoration:none;
+  background:rgba(248,250,255,.055);border:1px solid rgba(248,250,255,.12);
+  color:#fff;font-weight:500;font-size:1rem;
+  transition:background .16s ease,border-color .16s ease,transform .16s ease}
+.enlace:hover,.enlace:focus-visible{background:rgba(248,250,255,.1);
+  border-color:rgba(248,250,255,.28)}
+.enlace:active{transform:scale(.985)}
+.enlace:focus-visible{outline:2px solid var(--ilhas-grad-start);outline-offset:3px}
+/* El manual es el único sólido: es lo único que la página REGALA, y por eso
+   es lo que la hace valer la pena aunque no te quieran seguir. */
+.enlace--manual{background:var(--ilhas-primary);border-color:transparent}
+.enlace--manual:hover,.enlace--manual:focus-visible{background:#8b52ff}
+.enlace__icono{flex:0 0 auto;width:1.375rem;height:1.375rem;opacity:.9}
+.enlace__icono svg{width:100%;height:100%;display:block;fill:currentColor}
+.enlace__txt{flex:1;text-align:left}
+.enlace__sub{display:block;margin-top:.1rem;font-size:.8125rem;font-weight:400;
+  color:rgba(255,255,255,.62);line-height:1.35}
+.enlace--manual .enlace__sub{color:rgba(255,255,255,.84)}
+.enlace__flecha{flex:0 0 auto;opacity:.45;font-size:1.05rem}
+
+/* --- el pie -------------------------------------------------------------- */
+/* Es un enlace, no un rótulo: todo el renglón lleva a ilhas.ai. */
+.pie{margin-top:1.35rem;display:flex;align-items:center;gap:.55rem;
+  font-size:.8125rem;color:rgba(248,250,255,.45);text-decoration:none;
+  transition:color .16s ease}
+.pie:hover,.pie:focus-visible{color:rgba(248,250,255,.72)}
+.pie:hover b,.pie:focus-visible b{color:#fff}
+.pie:focus-visible{outline:2px solid var(--ilhas-grad-start);outline-offset:4px;
+  border-radius:6px}
+.pie img{width:1.05rem;height:1.05rem}
+.pie b{transition:color .16s ease;font-family:var(--ilhas-font-display);font-weight:600;font-size:.9375rem;
+  color:rgba(248,250,255,.8);letter-spacing:-.02em}
+
+/* ==========================================================================
+   ESCRITORIO — el encuadre de la slide
+   ========================================================================== */
+@media (min-width:860px){
+  .bio{flex-direction:row;align-items:center;justify-content:center;
+    gap:clamp(2rem,6vw,5rem);max-width:72rem;margin-inline:auto;
+    padding-inline:clamp(2rem,5vw,4rem)}
+  .figura{flex:0 0 auto;padding-top:0;align-items:center}
+  .figura img{height:min(78svh,620px);max-width:none}
+  /* El desvanecido se queda, más corto. El recorte de origen termina a medio
+     muslo con un canto recto: sin degradado se ve como una foto mal cortada,
+     con degradado se lee como decisión. */
+  .figura::after{height:14%}
+  .figura__luz{width:420px;bottom:14%}
+  .cuerpo{flex:0 1 26rem;align-items:flex-start;text-align:left;
+    margin-top:0;padding:0}
+  h1{font-size:clamp(2.6rem,4.6vw,3.6rem)}
+  .bio__linea{font-size:1.0625rem;max-width:28ch}
+  .enlaces{margin-top:1.75rem;max-width:none}
+  .pie{margin-top:1.6rem}
+}
+
+/* ==========================================================================
+   KINZAL — la otra mitad
+   ==========================================================================
+   Los dos gradientes de marca terminan en violeta:
+     Ilhas  #55E8FF → #7A3CFF → #A14BFF   (cian → violeta)
+     Kinzal #1A2A6C → #2E5BE0 → #9B3FD4   (marino → azul → violeta)
+   Por eso Kinzal puede traer su color aquí sin verse pegado: la página baja de
+   violeta cálido (Ilhas, arriba) a azul frío (Kinzal, abajo), y el violeta es
+   la bisagra. Si Kinzal usara el morado de Ilhas parecería un producto de
+   Ilhas — que es justo lo que NO es. */
+
+.kz{margin:1.15rem 0 0;width:100%;max-width:26rem;text-align:left}
+.kz__sep{display:flex;align-items:center;gap:.7rem;margin:0 0 .7rem;
+  font-size:.6875rem;letter-spacing:.14em;text-transform:uppercase;
+  /* .48 y no .38: a 11px hace falta 4.5:1 contra #0E0E0F y .38 medía 3.45. */
+  color:rgba(248,250,255,.48)}
+.kz__sep::after{content:"";flex:1;height:1px;
+  background:linear-gradient(to right,rgba(248,250,255,.16),transparent)}
+.kz__card{display:block;position:relative;overflow:hidden;text-decoration:none;
+  border-radius:16px;
+  transition:border-color .18s ease,transform .18s ease,background .18s ease}
+.kz__card:focus-visible{outline:2px solid #7B3FD4;outline-offset:3px}
+/* display:block obligatorio: son <span> dentro del <a>, y un span inline
+   ignora el padding en el flujo — la D de «Del» quedaba cortada contra el
+   canto de la tarjeta. */
+.kz__cuerpo{display:block;padding:1rem 1.1rem}
+.kz__top{display:flex;align-items:center;gap:.6rem;margin:0 0 .55rem}
+.kz__top img{width:26px;height:28px;display:block;flex:0 0 auto}
+.kz__word{font-family:var(--ilhas-font-display);font-weight:600;font-size:1.0625rem;
+  letter-spacing:.06em;color:#fff}
+.kz__ar{margin-left:auto;font-size:.8125rem;color:rgba(192,132,252,.9);white-space:nowrap}
+.kz__ttl{display:block;margin:0;font-size:1rem;font-weight:500;line-height:1.35;color:#fff}
+.kz__ttl b{font-weight:500;color:#C084FC}
+.kz__pies{margin:.65rem 0 0;padding:0;list-style:none;display:flex;flex-wrap:wrap;gap:.35rem}
+.kz__pies li{font-size:.75rem;padding:.22rem .55rem;border-radius:99px;
+  color:rgba(226,232,255,.85);background:rgba(150,170,255,.12);
+  border:1px solid rgba(150,170,255,.22)}
+
+/* D · la obra. La única que trae PRUEBA: una torre entregada, no un adjetivo.
+   Las otras tres dicen que Jorge hace fachadas; ésta la enseña. Es la
+   diferencia entre «10+ años» y una foto de una torre con la cancelería
+   puesta — y en un link in bio, donde nadie lee, la foto gana.
+   La foto va arriba en banda y NO de fondo: de fondo habría que oscurecerla
+   tanto para que el texto se lea que dejaría de verse la obra. */
+.kz__card{background:#0D1630;border:1px solid rgba(120,140,220,.22)}
+.kz__card:hover,.kz__card:focus-visible{border-color:rgba(150,170,255,.45);
+  transform:translateY(-1px)}
+.kz__foto{position:relative;display:block;height:132px;overflow:hidden;
+  background:#0A1128}
+.kz__foto img{width:100%;height:100%;object-fit:cover;object-position:50% 46%;
+  display:block;transition:transform .5s ease}
+.kz__card:hover .kz__foto img{transform:scale(1.035)}
+/* El desvanecido amarra la foto con la tarjeta: sin él es una foto pegada
+   arriba, con él es una tarjeta que tiene una foto. */
+.kz__foto::after{content:"";position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(to top,#0D1630 5%,rgba(13,22,48,.9) 24%,
+    rgba(13,22,48,.12) 58%,rgba(13,22,48,.34))}
+/* El canto de arriba, el gradiente del logo. */
+.kz__foto::before{content:"";position:absolute;inset:0 0 auto 0;height:2px;z-index:2;
+  background:linear-gradient(to right,#1A2A6C,#2E5BE0 45%,#7B3FD4 78%,#9B3FD4)}
+.kz__etiq{position:absolute;z-index:2;left:.85rem;bottom:.6rem;
+  font-size:.625rem;letter-spacing:.14em;text-transform:uppercase;
+  /* Sobre una foto el contraste no lo decide el CSS, lo decide el pixel. Por
+     eso el velo de arriba llega casi opaco a esta altura y la etiqueta va en
+     blanco: medido sobre la imagen final, no supuesto. */
+  color:rgba(255,255,255,.94);text-shadow:0 1px 8px rgba(0,0,0,.75)}
+.kz__cuerpo{padding:.85rem 1.1rem 1rem}
+
+</style></head><body>
+
+<main class="bio">
+  <div class="figura">
+    <div class="figura__luz" aria-hidden="true"></div>
+    <img src="/assets/bio/jorge-full.webp" alt="Jorge Sierra"
+         width="609" height="1000" fetchpriority="high" decoding="async">
+  </div>
+
+  <div class="cuerpo">
+    <h1>Jorge Sierra</h1>
+    <p class="bio__linea">Enseño a convertir el caos en dinero.</p>
+
+    <ul class="enlaces">
+      <li>
+        <a class="enlace" href="https://www.instagram.com/soyjorgesierra" target="_blank" rel="noopener">
+          <span class="enlace__icono" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 2.16c3.2 0 3.58.01 4.85.07 1.17.05 1.8.25 2.23.41.56.22.96.48 1.38.9.42.42.68.82.9 1.38.16.42.36 1.06.41 2.23.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.25 1.8-.41 2.23-.22.56-.48.96-.9 1.38-.42.42-.82.68-1.38.9-.42.16-1.06.36-2.23.41-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.8-.25-2.23-.41-.56-.22-.96-.48-1.38-.9-.42-.42-.68-.82-.9-1.38-.16-.42-.36-1.06-.41-2.23C2.17 15.58 2.16 15.2 2.16 12s.01-3.58.07-4.85c.05-1.17.25-1.8.41-2.23.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.42-.16 1.06-.36 2.23-.41C8.42 2.17 8.8 2.16 12 2.16zm0 5.68a4.16 4.16 0 100 8.32 4.16 4.16 0 000-8.32zm0 6.86a2.7 2.7 0 110-5.4 2.7 2.7 0 010 5.4zm5.3-7.02a.97.97 0 11-1.94 0 .97.97 0 011.94 0z"/></svg></span>
+          <span class="enlace__txt">Instagram<span class="enlace__sub">@soyjorgesierra</span></span>
+          <span class="enlace__flecha" aria-hidden="true">↗</span>
+        </a>
+      </li>
+      <li>
+        <a class="enlace" href="https://www.tiktok.com/@jorgesierrai" target="_blank" rel="noopener">
+          <span class="enlace__icono" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M16.6 5.82A4.28 4.28 0 0115.54 3h-3.09v12.4a2.59 2.59 0 01-2.59 2.5 2.59 2.59 0 01-2.59-2.59 2.59 2.59 0 013.39-2.47V9.7a5.68 5.68 0 00-.8-.06A5.68 5.68 0 003.5 15.3 5.68 5.68 0 009.18 21a5.68 5.68 0 005.68-5.68V9.01a7.35 7.35 0 004.3 1.38V7.3a4.28 4.28 0 01-2.56-1.48z"/></svg></span>
+          <span class="enlace__txt">TikTok<span class="enlace__sub">@jorgesierrai</span></span>
+          <span class="enlace__flecha" aria-hidden="true">↗</span>
+        </a>
+      </li>
+      <li>
+        <a class="enlace" href="https://www.jorgesierra.io/" target="_blank" rel="noopener">
+          <span class="enlace__icono" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a15 15 0 010 18 15 15 0 010-18"/></svg></span>
+          <span class="enlace__txt">Mi portafolio<span class="enlace__sub">jorgesierra.io</span></span>
+          <span class="enlace__flecha" aria-hidden="true">↗</span>
+        </a>
+      </li>
+      <li>
+        <a class="enlace" href="/">
+          <span class="enlace__icono" aria-hidden="true"><img src="/assets/logo/logo-mark.svg" alt="" width="22" height="22"></span>
+          <span class="enlace__txt">Tu primer proceso corriendo con agentes de IA.<span class="enlace__sub">ilhas.ai</span></span>
+          <span class="enlace__flecha" aria-hidden="true">→</span>
+        </a>
+      </li>
+      <li>
+        <a class="enlace enlace--manual" href="/manual-ia-agentica.pdf" download>
+          <span class="enlace__icono" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12m0 0l-4-4m4 4l4-4M4 17v2a2 2 0 002 2h12a2 2 0 002-2v-2"/></svg></span>
+          <span class="enlace__txt">Descarga el manual<span class="enlace__sub">Un agente no es un chatbot con esteroides · 24 páginas, gratis</span></span>
+        </a>
+      </li>
+    </ul>
+
+    <section class="kz">
+      <p class="kz__sep">La otra mitad</p>
+      <a class="kz__card" href="https://kinzal.ai" target="_blank" rel="noopener">
+        <span class="kz__foto">
+          <img src="/assets/kinzal/kz-obra.webp" alt="" width="880" height="342" loading="lazy" decoding="async">
+          <span class="kz__etiq">Edificio Mutuo · Guadalajara</span>
+        </span>
+        <span class="kz__cuerpo">
+          <span class="kz__top">
+            <img src="/assets/kinzal/kinzal-mark.svg" alt="" width="26" height="28">
+            <span class="kz__word">KINZAL</span>
+            <span class="kz__ar" aria-hidden="true">kinzal.ai&nbsp;↗</span>
+          </span>
+          <span class="kz__ttl">Del perfil extruido a la <b>fachada terminada</b>.</span>
+          <ul class="kz__pies"><li>Fachadas</li><li>Cancelería</li><li>Planta propia</li></ul>
+        </span>
+      </a>
+    </section>
+
+    <a class="pie" href="/">
+      <img src="/assets/logo/logo-mark.svg" alt="" width="17" height="17">
+      <b>ilhas</b> · Fundador de Ilhas y Kinzal
+    </a>
+  </div>
+</main>
+
+</body></html>

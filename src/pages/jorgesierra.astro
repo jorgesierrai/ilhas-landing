@@ -211,6 +211,36 @@ const enlaces = [
           </li>
         </ul>
 
+        {/* KINZAL — FUERA DE LA LISTA, a propósito. Mientras sea un <li> más
+            de .enlaces compite con el botón del manual —el único sólido de la
+            página— y pierde. Aquí es otra cosa: no es un enlace más de Jorge,
+            es la otra mitad de lo que hace.
+
+            Copiado tal cual de medios/kinzal-referencia.html, líneas 250-267.
+
+            La foto lleva alt="" a propósito: el nombre accesible del enlace
+            sale del texto de la tarjeta, y un alt descriptivo lo leería dos
+            veces. `loading="lazy"` porque queda debajo del pliegue en los dos
+            tamaños. */}
+        <section class="kz">
+          <p class="kz__sep">La otra mitad</p>
+          <a class="kz__card" href="https://kinzal.ai" target="_blank" rel="noopener">
+            <span class="kz__foto">
+              <img src="/assets/kinzal/kz-obra.webp" alt="" width="880" height="342" loading="lazy" decoding="async">
+              <span class="kz__etiq">Edificio Mutuo · Guadalajara</span>
+            </span>
+            <span class="kz__cuerpo">
+              <span class="kz__top">
+                <img src="/assets/kinzal/kinzal-mark.svg" alt="" width="26" height="28">
+                <span class="kz__word">KINZAL</span>
+                <span class="kz__ar" aria-hidden="true">kinzal.ai&nbsp;↗</span>
+              </span>
+              <span class="kz__ttl">Del perfil extruido a la <b>fachada terminada</b>.</span>
+              <ul class="kz__pies"><li>Fachadas</li><li>Cancelería</li><li>Planta propia</li></ul>
+            </span>
+          </a>
+        </section>
+
         {/* El renglón entero es enlace al home, logo incluido. Va como <a> y
             no como <p> con un <a> dentro para que el área de clic sea la fila
             completa y no solo el texto — en un teléfono la diferencia entre
@@ -507,6 +537,74 @@ const enlaces = [
     color: rgba(248, 250, 255, 0.8);
     letter-spacing: -0.02em;
   }
+
+  /* ==========================================================================
+     KINZAL — la otra mitad
+     ==========================================================================
+     Los dos gradientes de marca terminan en violeta:
+       Ilhas  #55E8FF → #7A3CFF → #A14BFF   (cian → violeta)
+       Kinzal #1A2A6C → #2E5BE0 → #9B3FD4   (marino → azul → violeta)
+     Por eso Kinzal puede traer su color aquí sin verse pegado: la página baja de
+     violeta cálido (Ilhas, arriba) a azul frío (Kinzal, abajo), y el violeta es
+     la bisagra. Si Kinzal usara el morado de Ilhas parecería un producto de
+     Ilhas — que es justo lo que NO es. */
+
+  .kz{margin:1.15rem 0 0;width:100%;max-width:26rem;text-align:left}
+  .kz__sep{display:flex;align-items:center;gap:.7rem;margin:0 0 .7rem;
+    font-size:.6875rem;letter-spacing:.14em;text-transform:uppercase;
+    /* .48 y no .38: a 11px hace falta 4.5:1 contra #0E0E0F y .38 medía 3.45. */
+    color:rgba(248,250,255,.48)}
+  .kz__sep::after{content:"";flex:1;height:1px;
+    background:linear-gradient(to right,rgba(248,250,255,.16),transparent)}
+  .kz__card{display:block;position:relative;overflow:hidden;text-decoration:none;
+    border-radius:16px;
+    transition:border-color .18s ease,transform .18s ease,background .18s ease}
+  .kz__card:focus-visible{outline:2px solid #7B3FD4;outline-offset:3px}
+  /* display:block obligatorio: son <span> dentro del <a>, y un span inline
+     ignora el padding en el flujo — la D de «Del» quedaba cortada contra el
+     canto de la tarjeta. */
+  .kz__cuerpo{display:block;padding:1rem 1.1rem}
+  .kz__top{display:flex;align-items:center;gap:.6rem;margin:0 0 .55rem}
+  .kz__top img{width:26px;height:28px;display:block;flex:0 0 auto}
+  .kz__word{font-family:var(--ilhas-font-display);font-weight:600;font-size:1.0625rem;
+    letter-spacing:.06em;color:#fff}
+  .kz__ar{margin-left:auto;font-size:.8125rem;color:rgba(192,132,252,.9);white-space:nowrap}
+  .kz__ttl{display:block;margin:0;font-size:1rem;font-weight:500;line-height:1.35;color:#fff}
+  .kz__ttl b{font-weight:500;color:#C084FC}
+  .kz__pies{margin:.65rem 0 0;padding:0;list-style:none;display:flex;flex-wrap:wrap;gap:.35rem}
+  .kz__pies li{font-size:.75rem;padding:.22rem .55rem;border-radius:99px;
+    color:rgba(226,232,255,.85);background:rgba(150,170,255,.12);
+    border:1px solid rgba(150,170,255,.22)}
+
+  /* D · la obra. La única que trae PRUEBA: una torre entregada, no un adjetivo.
+     Las otras tres dicen que Jorge hace fachadas; ésta la enseña. Es la
+     diferencia entre «10+ años» y una foto de una torre con la cancelería
+     puesta — y en un link in bio, donde nadie lee, la foto gana.
+     La foto va arriba en banda y NO de fondo: de fondo habría que oscurecerla
+     tanto para que el texto se lea que dejaría de verse la obra. */
+  .kz__card{background:#0D1630;border:1px solid rgba(120,140,220,.22)}
+  .kz__card:hover,.kz__card:focus-visible{border-color:rgba(150,170,255,.45);
+    transform:translateY(-1px)}
+  .kz__foto{position:relative;display:block;height:132px;overflow:hidden;
+    background:#0A1128}
+  .kz__foto img{width:100%;height:100%;object-fit:cover;object-position:50% 46%;
+    display:block;transition:transform .5s ease}
+  .kz__card:hover .kz__foto img{transform:scale(1.035)}
+  /* El desvanecido amarra la foto con la tarjeta: sin él es una foto pegada
+     arriba, con él es una tarjeta que tiene una foto. */
+  .kz__foto::after{content:"";position:absolute;inset:0;pointer-events:none;
+    background:linear-gradient(to top,#0D1630 5%,rgba(13,22,48,.9) 24%,
+      rgba(13,22,48,.12) 58%,rgba(13,22,48,.34))}
+  /* El canto de arriba, el gradiente del logo. */
+  .kz__foto::before{content:"";position:absolute;inset:0 0 auto 0;height:2px;z-index:2;
+    background:linear-gradient(to right,#1A2A6C,#2E5BE0 45%,#7B3FD4 78%,#9B3FD4)}
+  .kz__etiq{position:absolute;z-index:2;left:.85rem;bottom:.6rem;
+    font-size:.625rem;letter-spacing:.14em;text-transform:uppercase;
+    /* Sobre una foto el contraste no lo decide el CSS, lo decide el pixel. Por
+       eso el velo de arriba llega casi opaco a esta altura y la etiqueta va en
+       blanco: medido sobre la imagen final, no supuesto. */
+    color:rgba(255,255,255,.94);text-shadow:0 1px 8px rgba(0,0,0,.75)}
+  .kz__cuerpo{padding:.85rem 1.1rem 1rem}
 
   /* ======================================================================
      ESCRITORIO — el encuadre de la slide que Jorge proyecta
