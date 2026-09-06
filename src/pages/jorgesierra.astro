@@ -13,9 +13,11 @@
  * link in bio. Por eso el documento va completo aquí, con `tokens.css` para las
  * variables y `base.css` para las @font-face (las tres viven ahí).
  *
- * CERO JAVASCRIPT. La versión anterior del brief traía un saludo condicional
- * con `?src=`; Jorge lo quitó al hacerla genérica, así que no queda nada que
- * necesite JS y la página sigue la regla del sitio.
+ * JAVASCRIPT: SÓLO GA4. La versión anterior del brief traía un saludo
+ * condicional con `?src=`; Jorge lo quitó al hacerla genérica, así que la
+ * página no necesita JS propio y no lo tiene. Lo único que carga es la
+ * analítica, y va repetida aquí porque esta página no hereda el <head> de
+ * `Base.astro`. Nada más entra: los botones, el foco y los estados son CSS.
  *
  * SIN `noindex`: es la página personal de Jorge y debe poder encontrarse.
  */
@@ -111,6 +113,17 @@ const enlaces = [
 
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" href="/favicon.ico" sizes="32x32" />
+
+    {/* ⚠️ GA4 VA REPETIDO AQUÍ Y NO ES DESCUIDO. Esta página NO usa
+        `Base.astro` —ver la nota de arriba—, así que no hereda nada de su
+        <head>. Si el snippet vive sólo allá, la página que Jorge reparte por QR
+        es justo la única que no se mide, y el embudo empieza ciego.
+        Si algún día cambia el ID, son DOS lugares: aquí y `Base.astro`. */}
+    <script
+      is:inline
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-ENCWN9XWT1"></script>
+    <script is:inline src="/ga.js"></script>
 
     {/* La foto es el LCP de esta página y lo único pesado que carga. */}
     <link rel="preload" as="image" href="/assets/bio/jorge-full.webp" />
