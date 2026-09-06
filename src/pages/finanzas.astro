@@ -69,8 +69,17 @@ const noEsParaTi = [
   "Buscas algo gratis e instantáneo, sin poner el trabajo.",
 ];
 
-const webinarUrl =
-  "https://eventos.ilhas.ai/?utm_source=sitio&utm_medium=web&utm_campaign=webinar&utm_content=finanzas";
+// ⚠️ MIENTRAS EL REGISTRO NO ABRA, los dos botones del webinar caen en
+// `/webinar`, que dice la verdad —«todavía no puedes registrarte»— y recoge la
+// lista de espera. Cuando abra, esta constante vuelve a apuntar a donde corra
+// el registro y no hay que tocar nada más: los `data-evento` de abajo se quedan
+// tal cual, porque miden la intención y no la dirección.
+//
+// Consecuencia que conviene tener presente: con esto se pierden las UTMs que
+// llevaba esta URL (`utm_source=sitio&utm_medium=web&utm_campaign=webinar
+// &utm_content=finanzas`). El `?origen=sitio` del formulario de Tally cumple
+// ahora esa función.
+const webinarUrl = "/webinar";
 
 const faqs = [
   {

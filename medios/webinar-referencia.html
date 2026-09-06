@@ -1,0 +1,187 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Ilhas · /webinar — referencia medida (1,413 px en 390×844 · 1,148 en 1440)</title>
+<style>
+@font-face{font-family:"Space Grotesk";src:url(/assets/fonts/space-grotesk-600.woff2) format("woff2");font-weight:600;font-display:swap}
+@font-face{font-family:"Inter";src:url(/assets/fonts/inter-400.woff2) format("woff2");font-weight:400;font-display:swap}
+@font-face{font-family:"Inter";src:url(/assets/fonts/inter-500.woff2) format("woff2");font-weight:500;font-display:swap}
+@font-face{font-family:"Inter";src:url(/assets/fonts/inter-600.woff2) format("woff2");font-weight:600;font-display:swap}
+:root{
+  --ilhas-primary:#7A3CFF; --ilhas-dark:#0E0E0F;
+  --ilhas-grad-start:#55E8FF; --ilhas-grad-end:#A14BFF;
+  --ilhas-gradient-d:linear-gradient(115deg,#55E8FF 0%,#7A3CFF 50%,#A14BFF 100%);
+  --ilhas-font-display:"Space Grotesk",system-ui,sans-serif;
+  --ilhas-font-body:"Inter",system-ui,-apple-system,sans-serif;
+  --ilhas-container:1140px; --ilhas-gutter:1.5rem;
+  --ilhas-section-y:clamp(2.75rem,5.5vw,4.5rem);
+}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;font-family:var(--ilhas-font-body);line-height:1.5;
+  -webkit-text-size-adjust:100%;background:var(--ilhas-dark);
+  color:rgba(248,250,255,.8)}
+
+/* --- lo que ya existe en base.css, copiado sólo para poder medir aquí ----- */
+.container{width:100%;max-width:var(--ilhas-container);margin-inline:auto;
+  padding-inline:var(--ilhas-gutter)}
+.section-y{padding-block:var(--ilhas-section-y)}
+.bg-dark{background:var(--ilhas-dark);color:rgba(248,250,255,.8)}
+
+/* ==========================================================================
+   /webinar — LA LISTA DE ESPERA
+   ==========================================================================
+   Quien llega aquí venía de apretar «Reservar mi lugar en el webinar».
+   Esperaba un formulario de registro y todavía no hay ninguno.
+
+   Esa expectativa rota es todo el problema de esta página, y no se arregla
+   adornándola: se arregla diciendo la verdad en el primer renglón y dándole
+   algo que SÍ puede hacer hoy —dejar por dónde avisarle— en vez de un premio
+   de consolación.
+
+   ⚠️ VA SUELTA, sin `Base.astro` — igual que /jorgesierra. Sin menú y sin pie
+   del sitio: esta página tiene UN trabajo, y todo lo que se le ponga alrededor
+   es una salida que compite con el botón.
+
+   Llegan aquí por TRES puertas: los dos botones del webinar en /finanzas y el
+   «Reservar el webinar» del pie del sitio, que sale en las ocho páginas. Por
+   eso tampoco enlaza de vuelta a /finanzas: a la mayoría los regresaría al
+   lugar de donde acaban de salir. */
+
+/* `min-height:100svh` y NO `100vh`: en Safari de iOS `100vh` ignora la barra
+   del navegador y la página se corta justo donde está el botón. */
+.espera{position:relative;overflow:hidden;min-height:100svh;
+  display:flex;flex-direction:column;justify-content:center}
+/* El resplandor de marca, una sola vez, detrás del titular. */
+.espera__luz{position:absolute;z-index:0;left:50%;top:-10%;translate:-50% 0;
+  width:min(120%,900px);aspect-ratio:1.6;border-radius:50%;
+  background:var(--ilhas-gradient-d);filter:blur(90px);opacity:.16;
+  pointer-events:none}
+.espera__int{position:relative;z-index:1;display:flex;flex-direction:column;
+  align-items:center;text-align:center}
+
+.kicker{margin:0 0 .9rem;font-size:.6875rem;font-weight:500;letter-spacing:.16em;
+  text-transform:uppercase;color:rgba(248,250,255,.5);
+  display:flex;align-items:center;gap:.6rem}
+.kicker::before{content:"";width:6px;height:6px;border-radius:50%;
+  background:var(--ilhas-grad-start);
+  box-shadow:0 0 0 4px rgba(85,232,255,.16)}
+
+h1{margin:0;font-family:var(--ilhas-font-display);font-weight:600;
+  font-size:clamp(2rem,5.4vw,3.2rem);line-height:1.05;letter-spacing:-.035em;
+  color:#F8FAFF;max-width:18ch}
+/* `display:inline-block` obligatorio: con `block`, `background-clip:text`
+   recorta sobre una caja del ancho de la columna y el degradado sale
+   truncado. Es el mismo bug que ya salió tres veces en este proyecto. */
+h1 b{font-weight:600;background:var(--ilhas-gradient-d);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  display:inline-block}
+.lead{margin:1rem 0 0;font-size:clamp(1rem,2.2vw,1.125rem);max-width:46ch;
+  color:rgba(248,250,255,.72)}
+
+/* --- el CTA --------------------------------------------------------------- */
+.cta{display:inline-flex;align-items:center;gap:.6rem;margin:1.6rem 0 0;
+  min-height:58px;padding:.85rem 1.6rem;border-radius:14px;
+  background:var(--ilhas-primary);color:#fff;text-decoration:none;
+  font-weight:600;font-size:1.0625rem;letter-spacing:-.01em;
+  transition:background .16s ease,transform .16s ease}
+.cta:hover,.cta:focus-visible{background:#8b52ff;transform:translateY(-1px)}
+.cta:focus-visible{outline:2px solid var(--ilhas-grad-start);outline-offset:3px}
+.cta__nota{margin:.7rem 0 0;font-size:.8125rem;color:rgba(248,250,255,.5)}
+
+/* --- las dos piezas ------------------------------------------------------- */
+.piezas{margin:clamp(2rem,5vh,3rem) 0 0;padding:0;list-style:none;
+  display:grid;gap:1rem;width:100%}
+@media (min-width:820px){ .piezas{grid-template-columns:1fr 1fr;gap:1.5rem} }
+
+.pieza{position:relative;overflow:hidden;border-radius:18px;text-align:left;
+  background:rgba(248,250,255,.04);border:1px solid rgba(248,250,255,.1);
+  padding:1.1rem 1.1rem 1.25rem}
+/* El filo de arriba, con el degradado de marca. */
+.pieza::before{content:"";position:absolute;inset:0 0 auto 0;height:2px;
+  background:var(--ilhas-gradient-d);opacity:.7}
+.pieza img{width:100%;height:auto;display:block;border-radius:10px;
+  margin:0 0 1rem}
+.pieza__et{display:inline-block;margin:0 0 .5rem;font-size:.625rem;
+  font-weight:500;letter-spacing:.14em;text-transform:uppercase;
+  padding:.24rem .6rem;border-radius:99px;
+  color:#DCC9FF;background:rgba(122,60,255,.22);
+  border:1px solid rgba(160,120,255,.4)}
+.pieza h2{margin:0;font-family:var(--ilhas-font-display);font-weight:600;
+  font-size:1.125rem;letter-spacing:-.02em;color:#fff}
+.pieza p{margin:.4rem 0 0;font-size:.9375rem;color:rgba(248,250,255,.66)}
+
+/* --- la nota y el pie chico ----------------------------------------------- */
+/* Se quitó el «Mientras tanto, esto es lo que vas a ver en la clase» que
+   ligaba a /finanzas (Jorge, 6 sep 2026). Dos razones y las dos son buenas:
+   el pie del sitio ya lleva ahí en su columna «Navegación», y los dos botones
+   que mandan A ESTA PÁGINA están en /finanzas — así que a la mayoría los
+   regresaba a donde acababan de salir. */
+.aviso{margin:clamp(1.75rem,4vh,2.5rem) 0 0;max-width:52ch;
+  font-size:.8125rem;line-height:1.6;color:rgba(248,250,255,.5)}
+.pie{margin:1.5rem 0 0;display:flex;align-items:center;gap:.55rem;
+  font-size:.8125rem;color:rgba(248,250,255,.45);text-decoration:none;
+  transition:color .16s ease}
+.pie:hover,.pie:focus-visible{color:rgba(248,250,255,.72)}
+.pie img{width:1.05rem;height:1.05rem}
+.pie b{font-family:var(--ilhas-font-display);font-weight:600;font-size:.9375rem;
+  color:rgba(248,250,255,.8);letter-spacing:-.02em}
+</style></head><body>
+
+<main class="section-y bg-dark espera">
+  <div class="espera__luz" aria-hidden="true"></div>
+  <div class="container espera__int">
+
+    <p class="kicker">Lista de espera</p>
+
+    <h1>En las próximas semanas <b>abrimos la clase</b>.</h1>
+
+    <p class="lead">
+      Todavía no puedes registrarte — estamos terminando de prepararla. Déjanos
+      por dónde avisarte y eres de los primeros en enterarte el día que abra.
+    </p>
+
+    <!-- El `?origen=sitio` cae en un campo oculto del formulario. Sirve para
+         saber de dónde llegó cada persona SIN preguntárselo — más exacto que
+         un «¿cómo nos conociste?», que nadie recuerda bien. Si algún día el
+         enlace se pone en la bio de TikTok o en un correo, se cambia el valor
+         y ya: mismo formulario, origen distinto. -->
+    <a class="cta" href="https://tally.so/r/GxGr82?origen=sitio"
+       target="_blank" rel="noopener">
+      Avísenme cuando abra
+      <span aria-hidden="true">↗</span>
+    </a>
+    <p class="cta__nota">Toma menos de un minuto. Te avisamos por WhatsApp.</p>
+
+    <ul class="piezas">
+      <li class="pieza">
+        <img src="/assets/webinar/master-course.webp" alt="" width="1120" height="667"
+             loading="lazy" decoding="async">
+        <span class="pieza__et">Grabado · a tu ritmo</span>
+        <h2>Master Course de Finanzas</h2>
+        <p>Ocho módulos con mi papá, de la verdad sobre el dinero a los
+          escenarios que sí toman decisiones.</p>
+      </li>
+      <li class="pieza">
+        <img src="/assets/webinar/bootcamp.webp" alt="" width="1120" height="667"
+             loading="lazy" decoding="async">
+        <span class="pieza__et">En vivo · por cohorte</span>
+        <h2>Bootcamp I·L·H·A·S</h2>
+        <p>El método completo en vivo, con tus propios números y la IA
+          corriendo de tu lado.</p>
+      </li>
+    </ul>
+
+    <p class="aviso">
+      El registro abrirá en una página de este mismo sitio, en
+      <strong>ilhas.ai</strong>. No apartamos lugares por mensaje directo ni por
+      correo: si alguien te lo ofrece por ahí, no somos nosotros.
+    </p>
+
+    <a class="pie" href="/">
+      <img src="/assets/logo/logo-mark.svg" alt="" width="17" height="17">
+      <b>ilhas</b> · Volver al inicio
+    </a>
+
+  </div>
+</main>
+
+</body></html>
