@@ -54,6 +54,17 @@ const enlaces = [
     fuera: true,
   },
   {
+    // ⚠️ SIN el `?si=…` que traía el enlace que pasó Jorge. Ese parámetro es el
+    // token de seguimiento que YouTube pega al compartir: identifica de dónde
+    // salió el clic y no pinta nada en una página propia.
+    href: "https://www.youtube.com/@soyjorgesierra",
+    grupo: "redes",
+    label: "YouTube",
+    sub: "@soyjorgesierra",
+    icono: "youtube",
+    fuera: true,
+  },
+  {
     href: "https://www.jorgesierra.io/",
     grupo: "redes",
     label: "Mi portafolio",
@@ -160,6 +171,11 @@ const enlaces = [
                         <path d="M16.6 5.82A4.28 4.28 0 0115.54 3h-3.09v12.4a2.59 2.59 0 01-2.59 2.5 2.59 2.59 0 01-2.59-2.59 2.59 2.59 0 013.39-2.47V9.7a5.68 5.68 0 00-.8-.06A5.68 5.68 0 003.5 15.3 5.68 5.68 0 009.18 21a5.68 5.68 0 005.68-5.68V9.01a7.35 7.35 0 004.3 1.38V7.3a4.28 4.28 0 01-2.56-1.48z" />
                       </svg>
                     )}
+                    {e.icono === "youtube" && (
+                      <svg viewBox="0 0 24 24">
+                        <path d="M23.5 6.9a3 3 0 00-2.1-2.1C19.5 4.3 12 4.3 12 4.3s-7.5 0-9.4.5A3 3 0 00.5 6.9C0 8.8 0 12 0 12s0 3.2.5 5.1a3 3 0 002.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 002.1-2.1c.5-1.9.5-5.1.5-5.1s0-3.2-.5-5.1zM9.6 15.6V8.4l6.2 3.6-6.2 3.6z" />
+                      </svg>
+                    )}
                     {e.icono === "sitio" && (
                       <svg
                         viewBox="0 0 24 24"
@@ -222,6 +238,11 @@ const enlaces = [
                         <path d="M16.6 5.82A4.28 4.28 0 0115.54 3h-3.09v12.4a2.59 2.59 0 01-2.59 2.5 2.59 2.59 0 01-2.59-2.59 2.59 2.59 0 013.39-2.47V9.7a5.68 5.68 0 00-.8-.06A5.68 5.68 0 003.5 15.3 5.68 5.68 0 009.18 21a5.68 5.68 0 005.68-5.68V9.01a7.35 7.35 0 004.3 1.38V7.3a4.28 4.28 0 01-2.56-1.48z" />
                       </svg>
                     )}
+                    {e.icono === "youtube" && (
+                      <svg viewBox="0 0 24 24">
+                        <path d="M23.5 6.9a3 3 0 00-2.1-2.1C19.5 4.3 12 4.3 12 4.3s-7.5 0-9.4.5A3 3 0 00.5 6.9C0 8.8 0 12 0 12s0 3.2.5 5.1a3 3 0 002.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 002.1-2.1c.5-1.9.5-5.1.5-5.1s0-3.2-.5-5.1zM9.6 15.6V8.4l6.2 3.6-6.2 3.6z" />
+                      </svg>
+                    )}
                     {e.icono === "sitio" && (
                       <svg
                         viewBox="0 0 24 24"
@@ -277,6 +298,37 @@ const enlaces = [
                 Descarga el manual
                 <span class="enlace__sub">
                   Un agente no es un chatbot con esteroides · 24 páginas, gratis
+                </span>
+              </span>
+            </a>
+          </li>
+
+          {/* La segunda guía. Va en CIAN —el otro extremo del mismo degradado de
+              marca— y no en otro morado: junto al del manual los dos se
+              confunden y parece un error de render, no una pareja. Así los dos
+              descargables se leen como lo que son, lo que Ilhas regala. */}
+          <li>
+            <a
+              class="enlace enlace--guia"
+              href="/numeros-que-pagan-la-nomina.pdf"
+              download
+            >
+              <span class="enlace__icono" aria-hidden="true">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path d="M12 3v12m0 0l-4-4m4 4l4-4M4 17v2a2 2 0 002 2h12a2 2 0 002-2v-2" />
+                </svg>
+              </span>
+              <span class="enlace__txt">
+                Descarga la guía
+                <span class="enlace__sub">
+                  Los números que pagan la nómina · 16 páginas, gratis
                 </span>
               </span>
             </a>
@@ -427,6 +479,15 @@ const enlaces = [
   /* El manual es el único sólido: es lo único que la página REGALA, y por eso
      es lo que la hace valer la pena aunque no te quieran seguir. */
   .enlace--manual{background:var(--ilhas-primary);border-color:transparent}
+  /* El cian es `--ilhas-grad-start` (#55E8FF), el otro extremo del mismo
+     degradado de marca: es «otro color» sin salirse de la paleta.
+     ⚠️ TEXTO EN OSCURO, NUNCA BLANCO. Sobre #55E8FF el blanco mide 1.4:1 y
+     desaparece. */
+  .enlace--guia{background:var(--ilhas-grad-start);border-color:transparent;
+    color:var(--ilhas-dark)}
+  .enlace--guia:hover,.enlace--guia:focus-visible{background:#7CEEFF}
+  .enlace--guia .enlace__sub{color:rgba(14,14,15,.78)}
+  .enlace--guia .enlace__icono{opacity:1}
   .enlace--manual:hover,.enlace--manual:focus-visible{background:#8b52ff}
   .enlace__icono{flex:0 0 auto;width:1.375rem;height:1.375rem;opacity:.9}
   /* El `img` va junto al `svg` y NO se quita: el icono de ilhas es un
@@ -445,7 +506,13 @@ const enlaces = [
      es una dirección, y encima va sobre el morado sólido, donde este violeta
      sería ilegible. Medido sobre el fondo real del botón —rgb(27,27,28), que
      es rgba(248,250,255,.055) sobre --ilhas-dark—: 5.52:1, AA para 13px. */
-  .enlace:not(.enlace--manual) .enlace__sub{color:rgba(192,132,252,.9)}
+  /* ⚠️ LOS DOS `:not()` SON OBLIGATORIOS, y el segundo ya se olvidó una vez.
+     `:not()` suma la especificidad de su argumento, así que esta regla pesa
+     (0,3,0) y le gana a `.enlace--guia .enlace__sub` (0,2,0) pase lo que pase
+     con el orden: el subtítulo salía lavanda sobre cian, ilegible. La regla
+     real es «los destinos van en lavanda, MENOS en los botones sólidos» — y
+     ahora los sólidos son dos, el manual y la guía. */
+  .enlace:not(.enlace--manual):not(.enlace--guia) .enlace__sub{color:rgba(192,132,252,.9)}
   /* .95 y no el .84 de la referencia: sobre el morado de marca, .84 mide
      4.23:1 y falla AA para 13px — lo cachó Lighthouse el 3 sep. .95 mide 4.99. */
   .enlace--manual .enlace__sub{color:rgba(255,255,255,.95)}
@@ -488,7 +555,7 @@ const enlaces = [
     .figura__luz{width:420px;bottom:14%}
     .cuerpo{flex:0 1 26rem;align-items:flex-start;text-align:left;
       margin-top:0;padding:0}
-    h1{font-size:clamp(2.4rem,4vw,3.1rem)}
+    h1{font-size:clamp(2.4rem,4vw,2.9rem)}
     .bio__linea{font-size:1.0625rem;max-width:28ch}
     /* --- La dieta de escritorio -------------------------------------------
        Con los dos rótulos y la tarjeta, la columna pedía 881 px y no cabía en
@@ -501,13 +568,13 @@ const enlaces = [
        uno y se van 48 px sin quitar una sola palabra. */
     .cuerpo{flex:0 1 30rem}
 
-    .enlaces{margin-top:.55rem;max-width:none;gap:.4rem}
+    .enlaces{margin-top:.4rem;max-width:none;gap:.34rem}
     /* El alto de estas filas no lo manda `min-height` —el contenido ya pasa de
        58 px— lo manda el padding. 58 px es el objetivo táctil de un PULGAR; con
        ratón sobra, y .4rem devuelve 32 px repartidos en las cinco filas. */
-    .enlace{min-height:0;padding:.4rem 1.05rem}
+    .enlace{min-height:0;padding:.32rem 1.05rem}
     .bio__linea{margin-top:.4rem}
-    .pie{margin-top:.85rem}
+    .pie{margin-top:.7rem}
   }
 
   /* ==========================================================================
@@ -575,7 +642,7 @@ const enlaces = [
      seguía con el margen de móvil. Es el tercer bug de cascada de este
      proyecto. Si alguien mueve este bloque más arriba, se rompe en silencio. */
   @media (min-width:860px){
-    .bio__sep{margin:.6rem 0 .35rem;max-width:none}
+    .bio__sep{margin:.5rem 0 .3rem;max-width:none}
   }
 
   /* La referencia NO trae este bloque; la v1 de la página sí, y se queda. Es
