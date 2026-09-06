@@ -66,6 +66,7 @@ const enlaces = [
   {
     href: "/",
     grupo: "tec",
+    clase: "enlace--ilhas",
     label: "Tu primer proceso corriendo con agentes de IA.",
     sub: "ilhas.ai",
     icono: "ilhas",
@@ -143,7 +144,7 @@ const enlaces = [
             enlaces.filter((e) => e.grupo === "redes").map((e) => (
               <li>
                 <a
-                  class="enlace"
+                  class:list={["enlace", e.clase]}
                   href={e.href}
                   target={e.fuera ? "_blank" : undefined}
                   rel={e.fuera ? "noopener" : undefined}
@@ -183,8 +184,15 @@ const enlaces = [
                     {e.label}
                     <span class="enlace__sub">{e.sub}</span>
                   </span>
+                  {/* ⚠️ SIEMPRE ↗, INCLUSO EN LO INTERNO. En el resto del sitio
+                      ↗ significa «abre pestaña nueva» y → «se queda aquí», y la
+                      fila de Ilhas apunta a «/», que es interna y no abre nada.
+                      Va en diagonal por simetría con Kinzal — pedido de Jorge,
+                      5 sep 2026. Queda escrito para que nadie lo «corrija».
+                      `fuera` sigue mandando en `target` y `rel`, que es lo que
+                      de verdad cambia el comportamiento. */}
                   <span class="enlace__flecha" aria-hidden="true">
-                    {e.fuera ? "↗" : "→"}
+                    ↗
                   </span>
                 </a>
               </li>
@@ -198,7 +206,7 @@ const enlaces = [
             enlaces.filter((e) => e.grupo === "tec").map((e) => (
               <li>
                 <a
-                  class="enlace"
+                  class:list={["enlace", e.clase]}
                   href={e.href}
                   target={e.fuera ? "_blank" : undefined}
                   rel={e.fuera ? "noopener" : undefined}
@@ -239,7 +247,7 @@ const enlaces = [
                     <span class="enlace__sub">{e.sub}</span>
                   </span>
                   <span class="enlace__flecha" aria-hidden="true">
-                    {e.fuera ? "↗" : "→"}
+                    ↗
                   </span>
                 </a>
               </li>
@@ -275,39 +283,48 @@ const enlaces = [
           </li>
         </ul>
 
-        {/* El separador se llama .bio__sep y ya NO .kz__sep: rotula los DOS
-            grupos, no solo el de Kinzal, y el nombre sigue la familia que ya
-            existe en la página (.bio__linea). */}
+        {/* El separador rotula los DOS grupos, no sólo el de Kinzal, y por eso
+            se llama .bio__sep y sigue la familia que ya existe en la página
+            (.bio__linea). Hubo un .kz__sep; ya no existe. */}
         <p class="bio__sep">La parte tradicional</p>
 
-        {/* KINZAL — FUERA DE LA LISTA, a propósito. Mientras sea un <li> más
-            de .enlaces compite con el botón del manual —el único sólido de la
-            página— y pierde. Aquí es otra cosa: no es un enlace más de Jorge,
-            es la otra mitad de lo que hace.
+        {/* KINZAL, DE VUELTA A LA LISTA (Jorge, 5 sep 2026). Fue una tarjeta con
+            la foto de IU Life y llegó a pesar 227 px; el problema es que entre
+            esa tarjeta y la de Ilhas la página pasaba de 1,069 a 1,428 px en
+            teléfono y dejaba de verse de un vistazo.
 
-            Copiado tal cual de medios/kinzal-referencia.html, líneas 250-267.
+            La fila mide lo mismo que Instagram o TikTok. Lo que la separa de un
+            enlace más no es el tamaño: es la piel de aluminio, que es CSS puro y
+            no cuesta ni un byte de imagen. Ver `.enlace--kinzal` en el <style>.
 
-            La foto lleva alt="" a propósito: el nombre accesible del enlace
-            sale del texto de la tarjeta, y un alt descriptivo lo leería dos
-            veces. `loading="lazy"` porque queda debajo del pliegue en los dos
-            tamaños. */}
-        <section class="kz">
-              <a class="kz__card" href="https://kinzal.ai" target="_blank" rel="noopener">
-            <span class="kz__foto">
-              <img src="/assets/kinzal/kz-obra.webp" alt="" width="880" height="278" loading="lazy" decoding="async">
-              <span class="kz__etiq">IU Life · Zapopan</span>
-            </span>
-            <span class="kz__cuerpo">
-              <span class="kz__top">
-                <img src="/assets/kinzal/kinzal-mark.svg" alt="" width="26" height="28">
-                <span class="kz__word">KINZAL</span>
-                <span class="kz__ar" aria-hidden="true">kinzal.ai&nbsp;↗</span>
+            Va en su propio <ul> porque el rótulo «La parte tradicional» separa
+            los dos grupos, y `.bio__sep + .enlaces` le quita el margen de arriba. */}
+        <ul class="enlaces">
+          <li>
+            <a
+              class="enlace enlace--kinzal"
+              href="https://kinzal.ai"
+              target="_blank"
+              rel="noopener"
+            >
+              <span class="enlace__icono" aria-hidden="true">
+                <img
+                  src="/assets/kinzal/kinzal-mark.svg"
+                  alt=""
+                  width="22"
+                  height="24"
+                />
               </span>
-              <span class="kz__ttl">Del perfil extruido a la <b>fachada terminada</b>.</span>
-              <ul class="kz__pies"><li>Fachadas</li><li>Cancelería</li><li>Planta propia</li></ul>
-            </span>
-          </a>
-        </section>
+              <span class="enlace__txt">
+                Conoce Kinzal
+                <span class="enlace__sub">
+                  Fachadas y cancelería de aluminio · kinzal.ai
+                </span>
+              </span>
+              <span class="enlace__flecha" aria-hidden="true">↗</span>
+            </a>
+          </li>
+        </ul>
 
         {/* El renglón entero es enlace al home, logo incluido. Va como <a> y
             no como <p> con un <a> dentro para que el área de clic sea la fila
@@ -494,87 +511,71 @@ const enlaces = [
   }
 
   /* ==========================================================================
-     KINZAL — la otra mitad
+     LOS RÓTULOS Y LAS DOS PIELES DE MARCA
      ==========================================================================
+     Las tarjetas con foto y video daban jerarquía pero cargaban la vista y no
+     cabían de un vistazo: la página se iba a 1,428 px en teléfono. Vuelven las
+     filas, que es lo que ya funcionaba, pero cada negocio trae SU superficie.
+     Siguen midiendo lo mismo que Instagram o TikTok, así que la página no crece
+     — sólo dejan de parecer un enlace más. De ahí los 1,069 px.
+
      Los dos gradientes de marca terminan en violeta:
        Ilhas  #55E8FF → #7A3CFF → #A14BFF   (cian → violeta)
        Kinzal #1A2A6C → #2E5BE0 → #9B3FD4   (marino → azul → violeta)
      Por eso Kinzal puede traer su color aquí sin verse pegado: la página baja de
-     violeta cálido (Ilhas, arriba) a azul frío (Kinzal, abajo), y el violeta es
-     la bisagra. Si Kinzal usara el morado de Ilhas parecería un producto de
-     Ilhas — que es justo lo que NO es. */
+     violeta cálido (Ilhas) a azul frío (Kinzal), y el violeta es la bisagra. Si
+     Kinzal usara el morado de Ilhas parecería un producto de Ilhas — que es
+     justo lo que NO es. */
 
-  .kz{margin:0;width:100%;max-width:26rem;text-align:left}
   .bio__sep{display:flex;align-items:center;gap:.7rem;margin:1.15rem 0 .6rem;width:100%;max-width:26rem;
     font-size:.6875rem;letter-spacing:.14em;text-transform:uppercase;
     /* .48 y no .38: a 11px hace falta 4.5:1 contra #0E0E0F y .38 medía 3.45. */
     color:rgba(248,250,255,.48)}
   .bio__sep::after{content:"";flex:1;height:1px;
     background:linear-gradient(to right,rgba(248,250,255,.16),transparent)}
-  .kz__card{display:block;position:relative;overflow:hidden;text-decoration:none;
-    border-radius:16px;
-    transition:border-color .18s ease,transform .18s ease,background .18s ease}
-  .kz__card:focus-visible{outline:2px solid #7B3FD4;outline-offset:3px}
-  /* display:block obligatorio: son <span> dentro del <a>, y un span inline
-     ignora el padding en el flujo — la D de «Del» quedaba cortada contra el
-     canto de la tarjeta. */
-  .kz__cuerpo{display:block;padding:1rem 1.1rem}
-  .kz__top{display:flex;align-items:center;gap:.6rem;margin:0 0 .55rem}
-  .kz__top img{width:26px;height:28px;display:block;flex:0 0 auto}
-  .kz__word{font-family:var(--ilhas-font-display);font-weight:600;font-size:1.0625rem;
-    letter-spacing:.06em;color:#fff}
-  .kz__ar{margin-left:auto;font-size:.8125rem;color:rgba(192,132,252,.9);white-space:nowrap}
-  .kz__ttl{display:block;margin:0;font-size:1rem;font-weight:500;line-height:1.35;color:#fff}
-  .kz__ttl b{font-weight:500;color:#C084FC}
-  .kz__pies{margin:.65rem 0 0;padding:0;list-style:none;display:flex;flex-wrap:wrap;gap:.35rem}
-  .kz__pies li{font-size:.75rem;padding:.22rem .55rem;border-radius:99px;
-    color:rgba(226,232,255,.85);background:rgba(150,170,255,.12);
-    border:1px solid rgba(150,170,255,.22)}
 
-  /* D · la obra. La única que trae PRUEBA: una torre entregada, no un adjetivo.
-     Las otras tres dicen que Jorge hace fachadas; ésta la enseña. Es la
-     diferencia entre «10+ años» y una foto de una torre con la cancelería
-     puesta — y en un link in bio, donde nadie lee, la foto gana.
-     La foto va arriba en banda y NO de fondo: de fondo habría que oscurecerla
-     tanto para que el texto se lea que dejaría de verse la obra. */
-  .kz__card{background:#0D1630;border:1px solid rgba(120,140,220,.22)}
-  .kz__card:hover,.kz__card:focus-visible{border-color:rgba(150,170,255,.45);
-    transform:translateY(-1px)}
-  .kz__foto{position:relative;display:block;height:132px;overflow:hidden;
-    background:#0A1128}
-  .kz__foto img{width:100%;height:100%;object-fit:cover;object-position:50% 34%;
-    display:block;transition:transform .5s ease}
-  .kz__card:hover .kz__foto img{transform:scale(1.035)}
-  /* El desvanecido amarra la foto con la tarjeta: sin él es una foto pegada
-     arriba, con él es una tarjeta que tiene una foto. */
-  .kz__foto::after{content:"";position:absolute;inset:0;pointer-events:none;
-    background:linear-gradient(to top,#0D1630 3%,rgba(13,22,48,.9) 21%,
-      rgba(13,22,48,0) 48%)}
-  /* El canto de arriba, el gradiente del logo. */
-  .kz__foto::before{content:"";position:absolute;inset:0 0 auto 0;height:2px;z-index:2;
-    background:linear-gradient(to right,#1A2A6C,#2E5BE0 45%,#7B3FD4 78%,#9B3FD4)}
-  .kz__etiq{position:absolute;z-index:2;left:.85rem;bottom:.6rem;
-    font-size:.625rem;letter-spacing:.14em;text-transform:uppercase;
-    /* Sobre una foto el contraste no lo decide el CSS, lo decide el pixel. Por
-       eso el velo de arriba llega casi opaco a esta altura y la etiqueta va en
-       blanco: medido sobre la imagen final, no supuesto. */
-    color:rgba(255,255,255,.94);text-shadow:0 1px 8px rgba(0,0,0,.75)}
-  .kz__cuerpo{padding:.85rem 1.1rem 1rem}
+  /* --- Ilhas: lavado del degradado de marca -------------------------------- */
+  .enlace--ilhas{
+    background:linear-gradient(112deg,rgba(85,232,255,.07),rgba(122,60,255,.12) 55%,rgba(161,75,255,.09));
+    border-color:rgba(150,110,255,.42)}
+  .enlace--ilhas:hover,.enlace--ilhas:focus-visible{
+    background:linear-gradient(112deg,rgba(85,232,255,.18),rgba(122,60,255,.26) 55%,rgba(161,75,255,.2));
+    border-color:rgba(175,140,255,.72)}
+  .enlace--ilhas .enlace__icono{opacity:1}
 
+  /* --- Kinzal: la fila de aluminio ----------------------------------------- */
+  /* La superficie ES el mensaje: cepillado diagonal, un reflejo especular que
+     barre al pasar el cursor, y el canto del gradiente del logo en el filo
+     izquierdo — como el anodizado que se ve en el corte de un perfil. Tres
+     gradientes, ni una imagen, ni un byte de JS.
+
+     ⚠️ EL REFLEJO VA EN .05 Y NO SE SUBE. A .085 el fondo bajo el subtítulo se
+     aclara a rgb(76,73,142) y el lavanda #C084FC mide 3.99:1 — reprueba AA para
+     13 px. Con .05 y la base un punto más oscura mide 5.09:1. Si alguien lo
+     sube «para que se vea más metálico», tumba el contraste del subtítulo. */
+  .enlace--kinzal{position:relative;overflow:hidden;
+    border-color:rgba(140,160,235,.3);
+    background:
+      linear-gradient(104deg,transparent 30%,rgba(255,255,255,.05) 47%,rgba(255,255,255,.012) 54%,transparent 70%),
+      repeating-linear-gradient(104deg,rgba(255,255,255,.028) 0 1px,transparent 1px 3px),
+      linear-gradient(146deg,#141E45,#0C1430 52%,#171139);
+    background-size:220% 100%,auto,auto;background-position:0% 0,0 0,0 0;
+    transition:background-position .55s ease,border-color .18s ease,transform .16s ease}
+  .enlace--kinzal::before{content:"";position:absolute;inset:0 auto 0 0;width:3px;
+    background:linear-gradient(to bottom,#2E5BE0,#7B3FD4 55%,#9B3FD4)}
+  .enlace--kinzal:hover,.enlace--kinzal:focus-visible{
+    background-position:100% 0,0 0,0 0;border-color:rgba(175,190,255,.55)}
+  .enlace--kinzal .enlace__icono{opacity:1;margin-left:.2rem}
+  .enlace--kinzal .enlace__sub{color:rgba(214,224,255,.72)}
 
   /* ⚠️ ESTE SEGUNDO @media EXISTE POR ORDEN DE CASCADA, NO POR CAPRICHO.
-     El @media de escritorio de arriba va ANTES que este bloque de Kinzal en el
-     archivo. Con la misma especificidad (0,1,0) gana la última regla escrita, o
-     sea la base — y cuatro overrides de escritorio simplemente no se aplicaban:
-     se midió y `.bio__sep` seguía con el margen de móvil y la foto con 112 px.
-     Es el tercer bug de cascada de este proyecto. Si algún día alguien mueve
-     este bloque más arriba en el <style>, esto vuelve a romperse en silencio. */
+     El @media de escritorio de arriba va ANTES que este bloque en el archivo.
+     Con la misma especificidad (0,1,0) gana la última regla escrita, o sea la
+     base — y el override de `.bio__sep` simplemente no se aplicaba: se midió y
+     seguía con el margen de móvil. Es el tercer bug de cascada de este
+     proyecto. Si alguien mueve este bloque más arriba, se rompe en silencio. */
   @media (min-width:860px){
-    .bio__sep{margin:.75rem 0 .4rem;max-width:none}
-    .kz__foto{height:108px;}
-    .kz__foto img{object-position:50% 26%}
-    .kz__cuerpo{padding:.7rem 1.1rem .75rem}
-    .kz__pies{margin-top:.5rem}
+    .bio__sep{margin:.6rem 0 .35rem;max-width:none}
   }
 
   /* La referencia NO trae este bloque; la v1 de la página sí, y se queda. Es

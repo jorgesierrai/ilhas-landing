@@ -38,7 +38,7 @@ Aparte del hub viven `/terminos`, `/privacidad` y `/cookies`. **No cuentan como 
 
 ## Estado del repositorio
 
-*Actualizado: 5 sep 2026 (Kinzal v2 en `/jorgesierra`).*
+*Actualizado: 5 sep 2026 (las filas con piel de marca en `/jorgesierra`, v5).*
 
 > **Este bloque se actualiza en cada iteración, no al final.** Es lo primero que
 > lee una sesión nueva; si miente, la sesión construye sobre una foto vieja. Lo
@@ -135,17 +135,53 @@ Aparte del hub viven `/terminos`, `/privacidad` y `/cookies`. **No cuentan como 
   - **La banda de autoridad salió del home.** El componente
     `BandaAutoridad.astro` SIGUE en el repo — solo se quitó su uso. Los tres
     hitos que resumía viven completos en `/nosotros` § En público desde la 18.
-  - **El bloque Kinzal de `/jorgesierra` (v2, 5 sep 2026).** Los cinco enlaces
-    ya no salen de un solo `.map()`: cada entrada del array lleva
-    `grupo: "redes" | "tec"` y hay **dos `<ul class="enlaces">`** que filtran por
-    él. **No se parte con `.slice(0,3)`** — el índice se rompe callado el día que
-    alguien reordene un enlace. Los rótulos `.bio__sep` («La parte tecnológica»,
-    «La parte tradicional») son el mismo componente de separador para los dos
-    grupos; el viejo `.kz__sep` ya no existe. La foto de la tarjeta es
-    `kz-obra.webp` (IU Life, Zapopan), 880×278.
+  - **`/jorgesierra` son SEIS FILAS, no tarjetas (v5, 5 sep 2026).** El array
+    lleva `grupo: "redes" | "tec"` y hay **tres `<ul class="enlaces">`** —redes,
+    tecnológica, tradicional— separados por los rótulos `.bio__sep`. **No se
+    parte con `.slice(0,3)`**: el índice se rompe callado el día que alguien
+    reordene un enlace.
+
+    **Se probaron tarjetas con foto y video y NO se quedaron.** Kinzal llegó a
+    ser una tarjeta de 227 px con la foto de IU Life, e Ilhas otra de 260 px con
+    un video del agente trabajando. Daban jerarquía, pero la página pasaba de
+    **1,069 a 1,428 px** en teléfono y dejaba de verse de un vistazo. La versión
+    que quedó da la jerarquía por **superficie, no por tamaño**: `.enlace--ilhas`
+    lleva un lavado del degradado de marca y `.enlace--kinzal` una piel de
+    aluminio —cepillado diagonal, reflejo especular que barre al hover y el canto
+    del gradiente del logo a la izquierda—, las dos con tres gradientes CSS, cero
+    imágenes y cero JS. Las seis filas miden lo mismo: **58 px en escritorio**.
+    El trabajo de las tarjetas vive en la rama **`respaldo-tarjetas`** por si
+    alguna vez se quiere recuperar.
+
+    ⚠️ **El reflejo del aluminio va en `.05` y no se sube.** A `.085` el fondo
+    bajo el subtítulo se aclara y el lavanda `#C084FC` cae a 3.99:1 — reprueba AA
+    para 13 px. Con `.05` mide **5.05:1** en reposo y **5.05:1** con el cursor
+    encima (medido sobre el píxel más claro de la caja del texto, no sobre la
+    fila: medir la fila entera muestrea la barra decorativa del canto y miente).
+
+    ⚠️ **Todas las flechas van en ↗, incluida la de Ilhas, que apunta a `/`.**
+    Rompe la convención del sitio —↗ = pestaña nueva, → = interno— y es decisión
+    de Jorge por simetría con Kinzal. `fuera` sigue mandando en `target`/`rel`.
+
+    ⚠️ **`kz-obra.webp` se borró** al quitar la tarjeta: un archivo en `public/`
+    que nadie referencia se publica igual. **`kinzal-mark.svg` SÍ se sigue
+    usando** — es el ícono de la fila de Kinzal.
+
     ⚠️ **El `<style>` de esta página es scopeado y NUNCA `is:global`** — la
     advertencia larga vive arriba del `<style>` en el archivo. Y el titular del
     home lo lee `src/pages/index.astro`, no esta página.
+
+  - ⚠️ **`home-hero-loop.mp4` LLEVA LA MARCA DE KINZAL DENTRO, y no sólo el
+    logotipo.** Si algún día se reutiliza fuera del hero, hay que recortarlo en
+    el ENCODE (taparlo con `object-position` deja la marca dentro del archivo).
+    Medido sobre el original de 1280×604: la barra `▣ KINZAL` en y≈15–35, el
+    logo y el folio en y≈55–110, «Innovando en Aluminio» en y≈118, el **bloque
+    de domicilio fiscal con `Tel: +52 33 1360 7178` y `Email: jorge@kinzal.ai`
+    en y≈208–234**, y «Descargar brochure Kinzal» en y≈583–595. La banda limpia
+    es **y=240…556**. El bloque de contacto es el que casi se cuela: es letra
+    muy chica y **el OCR no la ve** — la comprobación buena es extraer los
+    fotogramas a 4 fps y mirarlos. Y ojo: **el documento del video hace scroll**,
+    así que revisar un solo fotograma no prueba nada.
   - **`/jorgesierra/ia-aplicada-masterclass` — la presentación de la masterclass.**
     Vive en `public/`, lleva `noindex`, no va al sitemap y **no se enlaza desde
     ninguna página**: se llega por la URL, que es la que Jorge proyecta. Comparte
