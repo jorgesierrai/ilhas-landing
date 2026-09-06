@@ -38,7 +38,7 @@ Aparte del hub viven `/terminos`, `/privacidad` y `/cookies`. **No cuentan como 
 
 ## Estado del repositorio
 
-*Actualizado: 5 sep 2026 (las filas con piel de marca en `/jorgesierra`, v5).*
+*Actualizado: 6 sep 2026 (medición · paso A: cabeceras, dominio canónico y sitemap).*
 
 > **Este bloque se actualiza en cada iteración, no al final.** Es lo primero que
 > lee una sesión nueva; si miente, la sesión construye sobre una foto vieja. Lo
@@ -61,20 +61,33 @@ Aparte del hub viven `/terminos`, `/privacidad` y `/cookies`. **No cuentan como 
 > mitad `img` de `.enlace__icono svg, .enlace__icono img`, y la página sí las
 > necesita. Reconstruir un `<style>` desde la referencia las borra en silencio.
 
-- Rama de trabajo: **`kinzal-en-bio`**, que sale de `main`.
+- Rama de trabajo: **`medicion`**. Sale de `main` **después** de que
+  `kinzal-en-bio` entre — las dos tocan `CLAUDE.md` y `src/pages/jorgesierra.astro`.
 - **`main` ya trae las iteraciones 10 a 19** y el link in bio: el **#18 se
-  mergeó** y el **#20** metió la presentación de la masterclass. `main` está en
-  `81c3824`, y de ahí sale esta rama.
-- **Dos PRs abiertos, y los dos necesitan una decisión antes de entrar:**
-  - **#17 · `cabeceras-vercel`** — las cabeceras de seguridad. **`public/_headers`
-    nunca aplicó: es formato de Netlify y el sitio está en Vercel**, así que hoy
-    producción corre sin CSP, sin `X-Frame-Options` y sin `Referrer-Policy`. Van
-    en `vercel.json`. Es lo más urgente de la lista.
-    ⚠️ **Su `vercel.json` trae SÓLO `headers` y el de `main` trae SÓLO
-    `redirects`.** Mergearlo tal cual **mata el redirect `/jorge` → `/jorgesierra`**.
-    Hay que juntar las dos claves en un archivo antes de entrar.
-  - **#19 · `link-in-bio`** — **quedó obsoleto.** Su contenido ya está en `main`,
-    y esta rama lo rehace entero. Se puede cerrar sin mergear.
+  mergeó** y el **#20** metió la presentación de la masterclass.
+- **Los dos PRs viejos se cierran, ninguno se mergea:**
+  - **#17 · `cabeceras-vercel`** — **cerrado sin mergear el 6 sep 2026, y su
+    contenido está reescrito en `main`.** Su `vercel.json` traía sólo `headers`
+    y el de `main` sólo `redirects`: mergearlo mataba el redirect
+    `/jorge` → `/jorgesierra`. Se escribió un solo archivo con las dos claves.
+  - **#19 · `link-in-bio`** — **quedó obsoleto.** Su contenido ya está en `main`.
+    Se puede cerrar sin mergear.
+
+### ⚠️ Las cabeceras de seguridad: lo que se aprendió
+
+`public/_headers` **nunca aplicó**. Es formato Netlify / Cloudflare Pages y el
+sitio corre en **Vercel**, que lo ignora sin decir nada. Durante meses el
+repositorio creía tener CSP y producción respondía **sin una sola cabecera de
+seguridad** — medido con `curl -I`. El archivo se borró; las cabeceras viven en
+`vercel.json`. **Una cabecera que no se verificó contra producción no existe.**
+
+**El dominio canónico es `www.ilhas.ai`** (Jorge, 6 sep 2026); el apex redirige.
+`site` en `astro.config.mjs` decía el apex, así que todos los `canonical`
+apuntaban a una URL que redirige. ⚠️ **`site` no cubre dos lugares** que llevan
+la URL escrita a mano: `src/pages/jorgesierra.astro` (no usa `Base.astro`) y
+`public/jorgesierra/ia-aplicada-masterclass/index.html` (no pasa por Astro, y
+lleva también `og:image`). La prueba tras cada build:
+`grep -rn "https://ilhas\.ai" dist/ | grep -v eventos.ilhas.ai` debe salir vacío.
 - **El sitio nuevo en Astro está completo**: las cinco rutas del hub más las tres
   legales, con la auditoría visual (`AUDITORIA-VISUAL.md`) ya aplicada.
 - **Iteraciones cerradas:** 1 (ranuras) · 2 (activar material) · 3 (hero del home)
@@ -83,8 +96,9 @@ Aparte del hub viven `/terminos`, `/privacidad` y `/cookies`. **No cuentan como 
   (cirugía de copy) · 10 (productos) · 11 (capas y el experimento como figura) ·
   12 (`/finanzas`) · 13 (redes) · 14 (distinción del papá) · 15 (credenciales del
   hijo) · 16 (el mapa lleno) · 17 (el pie y las legales) · 18 (el aire de
-  arriba y la § En público) · 19 (el hero corriendo). Los briefs viven en
-  `prompts/iteracion-*.md`.
+  arriba y la § En público) · 19 (el hero corriendo) · **22 paso A (cabeceras en
+  `vercel.json`, dominio canónico `www` y `sitemap.xml`)**. Los briefs viven en
+  `prompts/iteracion-*.md`; el de medición es `prompts/PROPUESTA-medicion.md`.
 - **Piezas nuevas que conviene conocer antes de tocar nada:**
   - `src/data/mapa.ts` + `src/components/MapaEmpresa.astro` — las trece áreas en
     tres capas, con **38 renglones de lo que se construye en cada una**. Un
@@ -269,8 +283,11 @@ Aparte del hub viven `/terminos`, `/privacidad` y `/cookies`. **No cuentan como 
 | **Subtítulo del hero** | El de hoy —«Lo que hoy le toma horas a alguien de tu equipo…»— es una **propuesta mía, no copy aprobado**. El titular sí es de Jorge. Está puesto para que la página no quede coja; falta su visto bueno |
 | **Revisión legal** | **Un abogado no ha visto `/terminos`, `/privacidad` ni `/cookies`.** Son borradores sólidos y honestos, escritos para México, pero sin revisar. Es un trámite de una sesión y hoy es un hueco abierto |
 | **El domicilio fiscal** | Jorge lo pasó como *Zapopan* y el **C.P. 44690 es de Guadalajara**. Los documentos van con Guadalajara; **falta que lo confirme contra su constancia**, porque de ahí depende la cláusula de jurisdicción |
-| **`sitemap.xml`** | Decidido que va, pero **hasta el final**: se genera cuando las rutas y el contenido estén cerrados, como archivo estático en `public/` (sin instalar la integración). **Las tres legales NO entran**: llevan `noindex` |
-| **Hosting y DNS · plataforma del programa** | Ver `docs/00-INDEX.md` § "Lo que NO está resuelto" |
+| **El redirect del apex es 307, no 308** | `ilhas.ai` → `www.ilhas.ai` responde **307 (temporal)**. Para canonicalizar un dominio debe ser **308**. Se cambia en el panel de Vercel, en los dominios del proyecto — **no en `vercel.json`**, porque el redirect de dominio corre antes del enrutado |
+| **GA4 · el paso B de la medición** | Falta el `G-XXXXXXXXXX` de la propiedad (cuenta `jorge@ilhas.ai`). El sitio lo va a cargar desde **un archivo propio** `/assets/medicion.js`, no inline: así se mantiene la regla de cero `<script>` inline y la CSP sólo abre `googletagmanager.com` y `*.google-analytics.com`. **Cero píxeles de anuncios en el sitio** (Jorge, 6 sep 2026): el tráfico es orgánico de IG y TikTok, y lo de campañas se mide en GHL |
+| **`/privacidad` manda al INAI, que ya no existe** | La página remite al **INAI** y enlaza `inai.org.mx`. La **nueva LFPDPPP entró en vigor el 21 mar 2025** y las funciones del INAI pasaron a la **Secretaría Anticorrupción y Buen Gobierno**. Detectado el 6 sep 2026. Se corrige en el mismo PR que actualiza las legales por GA4 — y es una razón más para la revisión del abogado que sigue pendiente |
+| **Las legales, cuando entre GA4** | `/privacidad` dice que el sitio no recoge datos y `/cookies` dice que no hay cookies. **Con GA4 las dos dejan de ser ciertas** y se actualizan en el mismo PR que prende la medición, no después |
+| **DNS · plataforma del programa** | El hosting ya está resuelto (**Vercel**, 6 sep 2026). Sigue abierto **quién controla el DNS de ilhas.ai** y la plataforma de entrega del programa. Ver `docs/00-INDEX.md` § "Lo que NO está resuelto" |
 
 ## Convenciones de código
 

@@ -37,9 +37,8 @@ src/
   styles/base.css
 public/
   assets/logo/
-  _headers                    # cabeceras de seguridad
-  robots.txt
-  security.txt
+  robots.txt                  # con la línea Sitemap:
+  sitemap.xml                 # estático, a mano (ver abajo)
 ```
 
 ### Tipografías
@@ -52,22 +51,108 @@ Solo los pesos que se usan. Nada de cargar la familia completa.
 
 ## Seguridad
 
-### Cabeceras (archivo `public/_headers`, para Netlify o Cloudflare Pages)
+### Cabeceras (archivo `vercel.json`)
 
-```
-/*
-  Content-Security-Policy: default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self'; form-action 'self' https://eventos.ilhas.ai; frame-ancestors 'none'; base-uri 'self'; object-src 'none'; upgrade-insecure-requests
-  Strict-Transport-Security: max-age=63072000; includeSubDomains; preload
-  X-Content-Type-Options: nosniff
-  Referrer-Policy: strict-origin-when-cross-origin
-  Permissions-Policy: camera=(), microphone=(), geolocation=(), interest-cohort=()
-  X-Frame-Options: DENY
-  Cross-Origin-Opener-Policy: same-origin
+> ### ⚠️ `public/_headers` NUNCA aplicó. Se borró el 6 sep 2026.
+>
+> Ese archivo es formato **Netlify / Cloudflare Pages** y **el sitio corre en
+> Vercel**, que lo ignora en silencio: no falla el build, no avisa nadie, el
+> archivo se publica como un archivo más. Durante meses el repositorio decía
+> tener una CSP y producción respondía **sin ninguna cabecera de seguridad**.
+> Medido con `curl -I https://www.ilhas.ai/`: sólo volvía el
+> `Strict-Transport-Security` que Vercel pone por su cuenta.
+>
+> **La lección, que vale más que el arreglo:** una cabecera que no se verifica
+> contra producción es una cabecera que no existe. `curl -I` está en el
+> checklist de abajo por esto.
+
+Las cabeceras van en **`vercel.json`**, en la clave `headers`, junto a la clave
+`redirects`. **Las dos claves viven en el mismo archivo** — si alguna vez llegan
+por ramas distintas, hay que unirlas a mano antes de mergear o una borra a la
+otra. (Pasó: el PR #17 traía sólo `headers` y `main` sólo `redirects`. Se cerró
+sin mergear y el archivo se escribió de una pieza.)
+
+```json
+{
+  "headers": [
+    { "source": "/(.*)", "headers": [
+      { "key": "Content-Security-Policy", "value": "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; form-action 'self' https://eventos.ilhas.ai; frame-ancestors 'none'; base-uri 'self'; object-src 'none'; upgrade-insecure-requests" },
+      { "key": "Strict-Transport-Security", "value": "max-age=63072000; includeSubDomains" },
+      { "key": "X-Content-Type-Options", "value": "nosniff" },
+      { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" },
+      { "key": "Permissions-Policy", "value": "camera=(), microphone=(), geolocation=(), interest-cohort=()" },
+      { "key": "X-Frame-Options", "value": "DENY" },
+      { "key": "Cross-Origin-Opener-Policy", "value": "same-origin" }
+    ]}
+  ]
+}
 ```
 
-Si el hosting es otro (Vercel, S3+CloudFront), traduce las mismas cabeceras a su formato. **Las cabeceras no son opcionales:** son lo que hace que "estático" también signifique "seguro".
+**`style-src` lleva `'unsafe-inline'` y no es descuido:** es lo único que
+mantiene viva la presentación de la masterclass (494 atributos `style=`). Ver la
+sección de esa página más abajo, con la medición.
+
+**`preload` se quitó del HSTS.** El PR original lo traía. Enviar la palabra no
+hace nada por sí sola —hay que darse de alta en `hstspreload.org`— pero es un
+camino de una sola dirección: una vez en la lista, **todo** subdominio de
+`ilhas.ai` queda obligado a HTTPS en navegadores que ya la traen embebida, y
+salirse tarda versiones. `includeSubDomains` ya da la protección real. Cuando
+`media.ilhas.ai` exista y esté estable, se puede reconsiderar.
+
+**Las cabeceras no son opcionales:** son lo que hace que "estático" también
+signifique "seguro".
 
 > ⚠️ La CSP de arriba es estricta a propósito: **`script-src 'self'` sin `unsafe-inline`**. Eso significa **cero `<script>` inline y cero `onclick=` en el HTML**. Si algo necesita JS, va en un archivo `.js` propio. Si más adelante entra un pixel de Meta o Google Analytics, hay que añadir su dominio explícitamente y documentar por qué — no aflojar la política entera.
+
+### El dominio canónico es `www.ilhas.ai`
+
+Decisión de Jorge, 6 sep 2026. **El apex `ilhas.ai` redirige a `www`**, no al
+revés: es lo que ya servía Vercel y moverlo arriesgaba el certificado sin ganar
+nada.
+
+Lo que se corrigió ese día: `astro.config.mjs` decía `site: 'https://ilhas.ai'`,
+así que **cada `<link rel="canonical">` del sitio apuntaba a una URL que
+redirige** (307 al `www`). Un sitio que se declara canónico en un host y se
+sirve en otro parte su señal en dos.
+
+⚠️ **`site` no cubre todo el sitio.** Hay dos lugares con la URL escrita a mano,
+y una sesión que sólo cambie el config los deja atrás:
+
+- `src/pages/jorgesierra.astro` — no usa `Base.astro`, trae su propio `<head>`.
+- `public/jorgesierra/ia-aplicada-masterclass/index.html` — vive en `public/`,
+  no pasa por Astro. Lleva `canonical`, `og:url` **y `og:image`**.
+
+La comprobación, después de cada build:
+
+```bash
+grep -rn "https://ilhas\.ai" dist/ | grep -v "eventos.ilhas.ai"   # debe salir vacío
+```
+
+⚠️ **Sin verificar: el redirect del apex es 307 (temporal).** Para una
+canonicalización de dominio debería ser **308**. Se cambia en el panel de Vercel,
+en la configuración de dominios del proyecto — no en `vercel.json`, porque el
+redirect de dominio se resuelve antes del enrutado y una regla del archivo nunca
+llegaría a correr.
+
+### El sitemap
+
+**Archivo estático en `public/sitemap.xml`**, escrito a mano. No se instala
+`@astrojs/sitemap`: seis URLs no justifican una dependencia.
+
+Van las cinco del hub más `/jorgesierra`. **No van** las tres legales ni la
+presentación de la masterclass: las cuatro llevan `noindex`, y un sitemap que
+proponga a Google lo que la etiqueta le prohíbe es el sitio contradiciéndose.
+
+**Sin `<lastmod>`, `<changefreq>` ni `<priority>`.** Google ignora los dos
+últimos, y un `lastmod` escrito a mano se vuelve mentira en la primera
+iteración — una fecha falsa es peor que ninguna.
+
+`robots.txt` lo anuncia con `Sitemap: https://www.ilhas.ai/sitemap.xml`.
+
+⚠️ **Es un archivo a mano y por eso puede pudrirse:** el día que nazca una
+página, nadie va a acordarse. El guardián va en `scripts/eventos-check.mjs`
+(ver la medición): compara las páginas de `dist/` sin `noindex` contra los
+`<loc>` del sitemap y grita si sobran o faltan.
 
 ### El video y la CSP
 

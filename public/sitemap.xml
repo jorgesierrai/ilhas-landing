@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Archivo estático, a propósito (CLAUDE.md): no se instala @astrojs/sitemap.
+
+  Sólo van las páginas que se quieren posicionar. NO entran:
+    · /terminos, /privacidad, /cookies  → llevan noindex
+    · /jorgesierra/ia-aplicada-masterclass → lleva noindex y no se enlaza
+
+  Sin <lastmod>, <changefreq> ni <priority>: Google ignora los dos últimos, y
+  un lastmod escrito a mano se vuelve mentira en la primera iteración.
+
+  El host es www.ilhas.ai porque es el que sirve Vercel; el apex redirige.
+  Si cambia, cambia también `site` en astro.config.mjs — o el sitemap y los
+  canonical dejan de decir lo mismo.
+-->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>https://www.ilhas.ai/</loc></url>
+  <url><loc>https://www.ilhas.ai/metodo</loc></url>
+  <url><loc>https://www.ilhas.ai/finanzas</loc></url>
+  <url><loc>https://www.ilhas.ai/soluciones</loc></url>
+  <url><loc>https://www.ilhas.ai/nosotros</loc></url>
+  <url><loc>https://www.ilhas.ai/jorgesierra</loc></url>
+</urlset>
