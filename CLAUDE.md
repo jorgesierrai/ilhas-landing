@@ -62,13 +62,19 @@ Aparte del hub viven `/terminos`, `/privacidad` y `/cookies`. **No cuentan como 
 > necesita. Reconstruir un `<style>` desde la referencia las borra en silencio.
 
 - Rama de trabajo: **`kinzal-en-bio`**, que sale de `main`.
-- **Dos PRs abiertos sin mergear.** Hasta que entren, `main` no tiene nada de las
-  iteraciones 10 a 17:
+- **`main` ya trae las iteraciones 10 a 19** y el link in bio: el **#18 se
+  mergeó** y el **#20** metió la presentación de la masterclass. `main` está en
+  `81c3824`, y de ahí sale esta rama.
+- **Dos PRs abiertos, y los dos necesitan una decisión antes de entrar:**
   - **#17 · `cabeceras-vercel`** — las cabeceras de seguridad. **`public/_headers`
     nunca aplicó: es formato de Netlify y el sitio está en Vercel**, así que hoy
     producción corre sin CSP, sin `X-Frame-Options` y sin `Referrer-Policy`. Van
     en `vercel.json`. Es lo más urgente de la lista.
-  - **#18 · `credenciales-hijo`** — iteraciones 10 a 16.
+    ⚠️ **Su `vercel.json` trae SÓLO `headers` y el de `main` trae SÓLO
+    `redirects`.** Mergearlo tal cual **mata el redirect `/jorge` → `/jorgesierra`**.
+    Hay que juntar las dos claves en un archivo antes de entrar.
+  - **#19 · `link-in-bio`** — **quedó obsoleto.** Su contenido ya está en `main`,
+    y esta rama lo rehace entero. Se puede cerrar sin mergear.
 - **El sitio nuevo en Astro está completo**: las cinco rutas del hub más las tres
   legales, con la auditoría visual (`AUDITORIA-VISUAL.md`) ya aplicada.
 - **Iteraciones cerradas:** 1 (ranuras) · 2 (activar material) · 3 (hero del home)
