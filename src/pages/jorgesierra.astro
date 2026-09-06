@@ -31,9 +31,15 @@ const LINEA = "Enseño a convertir el caos en dinero.";
  * fuente de verdad es src/data/personas.ts. Está reportado para que corrija la
  * slide; aquí va el correcto.
  */
+/**
+ * `grupo` parte la lista en dos, con un rótulo en medio. Se filtra por este
+ * campo y NO con `.slice(0, 3)`: un índice se rompe callado el día que alguien
+ * reordene un enlace, y el rótulo quedaría en medio de la nada.
+ */
 const enlaces = [
   {
     href: "https://www.instagram.com/soyjorgesierra",
+    grupo: "redes",
     label: "Instagram",
     sub: "@soyjorgesierra",
     icono: "instagram",
@@ -41,13 +47,26 @@ const enlaces = [
   },
   {
     href: "https://www.tiktok.com/@jorgesierrai",
+    grupo: "redes",
     label: "TikTok",
     sub: "@jorgesierrai",
     icono: "tiktok",
     fuera: true,
   },
   {
+    // ⚠️ SIN el `?si=…` que traía el enlace que pasó Jorge. Ese parámetro es el
+    // token de seguimiento que YouTube pega al compartir: identifica de dónde
+    // salió el clic y no pinta nada en una página propia.
+    href: "https://www.youtube.com/@soyjorgesierra",
+    grupo: "redes",
+    label: "YouTube",
+    sub: "@soyjorgesierra",
+    icono: "youtube",
+    fuera: true,
+  },
+  {
     href: "https://www.jorgesierra.io/",
+    grupo: "redes",
     label: "Mi portafolio",
     sub: "jorgesierra.io",
     icono: "sitio",
@@ -57,6 +76,8 @@ const enlaces = [
   // con dos ilhas.ai abiertas.
   {
     href: "/",
+    grupo: "tec",
+    clase: "enlace--ilhas",
     label: "Tu primer proceso corriendo con agentes de IA.",
     sub: "ilhas.ai",
     icono: "ilhas",
@@ -74,7 +95,7 @@ const enlaces = [
       name="description"
       content="Jorge Sierra — fundador de Ilhas y Kinzal. Instagram, TikTok, portafolio y el manual de IA agéntica, gratis."
     />
-    <link rel="canonical" href="https://ilhas.ai/jorgesierra" />
+    <link rel="canonical" href="https://www.ilhas.ai/jorgesierra" />
     <meta name="theme-color" content="#0E0E0F" />
 
     <meta property="og:type" content="profile" />
@@ -85,7 +106,7 @@ const enlaces = [
       property="og:description"
       content="Instagram, TikTok, portafolio y el manual de IA agéntica, gratis."
     />
-    <meta property="og:url" content="https://ilhas.ai/jorgesierra" />
+    <meta property="og:url" content="https://www.ilhas.ai/jorgesierra" />
     <meta name="twitter:card" content="summary" />
 
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
@@ -127,12 +148,14 @@ const enlaces = [
         <h1>{TITULO}</h1>
         <p class="bio__linea">{LINEA}</p>
 
+        {/* LA LISTA VA PARTIDA EN DOS, con un rótulo en medio. Se filtra por
+            el campo `grupo`, no por índice. */}
         <ul class="enlaces">
           {
-            enlaces.map((e) => (
+            enlaces.filter((e) => e.grupo === "redes").map((e) => (
               <li>
                 <a
-                  class="enlace"
+                  class:list={["enlace", e.clase]}
                   href={e.href}
                   target={e.fuera ? "_blank" : undefined}
                   rel={e.fuera ? "noopener" : undefined}
@@ -146,6 +169,78 @@ const enlaces = [
                     {e.icono === "tiktok" && (
                       <svg viewBox="0 0 24 24">
                         <path d="M16.6 5.82A4.28 4.28 0 0115.54 3h-3.09v12.4a2.59 2.59 0 01-2.59 2.5 2.59 2.59 0 01-2.59-2.59 2.59 2.59 0 013.39-2.47V9.7a5.68 5.68 0 00-.8-.06A5.68 5.68 0 003.5 15.3 5.68 5.68 0 009.18 21a5.68 5.68 0 005.68-5.68V9.01a7.35 7.35 0 004.3 1.38V7.3a4.28 4.28 0 01-2.56-1.48z" />
+                      </svg>
+                    )}
+                    {e.icono === "youtube" && (
+                      <svg viewBox="0 0 24 24">
+                        <path d="M23.5 6.9a3 3 0 00-2.1-2.1C19.5 4.3 12 4.3 12 4.3s-7.5 0-9.4.5A3 3 0 00.5 6.9C0 8.8 0 12 0 12s0 3.2.5 5.1a3 3 0 002.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 002.1-2.1c.5-1.9.5-5.1.5-5.1s0-3.2-.5-5.1zM9.6 15.6V8.4l6.2 3.6-6.2 3.6z" />
+                      </svg>
+                    )}
+                    {e.icono === "sitio" && (
+                      <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="1.7"
+                      >
+                        <circle cx="12" cy="12" r="9" />
+                        <path d="M3 12h18M12 3a15 15 0 010 18 15 15 0 010-18" />
+                      </svg>
+                    )}
+                    {e.icono === "ilhas" && (
+                      <img
+                        src="/assets/logo/logo-mark.svg"
+                        alt=""
+                        width="22"
+                        height="22"
+                      />
+                    )}
+                  </span>
+                  <span class="enlace__txt">
+                    {e.label}
+                    <span class="enlace__sub">{e.sub}</span>
+                  </span>
+                  {/* ⚠️ SIEMPRE ↗, INCLUSO EN LO INTERNO. En el resto del sitio
+                      ↗ significa «abre pestaña nueva» y → «se queda aquí», y la
+                      fila de Ilhas apunta a «/», que es interna y no abre nada.
+                      Va en diagonal por simetría con Kinzal — pedido de Jorge,
+                      5 sep 2026. Queda escrito para que nadie lo «corrija».
+                      `fuera` sigue mandando en `target` y `rel`, que es lo que
+                      de verdad cambia el comportamiento. */}
+                  <span class="enlace__flecha" aria-hidden="true">
+                    ↗
+                  </span>
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+
+        <p class="bio__sep">La parte tecnológica</p>
+        <ul class="enlaces">
+          {
+            enlaces.filter((e) => e.grupo === "tec").map((e) => (
+              <li>
+                <a
+                  class:list={["enlace", e.clase]}
+                  href={e.href}
+                  target={e.fuera ? "_blank" : undefined}
+                  rel={e.fuera ? "noopener" : undefined}
+                >
+                  <span class="enlace__icono" aria-hidden="true">
+                    {e.icono === "instagram" && (
+                      <svg viewBox="0 0 24 24">
+                        <path d="M12 2.16c3.2 0 3.58.01 4.85.07 1.17.05 1.8.25 2.23.41.56.22.96.48 1.38.9.42.42.68.82.9 1.38.16.42.36 1.06.41 2.23.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.25 1.8-.41 2.23-.22.56-.48.96-.9 1.38-.42.42-.82.68-1.38.9-.42.16-1.06.36-2.23.41-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.8-.25-2.23-.41-.56-.22-.96-.48-1.38-.9-.42-.42-.68-.82-.9-1.38-.16-.42-.36-1.06-.41-2.23C2.17 15.58 2.16 15.2 2.16 12s.01-3.58.07-4.85c.05-1.17.25-1.8.41-2.23.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.42-.16 1.06-.36 2.23-.41C8.42 2.17 8.8 2.16 12 2.16zm0 5.68a4.16 4.16 0 100 8.32 4.16 4.16 0 000-8.32zm0 6.86a2.7 2.7 0 110-5.4 2.7 2.7 0 010 5.4zm5.3-7.02a.97.97 0 11-1.94 0 .97.97 0 011.94 0z" />
+                      </svg>
+                    )}
+                    {e.icono === "tiktok" && (
+                      <svg viewBox="0 0 24 24">
+                        <path d="M16.6 5.82A4.28 4.28 0 0115.54 3h-3.09v12.4a2.59 2.59 0 01-2.59 2.5 2.59 2.59 0 01-2.59-2.59 2.59 2.59 0 013.39-2.47V9.7a5.68 5.68 0 00-.8-.06A5.68 5.68 0 003.5 15.3 5.68 5.68 0 009.18 21a5.68 5.68 0 005.68-5.68V9.01a7.35 7.35 0 004.3 1.38V7.3a4.28 4.28 0 01-2.56-1.48z" />
+                      </svg>
+                    )}
+                    {e.icono === "youtube" && (
+                      <svg viewBox="0 0 24 24">
+                        <path d="M23.5 6.9a3 3 0 00-2.1-2.1C19.5 4.3 12 4.3 12 4.3s-7.5 0-9.4.5A3 3 0 00.5 6.9C0 8.8 0 12 0 12s0 3.2.5 5.1a3 3 0 002.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 002.1-2.1c.5-1.9.5-5.1.5-5.1s0-3.2-.5-5.1zM9.6 15.6V8.4l6.2 3.6-6.2 3.6z" />
                       </svg>
                     )}
                     {e.icono === "sitio" && (
@@ -173,16 +268,14 @@ const enlaces = [
                     <span class="enlace__sub">{e.sub}</span>
                   </span>
                   <span class="enlace__flecha" aria-hidden="true">
-                    {e.fuera ? "↗" : "→"}
+                    ↗
                   </span>
                 </a>
               </li>
             ))
           }
 
-          {/* El ÚNICO sólido en morado. No es capricho: es lo único que la
-              página regala, y es lo que la hace valer la pena aunque no te
-              quieran seguir. */}
+          {/* El ÚNICO sólido en morado: es lo único que la página regala. */}
           <li>
             <a
               class="enlace enlace--manual"
@@ -207,6 +300,80 @@ const enlaces = [
                   Un agente no es un chatbot con esteroides · 24 páginas, gratis
                 </span>
               </span>
+            </a>
+          </li>
+
+          {/* La segunda guía. Va en CIAN —el otro extremo del mismo degradado de
+              marca— y no en otro morado: junto al del manual los dos se
+              confunden y parece un error de render, no una pareja. Así los dos
+              descargables se leen como lo que son, lo que Ilhas regala. */}
+          <li>
+            <a
+              class="enlace enlace--guia"
+              href="/numeros-que-pagan-la-nomina.pdf"
+              download
+            >
+              <span class="enlace__icono" aria-hidden="true">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path d="M12 3v12m0 0l-4-4m4 4l4-4M4 17v2a2 2 0 002 2h12a2 2 0 002-2v-2" />
+                </svg>
+              </span>
+              <span class="enlace__txt">
+                Descarga la guía
+                <span class="enlace__sub">
+                  Los números que pagan la nómina · 16 páginas, gratis
+                </span>
+              </span>
+            </a>
+          </li>
+        </ul>
+
+        {/* El separador rotula los DOS grupos, no sólo el de Kinzal, y por eso
+            se llama .bio__sep y sigue la familia que ya existe en la página
+            (.bio__linea). Hubo un .kz__sep; ya no existe. */}
+        <p class="bio__sep">La parte tradicional</p>
+
+        {/* KINZAL, DE VUELTA A LA LISTA (Jorge, 5 sep 2026). Fue una tarjeta con
+            la foto de IU Life y llegó a pesar 227 px; el problema es que entre
+            esa tarjeta y la de Ilhas la página pasaba de 1,069 a 1,428 px en
+            teléfono y dejaba de verse de un vistazo.
+
+            La fila mide lo mismo que Instagram o TikTok. Lo que la separa de un
+            enlace más no es el tamaño: es la piel de aluminio, que es CSS puro y
+            no cuesta ni un byte de imagen. Ver `.enlace--kinzal` en el <style>.
+
+            Va en su propio <ul> porque el rótulo «La parte tradicional» separa
+            los dos grupos, y `.bio__sep + .enlaces` le quita el margen de arriba. */}
+        <ul class="enlaces">
+          <li>
+            <a
+              class="enlace enlace--kinzal"
+              href="https://kinzal.ai"
+              target="_blank"
+              rel="noopener"
+            >
+              <span class="enlace__icono" aria-hidden="true">
+                <img
+                  src="/assets/kinzal/kinzal-mark.svg"
+                  alt=""
+                  width="22"
+                  height="24"
+                />
+              </span>
+              <span class="enlace__txt">
+                Conoce Kinzal
+                <span class="enlace__sub">
+                  Fachadas y cancelería de aluminio · kinzal.ai
+                </span>
+              </span>
+              <span class="enlace__flecha" aria-hidden="true">↗</span>
             </a>
           </li>
         </ul>
@@ -236,339 +403,251 @@ const enlaces = [
     Scopeado funciona igual de bien aquí porque el <html> y el <body> están en
     ESTA plantilla, así que Astro les pone su hash y las reglas les llegan. */}
 <style>
-  /* La clase va en el <body> y la regla apunta a la CLASE, no al elemento.
-     Astro NUNCA scopea `body`, `html` ni `:root` —los trata como globales
-     siempre— así que un `body { background: dark }` aquí se le aplica a las
-     ocho páginas del sitio. Ya pasó. Con una clase propia sí se scopea. */
-  .bio-doc {
-    margin: 0;
-    background: var(--ilhas-dark);
-    color: rgba(248, 250, 255, 0.72);
-    line-height: 1.5;
-    -webkit-text-size-adjust: 100%;
-  }
+  /* Va en una CLASE del <body> y no en `body`: Astro nunca scopea `body`,
+     `html` ni `:root` —los trata como globales— y un `body{background:dark}`
+     aquí pinta de negro las ocho páginas del sitio. Ya pasó una vez. */
+  .bio-doc{margin:0;font-family:var(--ilhas-font-body);background:var(--ilhas-dark);
+    color:rgba(248,250,255,.72);line-height:1.5;-webkit-text-size-adjust:100%}
 
-  /* `100svh` y NO `100vh`: en Safari de iOS, `100vh` ignora la barra del
-     navegador y la página se corta justo donde están los botones — que es lo
-     único que esta página tiene que entregar. */
-  .bio {
-    position: relative;
-    min-height: 100svh;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-  }
+  /* ==========================================================================
+     LINK IN BIO — /jorgesierra
+     ==========================================================================
+     Genérica a propósito: la misma URL sirve para la slide de una masterclass,
+     para el perfil de Instagram y para el de TikTok. Sin parámetros, sin
+     variantes, sin saludos de evento — una sola página que no caduca.
 
-  /* --- la figura --- */
-  .figura {
-    position: relative;
-    flex: 0 0 auto;
-    display: flex;
-    justify-content: center;
-    align-items: flex-end;
-    padding-top: clamp(1rem, 4vw, 2rem);
-  }
+     Dos composiciones distintas, no una que se estira:
+       · teléfono  → la figura arriba, el nombre encima del desvanecido, los
+                     botones abajo. Es como se va a ver el 90% de las veces.
+       · pantalla  → la figura a la izquierda a toda altura y el contenido a la
+                     derecha, que es el encuadre de la slide que Jorge proyecta.
 
-  /* El degradado de marca aparece UNA vez en toda la página: aquí. En los
-     botones dejaría de ser acento y sería decoración. */
-  .figura__luz {
-    position: absolute;
-    z-index: 0;
-    left: 50%;
-    bottom: 6%;
-    translate: -50% 0;
-    width: min(115%, 520px);
-    aspect-ratio: 1;
-    border-radius: 50%;
-    background: linear-gradient(
-      115deg,
-      var(--ilhas-grad-start) 0%,
-      var(--ilhas-primary) 50%,
-      var(--ilhas-grad-end) 100%
-    );
-    filter: blur(60px);
-    opacity: 0.34;
-    pointer-events: none;
-  }
+     El degradado de marca aparece UNA vez: el resplandor detrás de la figura.
+     En los botones dejaría de ser acento y sería decoración. */
 
-  /* `contain`, NO `cover`: Jorge pidió la foto COMPLETA. Con `cover` se le
-     corta la cabeza o las piernas según el alto disponible. */
-  .figura img {
-    position: relative;
-    z-index: 1;
-    display: block;
-    height: clamp(300px, 42svh, 420px);
-    width: auto;
-    max-width: 88vw;
-    object-fit: contain;
-  }
+  .bio{position:relative;min-height:100svh;overflow:hidden;
+    display:flex;flex-direction:column}
 
-  /* El desvanecido que amarra la figura con el fondo. El recorte de origen
-     termina a medio muslo con un canto recto: sin degradado se ve como una
-     foto mal cortada, con degradado se lee como decisión. Va en los DOS
-     tamaños. */
-  .figura::after {
-    content: "";
-    position: absolute;
-    z-index: 2;
-    inset: auto 0 0 0;
-    height: 22%;
-    pointer-events: none;
-    background: linear-gradient(to top, var(--ilhas-dark) 12%, transparent);
-  }
+  /* --- la figura ----------------------------------------------------------- */
+  .figura{position:relative;flex:0 0 auto;display:flex;justify-content:center;
+    align-items:flex-end;padding-top:clamp(1rem,4vw,2rem)}
+  .figura__luz{position:absolute;z-index:0;left:50%;bottom:6%;translate:-50% 0;
+    width:min(115%,520px);aspect-ratio:1;border-radius:50%;
+    background:linear-gradient(115deg,var(--ilhas-grad-start) 0%,var(--ilhas-primary) 50%,var(--ilhas-grad-end) 100%);filter:blur(60px);opacity:.34;
+    pointer-events:none}
+  /* `contain`, no `cover`: Jorge pidió la foto COMPLETA. Con `cover` se le
+     corta la cabeza o los pies según el alto disponible. */
+  .figura img{position:relative;z-index:1;display:block;
+    height:clamp(300px,42svh,420px);width:auto;max-width:88vw;
+    object-fit:contain}
+  /* El desvanecido que amarra la figura con el fondo. Sin él, el recorte
+     termina en un canto duro contra el negro y se ve pegado. */
+  .figura::after{content:"";position:absolute;z-index:2;inset:auto 0 0 0;
+    height:22%;pointer-events:none;
+    background:linear-gradient(to top,var(--ilhas-dark) 12%,transparent)}
 
-  /* --- el texto --- */
-  .cuerpo {
-    position: relative;
-    z-index: 3;
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    padding: 0 clamp(1.25rem, 5vw, 2rem) clamp(1.5rem, 5vw, 2.5rem);
-    margin-top: -1.25rem;
-  }
+  /* --- el texto ------------------------------------------------------------ */
+  .cuerpo{position:relative;z-index:3;flex:1;display:flex;flex-direction:column;
+    align-items:center;text-align:center;
+    padding:0 clamp(1.25rem,5vw,2rem) clamp(1.5rem,5vw,2.5rem);
+    margin-top:-1.25rem}
+  h1{margin:0;font-family:var(--ilhas-font-display);font-weight:600;
+    font-size:clamp(2.1rem,8.5vw,2.9rem);line-height:1;letter-spacing:-.035em;
+    background:linear-gradient(115deg,var(--ilhas-grad-start) 0%,var(--ilhas-primary) 50%,var(--ilhas-grad-end) 100%);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+    /* inline-block para que el degradado se recorte sobre el TEXTO y no sobre
+       una caja del ancho de la columna. */
+    display:inline-block}
+  .bio__linea{margin:.6rem 0 0;font-size:1rem;color:rgba(248,250,255,.72);
+    max-width:30ch}
 
-  /* `inline-block` para que `background-clip: text` recorte sobre el TEXTO y
-     no sobre una caja del ancho de la columna — con `block` el degradado del
-     nombre sale truncado. Es el mismo bug que ya salió en la barra de stats
-     del home. */
-  .bio h1 {
-    margin: 0;
-    display: inline-block;
-    font-family: var(--ilhas-font-display);
-    font-weight: 600;
-    font-size: clamp(2.1rem, 8.5vw, 2.9rem);
-    line-height: 1;
-    letter-spacing: -0.035em;
-    background: linear-gradient(
-      115deg,
-      var(--ilhas-grad-start) 0%,
-      var(--ilhas-primary) 50%,
-      var(--ilhas-grad-end) 100%
-    );
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-  }
-
-  .bio__linea {
-    margin: 0.6rem 0 0;
-    font-size: 1rem;
-    color: rgba(248, 250, 255, 0.72);
-    max-width: 30ch;
-  }
-
-  /* --- los botones --- */
-  .enlaces {
-    width: 100%;
-    max-width: 26rem;
-    margin: 1.4rem 0 0;
-    padding: 0;
-    list-style: none;
-    display: grid;
-    gap: 0.55rem;
-  }
-
+  /* --- los botones --------------------------------------------------------- */
+  .bio__sep+.enlaces{margin-top:0}
+  .enlaces{width:100%;max-width:26rem;margin:1.4rem 0 0;padding:0;list-style:none;
+    display:grid;gap:.55rem}
   /* 58 px mínimo: por encima del objetivo táctil de 44 de Apple y 48 de
      Android, con holgura para un pulgar con prisa. */
-  .enlace {
-    display: flex;
-    align-items: center;
-    gap: 0.85rem;
-    min-height: 58px;
-    padding: 0.6rem 1.05rem;
-    border-radius: 14px;
-    text-decoration: none;
-    background: rgba(248, 250, 255, 0.055);
-    border: 1px solid rgba(248, 250, 255, 0.12);
-    color: var(--ilhas-white);
-    font-weight: 500;
-    font-size: 1rem;
-    transition:
-      background 0.16s ease,
-      border-color 0.16s ease,
-      transform 0.16s ease;
-  }
-
-  .enlace:hover,
-  .enlace:focus-visible {
-    background: rgba(248, 250, 255, 0.1);
-    border-color: rgba(248, 250, 255, 0.28);
-    color: var(--ilhas-white);
-  }
-
-  .enlace:active {
-    transform: scale(0.985);
-  }
-
-  .enlace:focus-visible {
-    outline: 2px solid var(--ilhas-grad-start);
-    outline-offset: 3px;
-  }
-
-  .enlace--manual {
-    background: var(--ilhas-primary);
-    border-color: transparent;
-  }
-
-  .enlace--manual:hover,
-  .enlace--manual:focus-visible {
-    background: #8b52ff;
-    border-color: transparent;
-  }
-
-  .enlace__icono {
-    flex: 0 0 auto;
-    width: 1.375rem;
-    height: 1.375rem;
-    opacity: 0.9;
-  }
-
+  .enlace{display:flex;align-items:center;gap:.85rem;min-height:58px;
+    padding:.6rem 1.05rem;border-radius:14px;text-decoration:none;
+    background:rgba(248,250,255,.055);border:1px solid rgba(248,250,255,.12);
+    color:#fff;font-weight:500;font-size:1rem;
+    transition:background .16s ease,border-color .16s ease,transform .16s ease}
+  .enlace:hover,.enlace:focus-visible{background:rgba(248,250,255,.1);
+    border-color:rgba(248,250,255,.28)}
+  .enlace:active{transform:scale(.985)}
+  .enlace:focus-visible{outline:2px solid var(--ilhas-grad-start);outline-offset:3px}
+  /* El manual es el único sólido: es lo único que la página REGALA, y por eso
+     es lo que la hace valer la pena aunque no te quieran seguir. */
+  .enlace--manual{background:var(--ilhas-primary);border-color:transparent}
+  /* El cian es `--ilhas-grad-start` (#55E8FF), el otro extremo del mismo
+     degradado de marca: es «otro color» sin salirse de la paleta.
+     ⚠️ TEXTO EN OSCURO, NUNCA BLANCO. Sobre #55E8FF el blanco mide 1.4:1 y
+     desaparece. */
+  .enlace--guia{background:var(--ilhas-grad-start);border-color:transparent;
+    color:var(--ilhas-dark)}
+  .enlace--guia:hover,.enlace--guia:focus-visible{background:#7CEEFF}
+  .enlace--guia .enlace__sub{color:rgba(14,14,15,.78)}
+  .enlace--guia .enlace__icono{opacity:1}
+  .enlace--manual:hover,.enlace--manual:focus-visible{background:#8b52ff}
+  .enlace__icono{flex:0 0 auto;width:1.375rem;height:1.375rem;opacity:.9}
+  /* El `img` va junto al `svg` y NO se quita: el icono de ilhas es un
+     <img src="logo-mark.svg">, no un <svg> en línea. La referencia sólo trae la
+     mitad del selector porque ahí ese icono no existe. */
   .enlace__icono svg,
-  .enlace__icono img {
-    width: 100%;
-    height: 100%;
-    display: block;
-    fill: currentColor;
-  }
-
-  .enlace__txt {
-    flex: 1;
-    text-align: left;
-  }
-
-  .enlace__sub {
-    display: block;
-    margin-top: 0.1rem;
-    font-size: 0.8125rem;
-    font-weight: 400;
-    color: rgba(255, 255, 255, 0.62);
-    line-height: 1.35;
-  }
-
+  .enlace__icono img{width:100%;height:100%;display:block;fill:currentColor}
+  .enlace__txt{flex:1;text-align:left}
+  .enlace__sub{display:block;margin-top:.1rem;font-size:.8125rem;font-weight:400;
+    color:rgba(255,255,255,.62);line-height:1.35}
+  /* El renglón de abajo va en violeta cuando es un DESTINO —un @ o un dominio—
+     y en gris cuando es una descripción (Jorge, 5 sep 2026). Es la misma
+     declaración que `kinzal.ai` en la tarjeta de abajo, para que el violeta
+     signifique lo mismo en toda la página: «esto es a dónde vas».
+     El manual queda fuera por las dos razones: su renglón describe el PDF, no
+     es una dirección, y encima va sobre el morado sólido, donde este violeta
+     sería ilegible. Medido sobre el fondo real del botón —rgb(27,27,28), que
+     es rgba(248,250,255,.055) sobre --ilhas-dark—: 5.52:1, AA para 13px. */
+  /* ⚠️ LOS DOS `:not()` SON OBLIGATORIOS, y el segundo ya se olvidó una vez.
+     `:not()` suma la especificidad de su argumento, así que esta regla pesa
+     (0,3,0) y le gana a `.enlace--guia .enlace__sub` (0,2,0) pase lo que pase
+     con el orden: el subtítulo salía lavanda sobre cian, ilegible. La regla
+     real es «los destinos van en lavanda, MENOS en los botones sólidos» — y
+     ahora los sólidos son dos, el manual y la guía. */
+  .enlace:not(.enlace--manual):not(.enlace--guia) .enlace__sub{color:rgba(192,132,252,.9)}
   /* .95 y no el .84 de la referencia: sobre el morado de marca, .84 mide
-     4.23:1 y falla AA para 13px —lo cachó Lighthouse—. .95 mide 4.99. No hace
-     falta oscurecer el botón: el blanco puro sobre ese morado llega a 5.36. */
-  .enlace--manual .enlace__sub {
-    color: rgba(255, 255, 255, 0.95);
+     4.23:1 y falla AA para 13px — lo cachó Lighthouse el 3 sep. .95 mide 4.99. */
+  .enlace--manual .enlace__sub{color:rgba(255,255,255,.95)}
+  .enlace__flecha{flex:0 0 auto;opacity:.45;font-size:1.05rem}
+
+  /* --- el pie -------------------------------------------------------------- */
+  /* Es un enlace, no un rótulo: todo el renglón lleva a ilhas.ai. */
+  .pie{margin-top:1.35rem;display:flex;align-items:center;gap:.55rem;
+    font-size:.8125rem;
+    /* .52 y no el .45 de la referencia: .45 mide 4.38:1 sobre --ilhas-dark y
+       falla AA para 13px. .52 mide 5.50. Mismo caso que el pie del sitio. */
+    color:rgba(248,250,255,.52);text-decoration:none;
+    transition:color .16s ease}
+  .pie:hover,.pie:focus-visible{color:rgba(248,250,255,.72)}
+  .pie:hover b,.pie:focus-visible b{color:#fff}
+  .pie:focus-visible{outline:2px solid var(--ilhas-grad-start);outline-offset:4px;
+    border-radius:6px}
+  .pie img{width:1.05rem;height:1.05rem}
+  .pie b{transition:color .16s ease;font-family:var(--ilhas-font-display);font-weight:600;font-size:.9375rem;
+    color:rgba(248,250,255,.8);letter-spacing:-.02em}
+
+  /* ==========================================================================
+     ESCRITORIO — el encuadre de la slide
+     ========================================================================== */
+  @media (min-width:860px){
+    /* `safe center`: centra mientras quepa y se comporta como flex-start en
+       cuanto NO quepa. Con `center` a secas, una columna más alta que la
+       ventana desborda por ARRIBA y por abajo a la vez, y lo de arriba —el
+       nombre— se sale de la pantalla al hacer scroll. Es lo que estaba pasando. */
+    .bio{flex-direction:row;align-items:safe center;justify-content:center;
+      padding-block:clamp(.75rem,2vh,1.5rem);
+      gap:clamp(2rem,6vw,5rem);max-width:72rem;margin-inline:auto;
+      padding-inline:clamp(2rem,5vw,4rem)}
+    .figura{flex:0 0 auto;padding-top:0;align-items:center}
+    .figura img{height:min(78svh,620px);max-width:none}
+    /* El desvanecido se queda, más corto. El recorte de origen termina a medio
+       muslo con un canto recto: sin degradado se ve como una foto mal cortada,
+       con degradado se lee como decisión. */
+    .figura::after{height:14%}
+    .figura__luz{width:420px;bottom:14%}
+    .cuerpo{flex:0 1 26rem;align-items:flex-start;text-align:left;
+      margin-top:0;padding:0}
+    h1{font-size:clamp(2.4rem,4vw,2.9rem)}
+    .bio__linea{font-size:1.0625rem;max-width:28ch}
+    /* --- La dieta de escritorio -------------------------------------------
+       Con los dos rótulos y la tarjeta, la columna pedía 881 px y no cabía en
+       una laptop. Cada número de aquí abajo salió de medir el desglose, no de
+       tantear. Nada de esto toca el teléfono: ahí la página crece y hace
+       scroll, que es lo correcto. */
+
+    /* La columna más ancha es la palanca más barata: a 26rem el botón de Ilhas
+       y el del manual parten su subtítulo en dos renglones. A 30rem caben en
+       uno y se van 48 px sin quitar una sola palabra. */
+    .cuerpo{flex:0 1 30rem}
+
+    .enlaces{margin-top:.4rem;max-width:none;gap:.34rem}
+    /* El alto de estas filas no lo manda `min-height` —el contenido ya pasa de
+       58 px— lo manda el padding. 58 px es el objetivo táctil de un PULGAR; con
+       ratón sobra, y .4rem devuelve 32 px repartidos en las cinco filas. */
+    .enlace{min-height:0;padding:.32rem 1.05rem}
+    .bio__linea{margin-top:.4rem}
+    .pie{margin-top:.7rem}
   }
 
-  .enlace__flecha {
-    flex: 0 0 auto;
-    opacity: 0.45;
-    font-size: 1.05rem;
+  /* ==========================================================================
+     LOS RÓTULOS Y LAS DOS PIELES DE MARCA
+     ==========================================================================
+     Las tarjetas con foto y video daban jerarquía pero cargaban la vista y no
+     cabían de un vistazo: la página se iba a 1,428 px en teléfono. Vuelven las
+     filas, que es lo que ya funcionaba, pero cada negocio trae SU superficie.
+     Siguen midiendo lo mismo que Instagram o TikTok, así que la página no crece
+     — sólo dejan de parecer un enlace más. De ahí los 1,069 px.
+
+     Los dos gradientes de marca terminan en violeta:
+       Ilhas  #55E8FF → #7A3CFF → #A14BFF   (cian → violeta)
+       Kinzal #1A2A6C → #2E5BE0 → #9B3FD4   (marino → azul → violeta)
+     Por eso Kinzal puede traer su color aquí sin verse pegado: la página baja de
+     violeta cálido (Ilhas) a azul frío (Kinzal), y el violeta es la bisagra. Si
+     Kinzal usara el morado de Ilhas parecería un producto de Ilhas — que es
+     justo lo que NO es. */
+
+  .bio__sep{display:flex;align-items:center;gap:.7rem;margin:1.15rem 0 .6rem;width:100%;max-width:26rem;
+    font-size:.6875rem;letter-spacing:.14em;text-transform:uppercase;
+    /* .48 y no .38: a 11px hace falta 4.5:1 contra #0E0E0F y .38 medía 3.45. */
+    color:rgba(248,250,255,.48)}
+  .bio__sep::after{content:"";flex:1;height:1px;
+    background:linear-gradient(to right,rgba(248,250,255,.16),transparent)}
+
+  /* --- Ilhas: lavado del degradado de marca -------------------------------- */
+  .enlace--ilhas{
+    background:linear-gradient(112deg,rgba(85,232,255,.07),rgba(122,60,255,.12) 55%,rgba(161,75,255,.09));
+    border-color:rgba(150,110,255,.42)}
+  .enlace--ilhas:hover,.enlace--ilhas:focus-visible{
+    background:linear-gradient(112deg,rgba(85,232,255,.18),rgba(122,60,255,.26) 55%,rgba(161,75,255,.2));
+    border-color:rgba(175,140,255,.72)}
+  .enlace--ilhas .enlace__icono{opacity:1}
+
+  /* --- Kinzal: la fila de aluminio ----------------------------------------- */
+  /* La superficie ES el mensaje: cepillado diagonal, un reflejo especular que
+     barre al pasar el cursor, y el canto del gradiente del logo en el filo
+     izquierdo — como el anodizado que se ve en el corte de un perfil. Tres
+     gradientes, ni una imagen, ni un byte de JS.
+
+     ⚠️ EL REFLEJO VA EN .05 Y NO SE SUBE. A .085 el fondo bajo el subtítulo se
+     aclara a rgb(76,73,142) y el lavanda #C084FC mide 3.99:1 — reprueba AA para
+     13 px. Con .05 y la base un punto más oscura mide 5.09:1. Si alguien lo
+     sube «para que se vea más metálico», tumba el contraste del subtítulo. */
+  .enlace--kinzal{position:relative;overflow:hidden;
+    border-color:rgba(140,160,235,.3);
+    background:
+      linear-gradient(104deg,transparent 30%,rgba(255,255,255,.05) 47%,rgba(255,255,255,.012) 54%,transparent 70%),
+      repeating-linear-gradient(104deg,rgba(255,255,255,.028) 0 1px,transparent 1px 3px),
+      linear-gradient(146deg,#141E45,#0C1430 52%,#171139);
+    background-size:220% 100%,auto,auto;background-position:0% 0,0 0,0 0;
+    transition:background-position .55s ease,border-color .18s ease,transform .16s ease}
+  .enlace--kinzal::before{content:"";position:absolute;inset:0 auto 0 0;width:3px;
+    background:linear-gradient(to bottom,#2E5BE0,#7B3FD4 55%,#9B3FD4)}
+  .enlace--kinzal:hover,.enlace--kinzal:focus-visible{
+    background-position:100% 0,0 0,0 0;border-color:rgba(175,190,255,.55)}
+  .enlace--kinzal .enlace__icono{opacity:1;margin-left:.2rem}
+  .enlace--kinzal .enlace__sub{color:rgba(214,224,255,.72)}
+
+  /* ⚠️ ESTE SEGUNDO @media EXISTE POR ORDEN DE CASCADA, NO POR CAPRICHO.
+     El @media de escritorio de arriba va ANTES que este bloque en el archivo.
+     Con la misma especificidad (0,1,0) gana la última regla escrita, o sea la
+     base — y el override de `.bio__sep` simplemente no se aplicaba: se midió y
+     seguía con el margen de móvil. Es el tercer bug de cascada de este
+     proyecto. Si alguien mueve este bloque más arriba, se rompe en silencio. */
+  @media (min-width:860px){
+    .bio__sep{margin:.5rem 0 .3rem;max-width:none}
   }
 
-  /* --- el pie --- */
-  .pie {
-    margin-top: 1.35rem;
-    display: flex;
-    align-items: center;
-    gap: 0.55rem;
-    font-size: 0.8125rem;
-    /* .52 y no el .45 de la referencia: sobre --ilhas-dark, .45 mide 4.38:1 y
-       falla AA para 13px. .46 pasa raspando con 4.53; .52 mide 5.50. Es el
-       mismo fallo que ya traía el pie del sitio en la iteración 17. */
-    color: rgba(248, 250, 255, 0.52);
-  }
-
-  .pie {
-    text-decoration: none;
-    border-radius: 8px;
-    transition: color 0.16s ease;
-  }
-
-  .pie:hover,
-  .pie:focus-visible {
-    color: rgba(248, 250, 255, 0.75);
-  }
-
-  .pie:hover b,
-  .pie:focus-visible b {
-    color: var(--ilhas-white);
-  }
-
-  .pie:focus-visible {
-    outline: 2px solid var(--ilhas-grad-start);
-    outline-offset: 4px;
-  }
-
-  .pie img {
-    width: 1.05rem;
-    height: 1.05rem;
-  }
-
-  .pie b {
-    font-family: var(--ilhas-font-display);
-    font-weight: 600;
-    font-size: 0.9375rem;
-    color: rgba(248, 250, 255, 0.8);
-    letter-spacing: -0.02em;
-  }
-
-  /* ======================================================================
-     ESCRITORIO — el encuadre de la slide que Jorge proyecta
-     ====================================================================== */
-  @media (min-width: 860px) {
-    .bio {
-      flex-direction: row;
-      align-items: center;
-      justify-content: center;
-      gap: clamp(2rem, 6vw, 5rem);
-      max-width: 72rem;
-      margin-inline: auto;
-      padding-inline: clamp(2rem, 5vw, 4rem);
-    }
-
-    .figura {
-      flex: 0 0 auto;
-      padding-top: 0;
-      align-items: center;
-    }
-
-    .figura img {
-      height: min(78svh, 620px);
-      max-width: none;
-    }
-
-    .figura::after {
-      height: 14%;
-    }
-
-    .figura__luz {
-      width: 420px;
-      bottom: 14%;
-    }
-
-    .cuerpo {
-      flex: 0 1 26rem;
-      align-items: flex-start;
-      text-align: left;
-      margin-top: 0;
-      padding: 0;
-    }
-
-    .bio h1 {
-      font-size: clamp(2.6rem, 4.6vw, 3.6rem);
-    }
-
-    .bio__linea {
-      font-size: 1.0625rem;
-      max-width: 28ch;
-    }
-
-    .enlaces {
-      margin-top: 1.75rem;
-      max-width: none;
-    }
-
-    .pie {
-      margin-top: 1.6rem;
-    }
-  }
-
+  /* La referencia NO trae este bloque; la v1 de la página sí, y se queda. Es
+     accesibilidad, no adorno: sin él, quien pidió menos movimiento en el
+     sistema sigue recibiendo el hundido de los botones al tocarlos. */
   @media (prefers-reduced-motion: reduce) {
     .enlace {
       transition-duration: 0s;

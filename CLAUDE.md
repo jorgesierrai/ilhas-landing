@@ -38,20 +38,56 @@ Aparte del hub viven `/terminos`, `/privacidad` y `/cookies`. **No cuentan como 
 
 ## Estado del repositorio
 
-*Actualizado: 31 ago 2026 (iteración 19).*
+*Actualizado: 6 sep 2026 (medición · paso A: cabeceras, dominio canónico y sitemap).*
 
 > **Este bloque se actualiza en cada iteración, no al final.** Es lo primero que
 > lee una sesión nueva; si miente, la sesión construye sobre una foto vieja. Lo
 > mismo aplica a `medios/ESTADO.md`. Ver el checklist de abajo.
 
-- Rama de trabajo: **`hero-corriendo`**, que sale de `aire-y-autoridad`.
-- **Dos PRs abiertos sin mergear.** Hasta que entren, `main` no tiene nada de las
-  iteraciones 10 a 17:
-  - **#17 · `cabeceras-vercel`** — las cabeceras de seguridad. **`public/_headers`
-    nunca aplicó: es formato de Netlify y el sitio está en Vercel**, así que hoy
-    producción corre sin CSP, sin `X-Frame-Options` y sin `Referrer-Policy`. Van
-    en `vercel.json`. Es lo más urgente de la lista.
-  - **#18 · `credenciales-hijo`** — iteraciones 10 a 16.
+> ### ⚠️ Las referencias de `medios/` NO son la fuente de los tokens
+>
+> Son páginas sueltas: traen su propio `:root` con nombres que **el sitio no
+> tiene**. `medios/kinzal-referencia.html` define `--ilhas-gradient-d`, que no
+> existe en `docs/marca/tokens.css`. Copiar su CSS tal cual dejó el nombre de
+> Jorge y el resplandor de la figura pintados con un token vacío: **no falla el
+> build, no falla ningún grep, simplemente no se ve nada**. Sólo salió en una
+> captura.
+>
+> Al traer CSS de una referencia: pasa cada `var(--…)` contra la hoja compilada
+> (`dist/_astro/*.css`) y **compara la captura contra la de la referencia**, no
+> sólo las alturas. Las alturas cuadraban al píxel con el degradado roto.
+>
+> Lo mismo al revés: la referencia **no** trae `prefers-reduced-motion` ni la
+> mitad `img` de `.enlace__icono svg, .enlace__icono img`, y la página sí las
+> necesita. Reconstruir un `<style>` desde la referencia las borra en silencio.
+
+- Rama de trabajo: **`medicion`**. Sale de `main` **después** de que
+  `kinzal-en-bio` entre — las dos tocan `CLAUDE.md` y `src/pages/jorgesierra.astro`.
+- **`main` ya trae las iteraciones 10 a 19** y el link in bio: el **#18 se
+  mergeó** y el **#20** metió la presentación de la masterclass.
+- **Los dos PRs viejos se cierran, ninguno se mergea:**
+  - **#17 · `cabeceras-vercel`** — **cerrado sin mergear el 6 sep 2026, y su
+    contenido está reescrito en `main`.** Su `vercel.json` traía sólo `headers`
+    y el de `main` sólo `redirects`: mergearlo mataba el redirect
+    `/jorge` → `/jorgesierra`. Se escribió un solo archivo con las dos claves.
+  - **#19 · `link-in-bio`** — **quedó obsoleto.** Su contenido ya está en `main`.
+    Se puede cerrar sin mergear.
+
+### ⚠️ Las cabeceras de seguridad: lo que se aprendió
+
+`public/_headers` **nunca aplicó**. Es formato Netlify / Cloudflare Pages y el
+sitio corre en **Vercel**, que lo ignora sin decir nada. Durante meses el
+repositorio creía tener CSP y producción respondía **sin una sola cabecera de
+seguridad** — medido con `curl -I`. El archivo se borró; las cabeceras viven en
+`vercel.json`. **Una cabecera que no se verificó contra producción no existe.**
+
+**El dominio canónico es `www.ilhas.ai`** (Jorge, 6 sep 2026); el apex redirige.
+`site` en `astro.config.mjs` decía el apex, así que todos los `canonical`
+apuntaban a una URL que redirige. ⚠️ **`site` no cubre dos lugares** que llevan
+la URL escrita a mano: `src/pages/jorgesierra.astro` (no usa `Base.astro`) y
+`public/jorgesierra/ia-aplicada-masterclass/index.html` (no pasa por Astro, y
+lleva también `og:image`). La prueba tras cada build:
+`grep -rn "https://ilhas\.ai" dist/ | grep -v eventos.ilhas.ai` debe salir vacío.
 - **El sitio nuevo en Astro está completo**: las cinco rutas del hub más las tres
   legales, con la auditoría visual (`AUDITORIA-VISUAL.md`) ya aplicada.
 - **Iteraciones cerradas:** 1 (ranuras) · 2 (activar material) · 3 (hero del home)
@@ -60,8 +96,9 @@ Aparte del hub viven `/terminos`, `/privacidad` y `/cookies`. **No cuentan como 
   (cirugía de copy) · 10 (productos) · 11 (capas y el experimento como figura) ·
   12 (`/finanzas`) · 13 (redes) · 14 (distinción del papá) · 15 (credenciales del
   hijo) · 16 (el mapa lleno) · 17 (el pie y las legales) · 18 (el aire de
-  arriba y la § En público) · 19 (el hero corriendo). Los briefs viven en
-  `prompts/iteracion-*.md`.
+  arriba y la § En público) · 19 (el hero corriendo) · **22 paso A (cabeceras en
+  `vercel.json`, dominio canónico `www` y `sitemap.xml`)**. Los briefs viven en
+  `prompts/iteracion-*.md`; el de medición es `prompts/PROPUESTA-medicion.md`.
 - **Piezas nuevas que conviene conocer antes de tocar nada:**
   - `src/data/mapa.ts` + `src/components/MapaEmpresa.astro` — las trece áreas en
     tres capas, con **38 renglones de lo que se construye en cada una**. Un
@@ -118,6 +155,53 @@ Aparte del hub viven `/terminos`, `/privacidad` y `/cookies`. **No cuentan como 
   - **La banda de autoridad salió del home.** El componente
     `BandaAutoridad.astro` SIGUE en el repo — solo se quitó su uso. Los tres
     hitos que resumía viven completos en `/nosotros` § En público desde la 18.
+  - **`/jorgesierra` son SEIS FILAS, no tarjetas (v5, 5 sep 2026).** El array
+    lleva `grupo: "redes" | "tec"` y hay **tres `<ul class="enlaces">`** —redes,
+    tecnológica, tradicional— separados por los rótulos `.bio__sep`. **No se
+    parte con `.slice(0,3)`**: el índice se rompe callado el día que alguien
+    reordene un enlace.
+
+    **Se probaron tarjetas con foto y video y NO se quedaron.** Kinzal llegó a
+    ser una tarjeta de 227 px con la foto de IU Life, e Ilhas otra de 260 px con
+    un video del agente trabajando. Daban jerarquía, pero la página pasaba de
+    **1,069 a 1,428 px** en teléfono y dejaba de verse de un vistazo. La versión
+    que quedó da la jerarquía por **superficie, no por tamaño**: `.enlace--ilhas`
+    lleva un lavado del degradado de marca y `.enlace--kinzal` una piel de
+    aluminio —cepillado diagonal, reflejo especular que barre al hover y el canto
+    del gradiente del logo a la izquierda—, las dos con tres gradientes CSS, cero
+    imágenes y cero JS. Las seis filas miden lo mismo: **58 px en escritorio**.
+    El trabajo de las tarjetas vive en la rama **`respaldo-tarjetas`** por si
+    alguna vez se quiere recuperar.
+
+    ⚠️ **El reflejo del aluminio va en `.05` y no se sube.** A `.085` el fondo
+    bajo el subtítulo se aclara y el lavanda `#C084FC` cae a 3.99:1 — reprueba AA
+    para 13 px. Con `.05` mide **5.05:1** en reposo y **5.05:1** con el cursor
+    encima (medido sobre el píxel más claro de la caja del texto, no sobre la
+    fila: medir la fila entera muestrea la barra decorativa del canto y miente).
+
+    ⚠️ **Todas las flechas van en ↗, incluida la de Ilhas, que apunta a `/`.**
+    Rompe la convención del sitio —↗ = pestaña nueva, → = interno— y es decisión
+    de Jorge por simetría con Kinzal. `fuera` sigue mandando en `target`/`rel`.
+
+    ⚠️ **`kz-obra.webp` se borró** al quitar la tarjeta: un archivo en `public/`
+    que nadie referencia se publica igual. **`kinzal-mark.svg` SÍ se sigue
+    usando** — es el ícono de la fila de Kinzal.
+
+    ⚠️ **El `<style>` de esta página es scopeado y NUNCA `is:global`** — la
+    advertencia larga vive arriba del `<style>` en el archivo. Y el titular del
+    home lo lee `src/pages/index.astro`, no esta página.
+
+  - ⚠️ **`home-hero-loop.mp4` LLEVA LA MARCA DE KINZAL DENTRO, y no sólo el
+    logotipo.** Si algún día se reutiliza fuera del hero, hay que recortarlo en
+    el ENCODE (taparlo con `object-position` deja la marca dentro del archivo).
+    Medido sobre el original de 1280×604: la barra `▣ KINZAL` en y≈15–35, el
+    logo y el folio en y≈55–110, «Innovando en Aluminio» en y≈118, el **bloque
+    de domicilio fiscal con `Tel: +52 33 1360 7178` y `Email: jorge@kinzal.ai`
+    en y≈208–234**, y «Descargar brochure Kinzal» en y≈583–595. La banda limpia
+    es **y=240…556**. El bloque de contacto es el que casi se cuela: es letra
+    muy chica y **el OCR no la ve** — la comprobación buena es extraer los
+    fotogramas a 4 fps y mirarlos. Y ojo: **el documento del video hace scroll**,
+    así que revisar un solo fotograma no prueba nada.
   - **`/jorgesierra/ia-aplicada-masterclass` — la presentación de la masterclass.**
     Vive en `public/`, lleva `noindex`, no va al sitemap y **no se enlaza desde
     ninguna página**: se llega por la URL, que es la que Jorge proyecta. Comparte
@@ -183,7 +267,7 @@ Aparte del hub viven `/terminos`, `/privacidad` y `/cookies`. **No cuentan como 
 - **Sistema de medios: montado, prioridad 1 completa.** El sitio declara **34
   ranuras** con nombre; dejas caer un archivo con el nombre exacto y aparece
   solo, sin tocar código. Una ranura vacía no pinta nada en producción. Hoy:
-  **19 de 34 listas, 0 con problema**.
+  **20 de 34 listas, 0 con problema**.
   - **Si vas a trabajar en medios, lee `medios/ESTADO.md` primero.**
   - `npm run medios` te dice qué falta, qué pesa de más y qué no tiene atribución.
 
@@ -191,14 +275,19 @@ Aparte del hub viven `/terminos`, `/privacidad` y `/cookies`. **No cuentan como 
 
 | Tema | Qué falta |
 |---|---|
+| **El punto huérfano del titular del home** | Desde que el titular es «…con agentes de IA.» (5 sep 2026), **a ≥1200 px el punto final cae solo en su propio renglón**. Medido: a 1440 el `<h1>` pasó de 4 a 5 renglones y el punto queda en `left=198`, al margen. A 390 y 768 se lee bien. Es la costura entre el `<span class="text-gradient">` —que es `inline-block` por el `background-clip:text`— y el punto que va fuera. **No se tocó: la decisión es de Jorge.** El arreglo es envolver span y punto en un `white-space:nowrap`, no cambiar el copy |
+| **`<title>` y `og:title` dicen «con IA»** | `src/layouts/Base.astro:78` y `:92` siguen con «Ilhas — tu primer proceso corriendo con IA», mientras el `<h1>` ya dice «con agentes de IA». **No se tocó**: es copy de Jorge y son las dos cadenas que ve Google y ven las redes al compartir. Igual `medios/hero-b2-referencia.html:129`, que es otra referencia del hero |
 | **`/finanzas` §07 · servicios del papá** | **Confirmado que va** (Jorge, 27 ago 2026). Faltan dos insumos suyos: el **copy de los servicios** y **a dónde apunta el botón de agenda** — hoy no hay ninguna URL de agenda en el repositorio, el único destino externo es `eventos.ilhas.ai` |
 | **`/nosotros` § La historia** | Tres clips (`nosotros-historia-01/02/03`) sin material |
 | **Párrafo de intro de la línea de tiempo** | Marcado como `TODO copy` en `src/pages/nosotros.astro`. Lo escribe Jorge |
 | **Subtítulo del hero** | El de hoy —«Lo que hoy le toma horas a alguien de tu equipo…»— es una **propuesta mía, no copy aprobado**. El titular sí es de Jorge. Está puesto para que la página no quede coja; falta su visto bueno |
 | **Revisión legal** | **Un abogado no ha visto `/terminos`, `/privacidad` ni `/cookies`.** Son borradores sólidos y honestos, escritos para México, pero sin revisar. Es un trámite de una sesión y hoy es un hueco abierto |
 | **El domicilio fiscal** | Jorge lo pasó como *Zapopan* y el **C.P. 44690 es de Guadalajara**. Los documentos van con Guadalajara; **falta que lo confirme contra su constancia**, porque de ahí depende la cláusula de jurisdicción |
-| **`sitemap.xml`** | Decidido que va, pero **hasta el final**: se genera cuando las rutas y el contenido estén cerrados, como archivo estático en `public/` (sin instalar la integración). **Las tres legales NO entran**: llevan `noindex` |
-| **Hosting y DNS · plataforma del programa** | Ver `docs/00-INDEX.md` § "Lo que NO está resuelto" |
+| **El redirect del apex es 307, no 308** | `ilhas.ai` → `www.ilhas.ai` responde **307 (temporal)**. Para canonicalizar un dominio debe ser **308**. Se cambia en el panel de Vercel, en los dominios del proyecto — **no en `vercel.json`**, porque el redirect de dominio corre antes del enrutado |
+| **GA4 · el paso B de la medición** | Falta el `G-XXXXXXXXXX` de la propiedad (cuenta `jorge@ilhas.ai`). El sitio lo va a cargar desde **un archivo propio** `/assets/medicion.js`, no inline: así se mantiene la regla de cero `<script>` inline y la CSP sólo abre `googletagmanager.com` y `*.google-analytics.com`. **Cero píxeles de anuncios en el sitio** (Jorge, 6 sep 2026): el tráfico es orgánico de IG y TikTok, y lo de campañas se mide en GHL |
+| **`/privacidad` manda al INAI, que ya no existe** | La página remite al **INAI** y enlaza `inai.org.mx`. La **nueva LFPDPPP entró en vigor el 21 mar 2025** y las funciones del INAI pasaron a la **Secretaría Anticorrupción y Buen Gobierno**. Detectado el 6 sep 2026. Se corrige en el mismo PR que actualiza las legales por GA4 — y es una razón más para la revisión del abogado que sigue pendiente |
+| **Las legales, cuando entre GA4** | `/privacidad` dice que el sitio no recoge datos y `/cookies` dice que no hay cookies. **Con GA4 las dos dejan de ser ciertas** y se actualizan en el mismo PR que prende la medición, no después |
+| **DNS · plataforma del programa** | El hosting ya está resuelto (**Vercel**, 6 sep 2026). Sigue abierto **quién controla el DNS de ilhas.ai** y la plataforma de entrega del programa. Ver `docs/00-INDEX.md` § "Lo que NO está resuelto" |
 
 ## Convenciones de código
 

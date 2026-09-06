@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 72 78" fill="none" role="img" aria-label="Kinzal">
+  <defs>
+    <linearGradient id="kz" x1="0" y1="0" x2="70" y2="76" gradientUnits="userSpaceOnUse">
+      <stop offset="0%"   stop-color="#2E5BE0"/>
+      <stop offset="52%"  stop-color="#7B3FD4"/>
+      <stop offset="100%" stop-color="#C084FC"/>
+    </linearGradient>
+  </defs>
+  <g stroke="url(#kz)" stroke-width="3.4" stroke-linecap="square" fill="none">
+    <rect x="1.7" y="1.7" width="68.6" height="74.6"/>
+    <line x1="24"   y1="1.7" x2="24"   y2="76.3"/>
+    <line x1="48"   y1="1.7" x2="48"   y2="76.3"/>
+    <line x1="1.7"  y1="20"  x2="70.3" y2="20"/>
+    <line x1="1.7"  y1="39"  x2="70.3" y2="39"/>
+    <line x1="1.7"  y1="58"  x2="70.3" y2="58"/>
+  </g>
+</svg>

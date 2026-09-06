@@ -67,7 +67,10 @@ Estos son los choques concretos. No hay que deliberarlos: ya están resueltos.
 No inventes estos. Si el trabajo los necesita, para y pregunta:
 
 - **Casos y logos de clientes reales** para `/soluciones`. La tabla de linaje de productos sí está y sí se usa.
-- **Dónde vive el hosting hoy y quién controla el DNS de ilhas.ai.**
+- ~~**Dónde vive el hosting hoy.**~~ **Resuelto el 6 sep 2026: Vercel.**
+  Verificado con `curl -I` (`server: Vercel`). El dominio canónico es
+  **`www.ilhas.ai`** y el apex redirige. Las cabeceras van en `vercel.json`.
+  Ver `06-stack-y-seguridad.md`. **Sigue abierto quién controla el DNS.**
 - **El domicilio fiscal de Jorge.** Lo pasó como *Zapopan*, pero el C.P. 44690 es
   de **Guadalajara**. Las tres páginas legales (30 ago 2026) van con Guadalajara,
   que es lo que dice el código postal, pero **tiene que confirmarlo contra su

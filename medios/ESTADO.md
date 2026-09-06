@@ -29,7 +29,7 @@
 | **Iteración 5 — bifurcación y mapa de la empresa** | ✅ Hecha (`../prompts/iteracion-5-bifurcacion-mapa.md`) |
 | **Material de prioridad 2 y 3** | ⬜ Pendiente — sigue `CHECKLIST.md` |
 
-`npm run medios` → **17 de 34 listas · 0 con problema**
+`npm run medios` → **20 de 34 listas · 0 con problema**
 
 ### Qué cambió desde la Iteración 1
 
