@@ -61,17 +61,30 @@ Aparte del hub viven `/terminos`, `/privacidad` y `/cookies`. **No cuentan como 
 > mitad `img` de `.enlace__icono svg, .enlace__icono img`, y la página sí las
 > necesita. Reconstruir un `<style>` desde la referencia las borra en silencio.
 
-- Rama de trabajo: **`medicion`**. Sale de `main` **después** de que
-  `kinzal-en-bio` entre — las dos tocan `CLAUDE.md` y `src/pages/jorgesierra.astro`.
+- Rama de trabajo: **`guia-pdf`**, que sale de `main`.
 - **`main` ya trae las iteraciones 10 a 19** y el link in bio: el **#18 se
   mergeó** y el **#20** metió la presentación de la masterclass.
-- **Los dos PRs viejos se cierran, ninguno se mergea:**
-  - **#17 · `cabeceras-vercel`** — **cerrado sin mergear el 6 sep 2026, y su
-    contenido está reescrito en `main`.** Su `vercel.json` traía sólo `headers`
-    y el de `main` sólo `redirects`: mergearlo mataba el redirect
-    `/jorge` → `/jorgesierra`. Se escribió un solo archivo con las dos claves.
-  - **#19 · `link-in-bio`** — **quedó obsoleto.** Su contenido ya está en `main`.
-    Se puede cerrar sin mergear.
+- **Ya no queda ningún PR abierto.** El **#21** entró a `main` el 6 sep 2026
+  con todo `/jorgesierra` —las ocho filas con piel de marca, YouTube y las dos
+  guías—, más las cabeceras, el `sitemap.xml` y la migración a `www.ilhas.ai`.
+  - **#17 · `cabeceras-vercel`** — **cerrado sin mergear**, su contenido está
+    reescrito en `main`. Su `vercel.json` traía sólo `headers` y el de `main`
+    sólo `redirects`: mergearlo mataba el redirect `/jorge` → `/jorgesierra`.
+    Ahora es un solo archivo con las dos claves.
+  - **#19 · `link-in-bio`** — **cerrado sin mergear**, llevaba semanas obsoleto:
+    su contenido ya estaba en `main`.
+- **Verificado contra el sitio vivo el 6 sep 2026, no contra ramas:** producción
+  sirve las ocho filas y responde con CSP, HSTS, `X-Frame-Options: DENY`,
+  `Referrer-Policy` y `nosniff`. `ilhas.ai/jorge` sigue redirigiendo, y la
+  presentación de la masterclass recibe `style-src 'self' 'unsafe-inline'`, así
+  que sus 494 estilos en línea siguen pintando.
+- **Los dos descargables de `/jorgesierra`:** `manual-ia-agentica.pdf` (24 pág,
+  1.1 MB) y `numeros-que-pagan-la-nomina.pdf` (16 pág, **6.19 MB**). El segundo
+  pesa de más porque **trae el texto trazado como curvas vectoriales, glifo por
+  glifo**, sin fuentes ni imágenes incrustadas. Si se regenera desde la fuente
+  incrustando Inter y Space Grotesk —las dos ya están en `public/assets/fonts/`—
+  bajaría a unos cientos de KB. Es peso de descarga, no de página: sólo se baja
+  al hacer clic.
 
 ### ⚠️ Las cabeceras de seguridad: lo que se aprendió
 
