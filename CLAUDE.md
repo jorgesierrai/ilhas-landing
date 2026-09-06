@@ -61,7 +61,7 @@ Aparte del hub viven `/terminos`, `/privacidad` y `/cookies`. **No cuentan como 
 > mitad `img` de `.enlace__icono svg, .enlace__icono img`, y la página sí las
 > necesita. Reconstruir un `<style>` desde la referencia las borra en silencio.
 
-- Rama de trabajo: **`medicion-ga4`**, que sale de `main`.
+- Rama de trabajo: **`eventos-ga4`**, que sale de `main`.
 - **`main` ya trae las iteraciones 10 a 19** y el link in bio: el **#18 se
   mergeó** y el **#20** metió la presentación de la masterclass.
 - **Ya no queda ningún PR abierto.** El **#21** entró a `main` el 6 sep 2026
@@ -104,6 +104,28 @@ Aparte del hub viven `/terminos`, `/privacidad` y `/cookies`. **No cuentan como 
     literalmente «Ilhas.ai no coloca cookies».
   - **El deck de la masterclass NO lleva GA4**: vive en `public/` como HTML
     estático, no pasa por `Base.astro`, lleva `noindex` y se proyecta en vivo.
+  - **LOS CUATRO EVENTOS, desde el 6 sep 2026.** `carril_elegir` (los dos CTA
+    del hero, con parámetro `carril`), `webinar_reservar`, `diagnostico_agendar`
+    y `contacto_correo`. El registro es **`src/data/eventos.ts`** y el chequeo
+    **`npm run eventos`**, que corre DENTRO de `npm run build`.
+    - Se cuelgan de un atributo **`data-evento`** en el marcado, **nunca de un
+      selector CSS ni del texto del botón**: así sobreviven a un cambio de copy,
+      de clase, de color o de orden. Un solo listener delegado en `document`,
+      en fase de captura, dentro de `public/ga.js`. No hay más JS.
+    - ⚠️ **El pie sale en las OCHO páginas de `Base.astro`**, así que
+      `webinar_reservar` aparece 10 veces (8 del pie + 2 en `/finanzas`) y
+      `contacto_correo` 12 (8 del pie + 4 en el cuerpo de las legales). La
+      propuesta hablaba de «tres enlaces» contando ubicaciones lógicas, no
+      apariciones en el build — **`npm run eventos` cazó la diferencia en su
+      primera corrida**. Si alguien cambia el pie, esos números se mueven.
+    - **NO se agregan más eventos sin una razón.** Scroll, vistas de sección,
+      clic por tarjeta y reproducción del hero ya se descartaron, con el motivo
+      escrito en `eventos.ts`. Cada evento que agregas es uno que se puede
+      romper, y la analítica rota es peor que la ausente.
+    - ⚠️ **Hay que APAGAR el scroll de «medición mejorada» en la propiedad de
+      GA4**: la página cambia de largo cada iteración, así que el 50% de hoy no
+      es el del mes pasado y la serie histórica no significa nada. Los clics
+      salientes se dejan.
   - ⚠️ **El flujo de GA4 está declarado como `https://ilhas.ai` (apex) y el
     sitio canónico es `www.ilhas.ai`.** No rompe la medición —el ID es lo que
     manda— pero conviene alinearlo en la consola de GA4.
