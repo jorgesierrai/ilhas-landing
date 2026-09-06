@@ -64,6 +64,26 @@ const pageTitle = title === "Ilhas" ? title : `${title} · Ilhas`;
     {noindex && <meta name="robots" content="noindex" />}
     <meta name="theme-color" content="#7A3CFF" />
 
+    {/* ⚠️ ESTO ROMPE LA REGLA DE «CERO JAVASCRIPT» DEL SITIO, y a propósito.
+        Hasta hoy las nueve páginas servían 0 bytes de JS. GA4 es la excepción
+        acordada con Jorge, porque sin medición no hay embudo — y es la ÚNICA:
+        el menú, el desplegable de «Aprender» y la banda Ilhas→Hilas siguen
+        siendo CSS puro y no se convierten en JS «ya que estamos».
+
+        Los dos <script> son EXTERNOS, ninguno en línea. El de `/ga.js` es del
+        mismo dominio, así que la CSP se queda en `script-src 'self'` más el
+        host de Google y NO necesita `'unsafe-inline'`. La explicación larga
+        vive arriba de `public/ga.js`.
+
+        `is:inline` NO vuelve el script código en línea: le dice a Astro que no
+        lo empaquete y lo deje tal cual. Sin él el build falla, porque Astro no
+        deja referenciar `public/` desde un <script> que procesa. */}
+    <script
+      is:inline
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-ENCWN9XWT1"></script>
+    <script is:inline src="/ga.js"></script>
+
     <!-- Open Graph -->
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Ilhas" />

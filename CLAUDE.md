@@ -61,7 +61,7 @@ Aparte del hub viven `/terminos`, `/privacidad` y `/cookies`. **No cuentan como 
 > mitad `img` de `.enlace__icono svg, .enlace__icono img`, y la página sí las
 > necesita. Reconstruir un `<style>` desde la referencia las borra en silencio.
 
-- Rama de trabajo: **`guia-pdf`**, que sale de `main`.
+- Rama de trabajo: **`medicion-ga4`**, que sale de `main`.
 - **`main` ya trae las iteraciones 10 a 19** y el link in bio: el **#18 se
   mergeó** y el **#20** metió la presentación de la masterclass.
 - **Ya no queda ningún PR abierto.** El **#21** entró a `main` el 6 sep 2026
@@ -78,6 +78,36 @@ Aparte del hub viven `/terminos`, `/privacidad` y `/cookies`. **No cuentan como 
   `Referrer-Policy` y `nosniff`. `ilhas.ai/jorge` sigue redirigiendo, y la
   presentación de la masterclass recibe `style-src 'self' 'unsafe-inline'`, así
   que sus 494 estilos en línea siguen pintando.
+- **MEDICIÓN: GA4 `G-ENCWN9XWT1`, y es la ÚNICA excepción a «cero JavaScript».**
+  Hasta el 6 sep 2026 las nueve páginas servían 0 bytes de JS. GA4 entra porque
+  sin medición no hay embudo; **nada más entra**. El menú, el desplegable de
+  «Aprender» y la banda Ilhas→Hilas siguen siendo CSS puro.
+  - El snippet va en **DOS lugares**: `src/layouts/Base.astro` (cubre las cinco
+    del hub y las tres legales) y `src/pages/jorgesierra.astro`, que **no usa
+    `Base.astro`** y si no se repite queda ciega — justo la del QR. Si cambia el
+    ID, son los dos.
+  - ⚠️ **El `gtag('config')` vive en `public/ga.js`, NO en línea.** El snippet
+    que da Google es un `<script>` inline y admitirlo obligaría a poner
+    `'unsafe-inline'` en `script-src`, que es la directiva que frena un XSS.
+    Sacándolo a un archivo propio la CSP se queda en `script-src 'self'
+    https://www.googletagmanager.com`. **No lo pegues en el `<head>`.**
+  - Las etiquetas llevan **`is:inline`**, que en Astro significa «no lo
+    empaquetes», no «vuélvelo código en línea»: siguen siendo `src` externos.
+    Sin eso el build falla.
+  - **La CSP se aflojó lo mínimo**, y está medido: `script-src` +
+    `googletagmanager.com`, `connect-src` + los tres hosts de
+    `google-analytics.com`/`analytics.google.com`, `img-src` + los dos de
+    `google-analytics.com`. **0 violaciones** en `/`, `/jorgesierra`, `/cookies`
+    y el deck, sirviendo con la política real.
+  - **Pone dos cookies**: `_ga` (2 años) y `_ga_ENCWN9XWT1`. Por eso
+    `/cookies` y `/privacidad` se reescribieron el 6 sep 2026 — la primera decía
+    literalmente «Ilhas.ai no coloca cookies».
+  - **El deck de la masterclass NO lleva GA4**: vive en `public/` como HTML
+    estático, no pasa por `Base.astro`, lleva `noindex` y se proyecta en vivo.
+  - ⚠️ **El flujo de GA4 está declarado como `https://ilhas.ai` (apex) y el
+    sitio canónico es `www.ilhas.ai`.** No rompe la medición —el ID es lo que
+    manda— pero conviene alinearlo en la consola de GA4.
+
 - **Los dos descargables de `/jorgesierra`:** `manual-ia-agentica.pdf` (24 pág,
   1.1 MB) y `numeros-que-pagan-la-nomina.pdf` (16 pág, **6.19 MB**). El segundo
   pesa de más porque **trae el texto trazado como curvas vectoriales, glifo por
