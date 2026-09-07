@@ -8,10 +8,11 @@
   },
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build",
+    "build": "astro build && npm run eventos",
     "preview": "astro preview",
     "astro": "astro",
-    "medios": "node --experimental-strip-types --disable-warning=ExperimentalWarning scripts/medios-check.mjs"
+    "medios": "node --experimental-strip-types --disable-warning=ExperimentalWarning scripts/medios-check.mjs",
+    "eventos": "node --experimental-strip-types --disable-warning=ExperimentalWarning scripts/eventos-check.mjs"
   },
   "dependencies": {
     "astro": "^7.2.4"

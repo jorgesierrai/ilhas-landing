@@ -149,9 +149,23 @@ const testimonio = porId("soluciones-testimonio-oncologia")!.atribucion!;
             sistema que tú entiendes y que corre solo.
           </p>
 
+          {/* `data-evento` es medición y NO se quita al reestilizar. Va en el
+              marcado y no colgado de `.btn-primary` justo para que sobreviva a
+              un cambio de clase, de copy o de orden. Ver src/data/eventos.ts;
+              `npm run eventos` avisa si alguno desaparece del build. */}
           <div class="hero__ctas">
-            <a href="/finanzas" class="btn btn-primary">Quiero aprenderlo</a>
-            <a href="/soluciones" class="btn btn-ghost-oscuro">
+            <a
+              href="/finanzas"
+              class="btn btn-primary"
+              data-evento="carril_elegir"
+              data-carril="aprender">Quiero aprenderlo</a
+            >
+            <a
+              href="/soluciones"
+              class="btn btn-ghost-oscuro"
+              data-evento="carril_elegir"
+              data-carril="implementar"
+            >
               Quiero implementarlo
             </a>
           </div>

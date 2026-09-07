@@ -42,7 +42,11 @@ const diagnosticoUrl = "mailto:hola@ilhas.ai?subject=Quiero%20un%20diagn%C3%B3st
             No somos una agencia de "implementación de IA". Traemos criterio de
             producto a un proceso que hoy se hace a mano.
           </p>
-          <a href={diagnosticoUrl} class="btn btn-primary hero-split__cta">
+          <a
+            href={diagnosticoUrl}
+            class="btn btn-primary hero-split__cta"
+            data-evento="diagnostico_agendar"
+          >
             Agendar un diagnóstico
           </a>
         </div>
@@ -139,7 +143,11 @@ const diagnosticoUrl = "mailto:hola@ilhas.ai?subject=Quiero%20un%20diagn%C3%B3st
         <p class="lead">
           Antes de hablar de precio hacemos un diagnóstico de tu caso.
         </p>
-        <a href={diagnosticoUrl} class="btn btn-primary">
+        <a
+          href={diagnosticoUrl}
+          class="btn btn-primary"
+          data-evento="diagnostico_agendar"
+        >
           Agendar un diagnóstico
         </a>
       </div>
