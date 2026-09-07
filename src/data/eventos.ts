@@ -16,12 +16,19 @@
  * renombre la clase — y no te avisa nadie.
  *
  * ─────────────────────────────────────────────────────────────────────────────
- * SON CUATRO. NO SE AGREGAN MÁS SIN UNA RAZÓN
+ * SON CINCO. NO SE AGREGAN MÁS SIN UNA RAZÓN
  * ─────────────────────────────────────────────────────────────────────────────
  * Cada evento que agregas es un evento que se puede romper, y la analítica rota
  * es peor que la ausente: te hace tomar decisiones con números que no
  * significan lo que crees. Estos cuatro se eligieron porque el sitio tiene dos
  * conversiones y una bifurcación; el resto es ruido.
+ *
+ * El quinto, `lista_espera_apuntarse`, entró el 6 sep 2026 y la razón queda
+ * escrita aquí y no implícita, que es justo el punto de este registro: apareció
+ * un paso del embudo que NO existía cuando se eligieron los cuatro. /webinar no
+ * existía. Sin él, el embudo era home → /finanzas → [clic medido] → /webinar →
+ * ciego, y el número más importante de esa página —cuántos de los que llegan sí
+ * abren el formulario— no se podría contestar.
  *
  * Lo que se descartó a propósito, y no se vuelve a proponer:
  *   · profundidad de scroll — la página cambia de largo cada iteración, así que
@@ -65,10 +72,14 @@ export const EVENTOS: Evento[] = [
   {
     id: "webinar_reservar",
     descripcion:
-      "La conversión del carril «aprender»: clic a eventos.ilhas.ai. Son tres " +
-      "enlaces — el hero de /finanzas, su cierre, y el pie del sitio. El de " +
-      "/finanzas ya lleva UTMs, así que HighLevel sabe de dónde vino; el evento " +
-      "sirve para verlo de ESTE lado, junto con el resto del embudo.",
+      "La conversión del carril «aprender»: el clic en «Reservar el webinar». " +
+      "Son los dos botones de /finanzas y el del pie del sitio. " +
+      "⚠️ DESDE EL 6 SEP 2026 ESE CLIC LLEVA A /webinar, la lista de espera, y " +
+      "ya NO a eventos.ilhas.ai: el registro todavía no abre. El evento sigue " +
+      "midiendo lo mismo —querer el webinar— y el destino final se distingue " +
+      "con el parámetro `link_url` que `ga.js` ya manda. El día que el registro " +
+      "abra, la constante `webinarUrl` de /finanzas vuelve a apuntar afuera y " +
+      "este evento no se entera: mide la intención, no la dirección.",
     // ⚠️ EL PIE SALE EN LAS OCHO PÁGINAS que usan `Base.astro`, así que este
     // evento aparece 8 veces por el pie MÁS 2 en el cuerpo de /finanzas. La
     // propuesta hablaba de «tres enlaces» contando ubicaciones lógicas, no
@@ -86,8 +97,11 @@ export const EVENTOS: Evento[] = [
     ],
     minimo: 10,
     seRompeSi:
-      "el webinar se muda de eventos.ilhas.ai. NO se rompe si cambia el texto " +
-      "del botón, o si se agrega un tercero.",
+      "desaparece alguno de los tres enlaces, o el pie deja de salir en las " +
+      "ocho páginas. NO se rompe si cambia el texto del botón, si se agrega un " +
+      "cuarto, ni si cambia el DESTINO — eso ya pasó una vez y el chequeo no " +
+      "lo caza, porque cuenta apariciones y no direcciones. Si vuelves a mover " +
+      "el destino, corrige esta ficha a mano.",
   },
   {
     id: "diagnostico_agendar",
@@ -125,5 +139,19 @@ export const EVENTOS: Evento[] = [
     seRompeSi:
       "cambia hola@ilhas.ai. NO se rompe si se mueve de sección o se agrega en " +
       "otra página.",
+  },
+  {
+    id: "lista_espera_apuntarse",
+    descripcion:
+      "El clic al formulario de Tally desde /webinar. Es el paso que hoy " +
+      "falta en el embudo: `webinar_reservar` mide que alguien quiso el " +
+      "webinar, éste mide que además dejó sus datos cuando se le dijo que " +
+      "todavía no abre. La caída entre los dos es el costo real de la espera.",
+    paginas: ["/webinar"],
+    minimo: 1,
+    seRompeSi:
+      "el registro abre y /webinar deja de ser lista de espera para volverse " +
+      "la página de registro. NO se rompe si cambia el copy del botón ni la " +
+      "URL del formulario.",
   },
 ];

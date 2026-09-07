@@ -61,7 +61,7 @@ Aparte del hub viven `/terminos`, `/privacidad` y `/cookies`. **No cuentan como 
 > mitad `img` de `.enlace__icono svg, .enlace__icono img`, y la página sí las
 > necesita. Reconstruir un `<style>` desde la referencia las borra en silencio.
 
-- Rama de trabajo: **`eventos-ga4`**, que sale de `main`.
+- Rama de trabajo: **`webinar-lista-espera`**, que sale de `eventos-ga4`.
 - **`main` ya trae las iteraciones 10 a 19** y el link in bio: el **#18 se
   mergeó** y el **#20** metió la presentación de la masterclass.
 - **Ya no queda ningún PR abierto.** El **#21** entró a `main` el 6 sep 2026
@@ -104,9 +104,28 @@ Aparte del hub viven `/terminos`, `/privacidad` y `/cookies`. **No cuentan como 
     literalmente «Ilhas.ai no coloca cookies».
   - **El deck de la masterclass NO lleva GA4**: vive en `public/` como HTML
     estático, no pasa por `Base.astro`, lleva `noindex` y se proyecta en vivo.
-  - **LOS CUATRO EVENTOS, desde el 6 sep 2026.** `carril_elegir` (los dos CTA
-    del hero, con parámetro `carril`), `webinar_reservar`, `diagnostico_agendar`
-    y `contacto_correo`. El registro es **`src/data/eventos.ts`** y el chequeo
+  - **`/webinar` — la lista de espera (6 sep 2026).** Los tres botones del
+    webinar —los dos de `/finanzas` y el del pie— ya **NO van a
+    `eventos.ilhas.ai`**: caen aquí, porque el registro todavía no abre. La
+    página dice la verdad en el primer renglón y recoge la lista con un
+    formulario de **Tally** (`GxGr82`), no de Google Forms.
+    - ⚠️ **No suavices el titular.** Un «¡Ya casi!» es el humo que este sitio
+      existe para no vender.
+    - ⚠️ **No le quites el `?origen=sitio`** al enlace del formulario: cae en un
+      campo oculto y sin él las respuestas llegan con el origen vacío.
+    - ⚠️ **No enlaza de vuelta a `/finanzas`**, y es a propósito: dos de las
+      tres puertas salen de ahí.
+    - Va **suelta, sin `Base.astro`**, como `/jorgesierra`. Y con
+      `<body class="espera-doc">`, porque Astro nunca scopea `body`.
+    - Se llama `/webinar` **a secas**: el día que el registro abra, esta misma
+      URL se vuelve la página de registro. Cambia el contenido, no la dirección.
+    - **`eventos.ilhas.ai` quedó sin enlaces desde las páginas que venden**, y
+      con ello se perdieron las UTMs que llevaba la constante `webinarUrl`. Los
+      de `/terminos`, `/privacidad` y `/cookies` NO se tocaron: ahí son
+      descriptivos y siguen siendo ciertos.
+  - **LOS CINCO EVENTOS, desde el 6 sep 2026.** `carril_elegir` (los dos CTA
+    del hero, con parámetro `carril`), `webinar_reservar`, `diagnostico_agendar`,
+    `contacto_correo` y `lista_espera_apuntarse`. El registro es **`src/data/eventos.ts`** y el chequeo
     **`npm run eventos`**, que corre DENTRO de `npm run build`.
     - Se cuelgan de un atributo **`data-evento`** en el marcado, **nunca de un
       selector CSS ni del texto del botón**: así sobreviven a un cambio de copy,
@@ -126,6 +145,9 @@ Aparte del hub viven `/terminos`, `/privacidad` y `/cookies`. **No cuentan como 
       GA4**: la página cambia de largo cada iteración, así que el 50% de hoy no
       es el del mes pasado y la serie histórica no significa nada. Los clics
       salientes se dejan.
+  - ⚠️ **EL ID DE GA4 VIVE EN TRES LUGARES**: `Base.astro`, `jorgesierra.astro`
+    y `webinar.astro`. Las dos páginas sueltas no heredan el `<head>` de Base.
+    Si cambia, son los tres.
   - ⚠️ **El flujo de GA4 está declarado como `https://ilhas.ai` (apex) y el
     sitio canónico es `www.ilhas.ai`.** No rompe la medición —el ID es lo que
     manda— pero conviene alinearlo en la consola de GA4.
