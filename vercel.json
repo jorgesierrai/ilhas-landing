@@ -5,6 +5,11 @@
       "source": "/jorge",
       "destination": "/jorgesierra",
       "permanent": false
+    },
+    {
+      "source": "/webinar",
+      "destination": "https://eventos.ilhas.ai/registro",
+      "permanent": false
     }
   ],
   "headers": [
