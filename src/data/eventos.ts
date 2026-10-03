@@ -74,12 +74,10 @@ export const EVENTOS: Evento[] = [
     descripcion:
       "La conversión del carril «aprender»: el clic en «Reservar el webinar». " +
       "Son los dos botones de /finanzas y el del pie del sitio. " +
-      "⚠️ DESDE EL 6 SEP 2026 ESE CLIC LLEVA A /webinar, la lista de espera, y " +
-      "ya NO a eventos.ilhas.ai: el registro todavía no abre. El evento sigue " +
-      "midiendo lo mismo —querer el webinar— y el destino final se distingue " +
-      "con el parámetro `link_url` que `ga.js` ya manda. El día que el registro " +
-      "abra, la constante `webinarUrl` de /finanzas vuelve a apuntar afuera y " +
-      "este evento no se entera: mide la intención, no la dirección.",
+      "Desde el 2 oct 2026 el clic lleva a eventos.ilhas.ai/registro (del 6 sep " +
+      "al 2 oct llevó a /webinar, la lista de espera). El evento mide lo mismo " +
+      "—querer el webinar— y el destino final se distingue con el parámetro " +
+      "`link_url` que `ga.js` ya manda: mide la intención, no la dirección.",
     // ⚠️ EL PIE SALE EN LAS OCHO PÁGINAS que usan `Base.astro`, así que este
     // evento aparece 8 veces por el pie MÁS 2 en el cuerpo de /finanzas. La
     // propuesta hablaba de «tres enlaces» contando ubicaciones lógicas, no

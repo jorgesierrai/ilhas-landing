@@ -38,7 +38,7 @@ Aparte del hub viven `/terminos`, `/privacidad` y `/cookies`. **No cuentan como 
 
 ## Estado del repositorio
 
-*Actualizado: 6 sep 2026 (medición · paso A: cabeceras, dominio canónico y sitemap).*
+*Actualizado: 2 oct 2026 (los botones del webinar van a `eventos.ilhas.ai/registro`).*
 
 > **Este bloque se actualiza en cada iteración, no al final.** Es lo primero que
 > lee una sesión nueva; si miente, la sesión construye sobre una foto vieja. Lo
@@ -61,7 +61,7 @@ Aparte del hub viven `/terminos`, `/privacidad` y `/cookies`. **No cuentan como 
 > mitad `img` de `.enlace__icono svg, .enlace__icono img`, y la página sí las
 > necesita. Reconstruir un `<style>` desde la referencia las borra en silencio.
 
-- Rama de trabajo: **`webinar-lista-espera`**, que sale de `eventos-ga4`.
+- Rama de trabajo: **`webinar-registro`**, que sale de `main`.
 - **`main` ya trae las iteraciones 10 a 19** y el link in bio: el **#18 se
   mergeó** y el **#20** metió la presentación de la masterclass.
 - **Ya no queda ningún PR abierto.** El **#21** entró a `main` el 6 sep 2026
@@ -104,6 +104,12 @@ Aparte del hub viven `/terminos`, `/privacidad` y `/cookies`. **No cuentan como 
     literalmente «Ilhas.ai no coloca cookies».
   - **El deck de la masterclass NO lleva GA4**: vive en `public/` como HTML
     estático, no pasa por `Base.astro`, lleva `noindex` y se proyecta en vivo.
+  - **2 oct 2026: el registro abrió.** Los tres botones del webinar —los dos de
+    `/finanzas` (con sus UTMs de vuelta) y el del pie— van a
+    **`https://eventos.ilhas.ai/registro`**. Ya **ninguna página enlaza a
+    `/webinar`**; la página sigue existiendo y en el sitemap, con el copy de
+    lista de espera — **falta que Jorge decida** si se vuelve redirect a
+    `eventos.ilhas.ai/registro` o se borra. Lo de abajo es historia.
   - **`/webinar` — la lista de espera (6 sep 2026).** Los tres botones del
     webinar —los dos de `/finanzas` y el del pie— ya **NO van a
     `eventos.ilhas.ai`**: caen aquí, porque el registro todavía no abre. La
