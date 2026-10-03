@@ -107,9 +107,12 @@ Aparte del hub viven `/terminos`, `/privacidad` y `/cookies`. **No cuentan como 
   - **2 oct 2026: el registro abrió.** Los tres botones del webinar —los dos de
     `/finanzas` (con sus UTMs de vuelta) y el del pie— van a
     **`https://eventos.ilhas.ai/registro`**. Ya **ninguna página enlaza a
-    `/webinar`**; la página sigue existiendo y en el sitemap, con el copy de
-    lista de espera — **falta que Jorge decida** si se vuelve redirect a
-    `eventos.ilhas.ai/registro` o se borra. Lo de abajo es historia.
+    `/webinar`**, y la URL **redirige (307) a `eventos.ilhas.ai/registro`**
+    desde `vercel.json` (Jorge, 2 oct 2026), para los links viejos o
+    compartidos. Salió del sitemap. `webinar.astro` sigue en el repo y se
+    construye, pero el redirect de Vercel corre antes que el archivo y nadie
+    la ve; no se borró porque `npm run eventos` cuenta
+    `lista_espera_apuntarse` en ella. Lo de abajo es historia.
   - **`/webinar` — la lista de espera (6 sep 2026).** Los tres botones del
     webinar —los dos de `/finanzas` y el del pie— ya **NO van a
     `eventos.ilhas.ai`**: caen aquí, porque el registro todavía no abre. La
