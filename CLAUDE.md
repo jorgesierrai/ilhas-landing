@@ -109,7 +109,8 @@ Aparte del hub viven `/terminos`, `/privacidad` y `/cookies`. **No cuentan como 
     **`https://eventos.ilhas.ai/registro`**. Ya **ninguna página enlaza a
     `/webinar`**, y la URL **redirige (307) a `eventos.ilhas.ai/registro`**
     desde `vercel.json` (Jorge, 2 oct 2026), para los links viejos o
-    compartidos. Salió del sitemap. `webinar.astro` sigue en el repo y se
+    compartidos —con y sin diagonal final: el `source` es `/webinar{/}?`,
+    porque `/webinar/` servía la página vieja con 200—. Salió del sitemap. `webinar.astro` sigue en el repo y se
     construye, pero el redirect de Vercel corre antes que el archivo y nadie
     la ve; no se borró porque `npm run eventos` cuenta
     `lista_espera_apuntarse` en ella. Lo de abajo es historia.
