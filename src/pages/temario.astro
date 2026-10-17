@@ -1,0 +1,622 @@
+---
+/**
+ * /temario — el temario completo de Ilhas Academy.
+ *
+ * La ÚNICA excepción a la regla 1 de CLAUDE.md (Jorge, 16 oct 2026): el sitio
+ * no explica el programa en ninguna otra página. Aquí sí, completo, y SIN
+ * costos de nada — ni del programa, ni de herramientas, planes o licencias.
+ *
+ * No va en el menú: es una URL para compartir por WhatsApp, Instagram y en el
+ * webinar, como /jorgesierra. Sí va en el sitemap.
+ *
+ * ⚠️ TRES DECISIONES DE JORGE DEL MISMO 16 OCT, que no se deshacen sin él:
+ *
+ *   1. DIRECTO AL TEMARIO («me quiero ir directamente al temario»): de la
+ *      entrada se pasa a los cursos. Se quitaron las tarjetas de «El programa
+ *      en una mirada», «Cómo se trabaja» con el diagrama de la ruta, «Para
+ *      quién es» y la banda de cierre.
+ *   2. SIN BOTONES NI WEBINAR («ellos ya pasaron por el webinar»): ni
+ *      «Reservar el webinar» ni «Ver el temario», tampoco en el pie.
+ *   3. QUE SE DIGIERA EN EL TELÉFONO («está muy saturado… lo más importante
+ *      son los módulos, las lecciones»): una sola columna centrada; cada curso
+ *      es un índice de módulos que se abren, con una lección por renglón (ver
+ *      Curso.astro); la entrada se quedó en título, frase y los dos números.
+ *
+ * ⚠️ AQUÍ NO SE ESCRIBE CONTENIDO DEL TEMARIO. Todo sale de
+ * `src/data/temario.md` —la exportación del doc maestro de Jorge— a través de
+ * `src/lib/temario.ts`. Para cambiar el temario se reemplaza ese archivo; lo de
+ * esta página es microcopy de interfaz («Índice», «Sobre este curso»…).
+ *
+ * Cero JavaScript propio: anclas para navegar, <details> para abrir y
+ * `position: sticky` para el índice. Lo único que carga es GA4, desde Base.
+ */
+import Base from "../layouts/Base.astro";
+import TarjetaPersona from "../components/TarjetaPersona.astro";
+import Curso from "../components/temario/Curso.astro";
+import Texto from "../components/temario/Texto.astro";
+import { MAESTROS } from "../data/personas";
+import md from "../data/temario.md?raw";
+import { leerTemario, descripcion, nombreCorto, quienEs } from "../lib/temario";
+
+const t = leerTemario(md);
+
+// El titular parte en los dos puntos: «Finanzas + IA:» en tinta y «de reportes
+// a decisiones» con el degradado (una frase clave por titular). El punto va
+// FUERA del <span> pero pegado a él: .text-gradient es inline y no deja un
+// corte de renglón entre la palabra y el punto, que es justo lo que le pasa al
+// titular del home (CLAUDE.md, «El punto huérfano»).
+const [titularA, ...titularResto] = t.frase.destacado.split(":");
+const titularB = titularResto.join(":").trim().replace(/\.$/, "");
+
+// Quién lo imparte: el nombre y la trayectoria salen del temario; la foto, las
+// cifras atribuidas, la distinción y las redes, de personas.ts. El rol de Jorge
+// aquí es «CEO de Ilhas» (Jorge, 16 oct 2026).
+const personas = t.imparten.personas.flatMap((p) => {
+  const quien = quienEs(p.nombre);
+  if (!quien) return [];
+  const m = MAESTROS[quien];
+  return [
+    {
+      ...m,
+      nombre: p.nombre,
+      rol: quien === "hijo" ? "CEO de Ilhas" : m.rol,
+      trayectoria: p.parrafos.join(" "),
+    },
+  ];
+});
+
+// Qué secciones trae el archivo. Jorge puede quitar una completa de su doc y la
+// página no debe dejar un titular vacío: la sección y su chip del índice se van
+// con ella. El temario en sí —el encabezado, la tabla y los cursos— no es
+// opcional: si falta, `npm run temario` detiene el build.
+const hay = {
+  alTerminar: t.alTerminar.items.length > 0,
+  recibes: t.recibes.items.length > 0,
+  imparten: personas.length > 0,
+  preguntas: t.preguntas.items.length > 0,
+};
+
+// El fondo alterna blanco y claro entre las bandas que SÍ existen: con un orden
+// fijo, quitar una dejaba a dos vecinas del mismo color fundidas en un bloque.
+const bandas = [
+  ...t.cursos.map((c) => c.id),
+  t.bonos && "bonos",
+  hay.alTerminar && "al-terminar",
+  hay.recibes && "recibes",
+  hay.imparten && "imparten",
+  hay.preguntas && "preguntas",
+].filter((b): b is string => typeof b === "string");
+const blanco = (banda: string) => bandas.indexOf(banda) % 2 === 0;
+---
+
+<Base title="Temario" description={descripcion(t)} sinWebinar>
+  <article class="temario">
+    <!-- 01 · Entrada: qué es y cuánto trae. Nada más. -->
+    <section class="section-y-sm bg-lavado entrada">
+      <div class="container">
+        <div class="columna">
+          <p class="kicker">{t.titulo}</p>
+          <h1>
+            {titularB ? (
+              <>
+                {titularA}: <span class="text-gradient">{titularB}</span>.
+              </>
+            ) : (
+              t.frase.destacado
+            )}
+          </h1>
+          <p class="lead entrada__lead">{t.frase.resto}</p>
+          {
+            t.totales && (
+              <p class="entrada__cifras">
+                <span>
+                  <b>{t.totales.cursos}</b> cursos
+                </span>
+                <span>
+                  <b>{t.totales.lecciones}</b> lecciones
+                </span>
+              </p>
+            )
+          }
+        </div>
+      </div>
+    </section>
+
+    <!-- 02 · Índice fijo: se pega bajo el header y acompaña todo el temario -->
+    <nav class="indice" id="indice" aria-label="Índice del temario">
+      <div class="container">
+        <ul class="indice__lista" role="list">
+          {
+            t.cursos.map((c) => (
+              <li>
+                <a href={`#${c.id}`}>{nombreCorto(c)}</a>
+              </li>
+            ))
+          }
+          {
+            t.bonos && (
+              <li>
+                <a href="#bonos">{t.bonos.titulo}</a>
+              </li>
+            )
+          }
+          {
+            hay.recibes && (
+              <li>
+                <a href="#recibes">Lo que recibes</a>
+              </li>
+            )
+          }
+          {
+            hay.imparten && (
+              <li>
+                <a href="#imparten">Quién lo imparte</a>
+              </li>
+            )
+          }
+          {
+            hay.preguntas && (
+              <li>
+                <a href="#preguntas">Preguntas</a>
+              </li>
+            )
+          }
+        </ul>
+      </div>
+    </nav>
+
+    <!-- 03 · El temario: cada curso -->
+    {
+      t.cursos.map((c) => (
+        <section class:list={["section-y", blanco(c.id) && "bg-white"]}>
+          <div class="container">
+            <Curso curso={c} />
+          </div>
+        </section>
+      ))
+    }
+
+    {
+      t.bonos && (
+        <section
+          class:list={["section-y", blanco("bonos") && "bg-white"]}
+          aria-labelledby="bonos-titulo"
+        >
+          <div class="container">
+            <div class="columna" id="bonos">
+              <h2 id="bonos-titulo">{t.bonos.titulo}</h2>
+              {t.bonos.intro.map((p) => <p class="lead">{p}</p>)}
+            </div>
+            <div class="bonos">
+              {t.bonos.cursos.map((c) => (
+                <Curso curso={c} nivel="h3" />
+              ))}
+            </div>
+          </div>
+        </section>
+      )
+    }
+
+    <!-- 04 · Al terminar, tienes -->
+    {
+      hay.alTerminar && (
+        <section class:list={["section-y", blanco("al-terminar") && "bg-white"]}>
+          <div class="container">
+            <div class="columna" id="al-terminar">
+              <h2>{t.alTerminar.titulo}</h2>
+              <ul class="logros" role="list">
+                {t.alTerminar.items.map((item) => (
+                  <li>
+                    <span class="logros__marca" aria-hidden="true" />
+                    <span>
+                      <Texto t={item} />
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </section>
+      )
+    }
+
+    <!-- 05 · Lo que recibes -->
+    {
+      hay.recibes && (
+        <section class:list={["section-y", blanco("recibes") && "bg-white"]}>
+          <div class="container">
+            <div class="columna" id="recibes">
+              <h2>{t.recibes.titulo}</h2>
+              <ul class="recibes" role="list">
+                {t.recibes.items.map((r) => (
+                  <li class="recibe" id={r.id}>
+                    <h3 class="recibe__titulo">{r.titulo}</h3>
+                    <p class="recibe__texto">
+                      <Texto t={r.texto} />
+                    </p>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </section>
+      )
+    }
+
+    <!-- 06 · Quién lo imparte -->
+    {
+      hay.imparten && (
+        <section class:list={["section-y", blanco("imparten") && "bg-white"]}>
+          <div class="container" id="imparten">
+            <div class="imparten">
+              <h2>{t.imparten.titulo}</h2>
+              <div class="imparten__tarjetas">
+                {personas.map((p) => (
+                  <TarjetaPersona
+                    nombre={p.nombre}
+                    rol={p.rol}
+                    trayectoria={p.trayectoria}
+                    atribuciones={p.atribuciones}
+                    foto={p.foto}
+                    redes={p.redes}
+                    distincion={p.distincion}
+                  />
+                ))}
+              </div>
+              <p class="imparten__enlaces">
+                <a href="/">
+                  Conoce Ilhas <span aria-hidden="true">→</span>
+                </a>
+                <a href="/jorgesierra">
+                  Jorge en redes <span aria-hidden="true">→</span>
+                </a>
+              </p>
+            </div>
+          </div>
+        </section>
+      )
+    }
+
+    <!-- 07 · Preguntas frecuentes -->
+    {
+      hay.preguntas && (
+        <section class:list={["section-y", blanco("preguntas") && "bg-white"]}>
+          <div class="container">
+            <div class="columna" id="preguntas">
+              <h2>{t.preguntas.titulo}</h2>
+              <div class="preguntas__lista">
+                {t.preguntas.items.map((q) => (
+                  <details class="pregunta">
+                    <summary>{q.pregunta}</summary>
+                    <p>
+                      <Texto t={q.respuesta} />
+                    </p>
+                  </details>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+      )
+    }
+  </article>
+</Base>
+
+<style>
+  /* --- Lo que mide el cromo pegado arriba ------------------------------------
+     El header del sitio (Nav.astro) es sticky y su alto no vive en ningún
+     token: sale de su padding (1 rem arriba y abajo) más la hamburguesa o el
+     botón «Hablemos», y su filete. Medido el 16 oct 2026: 75 px en teléfono y
+     74.6 en escritorio. Va 74.4: medio píxel por DEBAJO, para que el índice
+     quede tapado por el header (z-index 40 contra 30) y nunca deje una rendija
+     por la que se vea pasar el contenido. Si el header cambia de alto, cambia
+     aquí. El índice mide 61 px (chips de 44 + 8 arriba y abajo + filete). */
+  .temario {
+    --alto-header: 4.65rem;
+    --alto-indice: 3.8125rem;
+  }
+
+  /* Cualquier ancla de la página —curso, sección— aterriza debajo del header y
+     del índice, no tapada por ellos. Las de módulo y lección llevan un margen
+     mayor en Curso.astro, para que se vea su renglón de título. */
+  .temario :global([id]) {
+    scroll-margin-top: calc(var(--alto-header) + var(--alto-indice) + 1rem);
+  }
+
+  .temario #indice {
+    scroll-margin-top: var(--alto-header);
+  }
+
+  /* Una sola columna de lectura, centrada, la misma de los cursos (46 rem en
+     Curso.astro): la página se lee como un documento. */
+  .columna {
+    max-width: 46rem;
+    margin-inline: auto;
+  }
+
+  /* --- 01 · Entrada --------------------------------------------------------- */
+  .entrada .kicker {
+    margin-bottom: 0.75rem;
+  }
+
+  .entrada h1 {
+    font-size: clamp(2rem, 5.2vw, 3.5rem);
+    line-height: 1.05;
+  }
+
+  .entrada__lead {
+    margin-top: 0.9rem;
+    font-size: clamp(1rem, 1.6vw, 1.1875rem);
+    line-height: 1.55;
+  }
+
+  .entrada__cifras {
+    display: flex;
+    gap: 1.75rem;
+    margin-top: 1.25rem;
+    font-size: 0.9375rem;
+    color: var(--ilhas-text);
+  }
+
+  .entrada__cifras b {
+    margin-right: 0.3rem;
+    font-family: var(--ilhas-font-display);
+    font-weight: 600;
+    font-size: 1.75rem;
+    letter-spacing: var(--ilhas-tracking-display);
+    color: var(--ilhas-primary);
+  }
+
+  /* --- 02 · Índice fijo ------------------------------------------------------ */
+  .indice {
+    position: sticky;
+    top: var(--alto-header);
+    z-index: 30;
+    background: var(--ilhas-light);
+    border-bottom: 1px solid var(--ilhas-gray);
+  }
+
+  /* La lista sangra hasta el borde de la pantalla para que los chips se vayan
+     por debajo del canto al hacer scroll; el degradado de la máscara avisa que
+     hay más a la derecha. */
+  .indice__lista {
+    list-style: none;
+    margin: 0 calc(var(--ilhas-gutter) * -1);
+    padding: 0.5rem var(--ilhas-gutter);
+    display: flex;
+    gap: 0.5rem;
+    overflow-x: auto;
+    scroll-snap-type: x proximity;
+    scroll-padding-inline: var(--ilhas-gutter);
+    scrollbar-width: none;
+    mask-image: linear-gradient(
+      to right,
+      transparent 0,
+      #000 var(--ilhas-gutter),
+      #000 calc(100% - 2.5rem),
+      transparent 100%
+    );
+  }
+
+  .indice__lista::-webkit-scrollbar {
+    display: none;
+  }
+
+  .indice__lista li {
+    flex: 0 0 auto;
+    scroll-snap-align: start;
+  }
+
+  .indice__lista a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 2.75rem;
+    padding: 0 1rem;
+    border-radius: var(--ilhas-radius-pill);
+    border: 1px solid var(--ilhas-gray);
+    background: var(--ilhas-white);
+    font-size: 0.875rem;
+    font-weight: 500;
+    white-space: nowrap;
+    text-decoration: none;
+    color: var(--ilhas-dark);
+    transition: border-color 0.18s ease, color 0.18s ease;
+  }
+
+  .indice__lista a:hover {
+    border-color: var(--ilhas-primary);
+    color: var(--ilhas-primary);
+  }
+
+  @media (min-width: 1100px) {
+    .indice__lista {
+      mask-image: none;
+      justify-content: center;
+    }
+  }
+
+  /* --- 03 · Bonos -------------------------------------------------------------- */
+  .bonos {
+    display: grid;
+    gap: 3rem;
+    margin-top: 2rem;
+  }
+
+  .bonos > :global(* + *) {
+    padding-top: 3rem;
+    border-top: 1px solid var(--ilhas-gray);
+  }
+
+  /* --- 04 · Al terminar, tienes ----------------------------------------------- */
+  .logros {
+    list-style: none;
+    margin: 1.5rem 0 0;
+    padding: 0;
+    display: grid;
+    gap: 0.9rem;
+  }
+
+  .logros li {
+    display: flex;
+    gap: 0.85rem;
+    align-items: flex-start;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: var(--ilhas-dark);
+  }
+
+  .logros__marca {
+    position: relative;
+    flex: 0 0 auto;
+    width: 1.375rem;
+    height: 1.375rem;
+    margin-top: 0.1rem;
+    border-radius: 50%;
+    background: var(--ilhas-primary);
+  }
+
+  .logros__marca::before {
+    content: "";
+    position: absolute;
+    left: 0.5rem;
+    top: 0.28rem;
+    width: 0.375rem;
+    height: 0.65rem;
+    border: solid var(--ilhas-white);
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+  }
+
+  /* --- 05 · Lo que recibes: lista, no rejilla de tarjetas ------------------------ */
+  .recibes {
+    list-style: none;
+    margin: 1.5rem 0 0;
+    padding: 0;
+  }
+
+  .recibe {
+    padding: 1rem 0;
+    border-top: 1px solid var(--ilhas-gray);
+  }
+
+  .recibe:last-child {
+    border-bottom: 1px solid var(--ilhas-gray);
+  }
+
+  .recibe:target .recibe__titulo {
+    color: var(--ilhas-primary-dark);
+  }
+
+  .recibe__titulo {
+    font-size: 1.0625rem;
+    line-height: 1.3;
+  }
+
+  .recibe__texto {
+    margin-top: 0.35rem;
+    font-size: 0.9375rem;
+    line-height: 1.55;
+  }
+
+  /* --- 06 · Quién lo imparte ------------------------------------------------------ */
+  .imparten {
+    max-width: 52rem;
+    margin-inline: auto;
+  }
+
+  .imparten h2 {
+    text-align: center;
+    margin-inline: auto;
+  }
+
+  .imparten__tarjetas {
+    display: grid;
+    gap: 1.25rem;
+    margin-top: 2rem;
+  }
+
+  .imparten__enlaces {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.5rem 2rem;
+    margin: 1.5rem auto 0;
+  }
+
+  .imparten__enlaces a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    min-height: 2.75rem;
+    font-size: 0.9375rem;
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  @media (min-width: 640px) {
+    .imparten__tarjetas {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    /* Si el temario trae una sola persona, su tarjeta va al centro y no pegada
+       a la izquierda de una rejilla de dos. */
+    .imparten__tarjetas > :global(:only-child) {
+      grid-column: 1 / -1;
+      justify-self: center;
+      width: min(100%, 25rem);
+    }
+  }
+
+  /* --- 07 · Preguntas frecuentes ---------------------------------------------------- */
+  .preguntas__lista {
+    display: grid;
+    gap: 0.6rem;
+    margin-top: 1.5rem;
+  }
+
+  /* Regla de oro de base.css: una tarjeta nunca comparte fondo con su sección.
+     Blanca con filete sobre claro; clara sobre blanco. */
+  .pregunta {
+    background: var(--ilhas-white);
+    border: 1px solid var(--ilhas-gray);
+    border-radius: var(--ilhas-radius-card);
+  }
+
+  .bg-white .pregunta {
+    background: var(--ilhas-light);
+  }
+
+  .pregunta summary {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+    min-height: 2.75rem;
+    padding: 1rem 1.25rem;
+    cursor: pointer;
+    list-style: none;
+    font-weight: 600;
+    color: var(--ilhas-dark);
+    border-radius: var(--ilhas-radius-card);
+  }
+
+  .pregunta summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .pregunta summary::after {
+    content: "+";
+    flex-shrink: 0;
+    font-family: var(--ilhas-font-display);
+    color: var(--ilhas-primary);
+  }
+
+  .pregunta[open] summary::after {
+    content: "–";
+  }
+
+  .pregunta p {
+    padding: 0 1.25rem 1.1rem;
+    font-size: 0.9375rem;
+  }
+</style>

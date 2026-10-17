@@ -1,0 +1,582 @@
+---
+/**
+ * Un curso del temario, pensado para leerse en el teléfono como un ÍNDICE.
+ *
+ * Jorge, 16 oct 2026: «está muy saturado… la mayoría lo van a leer en el
+ * celular… lo más importante son los módulos, las lecciones». Por eso:
+ *
+ *   · el encabezado es corto: «Curso N», el nombre, la pregunta que resuelve y
+ *     una línea con cuántas lecciones trae;
+ *   · el texto largo del curso («Cómo trabajas», «Antes de empezar», «Al
+ *     terminar tienes» y, en el Bootcamp, las 5 fases) vive en un «Sobre este
+ *     curso» cerrado;
+ *   · los módulos son filas que se abren (el primero, abierto), y adentro cada
+ *     lección es UN renglón —código y título—; la descripción y el «Te llevas»
+ *     salen al tocarla.
+ *
+ * Todo sale de `src/lib/temario.ts`; aquí no se escribe una sola palabra del
+ * curso, sólo microcopy de interfaz («Sobre este curso», «N lecciones»).
+ *
+ * ENLACES DIRECTOS: el id de cada lección (`#bootcamp-h2`) y de cada módulo
+ * (`#bootcamp-h`) va DENTRO de su <details>, no en él. Así, al llegar por el
+ * enlace, el navegador abre el módulo y la lección (revela los <details> que
+ * envuelven al destino) y el `scroll-margin` deja ver el renglón del título.
+ */
+import type { Curso, Leccion } from "../../lib/temario";
+import { contarLecciones, lecciones } from "../../lib/temario";
+import Texto from "./Texto.astro";
+
+interface Props {
+  curso: Curso;
+  /** `h3` para los bonos, que viven dentro de la sección «Bonos». */
+  nivel?: "h2" | "h3";
+}
+
+const { curso: c, nivel = "h2" } = Astro.props;
+const Titulo = nivel;
+const TituloGrupo = nivel === "h2" ? "h3" : "h4";
+
+// La Masterclass lista sus módulos, no sus lecciones: su grupo único se llama
+// por lo que trae («Los 9 módulos») y la cuenta dice las lecciones declaradas.
+const listaModulos = c.grupos.length === 0 && c.declaradas.modulos !== null;
+
+// La línea de datos bajo el título: lo que el curso declara en negritas
+// («9 módulos · 37 lecciones · 100% finanzas»), sin el punto final.
+const datos = c.destacado.replace(/\.$/, "").trim();
+
+interface GrupoVista {
+  id?: string;
+  /** «I», «L»… cuando la etiqueta es una sola letra: va en su cuadro. */
+  letra: string | null;
+  /** «Nivel 1», «Módulo 2»: va arriba del nombre, en chico. */
+  etiqueta: string | null;
+  nombre: string;
+  cuenta: string;
+  descripcion: string | null;
+  lecciones: Leccion[];
+  abierto: boolean;
+}
+
+// Un curso sin `###` (la Masterclass, los bonos) se pinta como un solo grupo
+// abierto: así todos los cursos se recorren igual.
+const grupos: GrupoVista[] = c.grupos.length
+  ? c.grupos.map((g, i) => {
+      const letra = g.nombre && /^[A-Z]$/.test(g.etiqueta) ? g.etiqueta : null;
+      return {
+        id: g.id,
+        letra,
+        etiqueta: g.nombre && !letra ? g.etiqueta : null,
+        nombre: g.nombre ?? g.etiqueta,
+        cuenta: lecciones(g.lecciones.length),
+        descripcion: g.descripcion,
+        lecciones: g.lecciones,
+        abierto: i === 0,
+      };
+    })
+  : [
+      {
+        letra: null,
+        etiqueta: null,
+        nombre: listaModulos
+          ? `Los ${c.lecciones.length} módulos`
+          : c.lecciones.length === 1
+            ? "La lección"
+            : `Las ${contarLecciones(c)} lecciones`,
+        cuenta:
+          listaModulos && c.declaradas.lecciones !== null
+            ? lecciones(c.declaradas.lecciones)
+            : lecciones(c.lecciones.length),
+        descripcion: null,
+        lecciones: c.lecciones,
+        abierto: true,
+      },
+    ];
+
+const haySobre = Boolean(
+  c.entrada || c.notas.length || c.comoTrabajas || c.antesDeEmpezar || c.alTerminar || c.fases,
+);
+---
+
+<article class="curso" id={c.id} aria-labelledby={`${c.id}-titulo`}>
+  <header class="curso__cabeza">
+    <p class="curso__numero">{c.esBono ? "Bono" : `Curso ${c.orden}`}</p>
+    <Titulo id={`${c.id}-titulo`} class:list={["curso__nombre", nivel === "h3" && "curso__nombre--bono"]}>
+      {c.nombre}
+    </Titulo>
+    {c.subtitulo && <p class="curso__subtitulo">{c.subtitulo}</p>}
+    {c.teResuelve && <p class="curso__pregunta">{c.teResuelve}</p>}
+    {datos && <p class="curso__datos">{datos}</p>}
+  </header>
+
+  {
+    haySobre && (
+      <details class="sobre">
+        <summary>Sobre este curso</summary>
+        <div class="sobre__cuerpo">
+          {c.entrada && (
+            <p>
+              <Texto t={c.entrada} />
+            </p>
+          )}
+          {c.notas.map((n) => (
+            <p>
+              <Texto t={n} />
+            </p>
+          ))}
+          {c.comoTrabajas && (
+            <p>
+              <b>Cómo trabajas.</b> <Texto t={c.comoTrabajas} />
+            </p>
+          )}
+          {c.antesDeEmpezar && (
+            <p>
+              <b>Antes de empezar.</b> <Texto t={c.antesDeEmpezar} />
+            </p>
+          )}
+          {c.fases && (
+            <div class="sobre__fases">
+              <p>
+                <b>{c.fases.titulo}</b>
+              </p>
+              <ol role="list">
+                {c.fases.filas.map((f) => (
+                  <li>
+                    <span class="sobre__letra" aria-hidden="true">
+                      {f.letra ?? "·"}
+                    </span>
+                    <span>
+                      <b>{f.nombre}.</b> {f.queHaces}. <em>Sales con:</em> {f.conQueSales}.
+                    </span>
+                  </li>
+                ))}
+              </ol>
+            </div>
+          )}
+          {c.alTerminar && (
+            <p class="sobre__logro">
+              <b>Al terminar tienes:</b> <Texto t={c.alTerminar} />
+            </p>
+          )}
+        </div>
+      </details>
+    )
+  }
+
+  <div class="modulos">
+    {
+      grupos.map((g) => (
+        <details class="grupo" open={g.abierto}>
+          <summary>
+            {g.letra && (
+              <span class="grupo__letra" aria-hidden="true">
+                {g.letra}
+              </span>
+            )}
+            <span class="grupo__textos">
+              <span class="grupo__meta">
+                {g.etiqueta && `${g.etiqueta} · `}
+                {g.cuenta}
+              </span>
+              <TituloGrupo class="grupo__titulo">
+                {g.letra && <span class="visually-hidden">{`${g.letra} · `}</span>}
+                {g.nombre}
+              </TituloGrupo>
+            </span>
+          </summary>
+          {g.id && <div class="ancla-grupo" id={g.id} />}
+          {g.descripcion && (
+            <p class="grupo__desc">
+              <Texto t={g.descripcion} />
+            </p>
+          )}
+          <ol class="lecciones" role="list">
+            {g.lecciones.map((l) => (
+              <li>
+                <details class="leccion">
+                  <summary>
+                    <span class="leccion__codigo">{l.codigo}</span>
+                    <span class="leccion__titulo">{l.titulo}</span>
+                  </summary>
+                  <div class="leccion__detalle" id={l.id}>
+                    {l.descripcion && (
+                      <p>
+                        <Texto t={l.descripcion} />
+                      </p>
+                    )}
+                    {l.teLlevas && (
+                      <p class="leccion__llevas">
+                        <b>Te llevas:</b> <Texto t={l.teLlevas} />
+                      </p>
+                    )}
+                  </div>
+                </details>
+              </li>
+            ))}
+          </ol>
+        </details>
+      ))
+    }
+  </div>
+
+  <p class="curso__volver">
+    <a href="#indice"><span aria-hidden="true">↑</span> Índice</a>
+  </p>
+</article>
+
+<style>
+  /* Una sola columna de lectura, centrada, igual en teléfono y en escritorio:
+     el temario se lee como un documento, no como una página de venta. */
+  .curso {
+    max-width: 46rem;
+    margin-inline: auto;
+  }
+
+  /* --- Encabezado ---------------------------------------------------------- */
+
+  /* «Curso 1», «Bono»: la marca de en qué parte del temario vas. Píldora
+     sólida y bastante más grande que un kicker (Jorge, 16 oct 2026: «que sea
+     más visible»); es lo primero que se ve al pasar de un curso al siguiente.
+     Blanco sobre --ilhas-primary mide 5.3:1. */
+  .curso__numero {
+    display: inline-flex;
+    align-items: center;
+    margin-bottom: 1rem;
+    padding: 0.45rem 1.1rem;
+    border-radius: var(--ilhas-radius-pill);
+    background: var(--ilhas-primary);
+    color: var(--ilhas-white);
+    font-family: var(--ilhas-font-body);
+    font-weight: 600;
+    font-size: 1rem;
+    line-height: 1.3;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    box-shadow: 0 8px 20px rgba(122, 60, 255, 0.22);
+  }
+
+  @media (min-width: 1024px) {
+    .curso__numero {
+      padding: 0.5rem 1.25rem;
+      font-size: 1.125rem;
+    }
+  }
+
+  .curso__nombre--bono {
+    font-size: clamp(1.5rem, 3vw, 1.875rem);
+  }
+
+  .curso__subtitulo {
+    margin-top: 0.5rem;
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--ilhas-text);
+  }
+
+  /* La pregunta de «Te resuelve»: la promesa del curso, con el filete del
+     degradado. El filete es decoración —nunca color de texto—, así que el
+     cian no compromete el contraste. */
+  .curso__pregunta {
+    margin-top: 1rem;
+    padding-left: 0.9rem;
+    border-left: 3px solid transparent;
+    border-image: var(--ilhas-gradient) 1;
+    font-family: var(--ilhas-font-display);
+    font-weight: 600;
+    font-size: clamp(1.125rem, 2.2vw, 1.375rem);
+    line-height: 1.3;
+    letter-spacing: var(--ilhas-tracking-display);
+    color: var(--ilhas-dark);
+  }
+
+  .curso__datos {
+    margin-top: 0.85rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--ilhas-text);
+  }
+
+  /* --- «Sobre este curso»: el texto largo, cerrado ---------------------------- */
+  .sobre {
+    margin-top: 1.25rem;
+  }
+
+  .sobre > summary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    min-height: 2.75rem;
+    cursor: pointer;
+    list-style: none;
+    font-size: 0.9375rem;
+    font-weight: 600;
+    color: var(--ilhas-primary-dark);
+  }
+
+  .sobre > summary::-webkit-details-marker {
+    display: none;
+  }
+
+  /* La flecha, dibujada: un glifo cambia de forma según la fuente del sistema. */
+  .sobre > summary::after {
+    content: "";
+    width: 0.45rem;
+    height: 0.45rem;
+    border: solid currentColor;
+    border-width: 0 2px 2px 0;
+    transform: translateY(-0.12rem) rotate(45deg);
+    transition: transform 0.2s ease;
+  }
+
+  .sobre[open] > summary::after {
+    transform: translateY(0.12rem) rotate(-135deg);
+  }
+
+  .sobre__cuerpo {
+    display: grid;
+    gap: 0.85rem;
+    padding: 0.25rem 0 0.5rem;
+    font-size: 0.9375rem;
+    line-height: 1.6;
+  }
+
+  .sobre__cuerpo b {
+    font-weight: 600;
+    color: var(--ilhas-dark);
+  }
+
+  .sobre__fases ol {
+    list-style: none;
+    margin: 0.5rem 0 0;
+    padding: 0;
+    display: grid;
+    gap: 0.6rem;
+  }
+
+  .sobre__fases li {
+    display: flex;
+    gap: 0.75rem;
+  }
+
+  .sobre__letra {
+    flex: 0 0 1.5rem;
+    font-family: var(--ilhas-font-display);
+    font-weight: 600;
+    font-size: 1.125rem;
+    line-height: 1.4;
+    color: var(--ilhas-primary-dark);
+  }
+
+  .sobre__fases em {
+    font-style: normal;
+    font-weight: 600;
+    color: var(--ilhas-dark);
+  }
+
+  .sobre__logro {
+    padding: 0.85rem 1rem;
+    border-radius: 0.75rem;
+    background: var(--ilhas-primary-10);
+    color: var(--ilhas-dark);
+  }
+
+  /* --- Módulos ------------------------------------------------------------- */
+  .modulos {
+    display: grid;
+    gap: 0.6rem;
+    margin-top: 1.25rem;
+  }
+
+  .grupo {
+    background: var(--ilhas-white);
+    border: 1px solid var(--ilhas-gray);
+    border-radius: var(--ilhas-radius-card);
+  }
+
+  :global(.bg-white) .grupo {
+    background: var(--ilhas-light);
+  }
+
+  .grupo > summary {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    min-height: 3.75rem;
+    padding: 0.8rem 1.1rem;
+    cursor: pointer;
+    list-style: none;
+    border-radius: var(--ilhas-radius-card);
+  }
+
+  .grupo > summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .grupo > summary::after {
+    content: "";
+    flex: 0 0 auto;
+    margin-left: auto;
+    width: 0.5rem;
+    height: 0.5rem;
+    border: solid var(--ilhas-primary);
+    border-width: 0 2px 2px 0;
+    transform: translateY(-0.15rem) rotate(45deg);
+    transition: transform 0.2s ease;
+  }
+
+  .grupo[open] > summary::after {
+    transform: translateY(0.15rem) rotate(-135deg);
+  }
+
+  /* La letra de la fase (I·L·H·A·S) en su cuadro: es la identidad del
+     Bootcamp, y en una lista se reconoce de un vistazo. */
+  .grupo__letra {
+    flex: 0 0 auto;
+    display: grid;
+    place-items: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 0.75rem;
+    background: var(--ilhas-primary-10);
+    font-family: var(--ilhas-font-display);
+    font-weight: 600;
+    font-size: 1.25rem;
+    color: var(--ilhas-primary-dark);
+  }
+
+  .grupo__textos {
+    display: grid;
+    gap: 0.15rem;
+    min-width: 0;
+  }
+
+  .grupo__meta {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--ilhas-primary-dark);
+  }
+
+  .grupo__titulo {
+    font-size: 1.0625rem;
+    line-height: 1.3;
+  }
+
+  .grupo__desc {
+    padding: 0 1.1rem 0.5rem;
+    font-size: 0.9375rem;
+    line-height: 1.55;
+  }
+
+  /* --- Lecciones: un renglón cada una --------------------------------------- */
+  .lecciones {
+    list-style: none;
+    margin: 0;
+    padding: 0 1.1rem 0.4rem;
+  }
+
+  .lecciones > li + li {
+    border-top: 1px solid var(--ilhas-gray);
+  }
+
+  .lecciones > li:first-child {
+    border-top: 1px solid var(--ilhas-gray);
+  }
+
+  .leccion > summary {
+    display: flex;
+    align-items: baseline;
+    gap: 0.75rem;
+    min-height: 2.75rem;
+    padding: 0.75rem 0;
+    cursor: pointer;
+    list-style: none;
+  }
+
+  .leccion > summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .leccion > summary::after {
+    content: "+";
+    flex: 0 0 auto;
+    margin-left: auto;
+    font-family: var(--ilhas-font-display);
+    font-size: 1.125rem;
+    line-height: 1;
+    color: #8a8a97;
+  }
+
+  .leccion[open] > summary::after {
+    content: "–";
+    color: var(--ilhas-primary);
+  }
+
+  .leccion__codigo {
+    flex: 0 0 2.6rem;
+    font-family: var(--ilhas-font-display);
+    font-weight: 600;
+    font-size: 0.875rem;
+    color: var(--ilhas-primary-dark);
+  }
+
+  .leccion__titulo {
+    font-size: 1rem;
+    line-height: 1.4;
+    font-weight: 500;
+    color: var(--ilhas-dark);
+  }
+
+  .leccion[open] .leccion__titulo {
+    font-weight: 600;
+  }
+
+  .leccion__detalle {
+    display: grid;
+    gap: 0.6rem;
+    padding: 0 0 1rem 3.35rem;
+    font-size: 0.9375rem;
+    line-height: 1.55;
+  }
+
+  .leccion__llevas b {
+    font-weight: 600;
+    color: var(--ilhas-primary-dark);
+  }
+
+  .leccion__llevas {
+    color: var(--ilhas-dark);
+  }
+
+  /* Al llegar por un enlace directo, el destino es el detalle de la lección
+     (o el arranque del módulo): este margen extra deja ver su renglón de
+     título debajo del header y del índice, en vez de esconderlo. 7.5 rem
+     alcanzan para un título de cuatro renglones en un teléfono de 390 px
+     (medido: «Tu modelo en Excel: las fórmulas calculan, la IA explica» ocupa
+     tres, 91 px). Va con dos clases para ganarle a la regla general de anclas
+     de la página. */
+  .leccion > .leccion__detalle,
+  .grupo > .ancla-grupo {
+    scroll-margin-top: calc(var(--alto-header, 0px) + var(--alto-indice, 0px) + 7.5rem);
+  }
+
+  .curso__volver {
+    margin-top: 0.75rem;
+  }
+
+  .curso__volver a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    min-height: 2.75rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  @media (max-width: 480px) {
+    .leccion__detalle {
+      padding-left: 0;
+    }
+  }
+</style>

@@ -67,7 +67,9 @@ El webinar y el programa son **un solo embudo**, no dos productos. El sitio solo
                           LA COSTURA ESTÁ AQUÍ
 ```
 
-**La costura está entre el 03 y el 04.** El sitio manda con un clic y ya: no explica el webinar, ni el temario, ni el precio, ni los bonos, ni la oferta. Si lo explica de los dos lados, acabas manteniendo dos copies que se desincronizan en tres semanas.
+**La costura está entre el 03 y el 04.** El sitio manda con un clic y ya: no explica el webinar, ni el precio, ni los bonos, ni la oferta. Si lo explica de los dos lados, acabas manteniendo dos copies que se desincronizan en tres semanas.
+
+**Una sola excepción: `/temario`** (Jorge, 16 oct 2026). Publica el temario completo, generado del doc maestro de Jorge (`src/data/temario.md`), **sin costos de nada** y sin condiciones de compra. Esquiva el problema de las dos copias porque no es una segunda copia: es la exportación del mismo doc, y un chequeo en el build (`npm run temario`) no deja publicarla si no cuadra. Es una URL para compartir —por WhatsApp, Instagram y en el webinar—, fuera del menú; ninguna otra página repite el temario. Quien llega a ella **ya pasó por el webinar**, así que no lleva botón al webinar, ni siquiera en el pie. Se actualiza así: Jorge cambia el doc maestro → exporta a Markdown → reemplaza `src/data/temario.md` → `npm run build` → PR. Ver `02-paginas.md` § `/temario`.
 
 Implicaciones técnicas:
 
@@ -79,7 +81,7 @@ Implicaciones técnicas:
 
 ## Reglas que no se rompen
 
-1. **El sitio nunca explica el webinar ni el programa.** Manda a GHL con un clic.
+1. **El sitio no vende el programa.** Manda a GHL con un clic: precio, oferta y compra viven allá. Única excepción: `/temario`, que explica el programa completo y sin costos (ver arriba).
 2. **Nada de la oferta del webinar sale gratis.** El Radar y su scoring se quedan del otro lado del pago. Si el sitio lo regala, el webinar deja de tener razón de existir.
 3. **No se anuncian islas futuras.** Ni con etiqueta de "próximamente". Cinco islas vacías se leen como promesa; una isla completa sobre un método sólido se lee como prueba.
 4. **Los números se atribuyen, no se suman.** Salvo en `/finanzas`, donde la fusión padre-hijo es el pitch.

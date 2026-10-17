@@ -73,16 +73,21 @@ export const EVENTOS: Evento[] = [
     id: "webinar_reservar",
     descripcion:
       "La conversión del carril «aprender»: el clic en «Reservar el webinar». " +
-      "Son los dos botones de /finanzas y el del pie del sitio. " +
+      "Son los dos botones de /finanzas y el del pie del sitio. /temario NO " +
+      "lleva ninguno, ni en el pie: quien llega ahí ya pasó por el webinar " +
+      "(Jorge, 16 oct 2026). " +
       "Desde el 2 oct 2026 el clic lleva a eventos.ilhas.ai/registro (del 6 sep " +
       "al 2 oct llevó a /webinar, la lista de espera). El evento mide lo mismo " +
       "—querer el webinar— y el destino final se distingue con el parámetro " +
       "`link_url` que `ga.js` ya manda: mide la intención, no la dirección.",
-    // ⚠️ EL PIE SALE EN LAS OCHO PÁGINAS que usan `Base.astro`, así que este
-    // evento aparece 8 veces por el pie MÁS 2 en el cuerpo de /finanzas. La
-    // propuesta hablaba de «tres enlaces» contando ubicaciones lógicas, no
-    // apariciones en el build — y `npm run eventos` lo cazó a la primera.
-    // `/jorgesierra` no cuenta: no lleva el pie del sitio.
+    // ⚠️ EL PIE SALE EN LAS NUEVE PÁGINAS que usan `Base.astro`, pero en
+    // /temario va sin este enlace (`sinWebinar`), así que el evento aparece 8
+    // veces por el pie MÁS 2 en el cuerpo de /finanzas. Si /temario vuelve a
+    // aparecer en el build con este evento, `npm run eventos` lo marca como
+    // página no declarada. La propuesta original hablaba de «tres enlaces»
+    // contando ubicaciones lógicas, no apariciones en el build — y
+    // `npm run eventos` lo cazó a la primera. `/jorgesierra` no cuenta: no
+    // lleva el pie del sitio.
     paginas: [
       "/",
       "/metodo",
@@ -96,7 +101,7 @@ export const EVENTOS: Evento[] = [
     minimo: 10,
     seRompeSi:
       "desaparece alguno de los tres enlaces, o el pie deja de salir en las " +
-      "ocho páginas. NO se rompe si cambia el texto del botón, si se agrega un " +
+      "ocho páginas que lo llevan. NO se rompe si cambia el texto del botón, si se agrega un " +
       "cuarto, ni si cambia el DESTINO — eso ya pasó una vez y el chequeo no " +
       "lo caza, porque cuenta apariciones y no direcciones. Si vuelves a mover " +
       "el destino, corrige esta ficha a mano.",
@@ -119,10 +124,10 @@ export const EVENTOS: Evento[] = [
     descripcion:
       "La intención suelta: los mailto a hola@ilhas.ai SIN asunto — el del pie " +
       "y los de las tres páginas legales. No es una venta, es una pregunta.",
-    // Mismo caso que el anterior: 8 del pie, más 4 en el cuerpo de las legales
-    // —uno en /terminos, uno en /cookies y dos en /privacidad—. El de
-    // /privacidad con asunto «Limitar uso» queda FUERA a propósito: ése no es
-    // una pregunta suelta, es el ejercicio de un derecho.
+    // Mismo caso que el anterior: 9 del pie (/temario incluida), más 4 en el
+    // cuerpo de las legales —uno en /terminos, uno en /cookies y dos en
+    // /privacidad—. El de /privacidad con asunto «Limitar uso» queda FUERA a
+    // propósito: ése no es una pregunta suelta, es el ejercicio de un derecho.
     paginas: [
       "/",
       "/metodo",
@@ -132,8 +137,9 @@ export const EVENTOS: Evento[] = [
       "/terminos",
       "/privacidad",
       "/cookies",
+      "/temario",
     ],
-    minimo: 12,
+    minimo: 13,
     seRompeSi:
       "cambia hola@ilhas.ai. NO se rompe si se mueve de sección o se agrega en " +
       "otra página.",

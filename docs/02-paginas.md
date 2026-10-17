@@ -4,6 +4,8 @@ Página por página: su único trabajo, quién llega, los bloques en orden, el C
 
 **Regla que aplica a las cinco:** la carnita arriba. Sustancia en el primer scroll. Sin intro larga, sin hype, sin relleno. Ver `04-voz-del-cliente.md`.
 
+Fuera del hub hay dos tipos de página más: `/temario` (para compartir, la única que explica el programa) y las tres legales. Las dos van al final de este documento.
+
 ---
 
 ## `/` — Home
@@ -316,6 +318,112 @@ aparecen **dos veces en la página**: una en la línea de tiempo y otra aquí.
 
 ### ✅ Desbloqueada
 Nombre, bio y foto de los dos ya están confirmados y en el sitio (`src/assets/equipo/`). La página está de vuelta en el menú.
+
+---
+
+## `/temario` — El temario de Ilhas Academy
+
+**Su único trabajo:** que quien recibe el enlace —por WhatsApp, Instagram o en el
+webinar— vea el programa completo, lo entienda de un vistazo y quiera entrar.
+Sumamente digerible, fácil de navegar y sin humo. Brief:
+`prompts/iteracion-22-temario.md` (16 oct 2026).
+
+**Es la única excepción a la regla 1** de `CLAUDE.md`: la única página que
+explica el programa. **Sin costos de nada** —ni del programa, ni de
+herramientas, planes o licencias— y sin condiciones de compra. Ninguna otra
+página repite el temario: si lo necesita, enlaza aquí.
+
+**No va en el menú** —es una URL para compartir, como `/jorgesierra`—, pero sí
+lleva el header y el pie del sitio (`Base.astro`) y sí va en el sitemap.
+
+### El contenido no se escribe aquí
+
+Todo sale de **`src/data/temario.md`**, la exportación a Markdown del doc
+maestro de Jorge, leída al compilar por `src/lib/temario.ts`. La página sólo
+pone microcopy de interfaz («Ver el temario», «Índice», «Empieza por»…).
+Cuántos cursos y cuántas lecciones dice el encabezado del archivo, y de ahí sale
+cualquier número que la página muestre.
+
+**Cómo se actualiza:** Jorge cambia el doc maestro → lo exporta a Markdown →
+reemplaza `src/data/temario.md` → `npm run build` → PR. Si algo no cuadra
+(conteos, la tabla contra las secciones, una lección mencionada que no existe,
+un costo, residuos de la exportación), **`npm run temario` detiene el build** y
+dice qué y en qué línea. Para probar una exportación nueva sin reemplazar la
+buena: `npm run temario -- ruta/al/archivo.md`.
+
+Las correcciones de acentos y erratas evidentes se hacen en
+`src/data/temario.md` y se listan para que Jorge las pase a su doc; si no, la
+siguiente exportación las borra.
+
+### Bloques, en orden
+
+**Directo al temario** (Jorge, 16 oct 2026: «me quiero ir directamente al
+temario»). De la entrada se pasa al índice y a los cursos, sin nada en medio.
+El brief pedía más bloques y **se quitaron, y no vuelven sin que Jorge lo
+pida**: las tarjetas de «El programa en una mirada», «Cómo se trabaja» con el
+diagrama de la ruta del Bootcamp, «Para quién es» y la banda de cierre. El doc
+maestro sigue trayendo esas secciones y el parser las salta
+(`QUE_NO_SE_PINTAN`); la tabla de la mirada se sigue leyendo porque da los
+totales y la pregunta de cada curso.
+
+**Que se digiera en el teléfono** (Jorge, 16 oct 2026: «está muy saturado… lo
+más importante son los módulos, las lecciones»): una sola columna centrada,
+cada curso como índice, y todo lo de lectura larga cerrado.
+
+1. **Entrada.** El kicker es el título del archivo; el `<h1>`, la frase en
+   negritas («Finanzas + IA: de reportes a decisiones.»), con la mitad después
+   de los dos puntos en degradado; debajo, su frase y los dos números del
+   encabezado («7 cursos · 106 lecciones»). Nada más: las frases de
+   introducción del archivo ya no se pintan. **Sin botones** (ver «CTA y
+   medición»).
+2. **Índice fijo.** Chips pegados bajo el header (`position: sticky`), con scroll
+   lateral en teléfono: cada curso, Bonos, Lo que recibes, Quién lo imparte y
+   Preguntas. A 390×844 el primer curso ya se ve debajo.
+3. **Cada curso, como índice.** «Curso N» en píldora morada grande —su número
+   por orden de aparición, porque el archivo salta del 4 al 6—, nombre, la
+   pregunta de «Te resuelve» y una línea de datos («9 módulos · 37 lecciones ·
+   100% finanzas»). Luego un **«Sobre este curso» cerrado** con la entrada,
+   «Cómo trabajas», «Antes de empezar», «Al terminar tienes» y, en el
+   Bootcamp, las 5 fases. Debajo, **los módulos como filas que se abren**
+   (niveles y fases también; las del Bootcamp llevan su letra I·L·H·A·S en un
+   cuadro), con su número de lecciones; el primero va abierto. Adentro, **una
+   lección por renglón**: código y título. La descripción y el «Te llevas»
+   salen al tocarla. Al final, «↑ Índice».
+4. **Bonos** — los dos cursos de `## 6. Bonos`, con el mismo componente.
+5. **Al terminar, tienes**, como lista de logros. Iba antes de los cursos; bajó
+   aquí con la decisión de arriba.
+6. **Lo que recibes**, como lista (no rejilla de tarjetas).
+7. **Quién lo imparte.** `TarjetaPersona` con `MAESTROS` de `personas.ts` (foto,
+   cifras atribuidas, distinción y redes); el nombre y la trayectoria salen del
+   temario y el rol de Jorge es «CEO de Ilhas». Debajo, «Conoce Ilhas» (`/`) y
+   «Jorge en redes» (`/jorgesierra`).
+8. **Preguntas frecuentes** en `<details>`. Después va el pie del sitio.
+
+Si una sección completa desaparece del doc, la página la omite junto con su chip
+del índice, y los fondos blanco y claro se recalculan para que dos vecinas no se
+fundan en un solo bloque.
+
+### Anclas para mandar por WhatsApp
+
+Estables aunque cambie el nombre del curso: `#masterclass`, `#bootcamp`, `#ia`,
+`#datos`, `#reporte`, `#herramienta`. Grupos: `#bootcamp-h`, `#ia-nivel-4`,
+`#datos-modulo-2`. Lecciones: `#bootcamp-h2`, `#ia-4-10`, `#reporte-r3`,
+`#masterclass-6`. Al llegar por el enlace, el navegador abre el módulo y la
+lección solos, y el título queda visible debajo del índice.
+
+### CTA y medición
+
+**Ningún CTA al webinar, ni en el pie** (Jorge, 16 oct 2026: «ellos ya pasaron
+por el webinar»). Quien llega a esta página ya lo vio, así que «Reservar el
+webinar» le pedía algo que ya hizo. El pie de `/temario` va sin ese enlace
+(`sinWebinar` en `Base.astro`); el correo (`contacto_correo`) sí se queda.
+Cuánta gente la ve lo dice el `page_view` de GA4: no se agregó ni un script.
+
+### ⛔ Lo que NO va aquí
+
+Ningún costo, de nada: ni `$`, `USD` o `MXN`, ni «gratis», «de pago», «cuánto
+pagar», «costo» o «licencia» — `npm run temario` lo revisa. Tampoco urgencia,
+contadores, testimonios, logos ni fechas que no vengan en el archivo.
 
 ---
 

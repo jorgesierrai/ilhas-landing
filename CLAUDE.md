@@ -24,9 +24,11 @@ Un **hub de marca con cinco páginas**, no un scroll de ventas:
 
 Aparte del hub viven `/terminos`, `/privacidad` y `/cookies`. **No cuentan como páginas del sitio**: no van en el menú, solo en la barra final del pie, y llevan `noindex`. Son documentos. Ver `docs/06-stack-y-seguridad.md` § "Las tres páginas legales" — incluida la advertencia de que **todavía no las revisa un abogado**.
 
+Aparte del hub vive también **`/temario`** (16 oct 2026): el temario completo de Ilhas Academy, para mandarlo por WhatsApp, Instagram y en el webinar. **No va en el menú** —como `/jorgesierra`—, sí va en el sitemap, y es **la única página que explica el programa** (regla 1). Se genera de `src/data/temario.md`; ver `docs/02-paginas.md` § `/temario`.
+
 ## Las cinco reglas que no se rompen
 
-1. **El sitio nunca explica el webinar ni el programa.** Manda a `eventos.ilhas.ai` (Go High Level) con un clic. Nada de temario, precio, bonos ni oferta en este repositorio. Dos explicaciones = dos verdades que se desincronizan.
+1. **El sitio no vende el programa.** Manda a `eventos.ilhas.ai` con un clic: precio, oferta y compra viven allá. **Única excepción: `/temario`** (Jorge, 16 oct 2026): el temario completo, generado de `src/data/temario.md`, que es copia del doc maestro de Jorge. Sin costos de nada (ni del programa ni de herramientas, planes o licencias) y sin condiciones de compra. Ninguna otra página repite el temario: si lo necesita, enlaza a `/temario`.
 2. **Nada de la oferta del webinar sale gratis.** El Radar de Oportunidades y su scoring (Tiempo × Dolor × Palanca) **no van en el sitio**. Se pueden nombrar; no se pueden enseñar.
 3. **No se anuncian islas futuras.** Ilhas Operaciones / Customer Success / Soporte / Marketing **no aparecen**, ni como "próximamente". El método ya declara que es universal; el visitante extrapola solo.
 4. **Los números se atribuyen, nunca se suman.** 40 años y +200 empresas son del papá. 12 años y +1B MXN/mes son de Jorge. El "40 + 12" junto solo se usa en `/finanzas`, que es donde los dos se juntan.
@@ -38,7 +40,7 @@ Aparte del hub viven `/terminos`, `/privacidad` y `/cookies`. **No cuentan como 
 
 ## Estado del repositorio
 
-*Actualizado: 2 oct 2026 (los botones del webinar van a `eventos.ilhas.ai/registro`).*
+*Actualizado: 16 oct 2026 (iteración 22: `/temario`, mergeada a `main` en el #28).*
 
 > **Este bloque se actualiza en cada iteración, no al final.** Es lo primero que
 > lee una sesión nueva; si miente, la sesión construye sobre una foto vieja. Lo
@@ -61,10 +63,22 @@ Aparte del hub viven `/terminos`, `/privacidad` y `/cookies`. **No cuentan como 
 > mitad `img` de `.enlace__icono svg, .enlace__icono img`, y la página sí las
 > necesita. Reconstruir un `<style>` desde la referencia las borra en silencio.
 
-- Rama de trabajo: **`webinar-registro`**, que sale de `main`.
+- **`/temario` está en `main`**: el PR **#28 · `temario`** entró el 16 oct
+  2026 con la iteración 22 completa, por orden de Jorge («deployalo»). La
+  siguiente rama sale de `main`. ⚠️ Se publicó con las frases del temario que
+  no cuadran (ver «Lo que sigue abierto»): se arreglan en el doc maestro y se
+  reexporta, no en el código.
+- **Un PR abierto: #27 · `webinar-redirect-diagonal`** (3 oct 2026). Es una
+  línea de `vercel.json` —el `source` pasa a `/webinar{/}?`— y una frase de este
+  archivo. **Medido el 16 oct 2026: en producción `/webinar/` con diagonal
+  todavía responde 200 con la lista de espera vieja** («En las próximas
+  semanas»), aunque el registro ya abrió; sin diagonal sí redirige. Probado con
+  `@vercel/routing-utils` 6.6.0 —el convertidor de Vercel—: el PR arregla
+  `/webinar/` y no toca ninguna otra ruta. Falta mergearlo; después,
+  `curl -sI https://www.ilhas.ai/webinar/` debe dar 307.
 - **`main` ya trae las iteraciones 10 a 19** y el link in bio: el **#18 se
   mergeó** y el **#20** metió la presentación de la masterclass.
-- **Ya no queda ningún PR abierto.** El **#21** entró a `main` el 6 sep 2026
+- El **#21** entró a `main` el 6 sep 2026
   con todo `/jorgesierra` —las ocho filas con piel de marca, YouTube y las dos
   guías—, más las cabeceras, el `sitemap.xml` y la migración a `www.ilhas.ai`.
   - **#17 · `cabeceras-vercel`** — **cerrado sin mergear**, su contenido está
@@ -83,7 +97,7 @@ Aparte del hub viven `/terminos`, `/privacidad` y `/cookies`. **No cuentan como 
   sin medición no hay embudo; **nada más entra**. El menú, el desplegable de
   «Aprender» y la banda Ilhas→Hilas siguen siendo CSS puro.
   - El snippet va en **DOS lugares**: `src/layouts/Base.astro` (cubre las cinco
-    del hub y las tres legales) y `src/pages/jorgesierra.astro`, que **no usa
+    del hub, las tres legales y `/temario`) y `src/pages/jorgesierra.astro`, que **no usa
     `Base.astro`** y si no se repite queda ciega — justo la del QR. Si cambia el
     ID, son los dos.
   - ⚠️ **El `gtag('config')` vive en `public/ga.js`, NO en línea.** El snippet
@@ -140,12 +154,15 @@ Aparte del hub viven `/terminos`, `/privacidad` y `/cookies`. **No cuentan como 
       selector CSS ni del texto del botón**: así sobreviven a un cambio de copy,
       de clase, de color o de orden. Un solo listener delegado en `document`,
       en fase de captura, dentro de `public/ga.js`. No hay más JS.
-    - ⚠️ **El pie sale en las OCHO páginas de `Base.astro`**, así que
-      `webinar_reservar` aparece 10 veces (8 del pie + 2 en `/finanzas`) y
-      `contacto_correo` 12 (8 del pie + 4 en el cuerpo de las legales). La
-      propuesta hablaba de «tres enlaces» contando ubicaciones lógicas, no
-      apariciones en el build — **`npm run eventos` cazó la diferencia en su
-      primera corrida**. Si alguien cambia el pie, esos números se mueven.
+    - ⚠️ **El pie sale en las NUEVE páginas de `Base.astro`** (desde el 16 oct
+      2026 también `/temario`), así que `contacto_correo` aparece **13** veces
+      (9 del pie + 4 en el cuerpo de las legales) y `webinar_reservar` **10**
+      (8 del pie —el de `/temario` va SIN ese enlace, `sinWebinar`— + 2 en
+      `/finanzas`).
+      La propuesta hablaba de «tres enlaces» contando ubicaciones
+      lógicas, no apariciones en el build — **`npm run eventos` cazó la
+      diferencia en su primera corrida**. Si alguien cambia el pie, esos números
+      se mueven.
     - **NO se agregan más eventos sin una razón.** Scroll, vistas de sección,
       clic por tarjeta y reproducción del hero ya se descartaron, con el motivo
       escrito en `eventos.ts`. Cada evento que agregas es uno que se puede
@@ -193,8 +210,96 @@ lleva también `og:image`). La prueba tras cada build:
   12 (`/finanzas`) · 13 (redes) · 14 (distinción del papá) · 15 (credenciales del
   hijo) · 16 (el mapa lleno) · 17 (el pie y las legales) · 18 (el aire de
   arriba y la § En público) · 19 (el hero corriendo) · **22 paso A (cabeceras en
-  `vercel.json`, dominio canónico `www` y `sitemap.xml`)**. Los briefs viven en
+  `vercel.json`, dominio canónico `www` y `sitemap.xml`)** · **22 · `/temario`**
+  (16 oct 2026 — el brief se llama `iteracion-22-temario.md` y su número choca
+  con el «22 paso A»: son dos iteraciones distintas). Los briefs viven en
   `prompts/iteracion-*.md`; el de medición es `prompts/PROPUESTA-medicion.md`.
+- **`/temario` (iteración 22) — cómo está armado, antes de tocarlo:**
+  - ⚠️ **DIRECTO AL TEMARIO** (Jorge, 16 oct 2026: «me quiero ir directamente
+    al temario»). La entrada lleva al índice y al primer curso, sin nada en
+    medio. **Se quitaron, y no vuelven
+    sin que Jorge lo pida**: las tarjetas de «El programa en una mirada»,
+    «Cómo se trabaja» con el diagrama de la ruta del Bootcamp, «Para quién es»
+    y la banda de cierre con el botón y el correo. «Al terminar, tienes» no
+    estaba en su lista y bajó a después de los cursos. El doc maestro sigue
+    trayendo esas secciones: el parser las reconoce y las salta
+    (`QUE_NO_SE_PINTAN` en `temario.ts`). La tabla de la mirada se sigue
+    LEYENDO aunque no se pinte, porque de ella salen los totales que se revisan
+    y la pregunta de «Te resuelve» de cada curso.
+  - ⚠️ **SIN BOTONES Y SIN WEBINAR** (Jorge, 16 oct 2026: «ellos ya pasaron
+    por el webinar»). Quien llega a `/temario` ya lo vio: la entrada no lleva
+    «Reservar el webinar» ni «Ver el temario», y **el pie de esta página va sin
+    «Reservar el webinar»** — prop `sinWebinar` de `Base.astro`, que la pasa a
+    `Footer.astro`. Las otras ocho páginas siguen igual, byte a byte. No le
+    pongas un CTA al webinar a esta página.
+  - **«Curso 1», «Curso 2», «Bono»** van en píldora morada sólida, a 16 px en
+    teléfono y 18 en escritorio (Jorge: «que sea más visible»), no como kicker.
+  - ⚠️ **QUE SE DIGIERA EN EL TELÉFONO** (Jorge, 16 oct 2026: «está muy
+    saturado… la mayoría lo van a leer en el celular… lo más importante son los
+    módulos, las lecciones»). Cada curso es un ÍNDICE: «Curso N», nombre,
+    pregunta, una línea de datos y sus módulos como filas que se abren (el
+    primero, abierto); adentro, **una lección por renglón** —código y título—,
+    y la descripción y el «Te llevas» salen al tocarla. El texto largo del
+    curso («Cómo trabajas», «Antes de empezar», «Al terminar tienes» y las 5
+    fases del Bootcamp) vive en un **«Sobre este curso» cerrado**. Todo va en
+    UNA columna centrada de 46 rem, también en escritorio. La entrada se quedó
+    en kicker, título, frase y «7 cursos · 106 lecciones»: las tres frases de
+    introducción y la nota de los niveles avanzados ya no se pintan (siguen en
+    el doc). «Lo que recibes» pasó de rejilla de tarjetas a lista. **No le
+    vuelvas a meter tarjetas, cajas ni texto abierto al temario**: si algo es
+    de lectura larga, va cerrado.
+  - **Si Jorge quita una sección entera de su doc**, la página no deja un
+    titular vacío: la sección y su chip del índice se van solos, y los fondos
+    blanco/claro se recalculan para que dos vecinas no se fundan (`bandas` en
+    la página).
+  - **La página no escribe contenido.** Todo sale de `src/data/temario.md` —la
+    exportación a Markdown del doc maestro de Jorge— a través de
+    `src/lib/temario.ts`, que la página importa con `?raw`. Para cambiar el
+    temario se reemplaza ese archivo; el código no se toca.
+  - **`npm run temario`** (`scripts/temario-check.mjs`) corre **ANTES** de
+    `astro build`, dentro de `npm run build`, y **detiene el build** si el
+    temario no cuadra: lecciones declaradas contra listadas (la Masterclass
+    cuenta módulos), la tabla «El programa en una mirada» contra cada sección,
+    la suma contra el encabezado, lecciones/niveles/módulos mencionados que no
+    existen, residuos de exportación, **cualquier costo** (`$`, `USD`, `MXN`,
+    gratis, de pago, cuánto pagar, costo, licencia) y anclas repetidas. Usa el
+    MISMO parser que la página. Acepta otra ruta para probar una exportación
+    antes de reemplazar la buena: `npm run temario -- ~/Downloads/temario.md`.
+  - **El total de lecciones no está escrito en ningún lado**: sale del
+    encabezado del archivo (hoy «7 cursos · 106 lecciones»; el brief viejo
+    decía 108 y Jorge lo cambió el mismo 16 oct al quitar una lección).
+  - **Los ids de los cursos salen de una palabra clave, no del nombre**
+    (`IDS_CURSO` en `temario.ts`): `#masterclass`, `#bootcamp`, `#ia`,
+    `#datos`, `#reporte`, `#herramienta`. «IA de 0 a 100» se llamaba «Claude de
+    0 a 100» hasta el 16 oct: con el nombre entero, ese cambio habría roto los
+    enlaces que Jorge ya mandó. Lecciones: `#bootcamp-h2`, `#ia-4-10`,
+    `#masterclass-3`; módulos: `#bootcamp-h`, `#ia-nivel-4`. **El id va DENTRO
+    del `<details>`** (en el detalle de la lección, o en un `div` al arranque
+    del módulo), no en él: así el navegador abre el módulo y la lección al
+    llegar, y un `scroll-margin` de 7.5 rem extra deja ver el título. Medido:
+    `#bootcamp-h2` a 390 px deja el título en y=164, debajo del índice. El
+    código de la lección ya NO es enlace —estorbaba en el renglón—: Jorge arma
+    la URL con el patrón.
+  - `src/components/temario/` — `Curso.astro` (un curso como índice: módulos y
+    lecciones en `<details>` anidados, y su «Sobre este curso») y `Texto.astro`
+    (negritas y cursivas sin `set:html`). El diagrama de la ruta (`Ruta.astro`)
+    existió y se borró con la decisión de arriba; está en el commit `7f7435a`
+    si algún día vuelve.
+  - **El índice fijo depende del alto del header**, que no vive en ningún
+    token: `--alto-header` en `temario.astro` (74.4 px, medido). Si `Nav.astro`
+    cambia de alto, cambia ahí o el índice deja una rendija.
+  - **`MAESTROS` vive en `src/data/personas.ts`**: foto, atribuciones,
+    distinción y redes de las dos personas, para `/finanzas` y `/temario`. En
+    `/temario` el nombre y la trayectoria salen del temario, y **el rol de
+    Jorge es «CEO de Ilhas»** (Jorge, 16 oct 2026). `/finanzas` quedó idéntico
+    byte a byte salvo el ícono nuevo.
+  - **YouTube entró a `ENLACES.hijo`**, al tipo `Red` y a `IconoSocial`, así
+    que ahora sale también en `/finanzas` y `/nosotros` (el brief lo pidió).
+    ⚠️ **La URL quedó DUPLICADA en `jorgesierra.astro`**, que arma sus filas
+    aparte y no lee `personas.ts`. Si cambia el canal, son los dos.
+  - **La hoja de estilos única creció 1.7 KB con gzip** (15.8 → 17.5 KB) y la
+    descarga TODA página, porque `cssCodeSplit` está apagado a propósito. Si
+    algún día pesa, el temario es el primer candidato a hoja propia.
 - **Piezas nuevas que conviene conocer antes de tocar nada:**
   - `src/data/mapa.ts` + `src/components/MapaEmpresa.astro` — las trece áreas en
     tres capas, con **38 renglones de lo que se construye en cada una**. Un
@@ -371,6 +476,10 @@ lleva también `og:image`). La prueba tras cada build:
 
 | Tema | Qué falta |
 |---|---|
+| **`/temario` · lo que no cuadró en el temario** | Se publicó tal cual y **no se arregló adivinando** (brief, § 1). Se corrige en el doc maestro y se reexporta: ① **«¡Dudas de Supabase!»** al final de la lección 4.2 de Análisis de datos se lee como nota interna — sale publicada si no se quita; ② la misma 4.2 dice «Data Studio», que hoy se llama Looker Studio; ③ el módulo 6 de la Masterclass dice «qué te dice cada una» sin decir cada una de qué; ④ la descripción de R.0 («no importa que hasta mano haya información queda muy bien hecho…») está cortada; ⑤ I.1 («lo que te cuesta valor, no necesariamente en tiempo…») y la fase I de la tabla de fases se leen cortadas; ⑥ el perfil «Dueños de negocio» cierra con «para eficientizar que realmente muevan la aguja»; ⑦ «dueño de negocio» sale en el perfil de profesionales **y** como perfil propio — ⑥ y ⑦ ya **no se publican** («Para quién es» salió de la página), pero siguen en el doc; ⑧ el «94% de las hojas de cálculo tenía errores» (Análisis 2.2) no dice de qué estudio sale; ⑨ «¿De IA cuáles también?» en Tu herramienta correcta |
+| **«Bootcamp» y «Skool» en `/temario`** | `docs/00-INDEX.md` dice que la palabra «bootcamp» no se escribe (25 ago 2026) y que el sitio no nombra la plataforma de entrega. El temario del 16 oct trae **«Bootcamp Ilhas»** como nombre de curso y **«Comunidad en Skool»**, y `/temario` lo publica tal cual porque el brief manda presentarlo sin editarlo. Falta que Jorge confirme las dos decisiones; si sí, se cierran esas líneas del INDEX |
+| **«+1,000 MDP/mes» en la tarjeta de Jorge en `/temario`** | Es su atribución de siempre (sale de `MAESTROS`), no un costo. Pero el brief dice «ni montos de dinero»: si eso alcanza a las credenciales, se filtra sólo en `/temario`, sin tocar `/finanzas` |
+| **PR #27 sin mergear** | `/webinar/` con diagonal sigue sirviendo la lista de espera vieja en producción. Ver arriba |
 | **El punto huérfano del titular del home** | Desde que el titular es «…con agentes de IA.» (5 sep 2026), **a ≥1200 px el punto final cae solo en su propio renglón**. Medido: a 1440 el `<h1>` pasó de 4 a 5 renglones y el punto queda en `left=198`, al margen. A 390 y 768 se lee bien. Es la costura entre el `<span class="text-gradient">` —que es `inline-block` por el `background-clip:text`— y el punto que va fuera. **No se tocó: la decisión es de Jorge.** El arreglo es envolver span y punto en un `white-space:nowrap`, no cambiar el copy |
 | **`<title>` y `og:title` dicen «con IA»** | `src/layouts/Base.astro:78` y `:92` siguen con «Ilhas — tu primer proceso corriendo con IA», mientras el `<h1>` ya dice «con agentes de IA». **No se tocó**: es copy de Jorge y son las dos cadenas que ve Google y ven las redes al compartir. Igual `medios/hero-b2-referencia.html:129`, que es otra referencia del hero |
 | **`/finanzas` §07 · servicios del papá** | **Confirmado que va** (Jorge, 27 ago 2026). Faltan dos insumos suyos: el **copy de los servicios** y **a dónde apunta el botón de agenda** — hoy no hay ninguna URL de agenda en el repositorio, el único destino externo es `eventos.ilhas.ai` |
