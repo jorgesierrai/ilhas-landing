@@ -231,6 +231,20 @@ lleva también `og:image`). La prueba tras cada build:
     pongas un CTA al webinar a esta página.
   - **«Curso 1», «Curso 2», «Bono»** van en píldora morada sólida, a 16 px en
     teléfono y 18 en escritorio (Jorge: «que sea más visible»), no como kicker.
+  - ⚠️ **QUE SE DIGIERA EN EL TELÉFONO** (Jorge, 16 oct 2026: «está muy
+    saturado… la mayoría lo van a leer en el celular… lo más importante son los
+    módulos, las lecciones»). Cada curso es un ÍNDICE: «Curso N», nombre,
+    pregunta, una línea de datos y sus módulos como filas que se abren (el
+    primero, abierto); adentro, **una lección por renglón** —código y título—,
+    y la descripción y el «Te llevas» salen al tocarla. El texto largo del
+    curso («Cómo trabajas», «Antes de empezar», «Al terminar tienes» y las 5
+    fases del Bootcamp) vive en un **«Sobre este curso» cerrado**. Todo va en
+    UNA columna centrada de 46 rem, también en escritorio. La entrada se quedó
+    en kicker, título, frase y «7 cursos · 106 lecciones»: las tres frases de
+    introducción y la nota de los niveles avanzados ya no se pintan (siguen en
+    el doc). «Lo que recibes» pasó de rejilla de tarjetas a lista. **No le
+    vuelvas a meter tarjetas, cajas ni texto abierto al temario**: si algo es
+    de lectura larga, va cerrado.
   - **Si Jorge quita una sección entera de su doc**, la página no deja un
     titular vacío: la sección y su chip del índice se van solos, y los fondos
     blanco/claro se recalculan para que dos vecinas no se fundan (`bandas` en
@@ -256,12 +270,18 @@ lleva también `og:image`). La prueba tras cada build:
     `#datos`, `#reporte`, `#herramienta`. «IA de 0 a 100» se llamaba «Claude de
     0 a 100» hasta el 16 oct: con el nombre entero, ese cambio habría roto los
     enlaces que Jorge ya mandó. Lecciones: `#bootcamp-h2`, `#ia-4-10`,
-    `#masterclass-3`. **El código de cada lección es el enlace**: un clic en
-    «H.2» deja la URL lista para copiar, y el grupo cerrado se abre solo.
-  - `src/components/temario/` — `Curso.astro` (un curso con sus `<details>` y,
-    en el Bootcamp, sus cinco fases) y `Texto.astro` (negritas y cursivas sin
-    `set:html`). El diagrama de la ruta (`Ruta.astro`) existió y se borró con
-    la decisión de arriba; está en el commit `7f7435a` si algún día vuelve.
+    `#masterclass-3`; módulos: `#bootcamp-h`, `#ia-nivel-4`. **El id va DENTRO
+    del `<details>`** (en el detalle de la lección, o en un `div` al arranque
+    del módulo), no en él: así el navegador abre el módulo y la lección al
+    llegar, y un `scroll-margin` de 7.5 rem extra deja ver el título. Medido:
+    `#bootcamp-h2` a 390 px deja el título en y=164, debajo del índice. El
+    código de la lección ya NO es enlace —estorbaba en el renglón—: Jorge arma
+    la URL con el patrón.
+  - `src/components/temario/` — `Curso.astro` (un curso como índice: módulos y
+    lecciones en `<details>` anidados, y su «Sobre este curso») y `Texto.astro`
+    (negritas y cursivas sin `set:html`). El diagrama de la ruta (`Ruta.astro`)
+    existió y se borró con la decisión de arriba; está en el commit `7f7435a`
+    si algún día vuelve.
   - **El índice fijo depende del alto del header**, que no vive en ningún
     token: `--alto-header` en `temario.astro` (74.4 px, medido). Si `Nav.astro`
     cambia de alto, cambia ahí o el índice deja una rendija.
@@ -274,7 +294,7 @@ lleva también `og:image`). La prueba tras cada build:
     que ahora sale también en `/finanzas` y `/nosotros` (el brief lo pidió).
     ⚠️ **La URL quedó DUPLICADA en `jorgesierra.astro`**, que arma sus filas
     aparte y no lee `personas.ts`. Si cambia el canal, son los dos.
-  - **La hoja de estilos única creció 2.5 KB con gzip** (15.8 → 18.3 KB) y la
+  - **La hoja de estilos única creció 1.7 KB con gzip** (15.8 → 17.5 KB) y la
     descarga TODA página, porque `cssCodeSplit` está apagado a propósito. Si
     algún día pesa, el temario es el primer candidato a hoja propia.
 - **Piezas nuevas que conviene conocer antes de tocar nada:**

@@ -366,27 +366,33 @@ maestro sigue trayendo esas secciones y el parser las salta
 (`QUE_NO_SE_PINTAN`); la tabla de la mirada se sigue leyendo porque da los
 totales y la pregunta de cada curso.
 
+**Que se digiera en el teléfono** (Jorge, 16 oct 2026: «está muy saturado… lo
+más importante son los módulos, las lecciones»): una sola columna centrada,
+cada curso como índice, y todo lo de lectura larga cerrado.
+
 1. **Entrada.** El kicker es el título del archivo; el `<h1>`, la frase en
    negritas («Finanzas + IA: de reportes a decisiones.»), con la mitad después
-   de los dos puntos en degradado; debajo, su frase. Luego la **fila de datos**
-   —los totales del encabezado y las frases de introducción del archivo—, que
-   en teléfono es una tira que se desliza de lado. **Sin botones** (ver «CTA y
+   de los dos puntos en degradado; debajo, su frase y los dos números del
+   encabezado («7 cursos · 106 lecciones»). Nada más: las frases de
+   introducción del archivo ya no se pintan. **Sin botones** (ver «CTA y
    medición»).
 2. **Índice fijo.** Chips pegados bajo el header (`position: sticky`), con scroll
    lateral en teléfono: cada curso, Bonos, Lo que recibes, Quién lo imparte y
    Preguntas. A 390×844 el primer curso ya se ve debajo.
-3. **Cada curso.** «Curso N» en píldora morada grande —su número por orden de
-   aparición, porque el archivo salta del 4 al 6—, nombre, la pregunta de «Te resuelve», entrada, «Cómo trabajas»,
-   «Antes de empezar» y **«Al terminar tienes» destacado**. Módulos, niveles y
-   fases en `<details>` con su número de lecciones; el primero de cada curso va
-   abierto. Cada lección con su código, título, descripción y **«Te llevas»
-   marcado**. El Bootcamp abre con sus cinco fases I·L·H·A·S como pasos con la
-   letra grande. En escritorio la entrada del curso se queda fija a la izquierda
-   mientras corren las lecciones. Al final, «↑ Índice».
+3. **Cada curso, como índice.** «Curso N» en píldora morada grande —su número
+   por orden de aparición, porque el archivo salta del 4 al 6—, nombre, la
+   pregunta de «Te resuelve» y una línea de datos («9 módulos · 37 lecciones ·
+   100% finanzas»). Luego un **«Sobre este curso» cerrado** con la entrada,
+   «Cómo trabajas», «Antes de empezar», «Al terminar tienes» y, en el
+   Bootcamp, las 5 fases. Debajo, **los módulos como filas que se abren**
+   (niveles y fases también; las del Bootcamp llevan su letra I·L·H·A·S en un
+   cuadro), con su número de lecciones; el primero va abierto. Adentro, **una
+   lección por renglón**: código y título. La descripción y el «Te llevas»
+   salen al tocarla. Al final, «↑ Índice».
 4. **Bonos** — los dos cursos de `## 6. Bonos`, con el mismo componente.
 5. **Al terminar, tienes**, como lista de logros. Iba antes de los cursos; bajó
    aquí con la decisión de arriba.
-6. **Lo que recibes**, en rejilla.
+6. **Lo que recibes**, como lista (no rejilla de tarjetas).
 7. **Quién lo imparte.** `TarjetaPersona` con `MAESTROS` de `personas.ts` (foto,
    cifras atribuidas, distinción y redes); el nombre y la trayectoria salen del
    temario y el rol de Jorge es «CEO de Ilhas». Debajo, «Conoce Ilhas» (`/`) y
@@ -402,8 +408,8 @@ fundan en un solo bloque.
 Estables aunque cambie el nombre del curso: `#masterclass`, `#bootcamp`, `#ia`,
 `#datos`, `#reporte`, `#herramienta`. Grupos: `#bootcamp-h`, `#ia-nivel-4`,
 `#datos-modulo-2`. Lecciones: `#bootcamp-h2`, `#ia-4-10`, `#reporte-r3`,
-`#masterclass-6`. **El código de cada lección es el enlace**: un clic en «H.2»
-deja la URL lista para copiar; el grupo cerrado se abre solo al llegar.
+`#masterclass-6`. Al llegar por el enlace, el navegador abre el módulo y la
+lección solos, y el título queda visible debajo del índice.
 
 ### CTA y medición
 
