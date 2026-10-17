@@ -58,7 +58,7 @@ Estos son los choques concretos. No hay que deliberarlos: ya están resueltos.
 | **Qué es Ilhas** | "Un bootcamp premium de finanzas con IA" | Ilhas es el **método**; el programa de finanzas es la primera isla | Arquitectura |
 | **Tagline del home** | "Domina las finanzas de tu negocio con tecnología y AI" | Eso es el tagline de **`/finanzas`**, no del home. El home habla del método, no de finanzas | Arquitectura |
 | **Programa vs webinar** | Aparecen como cosas separadas | Son **un solo embudo**: el webinar es donde se comparte la entrada al programa | NTPVS |
-| **La palabra "bootcamp"** | Toda la guía de marca y el NTPVS lo llaman bootcamp | **No es un bootcamp.** Es acceso a una comunidad — Skool u Hotmart, sin decidir. La palabra "bootcamp" no se escribe en el sitio ni en copy nuevo | Jorge, 25 ago 2026 |
+| **La palabra "bootcamp"** | Toda la guía de marca y el NTPVS lo llaman bootcamp | **No es un bootcamp.** Es acceso a una comunidad — Skool u Hotmart, sin decidir. La palabra "bootcamp" no se escribe en el sitio ni en copy nuevo. ⚠️ **Por confirmar:** el temario del 16 oct 2026 llama «Bootcamp Ilhas» a uno de sus siete cursos, y `/temario` lo publica tal cual porque presenta el doc de Jorge sin editarlo (`/webinar` ya decía «Bootcamp I·L·H·A·S» desde sep). Si es el nombre propio del curso, esta fila se reescribe | Jorge, 25 ago 2026 |
 | **"AI" vs "IA"** | Ambas formas conviven | **"IA"** en todo el sitio. Sin excepciones | Este documento |
 | **Color, tipografía, logo, layout** | — | — | **Marca** (sin discusión) |
 
@@ -76,7 +76,7 @@ No inventes estos. Si el trabajo los necesita, para y pregunta:
   que es lo que dice el código postal, pero **tiene que confirmarlo contra su
   constancia de situación fiscal**: de ahí depende la cláusula de jurisdicción de
   `/terminos`. Ver `06-stack-y-seguridad.md`.
-- **La plataforma de entrega del programa** — Skool u Hotmart. Jorge no ha decidido (25 ago 2026). Hasta entonces, el sitio no nombra ninguna.
+- **La plataforma de entrega del programa** — Skool u Hotmart. Jorge no ha decidido (25 ago 2026). Hasta entonces, el sitio no nombra ninguna. ⚠️ **Por confirmar:** el temario del 16 oct 2026 dice «Comunidad en Skool» en «Lo que recibes», y `/temario` lo publica tal cual. Si ya se decidió, esta línea se cierra.
 - ~~**Si "6 semanas" sigue siendo cierto.**~~ **Resuelto el 27 ago 2026: fuera.** Era herencia del formato bootcamp, que este mismo documento ya declaró muerto, y además dependía de una plataforma sin decidir. **El sitio no publica duración.** El formato lo explica el webinar, no este repositorio (regla 1 de `CLAUDE.md`).
 
 ## Fuentes upstream (fuera de este repo)

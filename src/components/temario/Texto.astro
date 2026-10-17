@@ -1,0 +1,28 @@
+---
+/**
+ * Un renglón del temario con sus **negritas** y *cursivas*, y nada más.
+ *
+ * Sin `set:html`, a propósito: el texto viene de una exportación que se pega
+ * tal cual en `src/data/temario.md`, y escaparlo sale gratis. Lo estructural
+ * (títulos, listas, tablas, la negrita que abre cada lección) ya lo resolvió
+ * `src/lib/temario.ts`; esto sólo cubre el énfasis suelto dentro de una frase.
+ */
+interface Props {
+  t: string;
+}
+
+const { t } = Astro.props;
+const partes = t.split(/(\*\*[^*]+\*\*|\*[^*\s][^*]*\*)/g).filter(Boolean);
+---
+
+{
+  partes.map((p) =>
+    p.startsWith("**") && p.endsWith("**") ? (
+      <strong>{p.slice(2, -2)}</strong>
+    ) : p.length > 2 && p.startsWith("*") && p.endsWith("*") ? (
+      <em>{p.slice(1, -1)}</em>
+    ) : (
+      p
+    ),
+  )
+}

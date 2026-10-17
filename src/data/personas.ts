@@ -1,10 +1,10 @@
 /**
  * Los enlaces públicos de cada persona.
  *
- * Vive aquí y no en cada página porque las dos —/finanzas §04 y /nosotros §01—
- * publican a las mismas dos personas con datos declarados por separado
- * (`maestros` allá, `personas` acá). Duplicar las URLs es la forma más segura
- * de que se desincronicen.
+ * Vive aquí y no en cada página porque tres —/finanzas §04, /nosotros §01 y
+ * /temario— publican a las mismas dos personas (/finanzas y /temario leen
+ * `MAESTROS`, al final de este archivo; /nosotros arma su propio `personas`).
+ * Duplicar las URLs es la forma más segura de que se desincronicen.
  *
  * URLs LIMPIAS: Jorge las pasó como salieron del botón de compartir de cada
  * app, con parámetros de rastreo (`igsi`, `_t`, `utm_source=share_via`…). Esos
@@ -12,7 +12,11 @@
  * dónde llega el enlace. Se guardan sin ellos.
  */
 
-export type Red = "instagram" | "tiktok" | "linkedin" | "sitio";
+import type { ImageMetadata } from "astro";
+import fotoPapa from "../assets/equipo/jorge-papa.png";
+import fotoHijo from "../assets/equipo/jorge-hijo.png";
+
+export type Red = "instagram" | "tiktok" | "youtube" | "linkedin" | "sitio";
 
 export interface Enlace {
   red: Red;
@@ -46,6 +50,14 @@ export const ENLACES: Record<"papa" | "hijo", Enlace[]> = {
       red: "tiktok",
       url: "https://www.tiktok.com/@jorgesierrai",
       etiqueta: "TikTok de Jorge Sierra: @jorgesierrai",
+    },
+    {
+      // Entró el 16 oct 2026 (iteración 22). La misma URL vive también en
+      // `jorgesierra.astro`, que arma sus filas aparte y NO lee de aquí: si
+      // cambia el canal, son los dos lugares.
+      red: "youtube",
+      url: "https://www.youtube.com/@soyjorgesierra",
+      etiqueta: "YouTube de Jorge Sierra: @soyjorgesierra",
     },
     {
       red: "linkedin",
@@ -136,5 +148,71 @@ export const DISTINCIONES: Record<"papa" | "hijo", Distincion | undefined> = {
     // SIN `fuente`: Jorge no dijo en qué institución. No la inventes ni la
     // deduzcas.
     icono: "birrete",
+  },
+};
+
+/**
+ * Las dos personas que enseñan, completas: lo que pinta `TarjetaPersona`.
+ *
+ * Vivían como `maestros` dentro de /finanzas. Se mudaron aquí en la iteración
+ * 22 porque /temario publica las mismas dos tarjetas, y dos copias de las
+ * mismas cifras son dos cifras que se desincronizan.
+ *
+ * /temario NO usa `nombre`, `trayectoria` ni el `rol` de Jorge tal cual: el
+ * nombre y la trayectoria salen del propio temario, y el rol de Jorge ahí es
+ * «CEO de Ilhas» (Jorge, 16 oct 2026). Todo lo demás —foto, atribuciones,
+ * distinción y redes— es esto.
+ *
+ * Los números van ATRIBUIDOS a cada quien y nunca sumados entre los dos
+ * (regla 4 de CLAUDE.md). El «40 + 12» junto es sólo de /finanzas, y lo arma
+ * esa página, no este archivo.
+ */
+export interface Atribucion {
+  dato: string;
+  contexto: string;
+}
+
+export interface Maestro {
+  nombre: string;
+  rol: string;
+  trayectoria: string;
+  atribuciones: Atribucion[];
+  distincion?: Distincion;
+  foto: ImageMetadata;
+  redes: Enlace[];
+}
+
+export const MAESTROS: Record<"papa" | "hijo", Maestro> = {
+  papa: {
+    nombre: "Jorge Sierra (papá)",
+    rol: "Finanzas corporativas",
+    trayectoria:
+      "40 años de criterio financiero, asesorando empresas en América Latina.",
+    atribuciones: [
+      { dato: "40 años", contexto: "de criterio financiero" },
+      { dato: "+200 empresas", contexto: "asesoradas en LATAM" },
+      { dato: "+10,000 alumnos", contexto: "formados" },
+    ],
+    distincion: DISTINCIONES.papa,
+    foto: fotoPapa,
+    redes: ENLACES.papa,
+  },
+  hijo: {
+    nombre: "Jorge Sierra (hijo)",
+    rol: "Producto y tecnología",
+    trayectoria:
+      "12 años construyendo productos digitales sobre bases financieras reales.",
+    atribuciones: [
+      { dato: "12 años", contexto: "construyendo productos digitales" },
+      { dato: "+1,000 MDP/mes", contexto: "procesados por productos que ha liderado" },
+      // Al final, no al principio: la lista no es cronológica sino de lo más
+      // general a lo más específico, y esto acota los dos renglones de arriba.
+      // No es claim suelta: la línea de /nosotros ya documenta 2016 con
+      // investigación de algoritmos y 2017 con PLN.
+      { dato: "Desde 2016", contexto: "construyendo IA, y con IA" },
+    ],
+    distincion: DISTINCIONES.hijo,
+    foto: fotoHijo,
+    redes: ENLACES.hijo,
   },
 };

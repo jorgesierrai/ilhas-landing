@@ -1,0 +1,1182 @@
+---
+/**
+ * /temario — el temario completo de Ilhas Academy.
+ *
+ * La ÚNICA excepción a la regla 1 de CLAUDE.md (Jorge, 16 oct 2026): el sitio
+ * no explica el programa en ninguna otra página. Aquí sí, completo, y SIN
+ * costos de nada — ni del programa, ni de herramientas, planes o licencias.
+ *
+ * No va en el menú: es una URL para compartir por WhatsApp, Instagram y en el
+ * webinar, como /jorgesierra. Sí va en el sitemap.
+ *
+ * ⚠️ AQUÍ NO SE ESCRIBE CONTENIDO DEL TEMARIO. Todo sale de
+ * `src/data/temario.md` —la exportación del doc maestro de Jorge— a través de
+ * `src/lib/temario.ts`. Para cambiar el temario se reemplaza ese archivo; lo de
+ * esta página es microcopy de interfaz («Ver el temario», «Índice»…).
+ *
+ * Cero JavaScript propio: anclas para navegar, <details> para abrir y
+ * `position: sticky` para el índice. Lo único que carga es GA4, desde Base.
+ */
+import Base from "../layouts/Base.astro";
+import TarjetaPersona from "../components/TarjetaPersona.astro";
+import Curso from "../components/temario/Curso.astro";
+import Ruta from "../components/temario/Ruta.astro";
+import Texto from "../components/temario/Texto.astro";
+import { MAESTROS } from "../data/personas";
+import md from "../data/temario.md?raw";
+import { leerTemario, descripcion, nombreCorto, quienEs, todosLosCursos } from "../lib/temario";
+
+const t = leerTemario(md);
+const cursos = todosLosCursos(t);
+
+// Las UTMs dicen de qué página vino el registro (docs/01-arquitectura.md). Los
+// dos botones —entrada y cierre— cuentan como `webinar_reservar`: el evento
+// mide la intención, no el lugar del botón.
+const webinarUrl =
+  "https://eventos.ilhas.ai/registro?utm_source=sitio&utm_medium=web&utm_campaign=webinar&utm_content=temario";
+
+// El titular parte en los dos puntos: «Finanzas + IA:» en tinta y «de reportes
+// a decisiones» con el degradado (una frase clave por titular). El punto va
+// FUERA del <span> pero pegado a él: .text-gradient es inline y no deja un
+// corte de renglón entre la palabra y el punto, que es justo lo que le pasa al
+// titular del home (CLAUDE.md, «El punto huérfano»).
+const [titularA, ...titularResto] = t.frase.destacado.split(":");
+const titularB = titularResto.join(":").trim().replace(/\.$/, "");
+
+// Quién lo imparte: el nombre y la trayectoria salen del temario; la foto, las
+// cifras atribuidas, la distinción y las redes, de personas.ts. El rol de Jorge
+// aquí es «CEO de Ilhas» (Jorge, 16 oct 2026).
+const personas = t.imparten.personas.flatMap((p) => {
+  const quien = quienEs(p.nombre);
+  if (!quien) return [];
+  const m = MAESTROS[quien];
+  return [
+    {
+      ...m,
+      nombre: p.nombre,
+      rol: quien === "hijo" ? "CEO de Ilhas" : m.rol,
+      trayectoria: p.parrafos.join(" "),
+    },
+  ];
+});
+
+/** Lo que dice la tarjeta en su pie: «Ver el curso», «Ver el bono»… */
+function verQue(f: (typeof t.mirada.filas)[number]): string {
+  if (!f.cursoId) return "Ver qué incluye";
+  return f.esBono ? "Ver el bono" : "Ver el curso";
+}
+---
+
+<Base title="Temario" description={descripcion(t)}>
+  <article class="temario">
+    {/* 01 y 02 van en UNA sección, a propósito: el brief pide que a 390×844 ya
+        se asomen las tarjetas de la mirada, y con el ritmo completo entre dos
+        secciones (88 px en teléfono) no se asomaban. Dentro de una sección el
+        aire es libre; entre secciones, el ritmo del sitio no se toca. */}
+    <section class="section-y-sm bg-lavado entrada">
+      <div class="container">
+        <!-- 01 · Entrada: qué es, cuánto trae y los dos botones -->
+        <div class="entrada__inner">
+          <div class="entrada__texto">
+            <p class="kicker">{t.titulo}</p>
+            <h1>
+              {titularB ? (
+                <>
+                  {titularA}: <span class="text-gradient">{titularB}</span>.
+                </>
+              ) : (
+                t.frase.destacado
+              )}
+            </h1>
+            <p class="lead entrada__lead">{t.frase.resto}</p>
+          </div>
+
+          {/* La fila de datos: los totales del encabezado y las tres frases de
+              entrada del temario. En teléfono es una tira que se desliza de
+              lado —cuatro tarjetas apiladas empujaban la mirada fuera de la
+              primera pantalla—; en escritorio, la ficha de la columna derecha. */}
+          <ul class="ficha" role="list" aria-label="El programa en datos">
+            {
+              t.totales && (
+                <li class="ficha__totales">
+                  <p class="ficha__cifras">
+                    <span>
+                      <b>{t.totales.cursos}</b> cursos
+                    </span>
+                    <span>
+                      <b>{t.totales.lecciones}</b> lecciones
+                    </span>
+                  </p>
+                  {t.totales.nota && <p class="ficha__nota">{t.totales.nota}</p>}
+                </li>
+              )
+            }
+            {
+              t.intro.map((o) => (
+                <li class="ficha__dato">
+                  <span>{o}</span>
+                </li>
+              ))
+            }
+          </ul>
+
+          <div class="entrada__botones">
+            <a
+              href={webinarUrl}
+              data-evento="webinar_reservar"
+              class="btn btn-primary"
+              rel="noopener noreferrer"
+            >
+              Reservar el webinar
+            </a>
+            <a href="#mirada" class="btn btn-ghost">
+              Ver el temario <span aria-hidden="true">↓</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- 02 · El programa en una mirada: siete tarjetas, cada una lleva a su curso -->
+        <div class="mirada" id="mirada">
+          <div class="mirada__cabeza">
+            <h2>{t.mirada.titulo}</h2>
+            {t.mirada.nota && <p class="mirada__nota">{t.mirada.nota}</p>}
+          </div>
+        <ul class="mirada__lista" role="list">
+          {
+            t.mirada.filas.map((f) => (
+              <li class:list={["tarjeta-curso", (f.esBono || !f.cursoId) && "tarjeta-curso--extra"]}>
+                <p class="tarjeta-curso__cuenta">
+                  {f.esBono && <span class="tarjeta-curso__bono">Bono</span>}
+                  {f.cuenta !== null && /^\d+$/.test(f.lecciones)
+                    ? `${f.lecciones} ${f.cuenta === 1 ? "lección" : "lecciones"}`
+                    : f.lecciones}
+                </p>
+                <h3 class="tarjeta-curso__nombre">
+                  {f.destino ? <a href={f.destino}>{f.nombre}</a> : f.nombre}
+                </h3>
+                <p class="tarjeta-curso__pregunta">{f.teResuelve}</p>
+                <p class="tarjeta-curso__sales">
+                  <span>Sales con</span> {f.salesCon}
+                </p>
+                {f.destino && (
+                  <p class="tarjeta-curso__ver" aria-hidden="true">
+                    {verQue(f)} →
+                  </p>
+                )}
+              </li>
+            ))
+          }
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- 03 · Índice fijo: se pega bajo el header y acompaña todo el temario -->
+    <nav class="indice" id="indice" aria-label="Índice del temario">
+      <div class="container">
+        <ul class="indice__lista" role="list">
+          {
+            t.cursos.map((c) => (
+              <li>
+                <a href={`#${c.id}`}>{nombreCorto(c)}</a>
+              </li>
+            ))
+          }
+          {
+            t.bonos && (
+              <li>
+                <a href="#bonos">{t.bonos.titulo}</a>
+              </li>
+            )
+          }
+          <li><a href="#recibes">Lo que recibes</a></li>
+          <li><a href="#imparten">Quién lo imparte</a></li>
+          <li><a href="#preguntas">Preguntas</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <!-- 04 · Al terminar, tienes -->
+    <section class="section-y bg-white">
+      <div class="container" id="al-terminar">
+        <h2>{t.alTerminar.titulo}</h2>
+        <ul class="logros" role="list">
+          {
+            t.alTerminar.items.map((item) => (
+              <li>
+                <span class="logros__marca" aria-hidden="true" />
+                <span>
+                  <Texto t={item} />
+                </span>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </section>
+
+    <!-- 04b · Cómo se trabaja: los cuatro pasos y la ruta del Bootcamp -->
+    <section class="section-y bg-white">
+      <div class="container" id="como-se-trabaja">
+        <h2>{t.comoSeTrabaja.titulo}</h2>
+        {t.comoSeTrabaja.intro && <p class="lead como__intro">{t.comoSeTrabaja.intro}</p>}
+        <ol class="pasos" role="list">
+          {
+            t.comoSeTrabaja.pasos.map((p, i) => (
+              <li>
+                <span class="pasos__n" aria-hidden="true">
+                  {i + 1}
+                </span>
+                <span>
+                  <Texto t={p} />
+                </span>
+              </li>
+            ))
+          }
+        </ol>
+        {t.comoSeTrabaja.cierre.map((p) => <p class="como__cierre">{p}</p>)}
+        <Ruta temario={t} />
+      </div>
+    </section>
+
+    <!-- 05 · Para quién es: cuatro perfiles, cada uno con su puerta -->
+    <section class="section-y">
+      <div class="container" id="para-quien">
+        <h2>{t.paraQuien.titulo}</h2>
+        <ul class="perfiles" role="list">
+          {
+            t.paraQuien.perfiles.map((p) => (
+              <li class="perfil">
+                <h3 class="perfil__nombre">{p.perfil}</h3>
+                <p class="perfil__texto">
+                  <Texto t={p.texto} />
+                </p>
+                {p.empieza && (
+                  <p class="perfil__empieza">
+                    Empieza por{" "}
+                    <a href={p.empieza.destino}>
+                      {p.empieza.nombre} <span aria-hidden="true">→</span>
+                    </a>
+                  </p>
+                )}
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </section>
+
+    <!-- 06 · Cada curso -->
+    {
+      t.cursos.map((c, i) => (
+        <section class:list={["section-y", i % 2 === 0 && "bg-white"]}>
+          <div class="container">
+            <Curso curso={c} />
+          </div>
+        </section>
+      ))
+    }
+
+    {
+      t.bonos && (
+        <section
+          class:list={["section-y", t.cursos.length % 2 === 0 && "bg-white"]}
+          aria-labelledby="bonos-titulo"
+        >
+          <div class="container" id="bonos">
+            <h2 id="bonos-titulo">{t.bonos.titulo}</h2>
+            {t.bonos.intro.map((p) => <p class="lead">{p}</p>)}
+            <div class="bonos">
+              {t.bonos.cursos.map((c) => (
+                <Curso curso={c} nivel="h3" />
+              ))}
+            </div>
+          </div>
+        </section>
+      )
+    }
+
+    <!-- 07 · Lo que recibes -->
+    <section class="section-y">
+      <div class="container" id="recibes">
+        <h2>{t.recibes.titulo}</h2>
+        <ul class="recibes" role="list">
+          {
+            t.recibes.items.map((r) => (
+              <li class="recibe" id={r.id}>
+                <h3 class="recibe__titulo">{r.titulo}</h3>
+                <p class="recibe__texto">
+                  <Texto t={r.texto} />
+                </p>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </section>
+
+    <!-- 08 · Quién lo imparte -->
+    <section class="section-y bg-white">
+      <div class="container" id="imparten">
+        <div class="imparten">
+          <h2>{t.imparten.titulo}</h2>
+          <div class="imparten__tarjetas">
+            {
+              personas.map((p) => (
+                <TarjetaPersona
+                  nombre={p.nombre}
+                  rol={p.rol}
+                  trayectoria={p.trayectoria}
+                  atribuciones={p.atribuciones}
+                  foto={p.foto}
+                  redes={p.redes}
+                  distincion={p.distincion}
+                />
+              ))
+            }
+          </div>
+          <p class="imparten__enlaces">
+            <a href="/">Conoce Ilhas <span aria-hidden="true">→</span></a>
+            <a href="/jorgesierra">Jorge en redes <span aria-hidden="true">→</span></a>
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 09 · Preguntas frecuentes -->
+    <section class="section-y">
+      <div class="container" id="preguntas">
+        <div class="preguntas">
+          <h2>{t.preguntas.titulo}</h2>
+          <div class="preguntas__lista">
+            {
+              t.preguntas.items.map((q) => (
+                <details class="pregunta">
+                  <summary>{q.pregunta}</summary>
+                  <p>
+                    <Texto t={q.respuesta} />
+                  </p>
+                </details>
+              ))
+            }
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 10 · Cierre: una sola banda, el botón y el correo -->
+    <section class="section-y bg-dark cierre">
+      <div class="container prose prose-center cierre__inner">
+        <h2>El siguiente paso es el webinar.</h2>
+        <p class="lead">Ahí se comparte cómo entrar al programa.</p>
+        <a
+          href={webinarUrl}
+          data-evento="webinar_reservar"
+          class="btn btn-primary cierre__btn"
+          rel="noopener noreferrer"
+        >
+          Reservar el webinar
+        </a>
+        <p class="cierre__correo">
+          ¿Tienes una pregunta antes? Escríbenos a{" "}
+          <a href="mailto:hola@ilhas.ai" data-evento="contacto_correo">hola@ilhas.ai</a>
+        </p>
+      </div>
+    </section>
+  </article>
+</Base>
+
+<style>
+  /* --- Lo que mide el cromo pegado arriba ------------------------------------
+     El header del sitio (Nav.astro) es sticky y su alto no vive en ningún
+     token: sale de su padding (1 rem arriba y abajo) más la hamburguesa o el
+     botón «Hablemos», y su filete. Medido el 16 oct 2026: 75 px en teléfono y
+     74.6 en escritorio. Va 74.4: medio píxel por DEBAJO, para que el índice
+     quede tapado por el header (z-index 40 contra 30) y nunca deje una rendija
+     por la que se vea pasar el contenido. Si el header cambia de alto, cambia
+     aquí. El índice mide 61 px (chips de 44 + 8 arriba y abajo + filete). */
+  .temario {
+    --alto-header: 4.65rem;
+    --alto-indice: 3.8125rem;
+  }
+
+  /* Cualquier ancla de la página —curso, grupo o lección— aterriza debajo del
+     header y del índice, no tapada por ellos. */
+  .temario :global([id]) {
+    scroll-margin-top: calc(var(--alto-header) + var(--alto-indice) + 1rem);
+  }
+
+  .temario #indice {
+    scroll-margin-top: var(--alto-header);
+  }
+
+  .temario h2 {
+    max-width: 24ch;
+  }
+
+  /* --- 01 · Entrada --------------------------------------------------------- */
+  .entrada__inner {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .entrada .kicker {
+    margin-bottom: 0.75rem;
+  }
+
+  .entrada h1 {
+    font-size: clamp(2rem, 5.2vw, 4rem);
+    line-height: 1.04;
+    max-width: 14ch;
+  }
+
+  .entrada__lead {
+    margin-top: 0.9rem;
+    font-size: clamp(1rem, 1.6vw, 1.25rem);
+    line-height: 1.55;
+    max-width: 40ch;
+  }
+
+  /* Los dos botones caben en una fila a 390 px con este padding: apilados
+     costaban 58 px de la primera pantalla. */
+  .entrada__botones {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 1.25rem;
+  }
+
+  .entrada__botones .btn {
+    min-height: 2.75rem;
+    padding-inline: 1.1rem;
+  }
+
+  .entrada__botones .btn-ghost {
+    background: var(--ilhas-white);
+  }
+
+  /* La fila de datos. En teléfono, una tira de tarjetas que se desliza de lado
+     (la misma mecánica del índice): la primera —los totales— se ve completa y
+     la segunda se asoma, que es lo que invita a deslizar. */
+  .ficha {
+    list-style: none;
+    margin: 1.25rem calc(var(--ilhas-gutter) * -1) 0;
+    padding: 0 var(--ilhas-gutter) 0.25rem;
+    display: flex;
+    gap: 0.6rem;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: var(--ilhas-gutter);
+    scrollbar-width: none;
+  }
+
+  .ficha::-webkit-scrollbar {
+    display: none;
+  }
+
+  .ficha > li {
+    flex: 0 0 min(15rem, 74%);
+    scroll-snap-align: start;
+    padding: 0.85rem 1rem 0.9rem;
+    background: var(--ilhas-white);
+    border: 1px solid var(--ilhas-gray);
+    border-radius: var(--ilhas-radius-card);
+  }
+
+  .ficha__cifras {
+    display: flex;
+    gap: 1.25rem;
+    font-size: 0.875rem;
+    color: var(--ilhas-text);
+  }
+
+  .ficha__cifras b {
+    display: block;
+    font-family: var(--ilhas-font-display);
+    font-weight: 600;
+    font-size: 1.75rem;
+    line-height: 1;
+    letter-spacing: var(--ilhas-tracking-display);
+    color: var(--ilhas-primary);
+  }
+
+  .ficha__nota {
+    margin-top: 0.5rem;
+    font-size: 0.8125rem;
+    line-height: 1.45;
+  }
+
+  .ficha__dato {
+    position: relative;
+    font-size: 0.875rem;
+    line-height: 1.5;
+    color: var(--ilhas-dark);
+  }
+
+  /* La palomita, dibujada en CSS como en /finanzas: un ✓ de fuente cambia de
+     forma según el sistema. */
+  .ficha__dato::before {
+    content: "";
+    display: block;
+    width: 0.4rem;
+    height: 0.72rem;
+    margin: 0.1rem 0 0.55rem 0.3rem;
+    border: solid var(--ilhas-primary);
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+  }
+
+  /* Escritorio: el texto a la izquierda, la ficha a la derecha y los botones
+     debajo del texto. La ficha vuelve a ser UNA tarjeta con sus renglones. */
+  @media (min-width: 900px) {
+    .entrada__inner {
+      grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
+      grid-template-areas:
+        "texto ficha"
+        "botones ficha";
+      column-gap: 3.5rem;
+      align-items: center;
+    }
+
+    .entrada__texto {
+      grid-area: texto;
+      align-self: end;
+    }
+
+    .entrada__botones {
+      grid-area: botones;
+      align-self: start;
+      margin-top: 1.75rem;
+    }
+
+    .entrada__botones .btn {
+      padding-inline: 1.5rem;
+    }
+
+    .ficha {
+      grid-area: ficha;
+      margin: 0;
+      padding: 0.5rem 1.75rem;
+      display: block;
+      overflow: visible;
+      background: var(--ilhas-white);
+      border: 1px solid var(--ilhas-gray);
+      border-radius: var(--ilhas-radius-card);
+      box-shadow: var(--ilhas-shadow-soft);
+    }
+
+    .ficha > li {
+      padding: 1.1rem 0;
+      background: none;
+      border: none;
+      border-radius: 0;
+    }
+
+    .ficha > li + li {
+      border-top: 1px solid var(--ilhas-gray);
+    }
+
+    .ficha__totales {
+      padding-top: 1.35rem;
+    }
+
+    .ficha__cifras {
+      gap: 2rem;
+      font-size: 0.9375rem;
+    }
+
+    .ficha__cifras b {
+      font-size: var(--ilhas-fs-stat);
+    }
+
+    .ficha__nota {
+      margin-top: 0.75rem;
+      font-size: 0.875rem;
+    }
+
+    .ficha__dato {
+      display: flex;
+      gap: 0.9rem;
+      font-size: 0.9375rem;
+    }
+
+    .ficha__dato::before {
+      flex: 0 0 auto;
+      margin: 0.2rem 0.2rem 0 0.3rem;
+    }
+  }
+
+  /* --- 02 · El programa en una mirada ---------------------------------------- */
+  .mirada {
+    margin-top: 2.5rem;
+  }
+
+  @media (min-width: 900px) {
+    .mirada {
+      margin-top: 5rem;
+    }
+  }
+
+  .mirada__nota {
+    margin-top: 0.5rem;
+    font-size: clamp(1rem, 1.6vw, 1.25rem);
+  }
+
+  .mirada__lista {
+    list-style: none;
+    margin: 1.75rem 0 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    gap: 0.875rem;
+  }
+
+  .tarjeta-curso {
+    position: relative;
+    grid-column: span 12;
+    display: flex;
+    flex-direction: column;
+    padding: 1.25rem 1.35rem 1.15rem;
+    background: var(--ilhas-white);
+    border: 1px solid var(--ilhas-gray);
+    border-radius: var(--ilhas-radius-card);
+    box-shadow: var(--ilhas-shadow-soft);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+      box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+      border-color 0.3s ease;
+  }
+
+  .tarjeta-curso:hover {
+    transform: translateY(-3px);
+    border-color: rgba(122, 60, 255, 0.3);
+    box-shadow: 0 20px 50px rgba(15, 23, 42, 0.1);
+  }
+
+  /* El nombre es el enlace y su ::after cubre la tarjeta entera: toda la
+     tarjeta lleva al curso con un nombre accesible corto. El foco se dibuja en
+     la tarjeta, no en el renglón del nombre. */
+  .tarjeta-curso:focus-within {
+    outline: 2px solid var(--ilhas-primary);
+    outline-offset: 2px;
+  }
+
+  .tarjeta-curso__nombre a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .tarjeta-curso__nombre a::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+  }
+
+  .tarjeta-curso__nombre a:focus-visible {
+    outline: none;
+  }
+
+  .tarjeta-curso__cuenta {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ilhas-primary);
+  }
+
+  .tarjeta-curso__bono {
+    padding: 0.1rem 0.55rem;
+    border-radius: var(--ilhas-radius-pill);
+    background: var(--ilhas-primary);
+    color: var(--ilhas-white);
+    letter-spacing: 0.04em;
+  }
+
+  .tarjeta-curso__nombre {
+    margin-top: 0.6rem;
+    font-family: var(--ilhas-font-body);
+    font-size: 0.9375rem;
+    font-weight: 600;
+    letter-spacing: 0;
+    line-height: 1.35;
+    color: var(--ilhas-text);
+  }
+
+  .tarjeta-curso__pregunta {
+    margin-top: 0.35rem;
+    font-family: var(--ilhas-font-display);
+    font-weight: 600;
+    font-size: clamp(1.1875rem, 2vw, 1.4375rem);
+    line-height: 1.25;
+    letter-spacing: var(--ilhas-tracking-display);
+    color: var(--ilhas-dark);
+  }
+
+  .tarjeta-curso__sales {
+    margin-top: 0.75rem;
+    font-size: 0.875rem;
+    line-height: 1.5;
+  }
+
+  .tarjeta-curso__sales span {
+    font-weight: 600;
+    color: var(--ilhas-dark);
+  }
+
+  .tarjeta-curso__ver {
+    margin-top: auto;
+    padding-top: 1rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--ilhas-primary);
+  }
+
+  .tarjeta-curso--extra {
+    background: transparent;
+    box-shadow: none;
+  }
+
+  .tarjeta-curso--extra .tarjeta-curso__pregunta {
+    font-size: clamp(1.0625rem, 1.6vw, 1.1875rem);
+  }
+
+  @media (min-width: 720px) {
+    .tarjeta-curso {
+      grid-column: span 6;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .tarjeta-curso {
+      padding: 1.5rem 1.6rem 1.35rem;
+    }
+
+    .tarjeta-curso--extra {
+      grid-column: span 4;
+    }
+  }
+
+  /* --- 03 · Índice fijo ------------------------------------------------------ */
+  .indice {
+    position: sticky;
+    top: var(--alto-header);
+    z-index: 30;
+    background: var(--ilhas-light);
+    border-bottom: 1px solid var(--ilhas-gray);
+  }
+
+  /* La lista sangra hasta el borde de la pantalla para que los chips se vayan
+     por debajo del canto al hacer scroll; el degradado de la máscara avisa que
+     hay más a la derecha. */
+  .indice__lista {
+    list-style: none;
+    margin: 0 calc(var(--ilhas-gutter) * -1);
+    padding: 0.5rem var(--ilhas-gutter);
+    display: flex;
+    gap: 0.5rem;
+    overflow-x: auto;
+    scroll-snap-type: x proximity;
+    scroll-padding-inline: var(--ilhas-gutter);
+    scrollbar-width: none;
+    mask-image: linear-gradient(
+      to right,
+      transparent 0,
+      #000 var(--ilhas-gutter),
+      #000 calc(100% - 2.5rem),
+      transparent 100%
+    );
+  }
+
+  .indice__lista::-webkit-scrollbar {
+    display: none;
+  }
+
+  .indice__lista li {
+    flex: 0 0 auto;
+    scroll-snap-align: start;
+  }
+
+  .indice__lista a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 2.75rem;
+    padding: 0 1rem;
+    border-radius: var(--ilhas-radius-pill);
+    border: 1px solid var(--ilhas-gray);
+    background: var(--ilhas-white);
+    font-size: 0.875rem;
+    font-weight: 500;
+    white-space: nowrap;
+    text-decoration: none;
+    color: var(--ilhas-dark);
+    transition: border-color 0.18s ease, color 0.18s ease;
+  }
+
+  .indice__lista a:hover {
+    border-color: var(--ilhas-primary);
+    color: var(--ilhas-primary);
+  }
+
+  @media (min-width: 1100px) {
+    .indice__lista {
+      mask-image: none;
+      justify-content: center;
+    }
+  }
+
+  /* --- 04 · Al terminar, tienes ----------------------------------------------- */
+  .logros {
+    list-style: none;
+    margin: 1.75rem 0 0;
+    padding: 0;
+    display: grid;
+    gap: 0.75rem;
+  }
+
+  .logros li {
+    display: flex;
+    gap: 0.85rem;
+    align-items: flex-start;
+    padding: 1rem 1.15rem;
+    background: var(--ilhas-light);
+    border-radius: var(--ilhas-radius-card);
+    font-size: 1rem;
+    line-height: 1.5;
+    color: var(--ilhas-dark);
+  }
+
+  .logros__marca {
+    position: relative;
+    flex: 0 0 auto;
+    width: 1.5rem;
+    height: 1.5rem;
+    margin-top: 0.05rem;
+    border-radius: 50%;
+    background: var(--ilhas-primary);
+  }
+
+  .logros__marca::before {
+    content: "";
+    position: absolute;
+    left: 0.55rem;
+    top: 0.32rem;
+    width: 0.4rem;
+    height: 0.7rem;
+    border: solid var(--ilhas-white);
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+  }
+
+  @media (min-width: 760px) {
+    .logros {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  /* --- 04b · Cómo se trabaja ---------------------------------------------------- */
+  .como__intro {
+    margin-top: 0.75rem;
+  }
+
+  .pasos {
+    list-style: none;
+    margin: 1.75rem 0 0;
+    padding: 0;
+    display: grid;
+    gap: 0.75rem;
+  }
+
+  .pasos li {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+    padding: 1.1rem 1.2rem;
+    background: var(--ilhas-light);
+    border-radius: var(--ilhas-radius-card);
+    font-size: 1rem;
+    line-height: 1.5;
+    color: var(--ilhas-dark);
+  }
+
+  .pasos__n {
+    flex: 0 0 auto;
+    font-family: var(--ilhas-font-display);
+    font-weight: 600;
+    font-size: 2rem;
+    line-height: 1;
+    color: var(--ilhas-primary);
+  }
+
+  .como__cierre {
+    margin-top: 1.25rem;
+    font-size: 1rem;
+  }
+
+  @media (min-width: 760px) {
+    .pasos {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (min-width: 1100px) {
+    .pasos {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    .pasos li {
+      flex-direction: column;
+      gap: 0.75rem;
+      padding: 1.35rem 1.4rem 1.5rem;
+    }
+
+    .pasos__n {
+      font-size: 2.5rem;
+    }
+  }
+
+  /* --- 05 · Para quién es --------------------------------------------------- */
+  .perfiles {
+    list-style: none;
+    margin: 1.75rem 0 0;
+    padding: 0;
+    display: grid;
+    gap: 0.875rem;
+  }
+
+  .perfil {
+    display: flex;
+    flex-direction: column;
+    padding: 1.35rem 1.4rem 1.25rem;
+    background: var(--ilhas-white);
+    border: 1px solid var(--ilhas-gray);
+    border-radius: var(--ilhas-radius-card);
+    box-shadow: var(--ilhas-shadow-soft);
+  }
+
+  .perfil__nombre {
+    font-size: 1.1875rem;
+  }
+
+  .perfil__texto {
+    margin-top: 0.6rem;
+    font-size: 0.9375rem;
+    line-height: 1.55;
+  }
+
+  .perfil__empieza {
+    margin-top: auto;
+    padding-top: 1rem;
+    font-size: 0.875rem;
+    color: var(--ilhas-text);
+  }
+
+  .perfil__empieza a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    min-height: 2.75rem;
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  @media (min-width: 760px) {
+    .perfiles {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  /* --- 06 · Bonos ---------------------------------------------------------------- */
+  .bonos {
+    display: grid;
+    gap: 3.5rem;
+    margin-top: 2.25rem;
+  }
+
+  .bonos > :global(* + *) {
+    padding-top: 3.5rem;
+    border-top: 1px solid var(--ilhas-gray);
+  }
+
+  /* --- 07 · Lo que recibes ------------------------------------------------------- */
+  .recibes {
+    list-style: none;
+    margin: 1.75rem 0 0;
+    padding: 0;
+    display: grid;
+    gap: 0.75rem;
+  }
+
+  .recibe {
+    padding: 1.2rem 1.3rem 1.3rem;
+    background: var(--ilhas-white);
+    border: 1px solid var(--ilhas-gray);
+    border-radius: var(--ilhas-radius-card);
+  }
+
+  .recibe:target {
+    border-color: var(--ilhas-primary);
+    box-shadow: 0 0 0 3px var(--ilhas-primary-10);
+  }
+
+  .recibe__titulo {
+    font-size: 1.0625rem;
+    line-height: 1.3;
+  }
+
+  .recibe__texto {
+    margin-top: 0.45rem;
+    font-size: 0.9375rem;
+    line-height: 1.55;
+  }
+
+  @media (min-width: 640px) {
+    .recibes {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .recibes {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+
+  /* --- 08 · Quién lo imparte ------------------------------------------------------ */
+  .imparten {
+    max-width: 52rem;
+    margin-inline: auto;
+  }
+
+  .imparten h2 {
+    text-align: center;
+    margin-inline: auto;
+  }
+
+  .imparten__tarjetas {
+    display: grid;
+    gap: 1.25rem;
+    margin-top: 2rem;
+  }
+
+  .imparten__enlaces {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.5rem 2rem;
+    margin: 1.5rem auto 0;
+  }
+
+  .imparten__enlaces a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    min-height: 2.75rem;
+    font-size: 0.9375rem;
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  @media (min-width: 640px) {
+    .imparten__tarjetas {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  /* --- 09 · Preguntas frecuentes ---------------------------------------------------- */
+  .preguntas {
+    max-width: 48rem;
+  }
+
+  .preguntas__lista {
+    display: grid;
+    gap: 0.75rem;
+    margin-top: 1.75rem;
+  }
+
+  .pregunta {
+    background: var(--ilhas-white);
+    border: 1px solid var(--ilhas-gray);
+    border-radius: var(--ilhas-radius-card);
+  }
+
+  .pregunta summary {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+    min-height: 2.75rem;
+    padding: 1.1rem 1.4rem;
+    cursor: pointer;
+    list-style: none;
+    font-weight: 600;
+    color: var(--ilhas-dark);
+    border-radius: var(--ilhas-radius-card);
+  }
+
+  .pregunta summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .pregunta summary::after {
+    content: "+";
+    flex-shrink: 0;
+    font-family: var(--ilhas-font-display);
+    color: var(--ilhas-primary);
+  }
+
+  .pregunta[open] summary::after {
+    content: "–";
+  }
+
+  .pregunta p {
+    padding: 0 1.4rem 1.25rem;
+    font-size: 0.9375rem;
+  }
+
+  /* --- 10 · Cierre ------------------------------------------------------------------ */
+  .cierre__inner {
+    text-align: center;
+  }
+
+  .cierre__inner h2,
+  .cierre__inner .lead {
+    margin-inline: auto;
+  }
+
+  .cierre__inner .lead {
+    margin-top: 0.75rem;
+  }
+
+  .cierre__btn {
+    width: 100%;
+    min-height: 3rem;
+    margin-top: 1.75rem;
+  }
+
+  /* Sobre la tinta, --ilhas-primary no llega a 4.5:1 para texto chico (base.css
+     lo mide en ~3.6): el enlace va en blanco y subrayado. */
+  .cierre__correo {
+    margin: 1.25rem auto 0;
+    font-size: 0.9375rem;
+  }
+
+  .cierre__correo a {
+    color: var(--ilhas-white);
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+  }
+
+  .cierre__correo a:hover {
+    color: var(--ilhas-grad-start);
+  }
+
+  @media (min-width: 480px) {
+    .cierre__btn {
+      width: auto;
+      padding-inline: 3rem;
+    }
+  }
+</style>

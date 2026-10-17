@@ -2,7 +2,9 @@
 <!--
   Archivo estático, a propósito (CLAUDE.md): no se instala @astrojs/sitemap.
 
-  Sólo van las páginas que se quieren posicionar. NO entran:
+  Sólo van las páginas que se quieren posicionar. /temario SÍ entra aunque no
+  esté en el menú: es la URL que Jorge comparte, y que la encuentren también
+  buscándola es a favor. NO entran:
     · /terminos, /privacidad, /cookies  → llevan noindex
     · /jorgesierra/ia-aplicada-masterclass → lleva noindex y no se enlaza
 
@@ -20,4 +22,5 @@
   <url><loc>https://www.ilhas.ai/soluciones</loc></url>
   <url><loc>https://www.ilhas.ai/nosotros</loc></url>
   <url><loc>https://www.ilhas.ai/jorgesierra</loc></url>
+  <url><loc>https://www.ilhas.ai/temario</loc></url>
 </urlset>
