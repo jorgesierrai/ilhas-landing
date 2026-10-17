@@ -7,7 +7,7 @@
       "permanent": false
     },
     {
-      "source": "/webinar",
+      "source": "/webinar{/}?",
       "destination": "https://eventos.ilhas.ai/registro",
       "permanent": false
     }
