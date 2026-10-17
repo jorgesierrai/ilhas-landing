@@ -16,7 +16,7 @@
  * renombre la clase — y no te avisa nadie.
  *
  * ─────────────────────────────────────────────────────────────────────────────
- * SON CINCO. NO SE AGREGAN MÁS SIN UNA RAZÓN
+ * SON SEIS. NO SE AGREGAN MÁS SIN UNA RAZÓN
  * ─────────────────────────────────────────────────────────────────────────────
  * Cada evento que agregas es un evento que se puede romper, y la analítica rota
  * es peor que la ausente: te hace tomar decisiones con números que no
@@ -29,6 +29,11 @@
  * existía. Sin él, el embudo era home → /finanzas → [clic medido] → /webinar →
  * ciego, y el número más importante de esa página —cuántos de los que llegan sí
  * abren el formulario— no se podría contestar.
+ *
+ * El sexto, `oferta_interes`, entró el 16 oct 2026 por la misma clase de razón:
+ * /temario es para quien YA pasó por el webinar —por eso no lleva
+ * `webinar_reservar`, ni siquiera en el pie— y su botón «Estoy interesado» es
+ * lo único que esa página le pide. Sin él, la página no tendría conversión.
  *
  * Lo que se descartó a propósito, y no se vuelve a proponer:
  *   · profundidad de scroll — la página cambia de largo cada iteración, así que
@@ -157,5 +162,17 @@ export const EVENTOS: Evento[] = [
       "el registro abre y /webinar deja de ser lista de espera para volverse " +
       "la página de registro. NO se rompe si cambia el copy del botón ni la " +
       "URL del formulario.",
+  },
+  {
+    id: "oferta_interes",
+    descripcion:
+      "La conversión de /temario: el botón flotante «Estoy interesado», que " +
+      "lleva a eventos.ilhas.ai/oferta. Quien lee el temario ya vio el " +
+      "webinar; este clic dice que, además, quiere entrar al programa.",
+    paginas: ["/temario"],
+    minimo: 1,
+    seRompeSi:
+      "el botón sale de /temario o pierde su `data-evento`. NO se rompe si " +
+      "cambia el texto, el color, el lugar donde flota o el destino.",
   },
 ];

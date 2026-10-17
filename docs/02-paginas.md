@@ -417,6 +417,14 @@ lección solos, y el título queda visible debajo del índice.
 por el webinar»). Quien llega a esta página ya lo vio, así que «Reservar el
 webinar» le pedía algo que ya hizo. El pie de `/temario` va sin ese enlace
 (`sinWebinar` en `Base.astro`); el correo (`contacto_correo`) sí se queda.
+
+**El único llamado a la acción es un botón flotante, «Estoy interesado»**
+(Jorge, 16 oct 2026: «fácil de ver y que no tape nada»): lleva a
+`eventos.ilhas.ai/oferta` con `utm_campaign=oferta&utm_content=temario`, y se
+mide como `oferta_interes`. Píldora compacta, no barra: abajo al centro en
+teléfono y, desde 1300 px, en el margen derecho, fuera de la columna. El pie de
+la página gana aire abajo para que el botón nunca tape los enlaces legales.
+
 Cuánta gente la ve lo dice el `page_view` de GA4: no se agregó ni un script.
 
 ### ⛔ Lo que NO va aquí

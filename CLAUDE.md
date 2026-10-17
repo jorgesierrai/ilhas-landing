@@ -40,7 +40,7 @@ Aparte del hub vive también **`/temario`** (16 oct 2026): el temario completo d
 
 ## Estado del repositorio
 
-*Actualizado: 16 oct 2026 (iteración 22: `/temario` en el #28, y el #27 de `/webinar/`; los dos en `main` y verificados en producción).*
+*Actualizado: 16 oct 2026 (iteración 22: `/temario` en el #28 y el #27 de `/webinar/`, en `main` y verificados en producción; y el botón «Estoy interesado», en el #30).*
 
 > **Este bloque se actualiza en cada iteración, no al final.** Es lo primero que
 > lee una sesión nueva; si miente, la sesión construye sobre una foto vieja. Lo
@@ -147,9 +147,11 @@ Aparte del hub vive también **`/temario`** (16 oct 2026): el temario completo d
       con ello se perdieron las UTMs que llevaba la constante `webinarUrl`. Los
       de `/terminos`, `/privacidad` y `/cookies` NO se tocaron: ahí son
       descriptivos y siguen siendo ciertos.
-  - **LOS CINCO EVENTOS, desde el 6 sep 2026.** `carril_elegir` (los dos CTA
-    del hero, con parámetro `carril`), `webinar_reservar`, `diagnostico_agendar`,
-    `contacto_correo` y `lista_espera_apuntarse`. El registro es **`src/data/eventos.ts`** y el chequeo
+  - **LOS SEIS EVENTOS** (cinco desde el 6 sep 2026; el sexto, el 16 oct).
+    `carril_elegir` (los dos CTA del hero, con parámetro `carril`),
+    `webinar_reservar`, `diagnostico_agendar`, `contacto_correo`,
+    `lista_espera_apuntarse` y `oferta_interes` (el botón flotante de
+    `/temario`). El registro es **`src/data/eventos.ts`** y el chequeo
     **`npm run eventos`**, que corre DENTRO de `npm run build`.
     - Se cuelgan de un atributo **`data-evento`** en el marcado, **nunca de un
       selector CSS ni del texto del botón**: así sobreviven a un cambio de copy,
@@ -233,6 +235,15 @@ lleva también `og:image`). La prueba tras cada build:
     «Reservar el webinar»** — prop `sinWebinar` de `Base.astro`, que la pasa a
     `Footer.astro`. Las otras ocho páginas siguen igual, byte a byte. No le
     pongas un CTA al webinar a esta página.
+  - **Su único llamado a la acción es un botón FLOTANTE, «Estoy interesado»**
+    (Jorge, 16 oct 2026: «fácil de ver y que no tape nada»), que lleva a
+    `eventos.ilhas.ai/oferta` con UTMs (`utm_campaign=oferta`,
+    `utm_content=temario`) y se mide como `oferta_interes`. Es una píldora,
+    no una barra: abajo al centro en teléfono, y desde 1300 px en el margen
+    derecho, fuera de la columna (medido: no se cruza ni con las tarjetas de
+    «Quién lo imparte», las más anchas). El pie de `/temario` gana 5.5 rem
+    abajo —regla con `body:has(.cta-flotante)`, para no tocar el pie de las
+    otras páginas— y así el botón nunca tapa los enlaces legales al final.
   - **«Curso 1», «Curso 2», «Bono»** van en píldora morada sólida, a 16 px en
     teléfono y 18 en escritorio (Jorge: «que sea más visible»), no como kicker.
   - ⚠️ **QUE SE DIGIERA EN EL TELÉFONO** (Jorge, 16 oct 2026: «está muy
