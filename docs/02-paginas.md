@@ -357,27 +357,25 @@ siguiente exportación las borra.
 
 ### Bloques, en orden
 
+**Directo al temario** (Jorge, 16 oct 2026: «me quiero ir directamente al
+temario»). De la entrada se pasa al índice y a los cursos, sin nada en medio.
+El brief pedía más bloques y **se quitaron, y no vuelven sin que Jorge lo
+pida**: las tarjetas de «El programa en una mirada», «Cómo se trabaja» con el
+diagrama de la ruta del Bootcamp, «Para quién es» y la banda de cierre. El doc
+maestro sigue trayendo esas secciones y el parser las salta
+(`QUE_NO_SE_PINTAN`); la tabla de la mirada se sigue leyendo porque da los
+totales y la pregunta de cada curso.
+
 1. **Entrada.** El kicker es el título del archivo; el `<h1>`, la frase en
    negritas («Finanzas + IA: de reportes a decisiones.»), con la mitad después
    de los dos puntos en degradado; debajo, su frase. Luego la **fila de datos**
-   —los totales del encabezado y las tres frases de introducción del archivo—,
-   que en teléfono es una tira que se desliza de lado, y los dos botones:
-   «Reservar el webinar» y «Ver el temario».
-2. **El programa en una mirada.** Una tarjeta por fila de la tabla del archivo:
-   la pregunta de «Te resuelve» grande, «Sales con» y el número de lecciones.
-   Cada tarjeta lleva a su curso; la del Playbook, que no tiene sección, a su
-   renglón de «Lo que recibes». **Entrada y mirada comparten sección**: a
-   390×844 la primera tarjeta ya se asoma (empieza en y=755).
-3. **Índice fijo.** Chips pegados bajo el header (`position: sticky`), con scroll
+   —los totales del encabezado y las frases de introducción del archivo—, que
+   en teléfono es una tira que se desliza de lado, y los dos botones:
+   «Reservar el webinar» y «Ver el temario», que salta al primer curso.
+2. **Índice fijo.** Chips pegados bajo el header (`position: sticky`), con scroll
    lateral en teléfono: cada curso, Bonos, Lo que recibes, Quién lo imparte y
-   Preguntas.
-4. **Al terminar, tienes** y **Cómo se trabaja**: los cuatro pasos y el diagrama
-   «Qué curso ves en cada fase del Bootcamp» (`<table>` en escritorio, lista por
-   tramo en teléfono). El diagrama **no viene en la exportación**: sus datos
-   viven en `RUTA`, en `src/lib/temario.ts`.
-5. **Para quién es.** Cuatro perfiles; cada uno enlaza al primer curso que su
-   propio texto nombra.
-6. **Cada curso.** Kicker con su número por orden de aparición (el archivo salta
+   Preguntas. A 390×844 el primer curso ya se ve debajo.
+3. **Cada curso.** Kicker con su número por orden de aparición (el archivo salta
    del 4 al 6), nombre, la pregunta de «Te resuelve», entrada, «Cómo trabajas»,
    «Antes de empezar» y **«Al terminar tienes» destacado**. Módulos, niveles y
    fases en `<details>` con su número de lecciones; el primero de cada curso va
@@ -385,14 +383,19 @@ siguiente exportación las borra.
    marcado**. El Bootcamp abre con sus cinco fases I·L·H·A·S como pasos con la
    letra grande. En escritorio la entrada del curso se queda fija a la izquierda
    mientras corren las lecciones. Al final, «↑ Índice».
-7. **Bonos** — los dos cursos de `## 6. Bonos`, con el mismo componente.
-8. **Lo que recibes**, en rejilla.
-9. **Quién lo imparte.** `TarjetaPersona` con `MAESTROS` de `personas.ts` (foto,
+4. **Bonos** — los dos cursos de `## 6. Bonos`, con el mismo componente.
+5. **Al terminar, tienes**, como lista de logros. Iba antes de los cursos; bajó
+   aquí con la decisión de arriba.
+6. **Lo que recibes**, en rejilla.
+7. **Quién lo imparte.** `TarjetaPersona` con `MAESTROS` de `personas.ts` (foto,
    cifras atribuidas, distinción y redes); el nombre y la trayectoria salen del
    temario y el rol de Jorge es «CEO de Ilhas». Debajo, «Conoce Ilhas» (`/`) y
    «Jorge en redes» (`/jorgesierra`).
-10. **Preguntas frecuentes** en `<details>`.
-11. **Cierre**: una banda oscura con el botón y el correo.
+8. **Preguntas frecuentes** en `<details>`. Después va el pie del sitio.
+
+Si una sección completa desaparece del doc, la página la omite junto con su chip
+del índice, y los fondos blanco y claro se recalculan para que dos vecinas no se
+fundan en un solo bloque.
 
 ### Anclas para mandar por WhatsApp
 
@@ -405,8 +408,8 @@ deja la URL lista para copiar; el grupo cerrado se abre solo al llegar.
 ### CTA y medición
 
 «Reservar el webinar» → `eventos.ilhas.ai/registro` con
-`utm_content=temario`, en la entrada y en el cierre (`webinar_reservar`). El
-correo del cierre es `contacto_correo`. Cuánta gente la ve lo dice el
+`utm_content=temario`, en la entrada (`webinar_reservar`); el pie del sitio
+trae el suyo y el correo (`contacto_correo`). Cuánta gente la ve lo dice el
 `page_view` de GA4: no se agregó ni un script.
 
 ### ⛔ Lo que NO va aquí

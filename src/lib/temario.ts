@@ -110,16 +110,6 @@ export interface FilaMirada {
   esBono: boolean;
   /** El curso con sección propia, si lo tiene. El Playbook no. */
   cursoId: string | null;
-  /** A dónde lleva la tarjeta: el curso, o su renglón en «Lo que recibes». */
-  destino: string | null;
-  linea: number;
-}
-
-export interface Perfil {
-  perfil: string;
-  texto: string;
-  /** El curso por donde empieza, sacado del propio texto del perfil. */
-  empieza: { nombre: string; destino: string } | null;
   linea: number;
 }
 
@@ -137,8 +127,6 @@ export interface Temario {
   intro: string[];
   mirada: { titulo: string; nota: string | null; filas: FilaMirada[] };
   alTerminar: { titulo: string; items: string[] };
-  comoSeTrabaja: { titulo: string; intro: string | null; pasos: string[]; cierre: string[] };
-  paraQuien: { titulo: string; perfiles: Perfil[] };
   /** Los cursos con `##` propio. Los bonos van aparte. */
   cursos: Curso[];
   bonos: { titulo: string; orden: number; intro: string[]; cursos: Curso[] } | null;
@@ -231,7 +219,7 @@ export function idCurso(nombre: string): string {
 }
 
 /**
- * Cómo se llama el curso en el índice y en las tarjetas chicas. Microcopy de
+ * Cómo se llama el curso en los chips del índice. Microcopy de
  * interfaz: el nombre completo vive en el encabezado de cada curso.
  */
 const CORTOS: Record<string, string> = {
@@ -575,8 +563,6 @@ export function leerTemario(md: string): Temario {
     intro: [],
     mirada: { titulo: "", nota: null, filas: [] },
     alTerminar: { titulo: "", items: [] },
-    comoSeTrabaja: { titulo: "", intro: null, pasos: [], cierre: [] },
-    paraQuien: { titulo: "", perfiles: [] },
     cursos: [],
     bonos: null,
     recibes: { titulo: "", items: [] },
@@ -624,24 +610,8 @@ export function leerTemario(md: string): Temario {
       t.alTerminar.titulo = s.titulo;
       for (const b of s.bloques)
         if (b.tipo === "lista") t.alTerminar.items.push(...b.items.map((i) => i.texto));
-    } else if (n.startsWith("como se trabaja")) {
-      t.comoSeTrabaja.titulo = s.titulo;
-      for (const b of s.bloques) {
-        if (b.tipo === "lista") t.comoSeTrabaja.pasos.push(...b.items.map((i) => i.texto));
-        else if (b.tipo === "parrafo") {
-          if (!t.comoSeTrabaja.pasos.length && !t.comoSeTrabaja.intro)
-            t.comoSeTrabaja.intro = b.texto;
-          else t.comoSeTrabaja.cierre.push(b.texto);
-        }
-      }
-    } else if (n.startsWith("para quien")) {
-      t.paraQuien.titulo = s.titulo;
-      for (const b of s.bloques) {
-        if (b.tipo !== "parrafo") continue;
-        const p = partirNegritas(b.texto);
-        if (p) t.paraQuien.perfiles.push({ perfil: p.destacado, texto: p.resto, empieza: null, linea: b.linea });
-        else problemas.push(`Línea ${b.linea}: un perfil sin su nombre en negritas.`);
-      }
+    } else if (QUE_NO_SE_PINTAN.some((x) => n.startsWith(x))) {
+      // Viene en el doc, pero la página no la pinta. Ver QUE_NO_SE_PINTAN.
     } else if (numerado && norm(numerado[1]).startsWith("bonos")) {
       orden += 1;
       const intro: string[] = [];
@@ -689,7 +659,8 @@ export function leerTemario(md: string): Temario {
     }
   }
 
-  // ── Cruces: la tabla contra los cursos, y cada perfil contra su curso.
+  // ── Cruce: cada fila de la tabla con su curso. De ahí sale la pregunta de
+  // «Te resuelve» que encabeza cada curso.
   const todos = todosLosCursos(t);
   for (const f of t.mirada.filas) {
     const curso = todos.find(
@@ -697,15 +668,10 @@ export function leerTemario(md: string): Temario {
     );
     if (curso) {
       f.cursoId = curso.id;
-      f.destino = `#${curso.id}`;
       curso.teResuelve = f.teResuelve;
       curso.salesCon = f.salesCon;
-    } else {
-      const item = itemQueRecibes(t, f.nombre);
-      f.destino = item ? `#${item.id}` : null;
     }
   }
-  for (const p of t.paraQuien.perfiles) p.empieza = dondeEmpieza(t, p.texto);
 
   return t;
 }
@@ -737,7 +703,6 @@ function leerMirada(filas: string[][], linea: number, problemas: string[]): Fila
       cuenta: n ? Number(n[1]) : null,
       esBono: /^bono\b/i.test(curso),
       cursoId: null,
-      destino: null,
       // +1 por la cabeza: el renglón de guiones no cuenta como línea de datos
       // pero sí como línea del archivo.
       linea: linea + i + 2,
@@ -748,63 +713,6 @@ function leerMirada(filas: string[][], linea: number, problemas: string[]): Fila
 export function todosLosCursos(t: Temario): Curso[] {
   return [...t.cursos, ...(t.bonos ? t.bonos.cursos : [])];
 }
-
-/** El renglón de «Lo que recibes» que corresponde a una fila sin sección (el Playbook). */
-function itemQueRecibes(t: Temario, nombre: string) {
-  const palabras = norm(nombre)
-    .split(" ")
-    .filter((w) => w.length >= 5);
-  return t.recibes.items.find((it) => palabras.some((w) => norm(it.titulo).includes(w))) ?? null;
-}
-
-/**
- * Por dónde empieza un perfil: el PRIMER curso que su propio texto nombra.
- * «Empieza por Tu herramienta correcta y el nivel 1 de IA de 0 a 100» →
- * Tu herramienta correcta. Si nombra un nivel justo antes del curso («los
- * niveles 4 y 5 de IA de 0 a 100»), lleva a ese nivel y no al curso entero.
- */
-function dondeEmpieza(t: Temario, texto: string): { nombre: string; destino: string } | null {
-  const n = norm(texto);
-  const candidatos: { alias: string; nombre: string; destino: string; curso: Curso | null }[] = [];
-
-  for (const c of todosLosCursos(t)) {
-    const fila = t.mirada.filas.find((f) => f.cursoId === c.id);
-    const alias = new Set<string>([c.nombre, c.nombre.split(/\s+y\s+/)[0]]);
-    if (fila) alias.add(fila.nombre);
-    // Las marcas de una palabra, que el texto usa sueltas: «La Masterclass, el
-    // Playbook y Análisis de datos son para ti».
-    const primera = c.nombre.split(" ")[0];
-    if (MARCAS.test(primera)) alias.add(primera);
-    // El nombre de la tabla es el corto («Tu herramienta correcta», no «… y el
-    // Stack de los Grandes»): es el que cabe en un enlace.
-    const nombre = fila ? fila.nombre : c.nombre;
-    for (const a of alias) candidatos.push({ alias: a, nombre, destino: `#${c.id}`, curso: c });
-  }
-  // Las filas sin sección propia (el Playbook) llevan a su renglón de «Lo que recibes».
-  for (const f of t.mirada.filas) {
-    if (f.cursoId || !f.destino) continue;
-    const primera = f.nombre.split(" ")[0];
-    candidatos.push({ alias: MARCAS.test(primera) ? primera : f.nombre, nombre: f.nombre, destino: f.destino, curso: null });
-  }
-
-  let mejor: { pos: number; nombre: string; destino: string } | null = null;
-  for (const k of candidatos) {
-    const pos = n.indexOf(norm(k.alias));
-    if (pos < 0 || (mejor !== null && pos >= mejor.pos)) continue;
-    let destino = k.destino;
-    if (k.curso) {
-      const antes = n.slice(Math.max(0, pos - 28), pos);
-      const nivel = antes.match(/nivel(?:es)? (\d+)[^.]*$/);
-      const g = nivel ? k.curso.grupos.find((x) => norm(x.etiqueta) === `nivel ${nivel[1]}`) : null;
-      if (g) destino = `#${g.id}`;
-    }
-    mejor = { pos, nombre: k.nombre, destino };
-  }
-  return mejor ? { nombre: mejor.nombre, destino: mejor.destino } : null;
-}
-
-/** Nombres de una sola palabra que el temario usa sueltos para referirse a un curso. */
-const MARCAS = /^(masterclass|bootcamp|playbook)$/i;
 
 /** De quién es cada tarjeta de «Quién lo imparte». La foto y los datos viven en personas.ts. */
 export function quienEs(nombre: string): "papa" | "hijo" | null {
@@ -823,132 +731,6 @@ export function descripcion(t: Temario): string {
   if (completa.length <= 160) return completa;
   const corte = completa.slice(0, 159);
   return corte.slice(0, corte.lastIndexOf(" ")) + "…";
-}
-
-// ─────────────────────────────────────────────────────────────────────────────
-// El diagrama «Qué curso ves en cada fase del Bootcamp»
-// ─────────────────────────────────────────────────────────────────────────────
-//
-// Sus datos NO vienen en la exportación: el doc maestro lo trae como diagrama y
-// el Markdown sólo deja un comentario. Viven aquí, del brief de la iteración 22
-// (§ 5). Los números («9 módulos», «5 módulos») y los nombres SÍ salen del
-// temario, para que no se queden viejos solos; las etiquetas de nivel se
-// verifican contra los `###` del curso en `npm run temario`.
-
-export const TRAMOS = [
-  { id: "antes", nombre: "Antes", durante: false },
-  { id: "ilh", nombre: "I·L·H", durante: true },
-  { id: "a", nombre: "A", durante: true },
-  { id: "s", nombre: "S", durante: true },
-  { id: "despues", nombre: "Después", durante: false },
-] as const;
-
-export type TramoId = (typeof TRAMOS)[number]["id"];
-
-interface CeldaRuta {
-  desde: TramoId;
-  hasta: TramoId;
-  /** Texto fijo, o calculado del curso. */
-  texto: string | ((c: Curso) => string);
-  /** Si la celda es de otro curso que el del renglón (los bonos). */
-  curso?: string;
-  /** El `###` que nombra, para verificar que existe. */
-  grupo?: string;
-}
-
-interface RenglonRuta {
-  /** El id del curso, o `null` para el renglón de los bonos. */
-  curso: string | null;
-  eje?: boolean;
-  celdas: CeldaRuta[];
-}
-
-const RUTA: RenglonRuta[] = [
-  {
-    curso: "bootcamp",
-    eje: true,
-    celdas: [
-      { desde: "ilh", hasta: "ilh", texto: "I·L·H" },
-      { desde: "a", hasta: "a", texto: "A" },
-      { desde: "s", hasta: "s", texto: "S" },
-    ],
-  },
-  {
-    curso: "masterclass",
-    celdas: [
-      {
-        desde: "ilh",
-        hasta: "ilh",
-        texto: (c) => `${c.declaradas.modulos ?? c.lecciones.length} módulos`,
-      },
-    ],
-  },
-  {
-    curso: "ia",
-    celdas: [
-      { desde: "antes", hasta: "antes", texto: "Nivel 1", grupo: "nivel 1" },
-      { desde: "ilh", hasta: "ilh", texto: "Nivel 2", grupo: "nivel 2" },
-      { desde: "a", hasta: "s", texto: "Nivel 3", grupo: "nivel 3" },
-      { desde: "despues", hasta: "despues", texto: "Niveles 4 y 5", grupo: "nivel 5" },
-    ],
-  },
-  {
-    curso: "datos",
-    celdas: [{ desde: "a", hasta: "s", texto: (c) => `${c.grupos.length} módulos` }],
-  },
-  {
-    curso: null,
-    celdas: [
-      { desde: "antes", hasta: "antes", texto: "Herramienta", curso: "herramienta" },
-      { desde: "s", hasta: "s", texto: "Reporte", curso: "reporte" },
-    ],
-  },
-];
-
-export interface RenglonRutaListo {
-  nombre: string;
-  eje: boolean;
-  celdas: { desde: number; hasta: number; texto: string }[];
-}
-
-/** El diagrama resuelto contra el temario. Lo que no se pueda resolver va a `problemas`. */
-export function armarRuta(t: Temario): { renglones: RenglonRutaListo[]; problemas: string[] } {
-  const problemas: string[] = [];
-  const cursos = todosLosCursos(t);
-  const indice = (id: TramoId) => TRAMOS.findIndex((x) => x.id === id);
-  const renglones: RenglonRutaListo[] = [];
-
-  for (const r of RUTA) {
-    const curso = r.curso ? cursos.find((c) => c.id === r.curso) : null;
-    if (r.curso && !curso) {
-      problemas.push(`El diagrama de la ruta usa el curso «${r.curso}», que ya no está en el temario.`);
-      continue;
-    }
-    const celdas: RenglonRutaListo["celdas"] = [];
-    for (const celda of r.celdas) {
-      const de = celda.curso ? cursos.find((c) => c.id === celda.curso) : curso;
-      if (!de) {
-        problemas.push(`El diagrama de la ruta usa el curso «${celda.curso}», que ya no está en el temario.`);
-        continue;
-      }
-      if (celda.grupo && !de.grupos.some((g) => norm(g.etiqueta) === celda.grupo)) {
-        problemas.push(
-          `El diagrama de la ruta nombra «${celda.grupo}» de «${de.nombre}», y ese curso ya no lo trae.`,
-        );
-      }
-      celdas.push({
-        desde: indice(celda.desde),
-        hasta: indice(celda.hasta),
-        texto: typeof celda.texto === "function" ? celda.texto(de) : celda.texto,
-      });
-    }
-    renglones.push({
-      nombre: curso ? curso.nombre : (t.bonos?.titulo ?? "Bonos"),
-      eje: Boolean(r.eje),
-      celdas,
-    });
-  }
-  return { renglones, problemas };
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -1043,17 +825,13 @@ export function revisar(t: Temario, md: string): Regla[] {
         fallas.push(
           `Línea ${f.linea}: la tabla le da ${f.lecciones} a «${f.curso}» y su sección declara ${c.declaradas.lecciones} (línea ${c.linea}).`,
         );
-      if (!c && !f.destino)
-        fallas.push(
-          `Línea ${f.linea}: «${f.curso}» no tiene sección propia ni aparece en «${t.recibes.titulo || "Lo que recibes"}»: su tarjeta no tendría a dónde llevar.`,
-        );
     }
     for (const c of cursos)
       if (!t.mirada.filas.some((f) => f.cursoId === c.id))
         fallas.push(`Línea ${c.linea}: «${c.nombre}» tiene sección pero no renglón en la tabla.`);
     reglas.push({
       nombre: "La tabla coincide con cada curso",
-      resumen: `${t.mirada.filas.length} filas, cada una con su sección o su renglón en lo que recibes`,
+      resumen: `${t.mirada.filas.length} filas, cada curso con su renglón`,
       fallas,
     });
   }
@@ -1171,12 +949,9 @@ export function revisar(t: Temario, md: string): Regla[] {
     reglas.push({ nombre: "Cada ancla es única", resumen: `${ids.length} anclas`, fallas });
   }
 
-  // 9 · Cada perfil sabe por dónde empieza; cada persona tiene su tarjeta.
+  // 9 · Cada persona tiene su tarjeta.
   {
     const fallas: string[] = [];
-    for (const p of t.paraQuien.perfiles)
-      if (!p.empieza)
-        fallas.push(`Línea ${p.linea}: el perfil «${p.perfil}» no nombra ningún curso: no sé a cuál mandarlo.`);
     const vistos = new Set<string>();
     for (const p of t.imparten.personas) {
       const quien = quienEs(p.nombre);
@@ -1188,21 +963,19 @@ export function revisar(t: Temario, md: string): Regla[] {
       else vistos.add(quien);
     }
     reglas.push({
-      nombre: "Perfiles y personas",
-      resumen: `${t.paraQuien.perfiles.length} perfiles con su curso, ${t.imparten.personas.length} personas con tarjeta`,
+      nombre: "Quién lo imparte",
+      resumen: `${t.imparten.personas.length} personas, cada una con su tarjeta`,
       fallas,
     });
   }
 
-  // 10 · El diagrama de la ruta y la descripción.
+  // 10 · La descripción para buscadores y redes.
   {
-    const { problemas } = armarRuta(t);
     const d = descripcion(t);
-    if (d.length > 160) problemas.push(`La descripción mide ${d.length} caracteres; el máximo es 160.`);
     reglas.push({
-      nombre: "Ruta del Bootcamp y descripción",
-      resumen: `diagrama resuelto, descripción de ${d.length} caracteres`,
-      fallas: problemas,
+      nombre: "Descripción para buscadores",
+      resumen: `${d.length} caracteres`,
+      fallas: d.length > 160 ? [`La descripción mide ${d.length} caracteres; el máximo es 160.`] : [],
     });
   }
 
@@ -1210,14 +983,14 @@ export function revisar(t: Temario, md: string): Regla[] {
 }
 
 /** Las anclas fijas de la página. `npm run temario` verifica que ningún curso las pise. */
-export const SECCIONES = [
-  "mirada",
-  "indice",
-  "al-terminar",
-  "como-se-trabaja",
-  "para-quien",
-  "bonos",
-  "recibes",
-  "imparten",
-  "preguntas",
-];
+export const SECCIONES = ["indice", "bonos", "al-terminar", "recibes", "imparten", "preguntas"];
+
+/**
+ * Secciones que vienen en el doc maestro y que la página NO pinta, a propósito
+ * (Jorge, 16 oct 2026: «me quiero ir directamente al temario»). Se reconocen y
+ * se saltan; sin esta lista el parser las tomaría por secciones nuevas y
+ * detendría el build. «El programa en una mirada» también se quitó de la
+ * página, pero se sigue LEYENDO: su tabla da los totales que se revisan y la
+ * pregunta de «Te resuelve» de cada curso.
+ */
+const QUE_NO_SE_PINTAN = ["como se trabaja", "para quien"];

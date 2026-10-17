@@ -152,10 +152,10 @@ Aparte del hub vive también **`/temario`** (16 oct 2026): el temario completo d
       de clase, de color o de orden. Un solo listener delegado en `document`,
       en fase de captura, dentro de `public/ga.js`. No hay más JS.
     - ⚠️ **El pie sale en las NUEVE páginas de `Base.astro`** (desde el 16 oct
-      2026 también `/temario`), así que `webinar_reservar` aparece **13** veces
-      (9 del pie + 2 en `/finanzas` + 2 en `/temario`) y `contacto_correo`
-      **14** (9 del pie + 4 en el cuerpo de las legales + 1 en el cierre de
-      `/temario`). La propuesta hablaba de «tres enlaces» contando ubicaciones
+      2026 también `/temario`), así que `webinar_reservar` aparece **12** veces
+      (9 del pie + 2 en `/finanzas` + 1 en la entrada de `/temario`) y
+      `contacto_correo` **13** (9 del pie + 4 en el cuerpo de las legales).
+      La propuesta hablaba de «tres enlaces» contando ubicaciones
       lógicas, no apariciones en el build — **`npm run eventos` cazó la
       diferencia en su primera corrida**. Si alguien cambia el pie, esos números
       se mueven.
@@ -211,6 +211,21 @@ lleva también `og:image`). La prueba tras cada build:
   con el «22 paso A»: son dos iteraciones distintas). Los briefs viven en
   `prompts/iteracion-*.md`; el de medición es `prompts/PROPUESTA-medicion.md`.
 - **`/temario` (iteración 22) — cómo está armado, antes de tocarlo:**
+  - ⚠️ **DIRECTO AL TEMARIO** (Jorge, 16 oct 2026: «me quiero ir directamente
+    al temario»). La entrada lleva al índice y al primer curso, sin nada en
+    medio; «Ver el temario» salta a `#masterclass`. **Se quitaron, y no vuelven
+    sin que Jorge lo pida**: las tarjetas de «El programa en una mirada»,
+    «Cómo se trabaja» con el diagrama de la ruta del Bootcamp, «Para quién es»
+    y la banda de cierre con el botón y el correo. «Al terminar, tienes» no
+    estaba en su lista y bajó a después de los cursos. El doc maestro sigue
+    trayendo esas secciones: el parser las reconoce y las salta
+    (`QUE_NO_SE_PINTAN` en `temario.ts`). La tabla de la mirada se sigue
+    LEYENDO aunque no se pinte, porque de ella salen los totales que se revisan
+    y la pregunta de «Te resuelve» de cada curso.
+  - **Si Jorge quita una sección entera de su doc**, la página no deja un
+    titular vacío: la sección y su chip del índice se van solos, y los fondos
+    blanco/claro se recalculan para que dos vecinas no se fundan (`bandas` en
+    la página).
   - **La página no escribe contenido.** Todo sale de `src/data/temario.md` —la
     exportación a Markdown del doc maestro de Jorge— a través de
     `src/lib/temario.ts`, que la página importa con `?raw`. Para cambiar el
@@ -234,20 +249,13 @@ lleva también `og:image`). La prueba tras cada build:
     enlaces que Jorge ya mandó. Lecciones: `#bootcamp-h2`, `#ia-4-10`,
     `#masterclass-3`. **El código de cada lección es el enlace**: un clic en
     «H.2» deja la URL lista para copiar, y el grupo cerrado se abre solo.
-  - **El diagrama «Qué curso ves en cada fase del Bootcamp» NO viene en la
-    exportación** (el doc lo trae como imagen). Sus datos viven en `RUTA`, en
-    `temario.ts`, sacados del brief; los nombres y los conteos sí salen del
-    temario, y `npm run temario` falla si el diagrama nombra un curso o un
-    nivel que ya no existe.
-  - `src/components/temario/` — `Curso.astro` (un curso con sus `<details>`),
-    `Ruta.astro` (el diagrama: `<table>` en escritorio, lista por tramo en
-    teléfono) y `Texto.astro` (negritas y cursivas sin `set:html`).
+  - `src/components/temario/` — `Curso.astro` (un curso con sus `<details>` y,
+    en el Bootcamp, sus cinco fases) y `Texto.astro` (negritas y cursivas sin
+    `set:html`). El diagrama de la ruta (`Ruta.astro`) existió y se borró con
+    la decisión de arriba; está en el commit `7f7435a` si algún día vuelve.
   - **El índice fijo depende del alto del header**, que no vive en ningún
     token: `--alto-header` en `temario.astro` (74.4 px, medido). Si `Nav.astro`
     cambia de alto, cambia ahí o el índice deja una rendija.
-  - **Entrada y mirada van en UNA sección** a propósito: con el ritmo completo
-    entre dos secciones, a 390×844 no se asomaban las tarjetas. Medido: la
-    primera tarjeta empieza en y=755.
   - **`MAESTROS` vive en `src/data/personas.ts`**: foto, atribuciones,
     distinción y redes de las dos personas, para `/finanzas` y `/temario`. En
     `/temario` el nombre y la trayectoria salen del temario, y **el rol de
@@ -257,7 +265,7 @@ lleva también `og:image`). La prueba tras cada build:
     que ahora sale también en `/finanzas` y `/nosotros` (el brief lo pidió).
     ⚠️ **La URL quedó DUPLICADA en `jorgesierra.astro`**, que arma sus filas
     aparte y no lee `personas.ts`. Si cambia el canal, son los dos.
-  - **La hoja de estilos única creció 3.6 KB con gzip** (15.8 → 19.4 KB) y la
+  - **La hoja de estilos única creció 2.5 KB con gzip** (15.8 → 18.3 KB) y la
     descarga TODA página, porque `cssCodeSplit` está apagado a propósito. Si
     algún día pesa, el temario es el primer candidato a hoja propia.
 - **Piezas nuevas que conviene conocer antes de tocar nada:**
@@ -436,7 +444,7 @@ lleva también `og:image`). La prueba tras cada build:
 
 | Tema | Qué falta |
 |---|---|
-| **`/temario` · lo que no cuadró en el temario** | Se publicó tal cual y **no se arregló adivinando** (brief, § 1). Se corrige en el doc maestro y se reexporta: ① **«¡Dudas de Supabase!»** al final de la lección 4.2 de Análisis de datos se lee como nota interna — sale publicada si no se quita; ② la misma 4.2 dice «Data Studio», que hoy se llama Looker Studio; ③ el módulo 6 de la Masterclass dice «qué te dice cada una» sin decir cada una de qué; ④ la descripción de R.0 («no importa que hasta mano haya información queda muy bien hecho…») está cortada; ⑤ I.1 («lo que te cuesta valor, no necesariamente en tiempo…») y la fase I de la tabla de fases se leen cortadas; ⑥ el perfil «Dueños de negocio» cierra con «para eficientizar que realmente muevan la aguja»; ⑦ «dueño de negocio» sale en el perfil de profesionales **y** como perfil propio; ⑧ el «94% de las hojas de cálculo tenía errores» (Análisis 2.2) no dice de qué estudio sale; ⑨ «¿De IA cuáles también?» en Tu herramienta correcta |
+| **`/temario` · lo que no cuadró en el temario** | Se publicó tal cual y **no se arregló adivinando** (brief, § 1). Se corrige en el doc maestro y se reexporta: ① **«¡Dudas de Supabase!»** al final de la lección 4.2 de Análisis de datos se lee como nota interna — sale publicada si no se quita; ② la misma 4.2 dice «Data Studio», que hoy se llama Looker Studio; ③ el módulo 6 de la Masterclass dice «qué te dice cada una» sin decir cada una de qué; ④ la descripción de R.0 («no importa que hasta mano haya información queda muy bien hecho…») está cortada; ⑤ I.1 («lo que te cuesta valor, no necesariamente en tiempo…») y la fase I de la tabla de fases se leen cortadas; ⑥ el perfil «Dueños de negocio» cierra con «para eficientizar que realmente muevan la aguja»; ⑦ «dueño de negocio» sale en el perfil de profesionales **y** como perfil propio — ⑥ y ⑦ ya **no se publican** («Para quién es» salió de la página), pero siguen en el doc; ⑧ el «94% de las hojas de cálculo tenía errores» (Análisis 2.2) no dice de qué estudio sale; ⑨ «¿De IA cuáles también?» en Tu herramienta correcta |
 | **«Bootcamp» y «Skool» en `/temario`** | `docs/00-INDEX.md` dice que la palabra «bootcamp» no se escribe (25 ago 2026) y que el sitio no nombra la plataforma de entrega. El temario del 16 oct trae **«Bootcamp Ilhas»** como nombre de curso y **«Comunidad en Skool»**, y `/temario` lo publica tal cual porque el brief manda presentarlo sin editarlo. Falta que Jorge confirme las dos decisiones; si sí, se cierran esas líneas del INDEX |
 | **«+1,000 MDP/mes» en la tarjeta de Jorge en `/temario`** | Es su atribución de siempre (sale de `MAESTROS`), no un costo. Pero el brief dice «ni montos de dinero»: si eso alcanza a las credenciales, se filtra sólo en `/temario`, sin tocar `/finanzas` |
 | **PR #27 sin mergear** | `/webinar/` con diagonal sigue sirviendo la lista de espera vieja en producción. Ver arriba |

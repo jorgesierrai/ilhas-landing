@@ -21,8 +21,8 @@
  *   6. quedan residuos de la exportación (****, &#32;, &#91;);
  *   7. aparece un costo, de lo que sea (Jorge, 16 oct 2026);
  *   8. dos anclas se llaman igual;
- *   9. un perfil no nombra curso, o una persona no tiene tarjeta;
- *  10. el diagrama de la ruta nombra algo que ya no existe.
+ *   9. una persona de «Quién lo imparte» no tiene tarjeta en personas.ts;
+ *  10. la descripción para buscadores pasa de 160 caracteres.
  *
  * ⚠️ VA DENTRO DE `npm run build`, igual que `eventos`: un chequeo que depende
  * de que alguien se acuerde de correrlo no se corre.
