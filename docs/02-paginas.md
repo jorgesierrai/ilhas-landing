@@ -388,7 +388,8 @@ cada curso como índice, y todo lo de lectura larga cerrado.
    (niveles y fases también; las del Bootcamp llevan su letra I·L·H·A·S en un
    cuadro), con su número de lecciones; el primero va abierto. Adentro, **una
    lección por renglón**: código y título. La descripción y el «Te llevas»
-   salen al tocarla. Al final, «↑ Índice».
+   salen al tocarla. Sin «↑ Índice» al final: el índice ya va fijo arriba
+   (Jorge, 16 oct 2026: «si no sirve de nada quítala»).
 4. **Bonos** — los dos cursos de `## 6. Bonos`, con el mismo componente.
 5. **Al terminar, tienes**, como lista de logros. Iba antes de los cursos; bajó
    aquí con la decisión de arriba.
