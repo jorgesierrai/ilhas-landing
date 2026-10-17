@@ -40,7 +40,7 @@ Aparte del hub vive también **`/temario`** (16 oct 2026): el temario completo d
 
 ## Estado del repositorio
 
-*Actualizado: 16 oct 2026 (iteración 22: `/temario`, mergeada a `main` en el #28).*
+*Actualizado: 16 oct 2026 (iteración 22: `/temario` en el #28, y el #27 de `/webinar/`; los dos en `main` y verificados en producción).*
 
 > **Este bloque se actualiza en cada iteración, no al final.** Es lo primero que
 > lee una sesión nueva; si miente, la sesión construye sobre una foto vieja. Lo
@@ -68,14 +68,14 @@ Aparte del hub vive también **`/temario`** (16 oct 2026): el temario completo d
   siguiente rama sale de `main`. ⚠️ Se publicó con las frases del temario que
   no cuadran (ver «Lo que sigue abierto»): se arreglan en el doc maestro y se
   reexporta, no en el código.
-- **Un PR abierto: #27 · `webinar-redirect-diagonal`** (3 oct 2026). Es una
-  línea de `vercel.json` —el `source` pasa a `/webinar{/}?`— y una frase de este
-  archivo. **Medido el 16 oct 2026: en producción `/webinar/` con diagonal
-  todavía responde 200 con la lista de espera vieja** («En las próximas
-  semanas»), aunque el registro ya abrió; sin diagonal sí redirige. Probado con
-  `@vercel/routing-utils` 6.6.0 —el convertidor de Vercel—: el PR arregla
-  `/webinar/` y no toca ninguna otra ruta. Falta mergearlo; después,
-  `curl -sI https://www.ilhas.ai/webinar/` debe dar 307.
+- **Ya no queda ningún PR abierto.** El **#27 · `webinar-redirect-diagonal`**
+  entró a `main` el 16 oct 2026: el `source` del redirect pasó a
+  `/webinar{/}?`. **Verificado en producción ese día:** `/webinar` y
+  `/webinar/` responden 307 a `eventos.ilhas.ai/registro` —la lista de espera
+  vieja ya no se alcanza— y `/webinar/x` sigue en 404. Las respuestas de
+  redirect (`/webinar`, `/webinar/`, `/jorge`) sólo llevan HSTS de las
+  cabeceras de seguridad: así responde Vercel a un redirect, y ahí es la que
+  importa. Las páginas llevan el juego completo.
 - **`main` ya trae las iteraciones 10 a 19** y el link in bio: el **#18 se
   mergeó** y el **#20** metió la presentación de la masterclass.
 - El **#21** entró a `main` el 6 sep 2026
@@ -480,7 +480,6 @@ lleva también `og:image`). La prueba tras cada build:
 | **`/temario` · lo que no cuadró en el temario** | Se publicó tal cual y **no se arregló adivinando** (brief, § 1). Se corrige en el doc maestro y se reexporta: ① **«¡Dudas de Supabase!»** al final de la lección 4.2 de Análisis de datos se lee como nota interna — sale publicada si no se quita; ② la misma 4.2 dice «Data Studio», que hoy se llama Looker Studio; ③ el módulo 6 de la Masterclass dice «qué te dice cada una» sin decir cada una de qué; ④ la descripción de R.0 («no importa que hasta mano haya información queda muy bien hecho…») está cortada; ⑤ I.1 («lo que te cuesta valor, no necesariamente en tiempo…») y la fase I de la tabla de fases se leen cortadas; ⑥ el perfil «Dueños de negocio» cierra con «para eficientizar que realmente muevan la aguja»; ⑦ «dueño de negocio» sale en el perfil de profesionales **y** como perfil propio — ⑥ y ⑦ ya **no se publican** («Para quién es» salió de la página), pero siguen en el doc; ⑧ el «94% de las hojas de cálculo tenía errores» (Análisis 2.2) no dice de qué estudio sale; ⑨ «¿De IA cuáles también?» en Tu herramienta correcta |
 | **«Bootcamp» y «Skool» en `/temario`** | `docs/00-INDEX.md` dice que la palabra «bootcamp» no se escribe (25 ago 2026) y que el sitio no nombra la plataforma de entrega. El temario del 16 oct trae **«Bootcamp Ilhas»** como nombre de curso y **«Comunidad en Skool»**, y `/temario` lo publica tal cual porque el brief manda presentarlo sin editarlo. Falta que Jorge confirme las dos decisiones; si sí, se cierran esas líneas del INDEX |
 | **«+1,000 MDP/mes» en la tarjeta de Jorge en `/temario`** | Es su atribución de siempre (sale de `MAESTROS`), no un costo. Pero el brief dice «ni montos de dinero»: si eso alcanza a las credenciales, se filtra sólo en `/temario`, sin tocar `/finanzas` |
-| **PR #27 sin mergear** | `/webinar/` con diagonal sigue sirviendo la lista de espera vieja en producción. Ver arriba |
 | **El punto huérfano del titular del home** | Desde que el titular es «…con agentes de IA.» (5 sep 2026), **a ≥1200 px el punto final cae solo en su propio renglón**. Medido: a 1440 el `<h1>` pasó de 4 a 5 renglones y el punto queda en `left=198`, al margen. A 390 y 768 se lee bien. Es la costura entre el `<span class="text-gradient">` —que es `inline-block` por el `background-clip:text`— y el punto que va fuera. **No se tocó: la decisión es de Jorge.** El arreglo es envolver span y punto en un `white-space:nowrap`, no cambiar el copy |
 | **`<title>` y `og:title` dicen «con IA»** | `src/layouts/Base.astro:78` y `:92` siguen con «Ilhas — tu primer proceso corriendo con IA», mientras el `<h1>` ya dice «con agentes de IA». **No se tocó**: es copy de Jorge y son las dos cadenas que ve Google y ven las redes al compartir. Igual `medios/hero-b2-referencia.html:129`, que es otra referencia del hero |
 | **`/finanzas` §07 · servicios del papá** | **Confirmado que va** (Jorge, 27 ago 2026). Faltan dos insumos suyos: el **copy de los servicios** y **a dónde apunta el botón de agenda** — hoy no hay ninguna URL de agenda en el repositorio, el único destino externo es `eventos.ilhas.ai` |
