@@ -40,7 +40,7 @@ Aparte del hub vive también **`/temario`** (16 oct 2026): el temario completo d
 
 ## Estado del repositorio
 
-*Actualizado: 16 oct 2026 (iteración 22: `/temario`, en la rama `temario`).*
+*Actualizado: 16 oct 2026 (iteración 22: `/temario`, mergeada a `main` en el #28).*
 
 > **Este bloque se actualiza en cada iteración, no al final.** Es lo primero que
 > lee una sesión nueva; si miente, la sesión construye sobre una foto vieja. Lo
@@ -63,8 +63,11 @@ Aparte del hub vive también **`/temario`** (16 oct 2026): el temario completo d
 > mitad `img` de `.enlace__icono svg, .enlace__icono img`, y la página sí las
 > necesita. Reconstruir un `<style>` desde la referencia las borra en silencio.
 
-- Rama de trabajo: **`temario`**, que sale de `main` (16 oct 2026). Lleva la
-  iteración 22 completa: `/temario`. **Sin subir**: Jorge decide cuándo.
+- **`/temario` está en `main`**: el PR **#28 · `temario`** entró el 16 oct
+  2026 con la iteración 22 completa, por orden de Jorge («deployalo»). La
+  siguiente rama sale de `main`. ⚠️ Se publicó con las frases del temario que
+  no cuadran (ver «Lo que sigue abierto»): se arreglan en el doc maestro y se
+  reexporta, no en el código.
 - **Un PR abierto: #27 · `webinar-redirect-diagonal`** (3 oct 2026). Es una
   línea de `vercel.json` —el `source` pasa a `/webinar{/}?`— y una frase de este
   archivo. **Medido el 16 oct 2026: en producción `/webinar/` con diagonal
