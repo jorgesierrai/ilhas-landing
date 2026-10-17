@@ -16,6 +16,11 @@
  * quién es» y la banda de cierre. «Al terminar, tienes» no estaba en esa lista:
  * bajó a después de los cursos.
  *
+ * ⚠️ SIN BOTONES, y sin «Reservar el webinar» en ningún lado, ni en el pie
+ * (Jorge, 16 oct 2026: «ellos ya pasaron por el webinar»). Quien llega a esta
+ * página ya lo vio: el botón le pedía algo que ya hizo. «Ver el temario» se fue
+ * con él; el temario empieza justo debajo de la entrada.
+ *
  * ⚠️ AQUÍ NO SE ESCRIBE CONTENIDO DEL TEMARIO. Todo sale de
  * `src/data/temario.md` —la exportación del doc maestro de Jorge— a través de
  * `src/lib/temario.ts`. Para cambiar el temario se reemplaza ese archivo; lo de
@@ -33,10 +38,6 @@ import md from "../data/temario.md?raw";
 import { leerTemario, descripcion, nombreCorto, quienEs } from "../lib/temario";
 
 const t = leerTemario(md);
-
-// Las UTMs dicen de qué página vino el registro (docs/01-arquitectura.md).
-const webinarUrl =
-  "https://eventos.ilhas.ai/registro?utm_source=sitio&utm_medium=web&utm_campaign=webinar&utm_content=temario";
 
 // El titular parte en los dos puntos: «Finanzas + IA:» en tinta y «de reportes
 // a decisiones» con el degradado (una frase clave por titular). El punto va
@@ -63,9 +64,6 @@ const personas = t.imparten.personas.flatMap((p) => {
   ];
 });
 
-// «Ver el temario» lleva al primer curso, no a una sección de en medio.
-const primerCurso = t.cursos[0] ? `#${t.cursos[0].id}` : "#indice";
-
 // Qué secciones trae el archivo. Jorge puede quitar una completa de su doc y la
 // página no debe dejar un titular vacío: la sección y su chip del índice se van
 // con ella. El temario en sí —el encabezado, la tabla y los cursos— no es
@@ -90,7 +88,7 @@ const bandas = [
 const blanco = (banda: string) => bandas.indexOf(banda) % 2 === 0;
 ---
 
-<Base title="Temario" description={descripcion(t)}>
+<Base title="Temario" description={descripcion(t)} sinWebinar>
   <article class="temario">
     <!-- 01 · Entrada: qué es, cuánto trae y los dos botones -->
     <section class="section-y-sm bg-lavado entrada">
@@ -137,20 +135,6 @@ const blanco = (banda: string) => bandas.indexOf(banda) % 2 === 0;
             ))
           }
         </ul>
-
-        <div class="entrada__botones">
-          <a
-            href={webinarUrl}
-            data-evento="webinar_reservar"
-            class="btn btn-primary"
-            rel="noopener noreferrer"
-          >
-            Reservar el webinar
-          </a>
-          <a href={primerCurso} class="btn btn-ghost">
-            Ver el temario <span aria-hidden="true">↓</span>
-          </a>
-        </div>
       </div>
     </section>
 
@@ -379,24 +363,6 @@ const blanco = (banda: string) => bandas.indexOf(banda) % 2 === 0;
     max-width: 40ch;
   }
 
-  /* Los dos botones caben en una fila a 390 px con este padding: apilados
-     costaban 58 px de la primera pantalla. */
-  .entrada__botones {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-    margin-top: 1.25rem;
-  }
-
-  .entrada__botones .btn {
-    min-height: 2.75rem;
-    padding-inline: 1.1rem;
-  }
-
-  .entrada__botones .btn-ghost {
-    background: var(--ilhas-white);
-  }
-
   /* La fila de datos. En teléfono, una tira de tarjetas que se desliza de lado
      (la misma mecánica del índice): la primera —los totales— se ve completa y
      la segunda se asoma, que es lo que invita a deslizar. */
@@ -468,35 +434,16 @@ const blanco = (banda: string) => bandas.indexOf(banda) % 2 === 0;
     transform: rotate(45deg);
   }
 
-  /* Escritorio: el texto a la izquierda, la ficha a la derecha y los botones
-     debajo del texto. La ficha vuelve a ser UNA tarjeta con sus renglones. */
+  /* Escritorio: el texto a la izquierda y la ficha a la derecha. La ficha
+     vuelve a ser UNA tarjeta con sus renglones. */
   @media (min-width: 900px) {
     .entrada__inner {
       grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
-      grid-template-areas:
-        "texto ficha"
-        "botones ficha";
       column-gap: 3.5rem;
       align-items: center;
     }
 
-    .entrada__texto {
-      grid-area: texto;
-      align-self: end;
-    }
-
-    .entrada__botones {
-      grid-area: botones;
-      align-self: start;
-      margin-top: 1.75rem;
-    }
-
-    .entrada__botones .btn {
-      padding-inline: 1.5rem;
-    }
-
     .ficha {
-      grid-area: ficha;
       margin: 0;
       padding: 0.5rem 1.75rem;
       display: block;

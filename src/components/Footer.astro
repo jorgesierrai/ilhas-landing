@@ -21,6 +21,16 @@
 import IconoSocial from "./IconoSocial.astro";
 import { REDES_ILHAS } from "../data/personas";
 
+interface Props {
+  /**
+   * `true` en las páginas cuyo visitante YA pasó por el webinar: ahí
+   * «Reservar el webinar» no tiene sentido. Hoy sólo /temario (Jorge, 16 oct
+   * 2026: «ellos ya pasaron por el webinar»). El resto del pie no cambia.
+   */
+  sinWebinar?: boolean;
+}
+
+const { sinWebinar = false } = Astro.props;
 const year = new Date().getFullYear();
 
 const links = [
@@ -89,11 +99,15 @@ const links = [
               >hola@ilhas.ai</a
             >
           </li>
-          <li>
-            <a href="https://eventos.ilhas.ai/registro" data-evento="webinar_reservar"
-              >Reservar el webinar</a
-            >
-          </li>
+          {
+            !sinWebinar && (
+              <li>
+                <a href="https://eventos.ilhas.ai/registro" data-evento="webinar_reservar"
+                  >Reservar el webinar</a
+                >
+              </li>
+            )
+          }
           {/* La página personal de Jorge (Jorge, 3 sep 2026). Va en CONTACTO y
               no en Navegación: esa columna son las cuatro secciones del hub, y
               meter ahí una página personal la convierte en una quinta que no

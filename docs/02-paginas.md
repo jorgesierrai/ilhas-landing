@@ -370,13 +370,13 @@ totales y la pregunta de cada curso.
    negritas («Finanzas + IA: de reportes a decisiones.»), con la mitad después
    de los dos puntos en degradado; debajo, su frase. Luego la **fila de datos**
    —los totales del encabezado y las frases de introducción del archivo—, que
-   en teléfono es una tira que se desliza de lado, y los dos botones:
-   «Reservar el webinar» y «Ver el temario», que salta al primer curso.
+   en teléfono es una tira que se desliza de lado. **Sin botones** (ver «CTA y
+   medición»).
 2. **Índice fijo.** Chips pegados bajo el header (`position: sticky`), con scroll
    lateral en teléfono: cada curso, Bonos, Lo que recibes, Quién lo imparte y
    Preguntas. A 390×844 el primer curso ya se ve debajo.
-3. **Cada curso.** Kicker con su número por orden de aparición (el archivo salta
-   del 4 al 6), nombre, la pregunta de «Te resuelve», entrada, «Cómo trabajas»,
+3. **Cada curso.** «Curso N» en píldora morada grande —su número por orden de
+   aparición, porque el archivo salta del 4 al 6—, nombre, la pregunta de «Te resuelve», entrada, «Cómo trabajas»,
    «Antes de empezar» y **«Al terminar tienes» destacado**. Módulos, niveles y
    fases en `<details>` con su número de lecciones; el primero de cada curso va
    abierto. Cada lección con su código, título, descripción y **«Te llevas»
@@ -407,10 +407,11 @@ deja la URL lista para copiar; el grupo cerrado se abre solo al llegar.
 
 ### CTA y medición
 
-«Reservar el webinar» → `eventos.ilhas.ai/registro` con
-`utm_content=temario`, en la entrada (`webinar_reservar`); el pie del sitio
-trae el suyo y el correo (`contacto_correo`). Cuánta gente la ve lo dice el
-`page_view` de GA4: no se agregó ni un script.
+**Ningún CTA al webinar, ni en el pie** (Jorge, 16 oct 2026: «ellos ya pasaron
+por el webinar»). Quien llega a esta página ya lo vio, así que «Reservar el
+webinar» le pedía algo que ya hizo. El pie de `/temario` va sin ese enlace
+(`sinWebinar` en `Base.astro`); el correo (`contacto_correo`) sí se queda.
+Cuánta gente la ve lo dice el `page_view` de GA4: no se agregó ni un script.
 
 ### ⛔ Lo que NO va aquí
 

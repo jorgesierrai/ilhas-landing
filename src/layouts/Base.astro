@@ -41,6 +41,11 @@ interface Props {
    * encuentran y la tarjeta sale sin imagen.
    */
   imagen?: string;
+  /**
+   * `true` cuando quien llega a la página ya pasó por el webinar: el pie va
+   * sin «Reservar el webinar». Hoy sólo /temario (Jorge, 16 oct 2026).
+   */
+  sinWebinar?: boolean;
 }
 
 const {
@@ -49,6 +54,7 @@ const {
   heroOscuro = false,
   noindex = false,
   imagen = "/assets/og/portada.jpg",
+  sinWebinar = false,
 } = Astro.props;
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 const pageTitle = title === "Ilhas" ? title : `${title} · Ilhas`;
@@ -153,6 +159,6 @@ const pageTitle = title === "Ilhas" ? title : `${title} · Ilhas`;
     <main id="main">
       <slot />
     </main>
-    <Footer />
+    <Footer sinWebinar={sinWebinar} />
   </body>
 </html>

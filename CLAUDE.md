@@ -152,9 +152,10 @@ Aparte del hub vive también **`/temario`** (16 oct 2026): el temario completo d
       de clase, de color o de orden. Un solo listener delegado en `document`,
       en fase de captura, dentro de `public/ga.js`. No hay más JS.
     - ⚠️ **El pie sale en las NUEVE páginas de `Base.astro`** (desde el 16 oct
-      2026 también `/temario`), así que `webinar_reservar` aparece **12** veces
-      (9 del pie + 2 en `/finanzas` + 1 en la entrada de `/temario`) y
-      `contacto_correo` **13** (9 del pie + 4 en el cuerpo de las legales).
+      2026 también `/temario`), así que `contacto_correo` aparece **13** veces
+      (9 del pie + 4 en el cuerpo de las legales) y `webinar_reservar` **10**
+      (8 del pie —el de `/temario` va SIN ese enlace, `sinWebinar`— + 2 en
+      `/finanzas`).
       La propuesta hablaba de «tres enlaces» contando ubicaciones
       lógicas, no apariciones en el build — **`npm run eventos` cazó la
       diferencia en su primera corrida**. Si alguien cambia el pie, esos números
@@ -213,7 +214,7 @@ lleva también `og:image`). La prueba tras cada build:
 - **`/temario` (iteración 22) — cómo está armado, antes de tocarlo:**
   - ⚠️ **DIRECTO AL TEMARIO** (Jorge, 16 oct 2026: «me quiero ir directamente
     al temario»). La entrada lleva al índice y al primer curso, sin nada en
-    medio; «Ver el temario» salta a `#masterclass`. **Se quitaron, y no vuelven
+    medio. **Se quitaron, y no vuelven
     sin que Jorge lo pida**: las tarjetas de «El programa en una mirada»,
     «Cómo se trabaja» con el diagrama de la ruta del Bootcamp, «Para quién es»
     y la banda de cierre con el botón y el correo. «Al terminar, tienes» no
@@ -222,6 +223,14 @@ lleva también `og:image`). La prueba tras cada build:
     (`QUE_NO_SE_PINTAN` en `temario.ts`). La tabla de la mirada se sigue
     LEYENDO aunque no se pinte, porque de ella salen los totales que se revisan
     y la pregunta de «Te resuelve» de cada curso.
+  - ⚠️ **SIN BOTONES Y SIN WEBINAR** (Jorge, 16 oct 2026: «ellos ya pasaron
+    por el webinar»). Quien llega a `/temario` ya lo vio: la entrada no lleva
+    «Reservar el webinar» ni «Ver el temario», y **el pie de esta página va sin
+    «Reservar el webinar»** — prop `sinWebinar` de `Base.astro`, que la pasa a
+    `Footer.astro`. Las otras ocho páginas siguen igual, byte a byte. No le
+    pongas un CTA al webinar a esta página.
+  - **«Curso 1», «Curso 2», «Bono»** van en píldora morada sólida, a 16 px en
+    teléfono y 18 en escritorio (Jorge: «que sea más visible»), no como kicker.
   - **Si Jorge quita una sección entera de su doc**, la página no deja un
     titular vacío: la sección y su chip del índice se van solos, y los fondos
     blanco/claro se recalculan para que dos vecinas no se fundan (`bandas` en

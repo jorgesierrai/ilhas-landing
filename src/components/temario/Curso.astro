@@ -79,7 +79,7 @@ const enlaceA = listaModulos ? "al módulo" : "a la lección";
 
 <article class="curso" id={c.id} aria-labelledby={`${c.id}-titulo`}>
   <header class="curso__cabeza">
-    <p class="kicker">{c.esBono ? "Bono" : `Curso ${c.orden}`}</p>
+    <p class="curso__numero">{c.esBono ? "Bono" : `Curso ${c.orden}`}</p>
     <Titulo id={`${c.id}-titulo`} class:list={["curso__nombre", nivel === "h3" && "curso__nombre--bono"]}>
       {c.nombre}
     </Titulo>
@@ -225,8 +225,32 @@ const enlaceA = listaModulos ? "al módulo" : "a la lección";
     max-width: 50rem;
   }
 
-  .curso__cabeza .kicker {
-    margin-bottom: 0.75rem;
+  /* «Curso 1», «Bono»: la marca de en qué parte del temario vas. Píldora
+     sólida y bastante más grande que un kicker (Jorge, 16 oct 2026: «que sea
+     más visible»); es lo primero que se ve al pasar de un curso al siguiente.
+     Blanco sobre --ilhas-primary mide 5.3:1. */
+  .curso__numero {
+    display: inline-flex;
+    align-items: center;
+    margin-bottom: 1rem;
+    padding: 0.45rem 1.1rem;
+    border-radius: var(--ilhas-radius-pill);
+    background: var(--ilhas-primary);
+    color: var(--ilhas-white);
+    font-family: var(--ilhas-font-body);
+    font-weight: 600;
+    font-size: 1rem;
+    line-height: 1.3;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    box-shadow: 0 8px 20px rgba(122, 60, 255, 0.22);
+  }
+
+  @media (min-width: 1024px) {
+    .curso__numero {
+      padding: 0.5rem 1.25rem;
+      font-size: 1.125rem;
+    }
   }
 
   .curso__nombre--bono {
