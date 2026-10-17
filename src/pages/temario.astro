@@ -16,7 +16,9 @@
  *      en una mirada», «Cómo se trabaja» con el diagrama de la ruta, «Para
  *      quién es» y la banda de cierre.
  *   2. SIN BOTONES NI WEBINAR («ellos ya pasaron por el webinar»): ni
- *      «Reservar el webinar» ni «Ver el temario», tampoco en el pie.
+ *      «Reservar el webinar» ni «Ver el temario», tampoco en el pie. El ÚNICO
+ *      llamado a la acción es el botón flotante «Estoy interesado», que lleva a
+ *      la oferta en eventos.ilhas.ai (Jorge, 16 oct 2026).
  *   3. QUE SE DIGIERA EN EL TELÉFONO («está muy saturado… lo más importante
  *      son los módulos, las lecciones»): una sola columna centrada; cada curso
  *      es un índice de módulos que se abren, con una lección por renglón (ver
@@ -39,6 +41,11 @@ import md from "../data/temario.md?raw";
 import { leerTemario, descripcion, nombreCorto, quienEs } from "../lib/temario";
 
 const t = leerTemario(md);
+
+// La oferta vive en GHL; el sitio manda con un clic (regla 1). Las UTMs dicen
+// de qué página vino, como todos los enlaces del sitio a eventos.ilhas.ai.
+const ofertaUrl =
+  "https://eventos.ilhas.ai/oferta?utm_source=sitio&utm_medium=web&utm_campaign=oferta&utm_content=temario";
 
 // El titular parte en los dos puntos: «Finanzas + IA:» en tinta y «de reportes
 // a decisiones» con el degradado (una frase clave por titular). El punto va
@@ -121,6 +128,18 @@ const blanco = (banda: string) => bandas.indexOf(banda) % 2 === 0;
         </div>
       </div>
     </section>
+
+    {/* El botón flotante. Va aquí en el marcado —después de la entrada— y no al
+        final, para que con teclado se llegue a él sin recorrer las 77
+        lecciones; en pantalla flota abajo. */}
+    <a
+      href={ofertaUrl}
+      class="cta-flotante"
+      data-evento="oferta_interes"
+      rel="noopener noreferrer"
+    >
+      Estoy interesado
+    </a>
 
     <!-- 02 · Índice fijo: se pega bajo el header y acompaña todo el temario -->
     <nav class="indice" id="indice" aria-label="Índice del temario">
@@ -365,6 +384,83 @@ const blanco = (banda: string) => bandas.indexOf(banda) % 2 === 0;
     font-size: 1.75rem;
     letter-spacing: var(--ilhas-tracking-display);
     color: var(--ilhas-primary);
+  }
+
+  /* --- El botón flotante «Estoy interesado» ---------------------------------
+     El único llamado a la acción de /temario (Jorge, 16 oct 2026): lleva a la
+     oferta, no al webinar, porque quien llega aquí ya lo vio.
+
+     «Que no tape nada»: es una píldora compacta, no una barra. En pantallas
+     anchas vive en el margen derecho, FUERA de la columna (medido a 1440: la
+     columna termina en x=1088 y el botón arranca en 1215). El cambio es a
+     1300 px porque ahí ya no se cruza ni con lo más ancho de la página, las
+     dos tarjetas de «Quién lo imparte» (52 rem). En teléfono va abajo al centro, lejos
+     del «+» de las lecciones, que vive en la orilla derecha. Y el pie gana aire
+     abajo (la regla de `:has()` de más abajo) para que el último renglón y los
+     enlaces legales siempre puedan subir por encima del botón.
+
+     Blanco sobre --ilhas-primary mide 5.3:1. El anillo blanco lo despega de
+     cualquier morado que pase por debajo —la píldora de «Curso N», los
+     cuadros de las fases—. */
+  .cta-flotante {
+    position: fixed;
+    z-index: 35;
+    left: 50%;
+    bottom: calc(1rem + env(safe-area-inset-bottom, 0px));
+    transform: translateX(-50%);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 3.25rem;
+    padding: 0 1.75rem;
+    border-radius: var(--ilhas-radius-pill);
+    background: var(--ilhas-primary);
+    color: var(--ilhas-white);
+    font-family: var(--ilhas-font-body);
+    font-weight: 600;
+    font-size: 1.0625rem;
+    white-space: nowrap;
+    text-decoration: none;
+    box-shadow:
+      0 0 0 3px rgba(255, 255, 255, 0.92),
+      0 12px 32px rgba(122, 60, 255, 0.45);
+    transition: background 0.18s ease, box-shadow 0.18s ease;
+  }
+
+  .cta-flotante:hover {
+    background: var(--ilhas-primary-dark);
+    color: var(--ilhas-white);
+    box-shadow:
+      0 0 0 3px rgba(255, 255, 255, 0.92),
+      var(--ilhas-shadow-hover);
+  }
+
+  /* El anillo de foco de base.css es morado: sobre el botón morado no se vería. */
+  .cta-flotante:focus-visible {
+    outline: 3px solid var(--ilhas-dark);
+    outline-offset: 4px;
+  }
+
+  @media (min-width: 1300px) {
+    .cta-flotante {
+      left: auto;
+      right: 2rem;
+      bottom: 2rem;
+      transform: none;
+    }
+  }
+
+  @media print {
+    .cta-flotante {
+      display: none;
+    }
+  }
+
+  /* El aire del pie, SÓLO en la página que trae el botón: la hoja de estilos es
+     una para todo el sitio, y el `:has()` evita que el resto de los pies crezca.
+     5.5 rem = el botón (3.25) + su separación del borde + respiro. */
+  :global(body:has(.cta-flotante) .pie__barra) {
+    padding-bottom: calc(1.4rem + 5.5rem);
   }
 
   /* --- 02 · Índice fijo ------------------------------------------------------ */
