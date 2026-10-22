@@ -4,7 +4,7 @@ Oct 16, 2026 · @Jorge
 
 **Finanzas + IA: de reportes a decisiones.** Siete cursos para leer los números de una empresa con criterio y montar un sistema con IA que te entregue tu visibilidad del dinero en minutos, no en días.
 
-**7 cursos · 106 lecciones.** Los niveles avanzados de IA de 0 a 100 los ves después, a tu ritmo.
+**7 cursos · 108 lecciones.** Los niveles avanzados de IA de 0 a 100 los ves después, a tu ritmo.
 
 Todo se trabaja primero con un caso práctico y luego con los números de tu empresa. Cada lección deja un entregable. Imparten Jorge Sierra y el Ing. José Jorge Sierra Herrera.
 
@@ -16,7 +16,7 @@ Todo con acompañamiento por parte de los Jorges
 | --- | --- | --- | --- |
 | Masterclass de Finanzas | ¿Qué me dicen mis números? | Los números de tu empresa leídos con criterio y tres correcciones, cada una con dueño y fecha | 37 |
 | Bootcamp Ilhas | ¿Cómo armo un sistema que resuelva una necesidad con resultados? Enfocado al Motor Financiero Automático | Tu sistema financiero con IA corriendo cada mes, medido con 3 números | 17 |
-| IA de 0 a 100 | ¿Cómo uso la IA, de la primera pregunta a construir? | Claude montado para tu trabajo: Proyectos, conectores, tareas que corren solas y skills | 33 |
+| IA de 0 a 100 | ¿Cómo uso la IA, de la primera pregunta a construir? | Claude montado para tu trabajo: Proyectos, conectores, tareas que corren solas y skills. Y tu primer motor corriendo en Claude Code | 35 |
 | Análisis de datos y presentación | ¿Qué mido del negocio y por qué y cómo lo enseño? | Tus KPIs, tu base de datos ordenada y tu tablero | 9 |
 | Playbook de Decisiones y biblioteca de prompts y agentes | ¿Qué estrategias financieras me sirven en cada situación que tengo? ¿Qué le pido exactamente a la IA para hacerlo más fácil? | Más de 120 prompts y agentes probados, cada uno con su comprobación | 1 video + fichas |
 | Bono · Reporte en minutos | ¿Cómo entrego mis reportes en minutos? | Tu reporte del mes llegando solo, por enlace, correo o WhatsApp | 6 |
@@ -161,26 +161,31 @@ En IA de 0 a 100 practicas con un caso de ejemplo y luego con tu propio trabajo.
 
 ## 3. IA de 0 a 100
 
-**33 lecciones · 5 niveles · para cualquier trabajo, no solo finanzas.** Empiezas sin saber nada de inteligencia artificial y terminas construyendo con ella, con Claude como herramienta principal. En cada nivel la IA hace más trabajo sola, y tú aprendes a revisarlo.
+**35 lecciones · lección cero + cinco niveles · ~10 horas · para cualquier trabajo, no solo finanzas.** Empiezas sin saber nada de inteligencia artificial y terminas construyendo con ella, con Claude como herramienta principal. En cada nivel la IA hace más trabajo sola, y tú aprendes a revisarlo. Grabado en vivo y sin cortes con el caso El Buen Sueño: si algo falla, lo ves y lo arreglamos.
 
-**Al terminar tienes:** Claude montado para tu trabajo: un Proyecto con tu archivo de contexto, conectores a tus apps, tareas que corren solas y tus propios skills. Con los niveles 4 y 5, además, un proyecto de Claude Code con permisos, revisiones automáticas, un servidor MCP y un subagente revisor, y tu primera llamada a la API.
+**Al terminar tienes:** Claude montado para tu trabajo: un Proyecto con tu archivo de contexto, conectores a tus apps, tareas que corren solas y tus propios skills. Con el nivel 4, además, tu primer motor: el sistema de El Buen Sueño completo corriendo en Claude Code, con permisos, revisiones automáticas, un servidor MCP y un subagente revisor. Con el nivel 5, tu primera llamada a la API.
+
+### Lección 0 · En 20 minutos, tu primer entregable
+
+- **0.1 En 20 minutos, tu primer entregable** — Las dos reglas del curso: cuánto te cuesta que se equivoque decide cuánto revisas, y la IA lee y redacta, la cuenta la hace una fórmula. Creas tu cuenta, subes la hoja de ventas de El Buen Sueño, pides el reporte del mes, lo revisas contra la hoja y cachas un error. El mapa de los cinco niveles.
+  - Te llevas: tu primer reporte hecho por Claude y revisado por ti, con el error que encontraste.
 
 ### Nivel 1 · Pedir bien y saber cuánto creerle
 
 Le pides con claridad, detectas cuándo inventa y decides cuánto revisar cada respuesta.
 
-- **1.1 Tu primera conversación** — Abres tu cuenta y le das contexto desde el primer mensaje. Qué puede hacer, qué no, y qué recuerda dentro de una misma conversación.
-  - Te llevas: tu cuenta lista y una primera conversación con contexto.
+- **1.1 Tu primera conversación, bien hecha** — Le das contexto desde el primer mensaje. Qué puede hacer, qué no, y qué recuerda dentro de una misma conversación.
+  - Te llevas: una primera conversación con contexto.
 - **1.2 Por qué a veces inventa** — Cómo arma sus respuestas, por qué la misma pregunta da resultados distintos y por qué puede equivocarse con toda seguridad. Qué la distingue de otros asistentes.
   - Te llevas: una respuesta inventada que cachaste, y cómo te diste cuenta.
 - **1.3 Cómo pedirle las cosas** — Qué necesita saber para darte lo que buscas: para qué es, con qué datos y en qué formato. Pedirle que te pregunte lo que le falte, y pegarle el error completo cuando algo falla.
   - Te llevas: tres pedidos de tu semana, reescritos.
-- **1.4 Qué modelo usar en cada tarea** — Haiku, Sonnet, Opus y Fable: cuál responde más rápido, cuál razona mejor y cuándo conviene darle más tiempo para pensar.
+- **1.4 Qué modelo usar en cada tarea** — Haiku, Sonnet, Opus y Fable: cuál responde más rápido, cuál razona mejor y cuándo conviene darle más tiempo para pensar. Fija el modelo y cambia el esfuerzo, no al revés.
   - Te llevas: la misma tarea en dos modelos, con la diferencia anotada.
 - **1.5 Las piezas, sin confusiones** — Prompt, contexto, memoria, herramientas, MCP, skills, agentes, subagentes, hooks y permisos, cada uno con un ejemplo de trabajo. Y la diferencia entre los que más se confunden.
   - Te llevas: tu tabla de piezas, con un ejemplo de tu trabajo en cada una.
-- **1.6 Los 5 niveles de verificación** — Cuánto revisar según lo que cuesta que se equivoque: 1, le pides y eliges la mejor respuesta; 2, guardas tus instrucciones y tus archivos; 3, la conectas a tus apps y a tus fechas; 4, se revisa sola antes de entregar; 5, la IA lee y redacta, y una fórmula hace las cuentas. Cada nivel del curso sube uno. Y si cabe en una hoja sin "depende", no necesitas IA.
-  - Te llevas: tus 5 tareas más repetidas, cada una con su nivel.
+- **1.6 Las 5 zonas de verificación** — Cuánto revisar según lo que cuesta que se equivoque: 1, le pides y eliges la mejor respuesta; 2, guardas tus instrucciones y tus archivos; 3, la conectas a tus apps y a tus fechas; 4, se revisa sola antes de entregar; 5, la IA lee y redacta, y una fórmula hace las cuentas. Cada nivel del curso sube una zona. Y si cabe en una hoja sin "depende", no necesitas IA.
+  - Te llevas: tus 5 tareas más repetidas, cada una con su zona.
 
 ### Nivel 2 · Que trabaje con lo tuyo
 
@@ -196,12 +201,14 @@ Claude trabaja con tus archivos, con tus instrucciones y con el tono de tu empre
   - Te llevas: tu memoria revisada y tu estilo de respuesta.
 - **2.5 Documentos y mini herramientas para compartir** — Lo que Claude te arma para usar o compartir: documentos, páginas y mini herramientas. Quién puede abrirlas y cuándo conviene no compartirlas con enlace público.
   - Te llevas: una mini herramienta para tu equipo.
+- **2.6 Planes, límites y contexto** — Free, Pro, Max, Team y Enterprise: qué trae cada uno y cuál necesitas para cada parte del curso. El límite de 5 horas y el semanal. La ventana de contexto: una conversación muy larga confunde a Claude; una tarea nueva es una conversación nueva. Tu privacidad: si tus chats entrenan al modelo o no.
+  - Te llevas: tu plan elegido y tus conversaciones ordenadas por tarea.
 
 ### Nivel 3 · Que trabaje por ti
 
 Claude trabaja en tus carpetas y en tus apps, y repite tareas sin que se lo pidas.
 
-- **3.1 Que trabaje en tus carpetas** — Lee y escribe archivos de tu computadora, hace tareas largas y usa el navegador. Qué permisos darle y cuáles no.
+- **3.1 Que trabaje en tus carpetas** — Lee y escribe archivos de tu computadora, hace tareas largas y usa el navegador: por ejemplo, bajar tus facturas del SAT o el estado de cuenta del portal del banco. Qué permisos darle y cuáles no.
   - Te llevas: una carpeta tuya trabajada por Claude, con lo que le dejaste tocar y lo que no.
 - **3.2 Que use tus apps** — Los conectores con Drive, Gmail, Calendar y Microsoft 365: qué puede leer y qué puede hacer en cada uno. Qué es MCP, en simple.
   - Te llevas: un conector prendido y una pregunta contestada con tus datos.
@@ -214,30 +221,30 @@ Claude trabaja en tus carpetas y en tus apps, y repite tareas sin que se lo pida
 
 ### Nivel 4 · Que trabaje en tu proyecto, con reglas
 
-Con Claude Code, la IA trabaja dentro de una carpeta con permisos claros y revisiones automáticas. Pide ganas de usar la terminal, no saber programar.
+Con Claude Code, la IA trabaja dentro de una carpeta con permisos claros y revisiones automáticas. Lo usas desde la misma app de escritorio de los niveles anteriores; la terminal es opcional.
 
-- **4.1 Lo técnico, sin miedo** — La terminal, las carpetas y las rutas. Qué es un repositorio, Git, un commit y GitHub. Markdown, JSON y YAML. Variables de entorno, y por qué una contraseña nunca va en un archivo de instrucciones.
-  - Te llevas: tu carpeta hecha repositorio, con su primer commit.
-- **4.2 Arráncalo en tu carpeta** — Dónde corre Claude Code: la terminal, la app de escritorio y la web. Lo instalas, inicias sesión y le das su primera tarea.
-  - Te llevas: Claude Code instalado y corriendo en tu carpeta.
-- **4.3 Lo que tiene que saber de tu proyecto** — El archivo CLAUDE.md, que lee al empezar cada sesión: qué poner en él y qué dejar fuera.
+- **4.1 Claude Code en tu app** — El mismo motor del nivel 3, ahora dentro de una carpeta y con reglas. Abres la carpeta de El Buen Sueño, le das la primera tarea y ves cómo lee, edita y comprueba. Dónde más corre: la terminal, el editor y la web. /usage para ver cuánto llevas y /compact para liberar espacio. Fija el modelo, cambia el esfuerzo.
+  - Te llevas: Claude Code corriendo en tu carpeta, con su primera tarea hecha.
+- **4.2 Lo que tiene que saber de tu proyecto** — El archivo CLAUDE.md, que lee al empezar cada sesión: qué poner en él y qué dejar fuera.
   - Te llevas: tu CLAUDE.md.
-- **4.4 Qué puede tocar y qué no** — Los modos de permiso, las reglas para permitir, preguntar o negar, y el sandbox. Una instrucción la puede pasar por alto; un permiso, no.
+- **4.3 Qué puede tocar y qué no** — Los modos de permiso, las reglas para permitir, preguntar o negar, y el sandbox. Una instrucción la puede pasar por alto; un permiso, no.
   - Te llevas: tus reglas de permisos; por ejemplo, que nunca pueda borrar registros.
-- **4.5 Dónde se ajusta cada cosa** — Los archivos de configuración, cuál manda si dos dicen cosas distintas, el modelo por defecto y cómo regresar a un punto anterior.
-  - Te llevas: la configuración de tu proyecto.
-- **4.6 Trabajar desde tu editor** — Claude Code dentro de VS Code y Cursor: ves cada cambio junto a tu archivo y decides si lo aceptas.
-  - Te llevas: Claude Code corriendo en tu editor.
-- **4.7 Que trabaje sin que estés ahí** — Correrlo desde un script, retomar una sesión que dejaste a medias y las opciones que más vas a usar.
-  - Te llevas: una tarea corrida desde un script.
-- **4.8 Tus procedimientos, con su propio código** — Skills con su propio script y comandos hechos por ti, para que la cuenta la haga el código y no el modelo.
+- **4.4 Tus procedimientos, con su propio código** — Skills con su propio script y comandos hechos por ti, para que la cuenta la haga el código y no el modelo. Cuando ya le enseñaste a hacer algo bien en una conversación, guárdalo como skill antes de perderlo.
   - Te llevas: un skill con script.
-- **4.9 Revisiones que nunca se saltan** — Los hooks corren antes de entregar, siempre, aunque el modelo se olvide de revisar.
+- **4.5 Revisiones que nunca se saltan** — Los hooks corren antes de entregar, siempre, aunque el modelo se olvide de revisar.
   - Te llevas: un hook que revisa que los totales cuadren antes de entregar.
-- **4.10 Conectarlo con tus sistemas** — Los servidores MCP: cómo se agrega uno, cuáles se usan más y cómo armar uno sencillo.
+- **4.6 Conectarlo con tus sistemas** — Los servidores MCP: cómo se agrega uno, cuáles se usan más y cómo armar uno sencillo.
   - Te llevas: tu proyecto conectado a una hoja de Google.
-- **4.11 Que uno haga y otro revise** — Repartir el trabajo entre varios agentes en paralelo, con uno que revisa lo que hizo el otro.
+- **4.7 Que uno haga y otro revise** — Repartir el trabajo entre varios agentes en paralelo, con uno que revisa lo que hizo el otro. Y varios a la vez para investigar tu sector y compararte, lo que viste en el módulo 9 de la Masterclass.
   - Te llevas: un subagente revisor.
+- **4.8 Que no pare hasta que cuadre** — /goal: trabaja en bucle, comprobándose, hasta cumplir una meta que una máquina pueda verificar. /loop: repite una tarea cada tanto. Qué es una meta comprobable y qué pasa si no la hay: quema tu cuota.
+  - Te llevas: un /goal de El Buen Sueño que no termina hasta que el reporte cuadra contra la hoja.
+- **4.9 Dónde se ajusta cada cosa** — Los archivos de configuración, cuál manda si dos dicen cosas distintas, el modelo por defecto, los checkpoints y cómo regresar a un punto anterior.
+  - Te llevas: la configuración de tu proyecto.
+- **4.10 Lo técnico, si quieres** — La terminal, las carpetas y las rutas. Qué es un repositorio, Git, un commit y GitHub. Markdown, JSON y YAML. Variables de entorno, y por qué una contraseña nunca va en un archivo de instrucciones. Claude Code dentro de VS Code y Cursor, correrlo desde un script y retomar una sesión. Opcional: el resto del curso no lo necesita.
+  - Te llevas: tu carpeta hecha repositorio, con su primer commit.
+- **4.11 Proyecto final · Tu primer motor** — Juntas todo con El Buen Sueño: la hoja, el CLAUDE.md, el skill, el hook que cuadra, el subagente que revisa, el MCP a la hoja y la tarea programada. Entran las ventas del mes y sale el reporte, revisado, sin que lo pidas. Es el ensayo del Motor Financiero Automático: en el Bootcamp lo haces con tus números.
+  - Te llevas: tu primer motor corriendo de principio a fin.
 
 ### Nivel 5 · Construir con código
 
