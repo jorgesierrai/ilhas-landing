@@ -63,6 +63,7 @@ Aparte del hub vive también **`/temario`** (16 oct 2026): el temario completo d
 > mitad `img` de `.enlace__icono svg, .enlace__icono img`, y la página sí las
 > necesita. Reconstruir un `<style>` desde la referencia las borra en silencio.
 
+- temario: IA de 0 a 100 v5 (35 lecciones), 21 oct 2026.
 - **`/temario` está en `main`**: el PR **#28 · `temario`** entró el 16 oct
   2026 con la iteración 22 completa, por orden de Jorge («deployalo»). La
   siguiente rama sale de `main`. ⚠️ Se publicó con las frases del temario que
