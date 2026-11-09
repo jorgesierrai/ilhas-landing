@@ -4,7 +4,7 @@ Oct 16, 2026 · @Jorge
 
 **Finanzas + IA: de reportes a decisiones.** Siete cursos para leer los números de una empresa con criterio y montar un sistema con IA que te entregue tu visibilidad del dinero en minutos, no en días.
 
-**7 cursos · 87 lecciones.** Los niveles avanzados de IA de 0 a 100 los ves después, a tu ritmo.
+**8 cursos · 92 lecciones.** Los niveles avanzados de IA de 0 a 100 los ves después, a tu ritmo.
 
 Todo se trabaja primero con un caso práctico y luego con los números de tu empresa. Cada lección deja un entregable. Imparten Jorge Sierra y el Ing. José Jorge Sierra Herrera.
 
@@ -17,6 +17,7 @@ Todo con acompañamiento por parte de los Jorges
 | Masterclass de Finanzas | ¿Qué me dicen mis números? | Los números de tu empresa leídos con criterio y tres correcciones, cada una con dueño y fecha | 31 |
 | Bootcamp Ilhas | ¿Cómo armo un sistema que resuelva una necesidad con resultados? Enfocado al Motor Financiero Automático | Tu sistema financiero con IA corriendo cada mes, medido con 3 números | 13 |
 | IA de 0 a 100 | ¿Cómo uso la IA, de la primera pregunta a construir? | Claude montado para tu trabajo: Proyectos, conectores, tareas que corren solas y skills. Y tu primer motor corriendo en Claude Code | 24 |
+| IA para Construir Nivel Experto | ¿Cómo meto a Claude en mis propios sistemas y armo algo que aguante? | Tu sistema con la API: la IA pregunta y el código calcula, con su examen, sus barandales y su registro, corriendo solo | 5 |
 | Análisis de datos y presentación | ¿Qué mido del negocio y por qué y cómo lo enseño? | Tus KPIs, tu base de datos ordenada y tu tablero | 9 |
 | Playbook de Decisiones y biblioteca de prompts y agentes | ¿Qué estrategias financieras me sirven en cada situación que tengo? ¿Qué le pido exactamente a la IA para hacerlo más fácil? | Más de 120 prompts y agentes probados, cada uno con su comprobación | 1 video + fichas |
 | Bono · Reporte en minutos | ¿Cómo entrego mis reportes en minutos? | Tu reporte del mes llegando solo, por enlace, correo o WhatsApp | 6 |
@@ -28,7 +29,7 @@ Todo con acompañamiento por parte de los Jorges
 - Los números de tu empresa leídos con el criterio de más de 40 años en finanzas: dónde está el dinero, por qué está ahí y qué corregir.
 - Tu sistema financiero con IA corriendo.
 - El Método I·L·H·A·S, para repetirlo en cualquier otro proceso de tu empresa, o inclusive temas personales.
-- Claude a fondo: Proyectos, conectores, tareas que corren solas, skills, plugins y Claude Code.
+- Claude a fondo: Proyectos, conectores, tareas que corren solas, skills, plugins, Claude Code y la API.
 - Tus KPIs definidos, tu base de datos ordenada y tu tablero montado.
 - Tu reporte del mes en minutos, por enlace, correo o WhatsApp.
 - El criterio para decidir cuánto revisar lo que hace la IA, y cómo comprobar que tiene razón antes de decidir.
@@ -54,7 +55,7 @@ En IA de 0 a 100 practicas con un caso de ejemplo y luego con tu propio trabajo.
 
 **Nunca has usado IA, o apenas empiezas** — No necesitas saber programar. Empieza por Tu herramienta correcta y el nivel 1 de IA de 0 a 100.
 
-**Quieres construir** — Claude Code, servidores MCP, hooks y subagentes. El nivel 4 de IA de 0 a 100 pide ganas de construir, no saber programar.
+**Quieres construir** — Claude Code, servidores MCP, hooks y subagentes en el nivel 4 de IA de 0 a 100, y la API en IA para Construir Nivel Experto. Piden ganas de construir, no saber programar.
 
 ## 1. Masterclass de Finanzas
 
@@ -301,7 +302,26 @@ Con Claude Code, la IA trabaja dentro de una carpeta con permisos claros y revis
 - **4.9 Intermedia · Cobranza con n8n** — Dibujar el flujo antes de armarlo, pedirle a Claude el prompt para el asistente de n8n y las etiquetas de control. Ante la duda, no se guarda. Y comprobar contra Drive, no creerle al resumen.
   - Te llevas: tu flujo de n8n que baja tus comprobantes a Drive, con su etiqueta de control.
 
-## 4. Análisis de datos y presentación
+## 4. IA para Construir Nivel Experto
+
+**5 lecciones · el nivel experto, después de IA de 0 a 100 · con código.** Metes a Claude en tus propios sistemas con la API y construyes algo que aguante. En lo que cuesta dinero, la IA pregunta, traduce y explica, y la cuenta la hace una hoja o un script. Con el mismo caso, El Buen Sueño.
+
+**Antes de empezar.** Termina IA de 0 a 100: aquí partes de tu primer motor corriendo en Claude Code, con permisos, hook, revisor y MCP.
+
+**Al terminar tienes:** tu sistema metido en tus propios procesos con la API: la IA pregunta y el código calcula, con su examen, sus barandales y el registro de cada corrida, y corriendo solo por horario o por evento.
+
+- **1.1 Tú no calcules** — En lo que cuesta dinero, la IA no calcula: pregunta, traduce y explica, y la cuenta la hace una hoja o un script. El error bonito al lado de la tabla, y por qué el error se mueve a la traducción, que es donde va la persona que revisa.
+  - Te llevas: una decisión tuya en la que la IA pregunta y una hoja o un script calcula.
+- **1.2 La API de Claude** — Con una llave y unas líneas de código, tu programa le pregunta y Claude le contesta. La Consola, la Messages API, las herramientas, la visión y los PDF, el caché de prompts, los lotes, los límites de uso y los SDK oficiales.
+  - Te llevas: tu primera llamada a la API, con una herramienta que hace la cuenta.
+- **1.3 Programar con Claude** — Lo que aguanta no es el prompt más largo: son salidas con formato fijo, respuestas con su fuente y un examen que corre cada vez que cambias algo. RAG, prompts de sistema, las herramientas del servidor, el conector MCP, los skills en la API y el Agent SDK.
+  - Te llevas: un agente pequeño de El Buen Sueño, con su examen.
+- **1.4 Automatización avanzada** — Por horario o por evento, tu sistema corre sin ti y te avisa: cron y webhooks, n8n, Make y Zapier, las rutinas en la nube, GitHub Actions, scripts y flujos de varios agentes. El resultado te llega por WhatsApp o por correo.
+  - Te llevas: una rutina de El Buen Sueño que corre y avisa sola.
+- **1.5 Exámenes, barandales y cámaras** — El loop de un agente son treinta líneas; lo difícil es saber si acertó. Exámenes contra respuestas que ya conoces, barandales para que lo irreversible lo firme una persona y cámaras que registran cada corrida. Los errores comunes, cómo gastar menos y cuándo llamar a alguien.
+  - Te llevas: tu sistema con sus tres disciplinas por escrito.
+
+## 5. Análisis de datos y presentación
 
 **9 lecciones · sin Python ni SQL.** Cómo escoger qué medir, armar tu propia base de datos, analizarla y montar tu tablero tipo Power BI con lo que ya tienes. No te damos un dashboard hecho: te enseñamos a armar el tuyo.
 
@@ -311,7 +331,7 @@ Con Claude Code, la IA trabaja dentro de una carpeta con permisos claros y revis
 
 ### Módulo 1 · Qué medir
 
-- **1.1 Cuáles son tus KPIs de verdad** — La utilidad y la caja no se mueven directo: se mueven con indicadores que puedes empujar cada semana, como los días de cobranza, el margen bruto o la merma. Los cuatro tipos de medida de David Parmenter, los indicadores que se adelantan y los que llegan tarde, las métricas de vanidad y la ley de Goodhart.
+- **1.1 Resultado, palanca y vanidad** — La utilidad y la caja no se mueven directo: se mueven con indicadores que puedes empujar cada semana, como los días de cobranza, el margen bruto o la merma. Los cuatro tipos de medida de David Parmenter, los indicadores que se adelantan y los que llegan tarde, las métricas de vanidad y la ley de Goodhart.
   - Te llevas: tu árbol de indicadores, de la utilidad y la caja a lo que mueves cada semana.
 - **1.2 Cómo se mide bien** — La ficha de cada indicador: definición, fórmula, fuente, frecuencia, dueño, meta y semáforo. La línea base antes de mover nada, la mediana cuando hay casos raros y el número que no debe subir.
   - Te llevas: tu diccionario de 10 indicadores.
@@ -327,7 +347,7 @@ Con Claude Code, la IA trabaja dentro de una carpeta con permisos claros y revis
 
 - **3.1 Las cinco preguntas a cualquier dato** — Cuánto, contra qué, quién pesa, hacia dónde y por qué: precio, volumen o mezcla. Con tablas dinámicas y segmentaciones, en Excel o en Sheets.
   - Te llevas: las cinco preguntas contestadas con tus datos.
-- **3.2 Analizar con IA y comprobarlo** — La IA analiza y la hoja calcula. Tres comprobaciones fijas: el total cuadra, las filas que entraron son las que salieron y cada cifra dice de dónde salió. Cómo encontrar lo raro: valores atípicos, saltos y huecos.
+- **3.2 Analizar con IA sin el error bonito** — La IA analiza y la hoja calcula. Tres comprobaciones fijas: el total cuadra, las filas que entraron son las que salieron y cada cifra dice de dónde salió. Cómo encontrar lo raro: valores atípicos, saltos y huecos.
   - Te llevas: un análisis tuyo hecho con IA y comprobado.
 
 ### Módulo 4 · Tu tablero tipo Power BI
@@ -398,7 +418,7 @@ Ha creado productos de pagos, contabilidad, nómina, fiscales, transferencias in
 
 ## Preguntas frecuentes
 
-**¿Necesito saber programar?** No. El programa se hace con Claude y con Excel o Google Sheets. Incluso Claude Code, en el nivel 4 de IA de 0 a 100, lo usas desde la app, sin terminal.
+**¿Necesito saber programar?** No. El programa se hace con Claude y con Excel o Google Sheets. Claude Code, en el nivel 4 de IA de 0 a 100, lo usas desde la app, sin terminal. Solo IA para Construir Nivel Experto trabaja con código, y empieza desde cero.
 
 **¿Qué datos de mi empresa necesito?** Para la Masterclass, tu balance y tu estado de resultados de los últimos años. Para el Bootcamp, además, la balanza de comprobación del mes. Con un solo estado de resultados ya salen los márgenes, y si solo tienes facturas/xmls y estado de cuenta, el Playbook trae una ruta corta.
 

@@ -66,7 +66,16 @@ Aparte del hub vive también **`/temario`** (16 oct 2026): el temario completo d
 - **temario: los tres cursos principales como quedaron en Skool** (9 nov 2026,
   rama `temario-skool`): Masterclass 31 lecciones en 9 módulos (ya con `###`
   por módulo, como los demás cursos), Bootcamp 13, IA de 0 a 100 24 (bienvenida
-  + cuatro niveles: **el nivel 5 salió** del curso). Total **87 lecciones**. La
+  + cuatro niveles: **el nivel 5 salió** del curso). Total **87 lecciones**.
+  **Y el nivel 5 volvió como curso propio** (9 nov 2026, rama
+  `temario-experto`): **«IA para Construir Nivel Experto»**, 5 lecciones,
+  id `#experto` (`IDS_CURSO`) y chip «Nivel experto». Va justo después de IA
+  de 0 a 100. Su texto sale de `Ilhas-academy-cursos/IA de 0 a 100/
+  IA-de-0-a-100-textos-Skool.md` (§ Nivel 5, 21 oct) con el orden y los
+  títulos de Skool: la 5.6 «Enterprise y equipos» ya no está y «Construir con
+  Claude» se llama «Programar con Claude». Hoy: **8 cursos · 92 lecciones**.
+  En Análisis de datos sólo cambiaron dos títulos (1.1 y 3.2), sacados de una
+  captura de Skool. La
   fuente fue `Cierre-de-Materiales/fuentes/Skool-textos-5nov.md` y los
   `_indice.md` de `para-skool/`. Análisis de datos y los dos bonos NO se
   tocaron. ⚠️ Las anclas viejas `#masterclass-3` e `#ia-4-10` ya no existen.
@@ -262,7 +271,7 @@ lleva también `og:image`). La prueba tras cada build:
     curso («Cómo trabajas», «Antes de empezar», «Al terminar tienes» y las 5
     fases del Bootcamp) vive en un **«Sobre este curso» cerrado**. Todo va en
     UNA columna centrada de 46 rem, también en escritorio. La entrada se quedó
-    en kicker, título, frase y «7 cursos · 87 lecciones»: las tres frases de
+    en kicker, título, frase y «8 cursos · 92 lecciones»: las tres frases de
     introducción y la nota de los niveles avanzados ya no se pintan (siguen en
     el doc). «Lo que recibes» pasó de rejilla de tarjetas a lista. **No le
     vuelvas a meter tarjetas, cajas ni texto abierto al temario**: si algo es
@@ -285,11 +294,11 @@ lleva también `og:image`). La prueba tras cada build:
     MISMO parser que la página. Acepta otra ruta para probar una exportación
     antes de reemplazar la buena: `npm run temario -- ~/Downloads/temario.md`.
   - **El total de lecciones no está escrito en ningún lado**: sale del
-    encabezado del archivo (hoy «7 cursos · 87 lecciones»; el brief viejo
+    encabezado del archivo (hoy «8 cursos · 92 lecciones»; el brief viejo
     decía 108 y Jorge lo cambió el mismo 16 oct al quitar una lección).
   - **Los ids de los cursos salen de una palabra clave, no del nombre**
     (`IDS_CURSO` en `temario.ts`): `#masterclass`, `#bootcamp`, `#ia`,
-    `#datos`, `#reporte`, `#herramienta`. «IA de 0 a 100» se llamaba «Claude de
+    `#experto`, `#datos`, `#reporte`, `#herramienta`. «IA de 0 a 100» se llamaba «Claude de
     0 a 100» hasta el 16 oct: con el nombre entero, ese cambio habría roto los
     enlaces que Jorge ya mandó. Lecciones: `#bootcamp-h2`, `#ia-4-9`,
     `#masterclass-3-3`; módulos: `#bootcamp-h`, `#ia-nivel-4`, `#masterclass-modulo-3`. **El id va DENTRO

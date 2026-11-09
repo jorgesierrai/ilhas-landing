@@ -207,6 +207,7 @@ const IDS_CURSO: [RegExp, string][] = [
   [/masterclass/, "masterclass"],
   [/bootcamp/, "bootcamp"],
   [/0 a 100/, "ia"],
+  [/nivel experto/, "experto"],
   [/analisis de datos/, "datos"],
   [/reporte/, "reporte"],
   [/herramienta/, "herramienta"],
@@ -225,6 +226,7 @@ export function idCurso(nombre: string): string {
 const CORTOS: Record<string, string> = {
   masterclass: "Masterclass",
   bootcamp: "Bootcamp",
+  experto: "Nivel experto",
   datos: "Análisis de datos",
 };
 
