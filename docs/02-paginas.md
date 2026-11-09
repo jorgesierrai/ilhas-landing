@@ -373,7 +373,7 @@ cada curso como índice, y todo lo de lectura larga cerrado.
 1. **Entrada.** El kicker es el título del archivo; el `<h1>`, la frase en
    negritas («Finanzas + IA: de reportes a decisiones.»), con la mitad después
    de los dos puntos en degradado; debajo, su frase y los dos números del
-   encabezado («7 cursos · 106 lecciones»). Nada más: las frases de
+   encabezado («7 cursos · 87 lecciones»). Nada más: las frases de
    introducción del archivo ya no se pintan. **Sin botones** (ver «CTA y
    medición»).
 2. **Índice fijo.** Chips pegados bajo el header (`position: sticky`), con scroll
@@ -408,7 +408,7 @@ fundan en un solo bloque.
 
 Estables aunque cambie el nombre del curso: `#masterclass`, `#bootcamp`, `#ia`,
 `#datos`, `#reporte`, `#herramienta`. Grupos: `#bootcamp-h`, `#ia-nivel-4`,
-`#datos-modulo-2`. Lecciones: `#bootcamp-h2`, `#ia-4-10`, `#reporte-r3`,
+`#datos-modulo-2`. Lecciones: `#bootcamp-h2`, `#ia-4-9`, `#reporte-r3`,
 `#masterclass-6`. Al llegar por el enlace, el navegador abre el módulo y la
 lección solos, y el título queda visible debajo del índice.
 

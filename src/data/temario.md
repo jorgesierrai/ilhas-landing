@@ -4,7 +4,7 @@ Oct 16, 2026 · @Jorge
 
 **Finanzas + IA: de reportes a decisiones.** Siete cursos para leer los números de una empresa con criterio y montar un sistema con IA que te entregue tu visibilidad del dinero en minutos, no en días.
 
-**7 cursos · 108 lecciones.** Los niveles avanzados de IA de 0 a 100 los ves después, a tu ritmo.
+**7 cursos · 87 lecciones.** Los niveles avanzados de IA de 0 a 100 los ves después, a tu ritmo.
 
 Todo se trabaja primero con un caso práctico y luego con los números de tu empresa. Cada lección deja un entregable. Imparten Jorge Sierra y el Ing. José Jorge Sierra Herrera.
 
@@ -14,9 +14,9 @@ Todo con acompañamiento por parte de los Jorges
 
 | Curso | Te resuelve | Sales con | Lecciones |
 | --- | --- | --- | --- |
-| Masterclass de Finanzas | ¿Qué me dicen mis números? | Los números de tu empresa leídos con criterio y tres correcciones, cada una con dueño y fecha | 37 |
-| Bootcamp Ilhas | ¿Cómo armo un sistema que resuelva una necesidad con resultados? Enfocado al Motor Financiero Automático | Tu sistema financiero con IA corriendo cada mes, medido con 3 números | 17 |
-| IA de 0 a 100 | ¿Cómo uso la IA, de la primera pregunta a construir? | Claude montado para tu trabajo: Proyectos, conectores, tareas que corren solas y skills. Y tu primer motor corriendo en Claude Code | 35 |
+| Masterclass de Finanzas | ¿Qué me dicen mis números? | Los números de tu empresa leídos con criterio y tres correcciones, cada una con dueño y fecha | 31 |
+| Bootcamp Ilhas | ¿Cómo armo un sistema que resuelva una necesidad con resultados? Enfocado al Motor Financiero Automático | Tu sistema financiero con IA corriendo cada mes, medido con 3 números | 13 |
+| IA de 0 a 100 | ¿Cómo uso la IA, de la primera pregunta a construir? | Claude montado para tu trabajo: Proyectos, conectores, tareas que corren solas y skills. Y tu primer motor corriendo en Claude Code | 24 |
 | Análisis de datos y presentación | ¿Qué mido del negocio y por qué y cómo lo enseño? | Tus KPIs, tu base de datos ordenada y tu tablero | 9 |
 | Playbook de Decisiones y biblioteca de prompts y agentes | ¿Qué estrategias financieras me sirven en cada situación que tengo? ¿Qué le pido exactamente a la IA para hacerlo más fácil? | Más de 120 prompts y agentes probados, cada uno con su comprobación | 1 video + fichas |
 | Bono · Reporte en minutos | ¿Cómo entrego mis reportes en minutos? | Tu reporte del mes llegando solo, por enlace, correo o WhatsApp | 6 |
@@ -28,7 +28,7 @@ Todo con acompañamiento por parte de los Jorges
 - Los números de tu empresa leídos con el criterio de más de 40 años en finanzas: dónde está el dinero, por qué está ahí y qué corregir.
 - Tu sistema financiero con IA corriendo.
 - El Método I·L·H·A·S, para repetirlo en cualquier otro proceso de tu empresa, o inclusive temas personales.
-- Claude a fondo: Proyectos, conectores, tareas que corren solas, skills, Claude Code y la API.
+- Claude a fondo: Proyectos, conectores, tareas que corren solas, skills, plugins y Claude Code.
 - Tus KPIs definidos, tu base de datos ordenada y tu tablero montado.
 - Tu reporte del mes en minutos, por enlace, correo o WhatsApp.
 - El criterio para decidir cuánto revisar lo que hace la IA, y cómo comprobar que tiene razón antes de decidir.
@@ -54,38 +54,111 @@ En IA de 0 a 100 practicas con un caso de ejemplo y luego con tu propio trabajo.
 
 **Nunca has usado IA, o apenas empiezas** — No necesitas saber programar. Empieza por Tu herramienta correcta y el nivel 1 de IA de 0 a 100.
 
-**Quieres construir** — Claude Code, servidores MCP, subagentes y la API. Los niveles 4 y 5 de IA de 0 a 100 piden ganas de tocar la terminal, no saber programar.
+**Quieres construir** — Claude Code, servidores MCP, hooks y subagentes. El nivel 4 de IA de 0 a 100 pide ganas de construir, no saber programar.
 
 ## 1. Masterclass de Finanzas
 
-**9 módulos · 37 lecciones · 100% finanzas.** Los puntos finos del análisis e interpretación de la información financiera, con foco en liquidez y rentabilidad. No es un curso contable ni fiscal: donde termina la contabilidad, empiezan las finanzas.
+**9 módulos · 31 lecciones · 100% finanzas.** Los puntos finos del análisis e interpretación de la información financiera, con foco en liquidez y rentabilidad. No es un curso contable ni fiscal: donde termina la contabilidad, empiezan las finanzas.
 
-**Cómo trabajas.** Ves el video, haces el práctico en el Excel del caso y, desde el módulo 2, lo repites con tu empresa en la plantilla maestra. Cada módulo cierra con las jugadas del Playbook para cuando te pase lo mismo en tu empresa.
+**Cómo trabajas.** Ves el video, haces el práctico en el Excel del caso —Panificadora La Espiga, que en 2025 vendió 25% más y ganó 20% menos— y, desde el módulo 2, lo repites con tu empresa en la plantilla maestra. Cada módulo cierra con las jugadas del Playbook para cuando te pase lo mismo en tu empresa.
 
 **Al terminar tienes:** los números de tu empresa leídos con criterio en la plantilla maestra, tu flujo de efectivo cuadrado contra la caja, el tipo de empresa en el que estás y tres cosas que vas a corregir, cada una con dueño y fecha.
 
-- **1. Radiografía financiera: el ADN de la empresa y sus reportes clave** — Los tres estados financieros y qué te dice cada uno. Por qué el ADN de una empresa es permanecer en el mercado. El caso con el que trabajas todo el curso.
-  - Te llevas: el balance y el estado de resultados más recientes de tu empresa, listos para trabajar.
-- **2. Ingeniería financiera: liquidez, solvencia y rentabilidad** — Las razones financieras paso a paso, primero a mano y luego en Excel, con la gráfica de tendencia de cada una. Lo repites con los números de tu empresa.
-  - Te llevas: las razones de liquidez, solvencia y rentabilidad de tu empresa en la plantilla maestra, con su tendencia.
-- **3. Más allá de los números: diagnóstico y toma de decisiones** — Qué significa cada razón y si su tendencia es buena o mala, causa y efecto. Las razones que de verdad importan, y por qué compararte contra tu sector.
-  - Te llevas: tu diagnóstico en tres líneas: qué está grave, qué puede esperar y qué está bien.
-- **4. Análisis vertical, horizontal y de tendencias** — Cuánto pesa cada cuenta, cuánto creció y hacia dónde va. La lectura 80/20.
-  - Te llevas: el vertical y el horizontal de tu empresa, los renglones que crecieron más rápido que tus ventas con su efecto en pesos, y la lectura 80/20 de tu balance.
-- **5. El estado de resultados: valor del negocio contra rentabilidad del accionista** — Segmentación del Estado de Resultados y su importancia estratégica.
-  - Te llevas: tu utilidad, y detalles específicos de lo que se te está yendo hasta la utilidad neta.
-- **6. Del flujo del negocio al flujo final** — Cómo se construye el flujo de efectivo, y qué te dice cada una sobre la salud de la empresa.
-  - Te llevas: tu flujo libre, y la respuesta a si tu operación alcanza para lo que inviertes.
-- **7. La ruta del capital** — De dónde viene y a dónde va el dinero. Dónde está la verdadera liquidez.
-  - Te llevas: las cuentas de tu balance donde más se detuvo tu dinero, y cuánto de tu liquidez es efectivo de verdad.
-- **8. El pulso de la empresa: el flujo de efectivo** — Armas el flujo en Excel y lo cuadras contra la caja final. Por qué la utilidad no es caja. De dónde proviene el Valor de una empresa.
-  - Te llevas: tu flujo de efectivo cuadrado, y cuánto rinde tu dinero.
-- **9. Entorno, sector y conclusiones** — Cómo te comparas contra tu sector. Por qué crecer no siempre crea valor. Los cuatro tipos de empresa, la visión de corto y de largo plazo, y qué corregir antes de presupuestar.
-  - Te llevas: en cuál de los cuatro tipos está tu empresa y estrategias de valor.
+### Introducción
+
+- **0.1 Empieza aquí** — Quién lo imparte, el caso de todo el curso y cómo se trabaja: el video, el práctico en el Excel del caso y, desde el módulo 2, tu empresa en la plantilla maestra.
+  - Te llevas: el Excel del caso, la plantilla maestra y el Playbook, con el balance y el estado de resultados de tu empresa a la mano.
+
+### Módulo 1 · Radiografía financiera
+
+- **1.1 Donde termina la contabilidad** — Dónde termina la contabilidad y empiezan las finanzas, y el objetivo del curso: los puntos finos del análisis e interpretación de la información financiera.
+  - Te llevas: para qué usas hoy los estados financieros de tu empresa, en una frase.
+- **1.2 Los tres estados financieros** — El balance general, el estado de resultados y el flujo de efectivo: qué pregunta contesta cada uno. Por qué el ADN de una empresa es permanecer en el mercado.
+  - Te llevas: el balance y el estado de resultados de tu empresa del último cierre, ubicados.
+- **1.3 El caso: La Espiga** — Una panificadora de 1991, en segunda generación, con 86 personas y 14 rutas. Sus periodos: de 2023 a 2025 cerrados, y 2026 con el primer semestre real y el segundo proyectado.
+  - Te llevas: el Excel del caso abierto, con el balance, el estado de resultados y los periodos ubicados.
+
+### Módulo 2 · Ingeniería financiera
+
+- **2.1 Las razones del caso** — Liquidez, solvencia y rentabilidad: qué mide cada una, y los seis grupos de razones del Excel del caso.
+  - Te llevas: tu Excel del caso listo para calcular las razones al mismo tiempo que el video.
+- **2.2 Liquidez** — Razón circulante, prueba ácida y capital de trabajo operativo. Primero a mano, en el pintarrón; luego en Excel, con la tendencia de cada una.
+  - Te llevas: las tres razones de liquidez de La Espiga, para todos los periodos del caso.
+- **2.3 Estructura de capital (solvencia)** — Apalancamiento, endeudamiento total, deuda de largo plazo a capital y capital contable a activo.
+  - Te llevas: las cuatro razones de solvencia de La Espiga, para todos los periodos del caso.
+- **2.4 Rentabilidad** — Margen de operación, margen neto, rendimiento sobre el activo (ROA), sobre el capital promedio y sobre el capital (ROE).
+  - Te llevas: las cinco razones de rentabilidad de La Espiga.
+- **2.5 Ciclo operativo** — Cuántos días tardas en vender tu inventario, en cobrarle a tus clientes y en pagarle a tus proveedores, y el ciclo de conversión de efectivo.
+  - Te llevas: los días y el ciclo de conversión de La Espiga, para todos los periodos del caso.
+- **2.6 La tendencia y tu empresa** — La gráfica de tendencia de cada razón, y cómo usar la plantilla maestra con los números de tu empresa.
+  - Te llevas: las razones de tu empresa en la plantilla maestra.
+
+### Módulo 3 · Más allá de los números
+
+- **3.1 Rentabilidad y liquidez** — La diferencia entre solvencia, rentabilidad y liquidez, y por qué la liquidez va primero.
+  - Te llevas: si tu empresa anda mejor en rentabilidad o en liquidez.
+- **3.2 Las razones de La Espiga** — Sus razones de 2023 a 2026: cuáles suben, cuáles bajan y si eso es bueno o malo. Por qué cada razón se lee con tu giro, no con el libro.
+  - Te llevas: cada razón de tu empresa marcada: si subió o bajó, y si eso es bueno o malo.
+- **3.3 El ROE en tres partes: DuPont** — ROE = margen neto × rotación del activo × apalancamiento. En La Espiga bajó de 15.3% a 9.9%, y lo que más pesó fue el margen.
+  - Te llevas: el DuPont de tu empresa y la parte que movió tu ROE.
+
+### Módulo 4 · Dinámica estructural y evolutiva
+
+- **4.1 Vendió 25% más y ganó 20% menos** — Un número es una foto; la tendencia es la película. La Espiga en 2025: más ventas, menos utilidad.
+  - Te llevas: la pregunta del módulo hecha a tu empresa: ¿hubo un año en que vendiste más y ganaste menos?
+- **4.2 Vertical, horizontal y tendencia** — Cada renglón como porcentaje de las ventas o del activo, y contra el año anterior. En La Espiga las ventas suben y el margen de operación baja, de 12.3% en 2023 a 6.6% proyectado para 2026.
+  - Te llevas: el vertical y el horizontal de La Espiga, y los de tu empresa en la plantilla maestra.
+- **4.3 ¿A dónde se fue el margen?** — En 2025 las ventas de La Espiga crecieron 25.3%, pero los gastos de venta y distribución crecieron 36.5%, la mercadotecnia 48.1% y otros gastos 135.7%.
+  - Te llevas: los tres renglones de tu empresa que más crecieron contra tus ventas, con su efecto en pesos.
+- **4.4 La lectura 80/20** — Qué cuentas pesan más en el activo, cuánto es pasivo y cuánto capital, y qué pesa en el pasivo: proveedores y crédito bancario, de corto y de largo plazo.
+  - Te llevas: la lectura 80/20 del balance de tu empresa, en tres líneas.
+
+### Módulo 5 · Análisis del estado de resultados
+
+- **5.1 ¿Cuál utilidad es la más importante?** — Por qué el estado de resultados es la clave. La utilidad bruta, la de operación y la neta, y qué te dice cada una.
+  - Te llevas: cuál es la utilidad más importante de tu empresa, y por qué.
+- **5.2 Dos rutas: operación y accionista** — Vender más o ganar mercado no necesariamente genera rendimiento. La ruta de la operación: resultado operativo, flujo para la firma y ROIC. La del accionista: resultado neto, flujo para el accionista y ROE.
+  - Te llevas: tu utilidad de operación y tu utilidad neta, y cuánto se fue entre una y otra.
+- **5.3 La utilidad de operación y el apalancamiento** — Un modelito en el pintarrón, con la fotografía del balance: el lado de los activos es el que genera la operación.
+  - Te llevas: la utilidad de operación de tu empresa de los últimos tres años, y si sube o baja.
+
+### Módulo 6 · Cash flow operativo al free cash flow
+
+- **6.1 Las tres capas del flujo** — Flujo operativo, flujo libre y flujo de efectivo neto: qué suma y qué resta cada capa.
+  - Te llevas: las tres capas ubicadas en el flujo de La Espiga, y si el último año tu empresa ganó, tuvo con qué pagar, o las dos.
+- **6.2 El reloj del flujo, 2024 contra 2025** — La cascada de La Espiga: un flujo operativo positivo que terminó en un flujo libre negativo, con qué se cubrió y por qué bajó la caja.
+  - Te llevas: el reloj del flujo de tu empresa del último año, y si tu operación alcanza para lo que inviertes.
+
+### Módulo 7 · La ruta del capital
+
+- **7.1 Activo = pasivo + capital** — La ecuación en el pintarrón y las tres maneras de generar flujo: sube un pasivo, sube el capital, baja un activo. La regla de signos y el estado de origen y aplicación.
+  - Te llevas: el origen y aplicación de tu empresa, y el activo donde más se detuvo tu dinero.
+- **7.2 ¿A dónde se fue la caja?** — A clientes, inventarios e impuestos a favor, y cómo lo cubrió La Espiga. Por qué una razón circulante alta puede ser dinero parado.
+  - Te llevas: las tres cuentas de tu balance donde más se detuvo tu dinero, y cuánto de tu activo circulante es efectivo.
+
+### Módulo 8 · El pulso de la empresa
+
+- **8.1 No es lo mismo utilidad que flujo** — En 2025 La Espiga ganó 1.72 millones y su caja bajó 1.38 millones. Su flujo de efectivo en Excel, y el tuyo en la plantilla maestra.
+  - Te llevas: tu flujo de efectivo, y cuánto se separaron tu utilidad neta y tu variación de caja.
+- **8.2 Cuadra contra el banco** — El flujo cuadrado contra la caja del balance, qué revisar cuando no cuadra, y el flujo libre comparado contra lo que darían los CETES.
+  - Te llevas: tu flujo cuadrado contra la caja de tu balance, y cuánto rinde tu dinero.
+
+### Módulo 9 · Entorno y contexto financiero
+
+- **9.1 ¿Creció más que su sector?** — La Espiga contra el mercado de la panificación, en ventas, y de qué fuentes salen los datos del sector.
+  - Te llevas: tu crecimiento en ventas de los últimos tres años.
+- **9.2 Cómo se crea valor** — El triángulo de la creación de valor. Por qué más ventas o más mercado no necesariamente crean valor. Los activos líquidos y los estratégicos.
+  - Te llevas: cuál de las tres maneras de crear valor es la más débil en tu empresa.
+- **9.3 Del corto al largo plazo** — Corto plazo: utilidades, ROE y utilidad por acción. Largo plazo: utilidad de operación, flujo libre, ROIC, permanecer en el mercado y adaptar el modelo de negocio.
+  - Te llevas: si tu empresa hoy se mide con indicadores de corto o de largo plazo.
+- **9.4 Los 4 tipos de empresa** — Los cuatro tipos de empresa y cómo reconocer el tuyo.
+  - Te llevas: en cuál de los cuatro tipos está tu empresa hoy.
+- **9.5 Conclusiones** — De la A a la Z: qué vimos, qué corregir en tu empresa, tips de expertos y lo que sigue: hacerlo con tus números, con inteligencia artificial.
+  - Te llevas: tres cosas que vas a corregir en tu empresa, cada una con dueño y fecha.
 
 ## 2. Bootcamp Ilhas · El Método I·L·H·A·S aplicado a tus números
 
-**17 lecciones.** Aprendes un método de cinco pasos para que la inteligencia artificial dé resultados reales en tu trabajo, y lo aplicas a las finanzas de tu empresa. Construyes tu Motor Financiero Automático: un sistema que toma tus números, hace las cuentas y te entrega reportes claros para decidir. Sin programar: con Claude y Excel o Google Sheets.
+**13 lecciones.** Aprendes un método de cinco pasos para que la inteligencia artificial dé resultados reales en tu trabajo, y lo aplicas a las finanzas de tu empresa. Construyes tu Motor Financiero Automático: un sistema que toma tus números, hace las cuentas y te entrega reportes claros para decidir. Sin programar: con Claude y Excel o Google Sheets.
 
 **Cómo trabajas.** Cada lección la haces primero con un caso práctico que ya tiene la respuesta correcta, para que compares. Después la repites con los números de tu empresa.
 
@@ -106,162 +179,127 @@ En IA de 0 a 100 practicas con un caso de ejemplo y luego con tu propio trabajo.
 
 ### Introducción
 
-- **0.1 Qué vas a construir y por qué fallan los proyectos de IA** — Por qué la mayoría de los proyectos de IA no da resultados: se automatiza sin entender el problema y no se sabe dónde exigirle exactitud.
-  - Te llevas: en una frase: "lo que mueve la aguja en tu trabajo".
-- **0.2 Qué cosas que hagas aguantan errores o alucinaciones** — Por qué la IA a veces se equivoca o inventa, en qué tareas no importa y en cuáles sí. Cuando un error cuesta dinero, la IA te ayuda, pero las cuentas las hace una fórmula.
-  - Te llevas: tus tareas separadas entre las que la IA puede hacer sola y las que necesitan revisión.
+- **0.1 Qué vas a construir y por qué fallan** — Con qué sales: tu motor, con tus archivos como vengan, y el criterio para leer lo que te dice. Por qué el qué vale más que el cómo, y el método I·L·H·A·S en orden: lo que casi nadie hace es la I, la L y la H.
+  - Te llevas: tu motor instalado y, en una frase, lo que mueve la aguja en tu trabajo.
 
 ### I · Identificar
 
-- **I.1 Qué automatizar primero** — Cómo elegir qué automatizar según lo que te cuesta valor, no necesariamente en tiempo, en estrés y en dinero, y cómo medir cuánto es hoy para saber después si mejoró.
-  - Te llevas: tu prioridad número uno y su medición.
-- **I.2 Dónde está el problema en tus números** — Una revisión de tus estados financieros que te dice, en una página, dónde se está yendo el dinero, por qué pasa y qué hacer.
-  - Te llevas: tu diagnóstico en una página y el número que quieres mejorar.
+- **I.1 De tu trabajo a tus oportunidades** — Islas y engranes: la isla es lo que quieres resolver y los engranes, las partes que la mueven. Del organigrama al flujo: tus roles, sus tareas y dónde se rompe el flujo.
+  - Te llevas: tus roles con sus tareas, dónde se rompen tus flujos y tus oportunidades, cada una con el número con que se mide.
+- **I.2 El peso y la prioridad** — Dónde sale de verdad el retorno de la IA y cómo lo miden las empresas. Lo que libera contra lo que mueve, el peso de cada oportunidad y cómo se escoge el número 1.
+  - Te llevas: tu número 1: qué número de tu empresa mueve, cuánto en pesos al mes y en qué zona está.
+- **I.3 La bienvenida de tu motor** — Seis preguntas, una a la vez: tu decisión con número, tu pregunta y la solución de tu número 1.
+  - Te llevas: tu bienvenida contestada: tu decisión con número, tu pregunta y tu resultado.
 
 ### L · Levantamiento
 
-- **L.1 Cómo se hace hoy, de verdad** — Dibujas paso a paso cómo se hace hoy el trabajo.
-  - Te llevas: tu proceso actual en papel.
-- **L.2 Qué datos tienes** — Qué información de tu empresa necesitas y qué te permite hacer cada documento. Dejas por escrito las reglas de tu empresa.
-  - Te llevas: lo más importante: ¿Qué hacer con tus datos y cómo? y las reglas de tu empresa por escrito.
+- **L.1 El proceso real no es el que te cuentan** — El mapa de tu número 1 con Claude: quién lo hace, qué archivo usa, cuándo llega y dónde se rompe. De dónde sale tu información: tu sistema contable, el SAT, tu banco y tus Excel sueltos.
+  - Te llevas: el mapa de tu número 1, con dónde se rompe, y la lista de tus archivos.
+- **L.2 Tus llaves y cómo lo hacen los grandes** — Cómo se clasifica cada cuenta con la norma mexicana (NIF B-6) y el catálogo que tu contador ya le manda al SAT. Le das todo a tu motor y contestas solo lo que no sabe: esas respuestas son tus llaves.
+  - Te llevas: tu maestra cuadrada y tus llaves.
 
 ### H · Hilar
 
-- **H.1 Qué número mover y qué paso lo mueve** — Conectas cada paso del trabajo con el número que quieres mejorar y fijas una meta medible. Decides en papel qué hace la IA, qué hace Excel y qué haces tú.
-  - Te llevas: el diseño de tu sistema en una página.
-- **H.2 Tu modelo en Excel: las fórmulas calculan, la IA explica** — Armas tus números en Excel con fórmulas, para que siempre den lo mismo, y usas la IA para explicar, preguntar y redactar, no para hacer las cuentas.
-  - Te llevas: tu modelo en Excel.
-- **H.3 Cuánta revisión necesita cada paso** — Cuánto revisar cada paso según lo que te costaría un error, y en qué momento tiene que entrar una persona.
-  - Te llevas: tu diseño con los puntos de revisión marcados.
-- **H.4 Quién hace cada paso** — Qué parte hace la IA, qué parte una fórmula y qué parte una persona, y quién se encarga de que todo siga funcionando.
-  - Te llevas: cada paso de tu sistema con su responsable.
+- **H.1 Tu hilo: del resultado a la palanca** — El hilo en cinco cajas: resultado, palanca, meta, dato y quién. Con La Espiga: sus tres palancas, de dónde sale cada número y quién hace qué.
+  - Te llevas: tu hilo en una tabla: tu resultado, tus palancas con su meta, de dónde sale cada dato y quién hace cada paso.
+- **H.2 Cómo lee tu motor: tu criterio por escrito** — Las tres manos de tu motor: la fórmula, la IA y tú. Cómo se vuelve regla un criterio, con una regla del Ing. José Jorge Sierra Herrera y tu meta.
+  - Te llevas: tus reglas guardadas en tu motor y quién hace cada paso de tu solución.
 
 ### A · Accionar
 
-- **A.1 Quita pasos y prueba en pequeño** — Armas una primera versión pequeña en Claude y la compruebas contra el caso resuelto.
-  - Te llevas: tu primera versión funcionando.
-- **A.2 Que se revise solo** — Haces que tu sistema compruebe sus propios números antes de entregarte nada y te avise cuando algo no cuadra.
-  - Te llevas: tu sistema con sus comprobaciones.
-- **A.3 Decide y preséntalo** — Conviertes un hallazgo en una decisión, con responsable y fecha, y la presentas en un reporte de una página.
-  - Te llevas: una decisión tomada con datos y su reporte.
+- **A.1 Tu primera corrida: ¿le puedes creer?** — La primera corrida con La Espiga: a dónde se fue su dinero, y el freno en vivo: cien mil pesos de más y el motor se detiene. «Funciona si…»: la primera parte de tu experimento.
+  - Te llevas: tu primera corrida, cuadrada y comparada con dos números que ya conocías, y tu «funciona si…».
+- **A.2 Decide con lo que salió y anótalo** — Una decisión buena con un resultado malo. La hoja de decisiones que tu motor ya trae y, con La Espiga, la decisión anotada con nombre y fecha.
+  - Te llevas: tu decisión anotada, con nombre, fecha y cómo sabrás si funcionó.
 
 ### S · Sistematizar
 
-- **S.1 Que corra solo cuando necesites** — Programas tu sistema para que corra solo en su fecha. Lo que salga raro le llega a una persona para revisarlo, o alertas igual le llegan a la gente correspondiente.
-  - Te llevas: tu sistema programado.
-- **S.2 Tu Motor Financiero Automático** — Juntas todo: entran tus números y salen tus resultados.
-  - Te llevas: tu Motor Financiero Automático corriendo de principio a fin.
-- **S.3 Mide que funcionó** — Mides si tu sistema de verdad te ahorra tiempo y evita errores, y defines quién lo mantiene.
-  - Te llevas: tus resultados medidos.
+- **S.1 Que corra solo: tu rutina y tu freno** — Una rutina tiene cuatro cosas: disparador, pasos con quién, freno y qué cuenta como hecho. La segunda corrida de La Espiga y la rutina que corre sola.
+  - Te llevas: tu rutina escrita y tu motor corrido por segunda vez, con un archivo nuevo tuyo.
+- **S.2 Mide, cuida y crece** — Medir lo que sí es: el veredicto de La Espiga contra su meta. Qué le mandas a Ilhas de tus números: nada, salvo que tú lo prendas. Y cómo actualizar tu motor sin tocar lo tuyo.
+  - Te llevas: tu experimento con veredicto, tu sistema con quién lo cuida y tu siguiente isla.
 
 ### Cierre
 
-- **F.1 Tu siguiente proceso** — Eliges el siguiente trabajo que quieres mejorar y le aplicas el método tú solo.
-  - Te llevas: tu siguiente proyecto, elegido y diseñado.
+- **F.1 Tu siguiente isla** — Regresas a tus oportunidades, eliges la segunda y corres I·L·H·A·S tú solo, con el sprint de una isla. Y cuándo conviene pedir ayuda.
+  - Te llevas: tu sistema financiero en producción y la dirección de tu siguiente isla.
 
 ## 3. IA de 0 a 100
 
-**35 lecciones · lección cero + cinco niveles · ~10 horas · para cualquier trabajo, no solo finanzas.** Empiezas sin saber nada de inteligencia artificial y terminas construyendo con ella, con Claude como herramienta principal. En cada nivel la IA hace más trabajo sola, y tú aprendes a revisarlo. Grabado en vivo y sin cortes con el caso El Buen Sueño: si algo falla, lo ves y lo arreglamos.
+**24 lecciones · bienvenida + cuatro niveles · más de 10 horas · para cualquier trabajo, no solo finanzas.** Empiezas sin saber nada de inteligencia artificial y terminas construyendo con ella, con Claude como herramienta principal. En cada nivel, qué darle, qué pedirle y cuánto creerle. Desde el nivel 3, un mismo caso crece clase a clase: la cobranza de El Buen Sueño, hasta que corre sola cada mañana. Grabado en vivo: si algo falla, lo ves y lo arreglamos.
 
-**Al terminar tienes:** Claude montado para tu trabajo: un Proyecto con tu archivo de contexto, conectores a tus apps, tareas que corren solas y tus propios skills. Con el nivel 4, además, tu primer motor: el sistema de El Buen Sueño completo corriendo en Claude Code, con permisos, revisiones automáticas, un servidor MCP y un subagente revisor. Con el nivel 5, tu primera llamada a la API.
+**Al terminar tienes:** Claude montado para tu trabajo: un proyecto con tus instrucciones, conectores a tus apps, skills, plugins y tareas que corren solas. Con el nivel 4, además, tu primer motor: la cobranza de El Buen Sueño corriendo sola en Claude Code, con permisos, hooks que la frenan, recordatorios por WhatsApp y un subagente que la revisa.
 
-### Lección 0 · En 20 minutos, tu primer entregable
+### Introducción
 
-- **0.1 En 20 minutos, tu primer entregable** — Las dos reglas del curso: cuánto te cuesta que se equivoque decide cuánto revisas, y la IA lee y redacta, la cuenta la hace una fórmula. Creas tu cuenta, subes la hoja de ventas de El Buen Sueño, pides el reporte del mes, lo revisas contra la hoja y cachas un error. El mapa de los cinco niveles.
-  - Te llevas: tu primer reporte hecho por Claude y revisado por ti, con el error que encontraste.
+- **0 Bienvenida** — Por qué el criterio humano va primero, cómo está armado el curso y sus dos reglas: cuánto te cuesta que se equivoque decide cuánto revisas, y la IA lee y te explica, pero las cuentas de dinero las hace una hoja de cálculo o un script.
+  - Te llevas: el mapa del curso y sus dos reglas.
 
 ### Nivel 1 · Pedir bien y saber cuánto creerle
 
 Le pides con claridad, detectas cuándo inventa y decides cuánto revisar cada respuesta.
 
-- **1.1 Tu primera conversación, bien hecha** — Le das contexto desde el primer mensaje. Qué puede hacer, qué no, y qué recuerda dentro de una misma conversación.
-  - Te llevas: una primera conversación con contexto.
-- **1.2 Por qué a veces inventa** — Cómo arma sus respuestas, por qué la misma pregunta da resultados distintos y por qué puede equivocarse con toda seguridad. Qué la distingue de otros asistentes.
-  - Te llevas: una respuesta inventada que cachaste, y cómo te diste cuenta.
-- **1.3 Cómo pedirle las cosas** — Qué necesita saber para darte lo que buscas: para qué es, con qué datos y en qué formato. Pedirle que te pregunte lo que le falte, y pegarle el error completo cuando algo falla.
-  - Te llevas: tres pedidos de tu semana, reescritos.
-- **1.4 Qué modelo usar en cada tarea** — Haiku, Sonnet, Opus y Fable: cuál responde más rápido, cuál razona mejor y cuándo conviene darle más tiempo para pensar. Fija el modelo y cambia el esfuerzo, no al revés.
-  - Te llevas: la misma tarea en dos modelos, con la diferencia anotada.
-- **1.5 Las piezas, sin confusiones** — Prompt, contexto, memoria, herramientas, MCP, skills, agentes, subagentes, hooks y permisos, cada uno con un ejemplo de trabajo. Y la diferencia entre los que más se confunden.
-  - Te llevas: tu tabla de piezas, con un ejemplo de tu trabajo en cada una.
-- **1.6 Las 5 zonas de verificación** — Cuánto revisar según lo que cuesta que se equivoque: 1, le pides y eliges la mejor respuesta; 2, guardas tus instrucciones y tus archivos; 3, la conectas a tus apps y a tus fechas; 4, se revisa sola antes de entregar; 5, la IA lee y redacta, y una fórmula hace las cuentas. Cada nivel del curso sube una zona. Y si cabe en una hoja sin "depende", no necesitas IA.
-  - Te llevas: tus 5 tareas más repetidas, cada una con su zona.
+- **1.1 Tu primera conversación** — Abrir tu cuenta y traerte la memoria de ChatGPT. Cómo ver y borrar lo que recuerda. El mismo mensaje, corto y con contexto: el corto se inventa cosas.
+  - Te llevas: un mensaje de tu semana pedido corto y con todo el contexto, con la diferencia anotada.
+- **1.2 Claude y su ecosistema** — Qué es un modelo de lenguaje y por qué «la IA escribe muy IA». Los topes de uso, para qué sirve y dónde vive: el chat, Cowork y Claude Code, y también Excel, el navegador y el celular.
+  - Te llevas: tres cosas de tu trabajo en las que Claude te puede ayudar.
+- **1.3 Modelos** — Haiku para lo repetitivo, Sonnet para todos los días, Opus para lo difícil y Fable, el más capaz. Cuánto esfuerzo pedirle, y qué pasa cuando la conversación se llena.
+  - Te llevas: el mismo encargo en dos modelos: cuál te sirvió más y cuánto tardó.
+- **1.4 Cómo pedirle las cosas** — Rol, contexto, objetivo, tarea, datos, formato y restricciones. Con un modelo capaz sueltas el rol y los pasos, nunca el contexto. Y un BUSCARV que no jala: si no revisas, te pierdes.
+  - Te llevas: un pedido de tu semana: cómo lo pedías, cómo lo mejoraste y qué resultado dio.
+- **1.5 El empleado nuevo** — Las piezas, sin confusiones: contexto, memoria, prompt, herramientas, permisos, skills, conectores, MCP, API, subagentes y workflows. Automatización contra agente, y la escalera: subes solo cuando hace falta.
+  - Te llevas: las cosas de tu trabajo que puedes empezar a hacer con Claude.
+- **1.6 Zonas de verificación** — Las zonas de la 0 a la 5, con un solo ejemplo: cobrarle a quien no ha pagado. En cada una, qué hace la IA, qué es fijo y qué haces tú. En la zona 5, la IA traduce y un motor exacto decide.
+  - Te llevas: 5 o 6 tareas tuyas clasificadas por zona.
 
 ### Nivel 2 · Que trabaje con lo tuyo
 
 Claude trabaja con tus archivos, con tus instrucciones y con el tono de tu empresa.
 
-- **2.1 Dónde está cada cosa** — Un recorrido por la pantalla: el historial, el selector de modelo y dónde subes tus archivos. La app de escritorio, la del celular y la extensión para Chrome.
-  - Te llevas: Claude instalado y acomodado en tus dispositivos.
-- **2.2 Que lea tus archivos y busque por ti** — Qué archivos entiende y por qué conviene darle Excel antes que PDF. Que te entregue Excel, PowerPoint, Word o PDF. Búsquedas en internet con sus fuentes.
-  - Te llevas: un archivo de tu trabajo hecho por Claude y revisado por ti.
-- **2.3 Que no le expliques lo mismo dos veces** — Un Proyecto guarda tus archivos y tus instrucciones. Cómo compartirlo con tu equipo, y por qué lo que explicas más de dos veces debe vivir en un archivo.
-  - Te llevas: tu Proyecto con tu archivo de contexto.
-- **2.4 Que responda a tu manera** — Qué recuerda de ti entre conversaciones, cómo revisarlo o borrarlo y cómo ajustar su forma de responder.
-  - Te llevas: tu memoria revisada y tu estilo de respuesta.
-- **2.5 Documentos y mini herramientas para compartir** — Lo que Claude te arma para usar o compartir: documentos, páginas y mini herramientas. Quién puede abrirlas y cuándo conviene no compartirlas con enlace público.
-  - Te llevas: una mini herramienta para tu equipo.
-- **2.6 Planes, límites y contexto** — Free, Pro, Max, Team y Enterprise: qué trae cada uno y cuál necesitas para cada parte del curso. El límite de 5 horas y el semanal. La ventana de contexto: una conversación muy larga confunde a Claude; una tarea nueva es una conversación nueva. Tu privacidad: si tus chats entrenan al modelo o no.
-  - Te llevas: tu plan elegido y tus conversaciones ordenadas por tarea.
+- **2.1 La interfaz** — Un proyecto con su carpeta y sus instrucciones, que mandan sobre tus mensajes. El modo voz, grabar un skill para que repita lo que haces una vez, y el navegador.
+  - Te llevas: tu primer proyecto ligado a una carpeta, con sus instrucciones.
+- **2.2 Las llaves al empleado** — Darle una carpeta completa, aunque esté desordenada, y la app que graba tus reuniones. En minutos, un brand book: pilares, personalidad, clientes y un contexto para agentes de IA.
+  - Te llevas: la información de tu empresa, lista para dársela a Claude.
+- **2.3 Artifacts** — Revisar el contexto antes de usarlo. De un Excel, un tablero, una presentación y un documento, y un borrador de Gmail con tu logo. Claude Docs para editar en equipo.
+  - Te llevas: un artefacto con tus datos: tablero, presentación o documento.
+- **2.4 Investigación y archivos** — Una investigación que cita cada dato. Por qué un .md gasta mucho menos que un PDF. Un reporte por pasos: primero el índice, luego cada dato con su archivo y su fila. Recibos del celular a Excel.
+  - Te llevas: un reporte tuyo con el índice aprobado y cada dato con su archivo y su fila.
 
 ### Nivel 3 · Que trabaje por ti
 
 Claude trabaja en tus carpetas y en tus apps, y repite tareas sin que se lo pidas.
 
-- **3.1 Que trabaje en tus carpetas** — Lee y escribe archivos de tu computadora, hace tareas largas y usa el navegador: por ejemplo, bajar tus facturas del SAT o el estado de cuenta del portal del banco. Qué permisos darle y cuáles no.
-  - Te llevas: una carpeta tuya trabajada por Claude, con lo que le dejaste tocar y lo que no.
-- **3.2 Que use tus apps** — Los conectores con Drive, Gmail, Calendar y Microsoft 365: qué puede leer y qué puede hacer en cada uno. Qué es MCP, en simple.
-  - Te llevas: un conector prendido y una pregunta contestada con tus datos.
-- **3.3 Dentro de tu hoja de cálculo** — Claude dentro de Excel, Sheets y Office: cita las celdas, respeta tus fórmulas y maneja tablas dinámicas.
-  - Te llevas: una hoja tuya trabajada desde adentro.
-- **3.4 Tareas que corren solas** — Cada hora, cada día o cada semana, en la nube o en tu computadora. Qué cuenta como terminado y qué se queda en una bandeja para que lo revise una persona.
-  - Te llevas: una tarea programada tuya, con su bandeja.
-- **3.5 Tus procedimientos, guardados** — Un skill guarda un procedimiento para que Claude lo haga igual cada vez. Instalar uno, crear el tuyo y juntar varios en un plugin.
-  - Te llevas: tu primer skill.
+- **3.1 Claude en tu computadora** — Las partes del pedido: la carpeta, qué hacer, reglas, permisos, «está listo cuando…» y qué reportar. Lo dudoso no se adivina: va a Revisar. Comprobantes de WhatsApp a Pagos, y /goal en Claude Code.
+  - Te llevas: un proceso tuyo llevado a una carpeta, con su «está listo cuando…».
+- **3.2 Conectores** — Los permisos de cada conector: leer, libre; escribir, con aprobación. Las reglas: solo correos sin «Procesado», comparar el correo contra el comprobante, y no mandar, no contestar ni borrar. Los adjuntos, con n8n.
+  - Te llevas: tu correo conectado con permiso de leer y etiquetar, y una tarea que deja etiqueta.
+- **3.3 Claude en Excel y Sheets** — Las reglas del cruce: duplicado, factura que existe, dos facturas en un pago, factura que no existe y pago sin factura. Con fórmulas, no con números escritos, y un resumen que cuadra a cero.
+  - Te llevas: tu conciliador pensado: cómo lo armarías y con qué variables.
+- **3.4 Skills, plugins y tareas** — El skill, con el creador de skills; la ficha «Qué cuenta como hecho» y el plugin para tu equipo. Correrlo dos veces no duplica nada. Y la tarea programada que corre antes de que llegues.
+  - Te llevas: tu primera automatización, o tu plugin.
 
-### Nivel 4 · Que trabaje en tu proyecto, con reglas
+### Nivel 4 · Tu proyecto, con reglas
 
-Con Claude Code, la IA trabaja dentro de una carpeta con permisos claros y revisiones automáticas. Lo usas desde la misma app de escritorio de los niveles anteriores; la terminal es opcional.
+Con Claude Code, la IA trabaja dentro de una carpeta con permisos claros y revisiones automáticas. Lo usas desde la misma app de escritorio; la terminal es opcional.
 
-- **4.1 Claude Code en tu app** — El mismo motor del nivel 3, ahora dentro de una carpeta y con reglas. Abres la carpeta de El Buen Sueño, le das la primera tarea y ves cómo lee, edita y comprueba. Dónde más corre: la terminal, el editor y la web. /usage para ver cuánto llevas y /compact para liberar espacio. Fija el modelo, cambia el esfuerzo.
-  - Te llevas: Claude Code corriendo en tu carpeta, con su primera tarea hecha.
-- **4.2 Lo que tiene que saber de tu proyecto** — El archivo CLAUDE.md, que lee al empezar cada sesión: qué poner en él y qué dejar fuera.
-  - Te llevas: tu CLAUDE.md.
-- **4.3 Qué puede tocar y qué no** — Los modos de permiso, las reglas para permitir, preguntar o negar, y el sandbox. Una instrucción la puede pasar por alto; un permiso, no.
-  - Te llevas: tus reglas de permisos; por ejemplo, que nunca pueda borrar registros.
-- **4.4 Tus procedimientos, con su propio código** — Skills con su propio script y comandos hechos por ti, para que la cuenta la haga el código y no el modelo. Cuando ya le enseñaste a hacer algo bien en una conversación, guárdalo como skill antes de perderlo.
-  - Te llevas: un skill con script.
-- **4.5 Revisiones que nunca se saltan** — Los hooks corren antes de entregar, siempre, aunque el modelo se olvide de revisar.
-  - Te llevas: un hook que revisa que los totales cuadren antes de entregar.
-- **4.6 Conectarlo con tus sistemas** — Los servidores MCP: cómo se agrega uno, cuáles se usan más y cómo armar uno sencillo.
-  - Te llevas: tu proyecto conectado a una hoja de Google.
-- **4.7 Que uno haga y otro revise** — Repartir el trabajo entre varios agentes en paralelo, con uno que revisa lo que hizo el otro. Y varios a la vez para investigar tu sector y compararte, lo que viste en el módulo 9 de la Masterclass.
-  - Te llevas: un subagente revisor.
-- **4.8 Que no pare hasta que cuadre** — /goal: trabaja en bucle, comprobándose, hasta cumplir una meta que una máquina pueda verificar. /loop: repite una tarea cada tanto. Qué es una meta comprobable y qué pasa si no la hay: quema tu cuota.
-  - Te llevas: un /goal de El Buen Sueño que no termina hasta que el reporte cuadra contra la hoja.
-- **4.9 Dónde se ajusta cada cosa** — Los archivos de configuración, cuál manda si dos dicen cosas distintas, el modelo por defecto, los checkpoints y cómo regresar a un punto anterior.
-  - Te llevas: la configuración de tu proyecto.
-- **4.10 Lo técnico, si quieres** — La terminal, las carpetas y las rutas. Qué es un repositorio, Git, un commit y GitHub. Markdown, JSON y YAML. Variables de entorno, y por qué una contraseña nunca va en un archivo de instrucciones. Claude Code dentro de VS Code y Cursor, correrlo desde un script y retomar una sesión. Opcional: el resto del curso no lo necesita.
-  - Te llevas: tu carpeta hecha repositorio, con su primer commit.
-- **4.11 Proyecto final · Tu primer motor** — Juntas todo con El Buen Sueño: la hoja, el CLAUDE.md, el skill, el hook que cuadra, el subagente que revisa, el MCP a la hoja y la tarea programada. Entran las ventas del mes y sale el reporte, revisado, sin que lo pidas. Es el ensayo del Motor Financiero Automático: en el Bootcamp lo haces con tus números.
-  - Te llevas: tu primer motor corriendo de principio a fin.
-
-### Nivel 5 · Construir con código
-
-Construyes con la API algo que aguante: la IA lee y redacta, y el código hace las cuentas.
-
-- **5.1 La IA no hace las cuentas** — Por qué no le pides el número a la IA: la IA pregunta y una herramienta calcula. Dónde se cuela el error cuando la IA clasifica, y dónde va la persona que revisa.
-  - Te llevas: una decisión tuya en la que la IA pregunta y una hoja o un script calcula.
-- **5.2 Tu primera llamada por código** — Cómo conectas tu propio programa con Claude: la llave de acceso, la consola y las herramientas que le das para que calcule. Leer imágenes y PDF, y procesar muchos casos de una vez.
-  - Te llevas: tu primera llamada a la API, con una herramienta que hace la cuenta.
-- **5.3 Un agente pequeño, con su examen** — Respuestas con formato fijo y con su fuente, búsquedas en tus propios documentos, instrucciones de sistema y el Agent SDK. Y cómo calificar si funciona antes de usarlo.
-  - Te llevas: un agente pequeño con su examen.
-- **5.4 Que aguante en serio** — Lo que separa un prototipo de algo que se usa todos los días: pruebas contra respuestas conocidas, límites a lo que puede hacer, la firma de una persona en lo que no se puede deshacer y un registro de cada ejecución.
-  - Te llevas: tu sistema con sus controles por escrito.
-- **5.5 Que corra por horario o por evento** — Que arranque solo a cierta hora o cuando algo pasa: cron, webhooks, n8n, Make, Zapier, rutinas en la nube y GitHub Actions. Avisos por WhatsApp o por correo.
-  - Te llevas: una rutina que corre y te avisa sola.
-- **5.6 Llevarlo a tu equipo** — Lo que va a preguntar tu área de TI: administración de usuarios, inicio de sesión único, auditoría, retención de datos y certificaciones de los planes Team y Enterprise.
-  - Te llevas: la lista de lo que le pedirías a tu área de TI.
+- **4.1 Claude Code y lo técnico sin miedo** — Claude Code desde la app, sin terminal. Mejor un programa que fórmulas sueltas: un programa de indicadores para el contador, con su prueba de que cuadra.
+  - Te llevas: tu primer programa que hace una cuenta de tu negocio, con su cuadre.
+- **4.2 CLAUDE.md y memoria del proyecto** — /init lo crea y tú lo dejas corto y concreto. La bitácora de decisiones y la memoria: qué cambió después de correr lo automático.
+  - Te llevas: tu CLAUDE.md con tres reglas de tu negocio.
+- **4.3 Permisos y seguridad** — Los modos de la sesión contra el «nunca» de la configuración. Tres puertas: los permisos, el arenero y los permisos de cada conector. Y tres pruebas para romperlo.
+  - Te llevas: tus reglas de «nunca», y la prueba de que se cumplen.
+- **4.4 Skills y comandos** — Qué reglas deben ser exactas: el cruce pasa del criterio del agente a un programa en Python. Comando contra skill, y por qué Claude no puede cambiar sus propios permisos.
+  - Te llevas: tus reglas de dinero repartidas: cuáles van a un programa y cuáles a criterio.
+- **4.5 Hooks** — Dónde va el hook en el ciclo del agente: antes de actuar. Uno que revisa cada recordatorio antes de escribirlo, y el intento de forzarlo.
+  - Te llevas: un hook que frena algo que nunca debe pasar en tu negocio, con la prueba de que lo frena.
+- **4.6 MCP, servidores y WhatsApp** — Dónde entra lo nuevo en tu flujo, la ventana de 24 horas de WhatsApp y las plantillas que aprueba Meta. Probar con un número nuevo, nunca con el de la empresa, y el primer recordatorio enviado en vivo.
+  - Te llevas: una herramienta conectada por MCP, con una cuenta o un número de prueba.
+- **4.7 Subagentes y artefactos** — El subagente: un archivo con sus herramientas y su modelo. Un tablero privado que se filtra por vencimiento, y un revisor que cacha lo que se te pasa.
+  - Te llevas: un revisor de solo lectura para tu proceso.
+- **4.8 Proyecto final, motor y SDK (plugin Claude)** — La hoja de clientes, los recordatorios con límite, la conciliación contra el banco con tres candados y la cobranza diaria a las 8 de la mañana. Y un plugin que te entrevista y arma tu motor a partir de tus archivos.
+  - Te llevas: tu propio motor, armado con el plugin «instalar» a partir de un proceso tuyo.
+- **4.9 Intermedia · Cobranza con n8n** — Dibujar el flujo antes de armarlo, pedirle a Claude el prompt para el asistente de n8n y las etiquetas de control. Ante la duda, no se guarda. Y comprobar contra Drive, no creerle al resumen.
+  - Te llevas: tu flujo de n8n que baja tus comprobantes a Drive, con su etiqueta de control.
 
 ## 4. Análisis de datos y presentación
 
@@ -360,7 +398,7 @@ Ha creado productos de pagos, contabilidad, nómina, fiscales, transferencias in
 
 ## Preguntas frecuentes
 
-**¿Necesito saber programar?** No. El programa se hace con Claude y con Excel o Google Sheets. Solo los niveles 4 y 5 de IA de 0 a 100 usan la terminal, y empiezan desde cero.
+**¿Necesito saber programar?** No. El programa se hace con Claude y con Excel o Google Sheets. Incluso Claude Code, en el nivel 4 de IA de 0 a 100, lo usas desde la app, sin terminal.
 
 **¿Qué datos de mi empresa necesito?** Para la Masterclass, tu balance y tu estado de resultados de los últimos años. Para el Bootcamp, además, la balanza de comprobación del mes. Con un solo estado de resultados ya salen los márgenes, y si solo tienes facturas/xmls y estado de cuenta, el Playbook trae una ruta corta.
 
